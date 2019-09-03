@@ -15,7 +15,7 @@ cache:
 # 开始安装依赖之前
 before_install:
 - openssl aes-256-cbc -K $encrypted_dd36921e03d3_key -iv $encrypted_dd36921e03d3_iv
-  -in github_id_rsa.enc -out github_id_rsa -d
+  -in .travis/github_id_rsa.enc -out ~/.ssh/github_id_rsa -d
 # 改变文件权限
 - chmod 600 ~/.ssh/github_id_rsa 
 # 配置 ssh
