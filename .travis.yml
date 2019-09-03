@@ -21,7 +21,7 @@ install:
 script:
 - hexo clean
 - hexo generate
-- hexo algolia
+- npm run algolia
 after_script:
   - cd ./public
   - git init
