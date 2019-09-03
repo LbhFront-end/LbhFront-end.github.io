@@ -13,7 +13,6 @@ before_install:
 before_script:
 - git config user.name 'LbhFront-end'
 - git config user.email '544289495@qq.com'
-- set HEXO_ALGOLIA_INDEXING_KEY=097bff07ff221e5fc4e28ae91cd53807
 # github仓库操作
 - sed -i'' "s~git@github.com:LbhFront-end/LbhFront-end.github.io.git~https://${REPO_TOKEN}:x-oauth-basic@github.com/LbhFront-end/LbhFront-end.github.io.git~" _config.yml
 install:
@@ -22,7 +21,6 @@ install:
 script:
 - hexo clean
 - hexo generate
-- hexo algolia
 after_script:
   - cd ./public
   - git init
