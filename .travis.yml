@@ -21,13 +21,14 @@ install:
 script:
 - hexo clean
 - hexo generate
+- hexo algolia
 after_script:
   - cd ./public
   - git init
   - git config user.name "LbhFront-end"
   - git config user.email "544289495@qq.com"
   - git add .
-  - git commit -m "Update docs"
+  - git commit -m "Travis CI 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
   - git push --force --quiet "https://${blog}@${GH_REF}" master:master
 branches:
   only:

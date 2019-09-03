@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "deploy": "hexo clean && hexo g -d",
-    "start": "hexo clean && hexo g && hexo s"
+    "start": "hexo clean && hexo g && hexo s",
+    "algolia": "set HEXO_ALGOLIA_INDEXING_KEY=097bff07ff221e5fc4e28ae91cd53807 && hexo algolia"
   },
   "hexo": {
     "version": "3.8.0"
