@@ -7,12 +7,10 @@ cache:
   directories:
   - node_modules
 before_install:
-- openssl aes-256-cbc -K $encrypted_dd36921e03d3_key -iv $encrypted_dd36921e03d3_iv
-  -in .travis/github_id_rsa.enc -out ~/.ssh/github_id_rsa -d
-- chmod 600 ~/.ssh/github_id_rsa
-- eval $(ssh-agent)
-- ssh-add ~/.ssh/github_id_rsa
-- cp .travis/ssh_config ~/.ssh/config
+- export TZ='Asia/Beijing'  # 设置时区
+- npm install -g hexo
+- npm install -g hexo-cli
+before_script:
 - git config user.name 'LbhFront-end'
 - git config user.email '544289495@qq.com'
 install:
