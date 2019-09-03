@@ -1,0 +1,66 @@
+# 语言
+language: node_js
+
+# 版本
+node_js:
+  - '10.15.3'
+
+# 缓存
+cache:
+  apt: true
+  yarn: true
+  directories:
+    - node_modules
+
+# 开始安装依赖之前
+before_install:
+- openssl aes-256-cbc -K $encrypted_dd36921e03d3_key -iv $encrypted_dd36921e03d3_iv
+  -in github_id_rsa.enc -out github_id_rsa -d
+# 改变文件权限
+- chmod 600 ~/.ssh/github_id_rsa 
+# 配置 ssh
+- eval $(ssh-agent)
+- ssh-add ~/.ssh/id_rsa
+- cp .travis/ssh_config ~/.ssh/config
+# 配置 git 替换为自己的信息
+- git config user.name 'LbhFront'
+- git config user.email '544289495@qq.com'
+
+
+# 安装依赖
+install:
+- npm install hexo-cli -g
+- npm install
+
+# 部署的命令
+script:
+- npm run deploy  # hexo clean && hexo g -d
+
+after_script:
+  - git clone https://${GH_REF} .deploy_git  # GH_REF是最下面配置的仓库地址
+  - cd .deploy_git
+  - git checkout master
+  - cd ../
+  - mv .deploy_git/.git/ ./public/   # 这一步之前的操作是为了保留master分支的提交记录，不然每次git init的话只有1条commit
+  - cd ./public
+  - git config user.name "LbhFront"  #修改name
+  - git config user.email "544289495@qq.com"  #修改email
+  - git add .
+  - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"  # 提交记录包含时间 跟上面更改时区配合
+  - git push --force --quiet "https://${blog}@${GH_REF}" master:master  #Travis_Token是在Travis中配置环境变量的名称
+
+# 项目所在分支
+branches:
+  only:
+  - dev
+
+env:
+ global:
+   - GH_REF: github.com/LbhFront-end/LbhFront-end.github.io.git
+
+
+notifications:
+  email:
+    - 544289495@qq.com
+  on_success: change
+  on_failure: always
