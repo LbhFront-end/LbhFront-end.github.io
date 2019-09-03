@@ -20,7 +20,7 @@ before_install:
 - chmod 600 ~/.ssh/github_id_rsa 
 # 配置 ssh
 - eval $(ssh-agent)
-- ssh-add ~/.ssh/id_rsa
+- ssh-add ~/.ssh/github_id_rsa
 - cp .travis/ssh_config ~/.ssh/config
 # 配置 git 替换为自己的信息
 - git config user.name 'LbhFront'
