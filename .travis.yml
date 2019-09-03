@@ -21,8 +21,14 @@ install:
 script:
 - hexo clean
 - hexo generate
-after_success:
-- hexo deploy
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "LbhFront-end"
+  - git config user.email "544289495@qq.com"
+  - git add .
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${blog}@${GH_REF}" master:master
 branches:
   only:
   - dev
