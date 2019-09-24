@@ -103,7 +103,7 @@ algolia:
   applicationID: '1YNH8Y3MP9'
   apiKey: '61c189facf700193dfcbb902369ce227'
   # adminApiKey: '097bff07ff221e5fc4e28ae91cd53807'
-  indexName: 'MyBlog'
+  indexName: '赖同学'
   chunkSize: 5000
   fields:
   - title
