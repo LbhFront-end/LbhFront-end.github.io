@@ -362,3 +362,303 @@ Location: http://localhost:9000/oauth_callback?code=23ASKBWe4&state=843hi43824h4
 - 组件使用直接的后端信道和间接的前端信道HTTP链接相互通信
 
 ## 第三章：构建简单的OAuth客户端
+
+OAuth协议的焦点在于客户端如何获取令牌，以及如何使用令牌代表资源拥有访问受保护资源。在本章建立一个简单的OAuth客户端，使用授权码许可类型从授权服务器获取bearer令牌，并使用该令牌访问受保护资源。
+
+### 向授权服务器注册OAuth客户端
+
+OAuth客户端和授权服务器需要互相了解才能通信，OAuth协议本身不关心如何实现这一点。OAuth客户端由一个称为“客户端标识符”的特殊字符串来标识。OAuth协议的多个组件被称为`client_id`，在给定一个授权服务器下，每个客户端的标识必须 唯一，因此，客户端标识几乎总是由授权服务器分配，这种分配可以通过开发者门户来完成，也可以使用动态客户端注册。
+
+实例使用手动配置
+
+```javascript
+// client.js
+// 授权服务器给客户端分配好了标识符以及共享密钥。另外还有redirect_uri、要请求的权限范围集合和其他选项由客户端软件设定
+const client = {
+  "client_id": "oauth-client-1",
+  "client_secret": "oauth-client-secret-1",
+  "redirect_uris": ["http://localhost:9000/callback"]
+}
+
+// 授权端点与令牌端点
+const authServer = {
+  authorizationEndpoint: 'http://localhost:9001/authorize',
+  tokenEndpoint: 'http://localhost:9001/token'
+}
+
+```
+
+### 使用授权码许可类型获取令牌
+
+OAuth客户端要从授权服务器获取令牌，需要资源拥有者以某种形式授权。下面使用一种被称为授权许可类型的交互授权形式，由客户端将资源拥有者重定向至授权服务器的授权端点，然后，服务器通过`redirect_uri`将授权码返回给客户端。最后，客户端将受到的授权码发送到授权服务器的令牌端点，换取OAuth访问令牌，再进行解析和存储。
+
+#### 发送授权请求
+
+```javascript
+/**
+ * @param {String} base
+ * @param {Object} options
+ * @returns {String} 函数接收一个URL基础和一个对象，对象包含所有要添加到URL中的查询参数。
+*/
+const buildUrl = (base, options, hash) => {
+  const newUrl = url.parse(base, true);
+  delete newUrl.search;
+  if (!newUrl.query) {
+    newUrl.query = {}
+  }
+  __.each(options, (value, key, list) => {
+    newUrl.query[key] = value;
+  })
+  if (hash) {
+    newUrl.hash = hash;
+  }
+
+  return url.format(newUrl)
+}
+
+
+app.get('/authorize', (req, res) => {
+  const authorizeUrl = buildUrl(authServer.authorizationEndpoint, {
+    response_type: 'code',
+    client_id: client.client_id,
+    redirect_uri: client.redirect_uris[0]
+  })
+
+  res.redirect(authorizeUrl);
+})
+```
+
+#### 处理授权响应
+
+```javascript
+const encodeClientCredentials = (clientId, clientSecret) => {
+  return new Buffer(querystring.escape(clientId) + ':' + querystring.escape(clientSecret).toString('base64'));
+}
+
+
+// 查看传入参数，并从code参数中读取授权服务器返回的授权码，授权服务器通过重定向让浏览器向客户端发起请求，而不是直接响应客户端请求
+app.get('/callback', (req, res) => {
+  const { query: { code } } = req;
+
+  const form_data = qs.stringify({
+    grant_type: 'authorization_code',
+    code,
+    // 根据OAuth规范，如果在授权请求中重定向了URI，在令牌请求中也
+    // 必须包含该URI,可以防止攻击者使用被篡改的重定向URI获取受害人授权码
+    // 让并无恶意的客户端将受害用户的资源访问权限关联到攻击者账号
+    redirect_uri: client.redirect_uris[0]
+  })
+
+  // HTTP基本认证,Authorization 头部是一个base64 编码的字符串，编码内容是拼接后的用户名和密码，以冒号隔开。
+  // OAuth2.0要求将客户端ID作为用户名，将客户端密钥作为密码，但是用之前应该先对它们进行URL编码
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': `Basic ${encodeClientCredentials(client.client_id, client.client_secret)}`
+  }
+
+  // 使用POST请求将这些信息传送到服务器的授权端点
+  const tokRes = request('POST', authServer.tokenEndpoint, {
+    body: form_data,
+    headers
+  })
+
+
+  // 请求成功，授权服务器将返回一个包含访问令牌以及其他信息的JSON对象：
+  // {"access_token":"987tghjkiu6trfghjuytrghj","token_type":"Bearer"}
+  // 应用需要读取结果并解析JSON对象，获取访问令牌，保存起来
+  const body = JSON.parse(tokRes.getBody());
+  access_token = body.access_token;
+
+  res.send('index', {
+    access_token: body.access_token
+  })
+})
+```
+
+#### 使用state参数添加跨站保护
+
+每当有人访问 `localhost:9000/callback`，客户端会接收收到的code值，并试图发送给授权服务器。这意味着攻击者有可能会用客户端向授权服务器暴力搜索有效授权码，浪费客户端和授权服务器资源，而且还有可能导致客户端获取一个从未请求过的令牌
+
+可以使用名为state的可选OAuth参数缓解这个问题，将该参数设置为一随机值，应在应用中用变量保存，在丢弃旧的访问令牌后，创建一个state值
+
+> state = randomstring.generate();
+
+需要将值保存起来，因为当通过回调访问 redirect_uri时，还要用到这个值。由于此阶段使用前端信道通信，因此重定向至授权端点的请求一旦发出，客户端应用就会放弃对OAuth协议流程的控制，直到该回调发生，还需要将state添加到通过授权端点URL发送的参数列表中
+
+```javascript
+  const authorizeUrl = buildUrl(authServer.authorizationEndpoint, {
+    response_type: 'code',
+    client_id: client.client_id,
+    redirect_uri: client.redirect_uris[0],
+    state
+  })
+```
+
+当授权服务器收到一个带有state参数的授权请求时，必须总是该state参数和授权码一起原样返回客户端。意味着可以检查传入 `redirect_uri`页面的state值，并与之前保存的值对比，如果不一致，则向最终用户提示错误
+
+```javascript
+  const {
+    query: {
+      code,
+      error,
+      state: cbState
+    }
+  } = req;
+
+  if (error) {
+    res.render('error', { error })
+    return;
+  }
+
+  if (cbState !== state) {
+    console.log(`State DOES NOT MATCH: expected ${cbState} got ${state}`)
+    res.render('error', { error: 'State value did not match' })
+    return;
+  }
+```
+
+如果state与所期望的值不一样，可能是会话固化攻击、授权码暴力搜索或者其他恶意行为。此时客户端会终止所有授权去请求处理，并向用户展示错误页面
+
+### 使用令牌访问受保护资源
+
+受保护资源接收到有效的令牌后，会返回一些有用信息。客户端要做的就是使用令牌向保护资源发出调用请求，有3个合法的位置可用于携带令牌。在客户端中，使用HTTP Authorization头部来传递令牌。
+
+> 得到的这种访问令牌叫做bearer令牌，它意味着无论是谁，只要持有就可以向保护资源出示，OAuth bearer令牌使用规范明确给出了发送令牌值的3种方法：
+>
+> 使用HTTP Authorization 头部、使用表单格式的请求体参数、使用URL编码的查询参数
+>
+> 由于另外两种方法存在一定的局限性，因此建议尽可能使用Authorization头部。在使用查询参数时，访问令牌的值有可能被无意地泄露到服务端日志中吗，因为查询参数是URL请求的一部分；使用表单的方式，会限制受保护资源只能接受表单格式的输入参数，并且要使用POST方法。如果要API已经按这样的限制运行了，那这种方法没有问题，毕竟不会面临与查询参数方法一样的安全局限。
+>
+> 使用Authorization头部是这3种方法中最灵活和最安全的。由于对客户端来说，使用起来很困难。一个健壮的OAuth客户端或者服务端库应该完整地提供这3种方式，以适应不同情况。
+
+```javascript
+app.get('/fetch_resource', (req, res) => {
+  // 确认是否已拥有访问令牌，没有需要向用户提示错误并退出
+  if (!access_token) {
+    res.render('error', {
+      error: 'Missing access token.'
+    })
+    return;
+  }
+})
+```
+
+请求受保护资源，并将获取的响应数据渲染到页面，protectedResource变量设置了一个URL,将向该URL发送请求并期待返回JSON响应。使用OAuth定义的Authorization头发送令牌，将令牌设置为这个头部的值
+
+```javascript
+app.get('/fetch_resource', (req, res) => {
+  // 确认是否已拥有访问令牌，没有需要向用户提示错误并退出
+  if (!access_token) {
+    res.render('error', {
+      error: 'Missing access token.'
+    })
+    return;
+  }
+
+  const headers = {
+    Authorization: `Bearer ${access_token}`
+  }
+  const resource = require('POST', protectedResource, {
+    headers
+  })
+
+  if (resource.statusCode >= 200 && resource.statusCode < 300) {
+    const body = JSON.parse(resource.getBody());
+    res.render('data', {
+      resource: body
+    })
+    return;
+  } else {
+    res.render('error', {
+      error: `Server returned response code: ${resource.statusCode}`
+    })
+    return;
+  }
+})
+```
+
+### 刷新访问令牌
+
+OAuth2.0提供了一种无须用户参与的情况下最新访问令牌的方式：刷新令牌。用户在初次授权完成之后不会一直在场，而OAuth经常要在这样的情况下使用。
+
+客户端如何才能知道自己的访问令牌是否有效，唯一的方法就是使用它，然后看结果。如果令牌具有预设的过期时间，授权服务器可以在令牌响应中使用一个可选的`expires_in`字段来表示预设的有效期。这是一个从令牌发放到预设失效时间之间的秒数值，一个中规中矩的客户端应该会关注这个值，并将过期的令牌丢弃掉。
+
+然后，仅仅指定过期时间还不足以让客户端掌握令牌的状态。很多OAuth实现中，资源拥有者可以在令牌过期之前将其撤销。一个设计良好的客户端应该始终能预料到访问令牌可能随时突然失效，并能做出反应。
+
+可以提示用户重新授权并获取一个新的令牌，刷新令牌最初是与访问令牌在同一个JSON对象中返回给客户端的：
+
+```json
+{
+    "access_token": "987tghjkiu6trfghjuytrghj",
+    "token_type": "Bearer",
+    "refresh_token": "j2r3oj32r23rmasd98uhjrk2o3i"
+}
+```
+
+客户端将刷新令牌保存在 `refresh_token`变量中。授权服务器启动前先清空数据库，再将刷新令牌自动插入数据库。没有插入对应的访问令牌，模拟访问令牌失效但刷新令牌仍有效
+
+```javascript
+let access_token = '987tghjkiu6trfghjuytrghj';
+let scope = null;
+let refresh_token = 'j2r3oj32r23rmasd98uhjrk2o3i';
+
+if(resource.statusCode >=2000 && resource.statusCode < 300){
+    const body = JSON.parse(resource.getBody());
+    res.render('data',{resource:body})
+    return;
+}else{
+    access_token = null;
+    if(refresh_token){
+        refreshAccessToken(req,res)
+        return;
+    }else{
+        res.render('error',{error:resource.statusCode});
+        return;
+    }
+}
+// 向令牌端点发起一个请求，刷新访问令牌是授权许可的一种特殊情况
+function refreshAccessToken(){
+    // 使用refresh_token作为grant_type参数的值，刷新令牌也作为参数包含在其中
+    const form_data = qs.stringfy({
+        grant_type:'refresh_token',
+        refresh_token
+    })
+    const header = {
+        'Content-Type':'application/x-www-form-unlencoded',
+        'Authorization':`Basic ${encodeClientCredentials(client.client_id,client.client.secret)}`
+    }
+    const tokRes = requst('POST',authServer.tokenEndpoint,{
+        body:form_data,
+        headers,
+    })
+    if(tokRes.statusCode >=200 && tokRes.statusCode < 300){
+        const body = JSON.parse(tokRes.getBody)
+        access_token = body.access_token;
+        if(body.refresh_token){
+            refresh_token = body.refresh_token
+        }
+        scope = body.scope;
+        // 重新获取受保护资源
+        res.redirect('/fetch_resource')
+        return;
+    }else{
+        // 如果刷新令牌失效，则将刷新令牌与访问领票都丢弃掉，并渲染一个错误提示
+        console.log('NO refresh token,asking the user to get a new access token');
+        refresh_token = null;
+        res.render('error',{
+            error:'Unable to refresh token.'
+        })
+        return;
+    }
+}
+```
+
+### 小结
+
+Oauth客户单是OAuth生态系统中使用最广泛的部分：
+
+- 使用授权码许可类型获取令牌只需要几个简单的步骤
+- 如果刷新令牌可用，则可以使用它获取新的访问令牌，而不需要用户参与
+- 使用Oauth2.0的bearer令牌比获取令牌更简单，只需要将一个简单HTTP头部添加到所有HTTP请求中即可
+
+## 第四章：构建简单的OAuth受保护资源
