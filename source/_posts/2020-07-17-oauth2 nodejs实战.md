@@ -662,3 +662,295 @@ Oauth客户单是OAuth生态系统中使用最广泛的部分：
 - 使用Oauth2.0的bearer令牌比获取令牌更简单，只需要将一个简单HTTP头部添加到所有HTTP请求中即可
 
 ## 第四章：构建简单的OAuth受保护资源
+
+受保护资源，供客户端用访问令牌调用。对于大多数基于Web的API,增加OAuth安全层是一个轻量级的过程。资源服务器需要做的就是传入的HTTP请求中解析出OAuth令牌，验证该令牌，并确定它能用于哪些请求。
+
+尽管受保护资源和授权服务器在概念上是OAuth系统的不同组件，但许多OAuth实现将二者放在一起。这种做法在两个系统耦合紧密下的情况下适用。下面的例子，会在同一台机器使用独立进程运行受保护资源，但是它能够访问授权服务器所用的数据库。
+
+### 解析HTTP请求中的OAuth令牌
+
+受保护资源接受OAuth bearer令牌，因为授权服务器生成的就是bearer令牌，OAuth bearer令牌使用规范定义了3种受保护传递 bearer令牌的方法：使用HTTP Authorization 头部、使用表单参数以及使用查询参数。首选 Authorization头部。
+
+由于要在多个资源URL上执行此操作，会使用一个辅助函数来检查令牌。Express的方法第三个参数是 next，next是一个函数可以调用它来继续处理请求，使得可以使用多个函数处理单个请求，并把令牌检查功能添加到整个应用的请求处理流程中
+
+```javascript
+const getAccessToken = (req,res,next)=>{
+    // ...
+}
+```
+
+OAuth bearer令牌使用规范规定，在使用HTTP Authorization头部传递令牌时，HTTP头的值以关键字 Bearer开头，后跟一个空格，再跟令牌值本身。而且，OAuth 规范还规定了 Bearer关键字不区分大小写。此外，HTTP规范还规定了Authorization头部关键字本身不区分大小写。这意味着下面的所有HTTP头都是等价的
+
+```http
+Authorization: Bearer xxx
+Authorization: bearer xxx
+authorization: BEARER xxx
+```
+
+首先，尝试从请求中获取Authorization头部，然后检查是否包含OAuth bearer令牌，由于express自动将所有HTTP头名称转为小写，我们使用字符authorization检查传入的请求对象，还要在头部值转为小写后检查关键字 bearer
+
+```javascript
+let inToken = null;
+const auth = req.header['authorization'];
+if(auth && auth.toLowerCase().indexOf('bearer') === 0){
+    inToken = auth.slice('bearer '.length);
+}else if(req.body && req.body.access_token){
+    inToken = req.body.access_token;
+}else if(req.query&&req.query.access_token){
+    inToken = req.query.access_token;
+}
+```
+
+检查通过，将头部的bearer关键字和后面的空格去掉，获取令牌值。令牌值本身不区分大小写的，所以要从从初始字符串提取令牌，而不是转换之后的字符串中提取
+
+处理通过表单参数传递令牌，表单参数在请求主体中。OAuth规范不推荐这种方法，因为它认为限制了API的输入只能是表单形式。如果API的本来输入载体是JSON格式，那么客户端就无法在请求主体中加入令牌。在这种情况下，使用Authorization头部才是首选。但是对于那些输入载体就是表单格式的API，这种方法既简单又能和API保持一致，而且不需要处理Authorization头部。
+
+最后一种方法是通过查询参数传递令牌。建议在其他两种方法不能使用的时候才采用该方法。使用这种方法，访问令牌很可能被无意地记录在服务器访问日志中或者通过HTTP Referrer头泄露，它们会整体复制URL。然而，有时候客户端应用无法直接访问HTTP Authorization头部（受限于平台或库），也不能使用表单参数（比如HTTP GET 方法）。另外，这种方法不仅可以在URL中包含资源本身的定位符，而且还可以包含访问方法。在这些情况下，只要有适当的安全措施，OAuth运行客户端通过查询参数来传递令牌。
+
+### 根据数据存储验证令牌
+
+我们可以访问授权服务器用于存储令牌的数据库，这是小型OAuth系统中常用的配置方案，这样的系统将授权服务器与受保护的API放在一起。
+
+例子的授权服务器使用了一个NoSQL数据库，它将数据库存储在磁盘上的文件中，通过一个简单Nodejs模块来访问。如果想实时查看程序运行时数据库的内容，可以监控联系目录的database.sql文件。
+
+根据传入的令牌值执行简单的查找，从数据库中找出访问令牌，服务器将每一个访问令牌和刷新令牌分别作为单独的元素存储在数据中，所以只需要使用数据库的查询功能找出正确的令牌即可。查询函数的细节对于NoSQL数据库来说是特有的，但是其他数据库也会提供类似的查询方法
+
+```javascript
+nosql.one((token)=>{
+    if(token.access_token === inToken){
+        return token;
+    }
+},(err,token)=>{
+    if(token){
+        console.log(`We found a matching token: ${inToken}`)
+    }else{
+        console.log('No matching token was found.')
+    }
+    req.access_token = token;
+    next();
+    return;
+})
+```
+
+传入的第一个函数将获取令牌与数据库中的访问令牌进行对比，如果发现匹配项，就会停止搜索并返回令牌。第二个函数会在发生匹配的令牌时或者数据库遍历到尽头被调用。如果在数据库找到令牌，它会被作为token参数传入，否则为null。无论找到什么，都将它赋值个req对象的`access_token`成员，然后调用next函数，req对象会自动传递给处理函数的下一个处理步骤
+
+返回的令牌对象与授权服务器在生成令牌时插入数据库的对象完全相同，例如，示例授权服务器会像下面这样将访问令牌以及权限范围保存在下一个JSON对象中
+
+```json
+{
+    access_token:'xxx',
+    client_id:'xx',
+    scope:['xxx']
+}
+```
+
+> 使用共享数据是一种非常常见的OAuth部署模式，但不是唯一的选择。有一个叫做令牌内省（token introspection）的Web协议，它可以有授权服务器提供接口，让资源服务器可以在运行时检查令牌的状态。这使得资源服务器可以像客户端那样将令牌本身视为不透明的。代价是使用而更加的网络流量。还有另一种方式：可以在令牌内包含受保护资源能够直接解析并理解的信息。JWT就是这样的一种数据结构，它可以使用受加密保护的JSON对象携带声明信息。
+>
+> 是否必须将令牌以原始值存储在数据中，虽然这是一种简单且常见的做法，也可以存储令牌的散列值，这种方式类似存储用户密码，在查询令牌时，要将令牌再次进行散列计算，并同数据库中内容进行比较。还可以将唯一标识符添加到令牌中，并使用服务器的密钥对它签名。在数据库中只存储这唯一的标识符。当需要查找这个令牌的时候，资源服务器可以验证签名，解析令牌得到标识符，然后在数据库中查找这个标识符对应的令牌信息。
+
+接入服务，在Express应用中，有两个选择，一个是用于每个请求，二是只将它用于需要检查OAuth令牌的请求。为了将这一处理应用到每个请求，需要设置一个新的监听器。将令牌检查函数链接到处理流程中。令牌检查函数需要在路由中其他所有函数之前连接，因为这些函数是按照在代码中被添加的顺序来执行的。
+
+```javascript
+app.all('*',getAccessToken)
+```
+
+另外可以将新函数插入已有的处理函数设置，让新函数先被调用。
+
+```javascript
+app.post('/resource',(req,res)=>{})
+```
+
+要让令牌处理函数先被调用，需要在路由的处理函数定义之前添加函数
+
+```javascript
+app.post('/resource',getAccessToken,(req,res)=>{})
+```
+
+当路由处理函数被调用时，请求对象会附加一个`access_token`成员，如果令牌被找到，这个字段就会包含从数据库中取出的令牌对象。如果令牌未被找到，这个字段就会是null,需要根据情况判断
+
+```javascript
+if(req.access_token){
+    res.json(resource)
+}else{
+    res.status(401).end()
+}
+```
+
+### 根据令牌提供内容
+
+很多API设计中，不同的操作需要不同访问权限，还有一些API会根据授权者不同而返回不同的结果，或者根据不同权限返回某一部分信息。加一个 `requireAccessToken`处理函数，会在令牌不存在时直接返回错误，在令牌存在时将控制权交给最终处理函数进行后续处理
+
+```javascript
+const requireAccessToken = (req,res,next)=>{
+    if(req.access_token){
+        next();
+    }else{
+        res.status(401).end();
+   }
+}
+```
+
+#### 不同权限对应不同的操作
+
+不同类型的操作需要不同的权限范围，才能使调用成功。这使得资源服务器可以根据客户端能执行的操作来划分功能。这也是单个授权服务器对应的多个资源服务器之间使用单个令牌的常用方法。
+
+客户端有一个页面提供访问资源API的所有功能，读取显示并带上时间戳，用于资源服务器上添加新单词，删除功能等
+
+应用中注册了三个路由，分别对应不同的动作，只要传入的令牌有效，无论什么类型，都会执行
+
+```javascript
+app.get('/words',getAccessToken,requireAccessToken,(req,res)=>{
+    res.json({
+        words:saveWords.json(' '),
+        timestamp:Date.now()
+    })
+})
+
+app.post('/words',getAccessToken,requireAccessToken,(req,res)=>{
+    if(req.body.word){
+        saveWords.push(req.body.word)
+    }
+    res.status(201).end();
+})
+
+app.delete('/words',getAccessToken,requireAccesToken,(req,res)=>{
+    saveWords.pop()
+    res.status(204).end;
+})
+```
+
+现在，逐个修改它们，确保令牌中至少包含与各个功能对应的权限范围，鉴于在数据库中存储方式，需要获取令牌对应的`scope`成员，对于GET功能，我们需要客户端拥有与之对一个的read权限范围，客户端还可以拥有其他权限范围
+
+```javascript
+app.post('/words', getAccessToken, requireAccessToken, (req, res) => {
+	if (__.contains(req.access_token.scope, 'write')) {
+		if (req.word.word) {
+			saveWords.push(req.body.word)
+		}
+		res.status(201).end()
+	} else {
+		res.set('WWW-Authenticate', 'Bearer realm=localhost:9002,error="insufficient_scope",scope="write"');
+		res.status(403)
+	}
+})
+```
+
+使用 `WWW-Authenticate`头部返回错误，告诉客户端该资源需要接受一个OAuth bearer令牌，并且令牌中至少要包含read权限范围，才能调用成功。在另外两个函数中加入类似的代码，也会检查write,delete的权限范围，在任何情况下，即使令牌有效，只要权限范围不正确，就会返回错误：
+
+```javascript
+app.post('/words', getAccessToken, requireAccessToken, (req, res) => {
+	if (__.container(req.access_token.scope, 'write')) {
+		if (req.word.word) {
+			saveWords.push(req.body.word)
+		}
+		res.status(201).end()
+	} else {
+		res.set('WWW-Authenticate', 'Bearer realm=localhost:9002,error="insufficient_scope",scope="write"');
+		res.status(403)
+	}
+})
+
+
+app.delete('/words', getAccessToken, requireAccessToken, (req, res) => {
+	if (__.container(req.access_token.scope, 'delete')) {
+		saveWords.pop()
+		res.status(204).end()
+	} else {
+		res.set('WWW-Authenticate', 'Bearer realm=localhost:9002,error="insufficient_scope",scope="delete"');
+		res.status(403)
+	}
+})
+```
+
+这样一来，要为客户端指定不同的权限范围组合，需要重新对客户端应用授权
+
+#### 不同的权限范围对应不同的数据结果
+
+在这种风格的API设计中，同一个处理函数可以根据传入的令牌中包含的权限范围不同，而返回不同类别的信息。如果数据结构复杂，且希望通过同一个API端点为客户端提供多种信息子集的访问，这样设计就非常有用。
+
+在受保护资源没有为不同的农产品类别提供多个独立的处理函数，而是在一个处理函数中处理对所有农产品的请求，这个处理函数返回的对象中包含所有种类的农产品列表
+
+```javascript
+app.get('/produce',getAccessToken,requireAccessToken,(req,res)=>{
+    const produce = {
+        fruit:['apple','banana','kiwi'],
+        veggies:['lettuce','onion','potato'],
+        meats:['bacon','steak','chicken breast']
+    }
+    res.json(produce)
+})
+```
+
+在做修改之前，使用有效的令牌访问该API,会得到包含所有农产品的列表，如果对客户端授权让它得到访问令牌，但是不勾选任何权限范围，就会得到所有数据。
+
+切分数据结构，将数据片段放入控制语句，检查每个农产品类别的权限范围
+
+```javascript
+const produce = {
+    fruit:[],
+    veggies:[],
+    meats:[]
+}
+if(__.contains(req.access_token.scope,'fruit')){
+    Object.assign(produce,{fruit:['apple','banana','kiwi']})
+}
+
+if(__.contains(req.access_token.scope,'veggies')){
+    Object.assign(produce,{fruit:['lettuce','onion','potato']})
+}
+
+if(__.contains(req.access_token.scope,'meats')){
+    Object.assign(produce,{fruit:['bacon','steak','chicken breast']})
+}
+```
+
+#### 不同用户对应不同的数据结果
+
+同一个处理函数可以根据授权客户端的用户不同的信息。这是一种常见的API设计方式，使得客户端应用在不知道用户是谁的情况下，调用同一个URL也能获取个性化的结果。虽然客户端与受保护资源之间建立的连接上并没有资源拥有者的登录或者身份认证信息，但是生成的令牌中包含资源拥有者的信息，资源拥有者需要在授权批准的环节进行身份认证。
+
+> 授权服务器的批准页面会选择替哪个用户授权，通常这一步是通过授权服务器对资源拥有者进行身份认证来完成的，而且一般认为运行一个未经身份认证的用户随意冒充任何人是极不安全的做法。
+
+我们要做的就是根据授权者是谁来返回对应的数据，授权服务器已经讲资源拥有者的用户名存在访问令牌记录的user字段中，根据这个字段确定返回内容
+
+```javascript
+
+app.get('/favorites', getAccessToken, requireAccessToken, (req, res) => {
+	const {
+		access_token: {
+			user
+		}
+	} = req;
+	const unknown = { user: 'Unknown', favorites: { movies: [], foods: [] } }
+	switch (user) {
+		case 'alice':
+			res.json({ user: 'Alice', favorites: aliceFavorites })
+			break;
+		case 'bob':
+			res.json({ user: 'Bob', favorites: bobFavorites })
+		default:
+			res.json(unknown)
+	}
+})
+```
+
+在授权服务器上以Alice或者Bob名义授权了客户端，就会在客户端上得到他们的个性化数据。
+
+在OAuth处理流程中，客户端绝不知道与之交互的是Alice还是Bob或者其他的。客户端只是碰巧知道了Alice的名字，因为它调用的API的响应包含了她的名字，而这个人信息也很容易被去掉。这是一个重要的设计模式，因为它可以避免不必要的暴露资源拥有者的个人身份信息，从而保护隐私。如果与分享信息的API结合起来，可以用OAuth构建一个身份认证协议。
+
+#### 额外的访问控制
+
+使用OAuth能对受保护资源实现的访问控制远不止上面那些，而且当今使用OAuth的受保护资源都有各自的应用模式。因此，OAuth并不插手授权决策的过程，而只通过使用令牌和权限范围充当授权信息的载体。这样的设计思路使得OAuth广泛应用于互联网上各种类型的API.
+
+资源服务器可以根据令牌及其附属信息（如权限范围）直接作出授权决策。资源服务器还可以将访问令牌中的权限范围与其他访问控制信息结合起来，用于决定是否响应API调用已经响应什么内容。例如,资源服务器可以限制特定的客户端和用户只能在特定的时间段内访问资源，无论令牌是否有效。资源服务器甚至可以以令牌作为输入，调用外部策略引擎，以实现组织内对复杂授权规则的集中管理。
+
+在任何情况下，资源服务器都对访问令牌的含义拥有最终决定权，不管资源服务器外包了多少决策过程，最终都由它来决定如何处理给定请求。
+
+### 小结
+
+使用OAuth保护Web Api非常简单：
+
+- 从传入的请求中解析出令牌
+- 通过授权服务器验证令牌
+- 根据令牌的权限范围作出响应，令牌的权限范围有多种。
+
+## 第五章：构建简单的OAuth授权服务器
