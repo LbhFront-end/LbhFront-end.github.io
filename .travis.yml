@@ -38,7 +38,8 @@ branches:
     - dev
 env:
   global:
-    - GH_REF: git@github.com:LbhFront-end/LbhFront-end.github.io.git
+    - GH_REF: github.com/LbhFront-end/LbhFront-end.github.io.git
+    # - secure: ag0Hn2n81ccv7TISU8+uipCxIO0/YF/NI2CTs3m0WvYRVvtxTqtekHUjXUEVdsXPBSSG3os05orr6uuMb/AJoL7TFvJ8da7xt+rQUg1xrXUxnfOA/I7GbnjAEtZ91u+s42EWu0EAAiuILTXwFxkEoZY34UE2IDrTIu3sX5C1Swjv1UMSMQSVAcHSHBxx08LuQvmoNhYfs0Xg9VEtPwnD5AgOx9LS9d1jQEsJCmNKlVwyT6wTQy+jJ07k36E033mpI/O9fhvl8crLxOJsdq3xdde4ES/PI1B1ASzx2+VpUSSOcjcyGVpfVKh8fOqiN/HW68JQQwj9UymR9KGk1xXrT77Azc5zxJ31vM/2RCq3IUdnIDSNObzCTJ0hYWQfQKxri9AtatelscWlk4eg5+Djv4NKMC5W1lXgAZeH1O/P+d2VFG2swvjqjoIWj1HFDHuT4q5mG2lrZHSW69bwR9xzyv6clyiKMTlWkNWy4/SlRNmdc3Suw8OFtfU+qftBT8QjA83+WpZ1/BsBzModz9MtLg+3uqgcSuyC94khiSqtdI0vMqrQsF0T+giE0vvcjnyPLPf3yB+3jvaChPI0KOSZv547kmMuPnmidGxc7IZR8yB7WXUK5sxt5SH5TWgS3fWzghgH/2frsS27gfT0OvpEOvzLCtlIvHVDzIJVeuU8VtM=
 notifications:
   email:
     - 544289495@qq.com
