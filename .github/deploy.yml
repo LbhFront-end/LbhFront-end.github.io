@@ -1,0 +1,42 @@
+name: Deployment
+
+on:
+  push:
+    branches: [hexo] # only push events on source branch trigger deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    name: A job to deploy blog.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: true
+
+      - name: Setup Node.js
+        uses: actions/cache@v1
+        with:
+        node-version: '12.x'
+
+    - name: Install dependencies & Generate static files
+      run: |
+        node -v
+        npm i -g hexo-cli
+        npm i
+        hexo clean
+        hexo g
+    - name: Deploy to Github Pages
+      env:
+        GIT_NAME: LbhFront-end
+        GIT_EMAIL: 544289495@qq.com
+        REPO: github.com/LbhFront-end/LbhFront-end.github.io
+        GH_TOKEN: ${{ secrets.HEXO_DEPLOY_KEY }}
+      run: |
+        cd ./public && git init && git add .
+        git config --global user.name $GIT_NAME
+        git config --global user.email $GIT_EMAIL
+        git commit -m "github Actions 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
+        git push --force --quiet "https://$GH_TOKEN@$REPO" master:master
