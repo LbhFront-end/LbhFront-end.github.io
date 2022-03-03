@@ -22,6 +22,13 @@ jobs:
         with:
           node-version: '12'
 
+      - name: Cache Node Dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
+
       - name: Install dependencies & Generate static files
         run: |
             node -v
@@ -40,4 +47,4 @@ jobs:
             git config --global user.name $GIT_NAME
             git config --global user.email $GIT_EMAIL
             git commit -m "github Actions 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
-            git push --force --quiet "https://GH_TOKEN @$REPO" master:master
+            git push --force --quiet "https://GH_TOKEN@$REPO" master:master
