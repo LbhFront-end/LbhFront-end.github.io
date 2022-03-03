@@ -34,10 +34,10 @@ jobs:
             GIT_NAME: LbhFront-end
             GIT_EMAIL: 544289495@qq.com
             REPO: github.com/LbhFront-end/LbhFront-end.github.io
-            HEXO_DEPLOY_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+            GH_TOKEN : ${{ secrets.GH_TOKEN  }}
         run: |
             cd ./public && git init && git add .
             git config --global user.name $GIT_NAME
             git config --global user.email $GIT_EMAIL
             git commit -m "github Actions 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
-            git push --force --quiet "https://HEXO_DEPLOY_KEY@$REPO" master:master
+            git push --force --quiet "https://GH_TOKEN @$REPO" master:master

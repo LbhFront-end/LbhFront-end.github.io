@@ -992,3 +992,44 @@ describe('contract', () => {
 })
 ```
 
+代码使用的断言库是nodejs内置的assert模块，ganache-cli的provider自己在内部管理了一些账户。web3.js智能合约实例交互的方法，在DApp开发时会大量使用：
+
+- contract.methods.brand().call()，调用合约上的方法，通常是取数据，立即返回
+- contract.methods.setBrand('xxx').send(),对合约发起交易，通常是修改数据，返回是交易Hash
+
+send必须指定发起的账户地址，而call可以直接调用
+
+### 运行测试
+
+```bash
+$ mocha tests
+
+
+  contract
+合约部署账户： 0x25E0EAE6B1A9D09Ad3B8f20E1945B6Aa03055275
+合约部署成功： 0xC9640efE6f4AE6561BC5CE294C814f71f465E04f
+    ✔ deploy a contract
+合约部署账户： 0x25E0EAE6B1A9D09Ad3B8f20E1945B6Aa03055275
+合约部署成功： 0x72af628dE4b4C09D82aA66846aD3317EA6B818f4
+    ✔ has initial brand
+合约部署账户： 0x25E0EAE6B1A9D09Ad3B8f20E1945B6Aa03055275
+合约部署成功： 0xB572717DFc65236F6a07631A5b02a80FaAD29CB1
+    ✔ can change the brand (295ms)
+
+
+  3 passing (1s)
+
+Done in 3.47s.
+```
+
+### 完整的工作流
+
+```json
+  "scripts": {
+    "predeploy": "yarn compile",
+    "pretest": "yarn compile",
+    "compile": "node scripts/compile.js",
+    "deploy": "node scripts/deploy.js",
+    "test": "mocha tests/"
+  },
+```
