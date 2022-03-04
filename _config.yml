@@ -127,4 +127,3 @@ deploy:
   branch: master
   name: LbhFront-end
   email: 544289495@qq.com
-  message: "GithubActions Auto Deploy Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"

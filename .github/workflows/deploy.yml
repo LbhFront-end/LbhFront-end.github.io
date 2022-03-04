@@ -57,6 +57,4 @@ jobs:
 
       - name: Deploy to Github Pages
         run: |
-            hexo clean
-            hexo g        
             hexo deploy --generate
