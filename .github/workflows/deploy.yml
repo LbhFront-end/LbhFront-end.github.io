@@ -45,14 +45,13 @@ jobs:
         env:
           GIT_USER : LbhFront-end
           GIT_EMAIL : 544289495@qq.com
-          HEXO_DEPLOY_PUB : ${{ secrets.HEXO_DEPLOY_PUB }}
+          HEXO_DEPLOY_PRI : ${{ HEXO_DEPLOY_PRI }}
         run: |
             sudo timedatectl set-timezone "Asia/Shanghai"
             mkdir -p ~/.ssh/
-            echo "$HEXO_DEPLOY_PUB" > ~/.ssh/id_rsa
+            echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
-            ssh-keyscan vensing.com >> ~/.ssh/known_hosts
+            ssh-keyscan github.com >> ~/.ssh/known_hosts            
             git config --global user.name $GIT_USER
             git config --global user.email $GIT_EMAIL
 
