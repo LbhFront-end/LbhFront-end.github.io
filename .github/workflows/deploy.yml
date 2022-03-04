@@ -39,6 +39,7 @@ jobs:
             node -v
             npm i -g hexo-deployer-git
             npm i -g hexo-cli
+            npm i -g hexo
             npm i
 
       - name: Configuration environment
