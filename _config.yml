@@ -122,8 +122,10 @@ mermaid:
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
+  skip_cleanup: true
   type: git
   repo: git@github.com:LbhFront-end/LbhFront-end.github.io
   branch: master
   name: LbhFront-end
   email: 544289495@qq.com
+  message: "GithubActions Auto Deploy Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
