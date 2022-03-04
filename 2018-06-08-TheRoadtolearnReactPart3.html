@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="The Road to learn React书籍学习笔记(第三章)代码详情 声明周期方法通过之前的学习，可以了解到ES6 类组件中的生命周期方法 constructor() 和 render()constructor() 构造函数只有在组件实例化并插入到 DOM 中的时候才会被调用。组件实例化的过程称为组件的挂载 mountrender()方法也会在组件挂载过程中被调用，同时组件更新的时候也会被">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Road to learn React Part3">
+<meta property="og:url" content="http://laibh.top/2018-06-08-TheRoadtolearnReactPart3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="The Road to learn React书籍学习笔记(第三章)代码详情 声明周期方法通过之前的学习，可以了解到ES6 类组件中的生命周期方法 constructor() 和 render()constructor() 构造函数只有在组件实例化并插入到 DOM 中的时候才会被调用。组件实例化的过程称为组件的挂载 mountrender()方法也会在组件挂载过程中被调用，同时组件更新的时候也会被">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Road to learn React Part3">
+<meta name="twitter:description" content="The Road to learn React书籍学习笔记(第三章)代码详情 声明周期方法通过之前的学习，可以了解到ES6 类组件中的生命周期方法 constructor() 和 render()constructor() 构造函数只有在组件实例化并插入到 DOM 中的时候才会被调用。组件实例化的过程称为组件的挂载 mountrender()方法也会在组件挂载过程中被调用，同时组件更新的时候也会被">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-06-08-TheRoadtolearnReactPart3.html"/>
+
+
+
+
+
+  <title>The Road to learn React Part3 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-06-08-TheRoadtolearnReactPart3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">The Road to learn React Part3</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-08T11:02:45+08:00">
+                2018-06-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react相关/" itemprop="url" rel="index">
+                    <span itemprop="name">react相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-06-08-TheRoadtolearnReactPart3.html" class="leancloud_visitors" data-flag-title="The Road to learn React Part3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,330
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="The-Road-to-learn-React书籍学习笔记-第三章"><a href="#The-Road-to-learn-React书籍学习笔记-第三章" class="headerlink" title="The Road to learn React书籍学习笔记(第三章)"></a>The Road to learn React书籍学习笔记(第三章)</h1><p><a href="https://github.com/LbhFront-end/react-pratice/tree/master/my-first-react-app">代码详情</a></p>
+<h2 id="声明周期方法"><a href="#声明周期方法" class="headerlink" title="声明周期方法"></a>声明周期方法</h2><p>通过之前的学习，可以了解到ES6 类组件中的生命周期方法 <code>constructor()</code> 和 <code>render()</code><br><code>constructor()</code> 构造函数只有在组件实例化并插入到 <code>DOM</code> 中的时候才会被调用。组件实例化的过程称为组件的挂载 <code>mount</code><br><code>render()</code>方法也会在组件挂载过程中被调用，同时组件更新的时候也会被调用。每当组件的状态 <code>state</code> 和属性 <code>props</code> 改变的时候，组件的 <code>render()</code> 方法都会被调用</p>
+<h3 id="挂载过程中有四个生命周期方法，调用顺序是这样的"><a href="#挂载过程中有四个生命周期方法，调用顺序是这样的" class="headerlink" title="挂载过程中有四个生命周期方法，调用顺序是这样的"></a>挂载过程中有四个生命周期方法，调用顺序是这样的</h3><p><code>constructor()</code><br><code>componentWillMount()</code><br><code>render()</code><br><code>componentDidMount()</code></p>
+<h3 id="当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤"><a href="#当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤" class="headerlink" title="当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤"></a>当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤</h3><p><code>componentWillReceiveProps()</code><br><code>shouldComponentUpdate()</code><br><code>componentWillUpdate()</code><br><code>render()</code><br><code>componentDidUpdate()</code>  </p>
+<h3 id="组件卸载的生命周期只有一个"><a href="#组件卸载的生命周期只有一个" class="headerlink" title="组件卸载的生命周期只有一个"></a>组件卸载的生命周期只有一个</h3><p><code>componentWillUnmount()</code></p>
+<h3 id="生命周期详解"><a href="#生命周期详解" class="headerlink" title="生命周期详解"></a>生命周期详解</h3><p><code>constructor(props)</code><br>在组件初始化的时被调用，在这个方法中，可以设置初始化状态以及绑定类方法</p>
+<p><code>componentWillMount()</code><br>在 <code>render()</code> 方法之前被调用，这就是为什么它可以用作去设置组件内部的状态，因为它不会触发组件的再次渲染，一般还是推荐在 <code>constructor()</code> 中去初始化状态</p>
+<p><code>componentDidMount()</code><br>仅在组件挂载后执行一次，是发起异步请求去API 获取数据的最好时期，获取到的数据将被保存在内部组件的状态中然后在 <code>render()</code> 生命周期方法中展示出来</p>
+<p><code>componentWillReceviceProps(nextProps)</code><br>这个方法在一个更新声明周（<code>update lifecycle</code>）中使用， 新的属性会作为它的输入，因此可以利用 <code>this.props</code> 来对比之后的属性和之前的属性，基于对比的结果去实现不同的行为，此外还可以基于新的属性来设置组件的状态</p>
+<p><code>shouldComponentUpdate(nextProps,nextState)</code><br>每次组件因为状态或者是属性更改而更新时，它都会被调用。在成熟的React应用中使用它来进行性能优化。在一个更新声明周期中，组件以及其组件将根据该方法返回的布尔值来决定是否重新渲染，这样就可以阻止组件的渲染声明周期方法，避免不必要的渲染</p>
+<p><code>componentWillUpdate(nextProps,nextState)</code><br>这个方法是 <code>render()</code>  方法执行之前的最后一个方法，此时拥有了下一个属性和状态，可以利用这个方法在渲染之前做最后的准备。注意这个声明周期不能再触发 <code>setState()</code> 如果想基于新的属性计算状态 ,必须使用 <code>componentWillReceiveProps()</code></p>
+<p><code>componentDidUpdate(prevProps,prevState)</code><br>这个方法在 <code>render()</code> 之后调用，可以用它当成操作DOM 或者是 执行更多异步请求的机会</p>
+<p><code>componentWillUnmount()</code><br>它会在组件销毁之前被调用，可以利用这个声明周期方法去执行任何清理任务</p>
+<p><code>render()</code> 是必须有的，否则不会返回一个组件实例</p>
+<h3 id="还有一个生命周期方法"><a href="#还有一个生命周期方法" class="headerlink" title="还有一个生命周期方法"></a>还有一个生命周期方法</h3><p><code>componentDidCatch(error,info)</code><br>在 <code>React 16</code> 中引入，用来捕获组件的错误。<br>举例来说，在你的应用中展示样本数据本来是没问题的。但是可能会有列表的本地状态被意外设置成 <code>null</code> 的情况发生（例如从外部 <code>API</code> 获取列表失败时，你把本地状态设置为空了）。然后它就不能像之前一样去过滤（<code>filter</code>）和映射（<code>map</code>）这个列表，因为它不是一个空列表（[]）而是 <code>null</code>。这时组件就会崩溃，然后整个应用就会挂掉。现在你可以用<code>componentDidCatch()</code> 来捕获错误，将它存在本地的状态中，然后像用户展示一条信息，说明应用发生了错误</p>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><p>从 <code>Hacker News API</code> 获取数据。可以在 <code>componentDidMount()</code> 生命周期方法来获取数据,用JavaScript原生的 <code>fetch API</code> 来发起请求<br>在那之前，先设置好 <code>URL</code>常量和默认参数，将 <code>API</code> 请求分解成几步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import React,&#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import &apos;./App.css&apos;</span><br><span class="line"></span><br><span class="line">const DEFAULT_QUERY = &apos;redux&apos;;</span><br><span class="line">const PATH_BASE = &apos;https://hn.algolia.com/api/v1&apos;;</span><br><span class="line">const PATH_SEARCH = &apos;/search&apos;;</span><br><span class="line">const PARAM_SEARCH = &apos;query=&apos;;</span><br><span class="line"></span><br><span class="line">在ES6 中 可以用模板字符串（`template strings`） 来连接字符串</span><br><span class="line"></span><br><span class="line">//ES6 </span><br><span class="line">const url = `$&#123;PATH_BASE&#125;$&#123;PATH_SEARCH&#125;?$&#123;PARAM_SEARCH&#125;$&#123;DEFAULT_QUERY&#125;`;</span><br><span class="line">//ES5 </span><br><span class="line">var url = PATH_BASE + PATH_SEARCH +&apos;?&apos; + PARAM_SEARCH + DEFAULT_QUERY;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">class App extends Component &#123;</span><br><span class="line"></span><br><span class="line">constructor(props) &#123;</span><br><span class="line">  super(props);</span><br><span class="line"></span><br><span class="line">  this.state = &#123;</span><br><span class="line">    result: null,</span><br><span class="line">    searchTerm: DEFAULT_QUERY,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  this.setSearchTopStories = this.setSearchTopStories.bind(this);</span><br><span class="line">  this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);</span><br><span class="line">  this.onSearchChange = this.onSearchChange.bind(this);</span><br><span class="line">  this.onDismiss = this.onDismiss.bind(this);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setSearchTopStories(result) &#123;</span><br><span class="line">  this.setState(&#123; result &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetchSearchTopStories(searchTerm) &#123;</span><br><span class="line">  fetch(`$&#123;PATH_BASE&#125;$&#123;PATH_SEARCH&#125;?$&#123;PARAM_SEARCH&#125;$&#123;searchTerm&#125;`)</span><br><span class="line">    .then(response =&gt; response.json())</span><br><span class="line">    .then(result =&gt; this.setSearchTopStories(result))</span><br><span class="line">    .catch(e =&gt; e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">  const &#123; searchTerm &#125; = this.state;</span><br><span class="line">  this.fetchSearchTopStories(searchTerm);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 <code>Hacker News API</code> 得到一个真实的列表。组件将一个空的列表结果以及一个默认的搜索词作为初始状态。这个默认搜索词也同样用在 <code>Search</code> 组件的输入字段和第一个 API 请求中。</p>
+<p>其次，在组件挂载之后，它用了 <code>componentDidMount()</code>生命周期方法去获取数据。在第一次获取数据时，使用的是本地状态中的默认搜索词。它将获取与 “<code>redux</code>” 相关的资讯，因为它是默认的参数。</p>
+<p>再次，这里使用的是原生的 <code>fetch API</code>。<code>JavaScript ES6</code> 模板字符串允许组件利用 <code>searchTerm</code> 来组成 URL。该 URL 是原生 <code>fetch API</code> 函数的参数。返回的响应需要被转化成 JSON 格式的数据结构。这是在处理 <code>JSON</code> 数据结构时，原生的 fetch API 中的强制步骤。最后将处理后的响应赋值给组件内部状态中的结果。此外，我们用一段 <code>catch</code> 代码来处理出错的情况。如果在发起请求时出现错误，这个函数会进入到 <code>catch</code> 中而不是 <code>then</code> 中。在本书之后的章节中，将涵盖错误处理的内容。</p>
+<p>最后但同样重要的是，不要忘记在构造函数中绑定你的组件方法。</p>
+<h2 id="拓展操作符"><a href="#拓展操作符" class="headerlink" title="拓展操作符"></a>拓展操作符</h2><p><code>Dismiss</code> 按钮之所以不工作，是因为 <code>onDismiss()</code> 方法不能处理复杂的 <code>result</code> 对象。它现在还只能处理一个本地状态中的简单列表。但是现在这个列表已经不再是简单的平铺列表了。现在，让我们去操作这个 <code>result</code> 对象而不是去操作列表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onDismiss(id) &#123;</span><br><span class="line">const isNotId = item =&gt; item.objectID !== id;</span><br><span class="line">const updatedHits = this.state.result.hits.filter(isNotId);</span><br><span class="line">this.setState(&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/ don`t do this</span><br><span class="line">this.state.result.hits = updatedHits</span><br></pre></td></tr></table></figure>
+<p>React 拥护不可变的数据结构，不应该改变一个对象或者是直接改变状态。更好的做法是基于现在拥有的资源来创建一个新的对象。<br><code>javaSrcipt ES6</code> 的 <code>Object.assign()</code> 函数可以达到这样的目的。它把接受的第一个参数作为目标对象，后面的所有参数作为源对象，然后把所有的源对象合并到目标对象中。只要将目标对象设置为空，就可以得到一个新的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const updatedHits  = &#123;hits:updatedHits &#125;;</span><br><span class="line">const updateList = Object.assign(&#123;&#125;,this.state.result,updateHits);</span><br></pre></td></tr></table></figure>
+<h3 id="ES6中数组的扩展运算符"><a href="#ES6中数组的扩展运算符" class="headerlink" title="ES6中数组的扩展运算符"></a>ES6中数组的扩展运算符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">数组+字符串</span><br><span class="line">const userList = [&apos;Robin&apos;, &apos;Andrew&apos;, &apos;Dan&apos;];</span><br><span class="line">const additionalUser = &apos;Jordan&apos;;</span><br><span class="line">const allUsers = [ ...userList, additionalUser ];</span><br><span class="line"></span><br><span class="line">console.log(allUsers);</span><br><span class="line">// output: [&apos;Robin&apos;, &apos;Andrew&apos;, &apos;Dan&apos;, &apos;Jordan&apos;]</span><br><span class="line"></span><br><span class="line">合并数组</span><br><span class="line">onst oldUsers = [&apos;Robin&apos;, &apos;Andrew&apos;];</span><br><span class="line">const newUsers = [&apos;Dan&apos;, &apos;Jordan&apos;];</span><br><span class="line">const allUsers = [ ...oldUsers, ...newUsers ];</span><br><span class="line"></span><br><span class="line">console.log(allUsers);</span><br><span class="line">// output: [&apos;Robin&apos;, &apos;Andrew&apos;, &apos;Dan&apos;, &apos;Jordan&apos;]</span><br><span class="line">对象</span><br><span class="line">const userNames = &#123; firstname: &apos;Robin&apos;, lastname: &apos;Wieruch&apos; &#125;;</span><br><span class="line">const userAge = &#123; age: 28 &#125;;</span><br><span class="line">const user = &#123; ...userNames, ...userAge &#125;;</span><br><span class="line"></span><br><span class="line">console.log(user);</span><br><span class="line">// output: &#123; firstname: &apos;Robin&apos;, lastname: &apos;Wieruch&apos;, age: 28 &#125;</span><br></pre></td></tr></table></figure>
+<p>重新改写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">onDismiss(id) &#123;</span><br><span class="line">    const isNotId = item =&gt; item.objectID !== id;</span><br><span class="line">    const updatedHits = this.state.result.hits.filter(isNotId);</span><br><span class="line">    this.setState(&#123;</span><br><span class="line">      result: &#123; ...this.state.result, hits: updatedHits &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h2><p>条件渲染用于需要决定渲染哪个元素的时候，就可以用 <code>JSX</code> 中 <code>if-else</code> 来实现<br>组件内部状态中的 <code>result</code> 对象初始值为空，当 <code>API</code> 结果还没有返回的时候，此时的主组件中没有任何的元素，这就是一个条件渲染，因为在某个特定的条件下， <code>render()</code> 方法提前返回了，根据条件， 主组件渲染它的元素或者什么都不渲染</p>
+<p><code>Table</code> 组件的渲染依赖于 <code>result</code>，所以将它包在一个独立的条件渲染中才比较合理。即使 <code>result</code> 为空，其它的所有组件还是应该被渲染。你只需要在 <code>JSX</code> 中加上一个三元运算符就可以达到这样的目的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">return (</span><br><span class="line">    &lt;div className=&quot;page&quot;&gt;</span><br><span class="line">      &lt;div className = &quot;interactions&quot;&gt;</span><br><span class="line">        &lt;Search</span><br><span class="line">          value=&#123;searchText&#125;</span><br><span class="line">          onChange=&#123;this.onSearchChange&#125; /&gt;</span><br><span class="line">          &#123;</span><br><span class="line">            result?</span><br><span class="line">            &lt;Table</span><br><span class="line">            list=&#123;result.hits&#125;</span><br><span class="line">            pattern=&#123;searchText&#125;</span><br><span class="line">            onDismiss=&#123;this.onDismiss&#125;/&gt;:null</span><br><span class="line">          &#125;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+<p>这是实现条件渲染的第二种方式。<br>第三种则是运用 <code>&amp;&amp;</code> 逻辑运算符。在JavaScript中， true &amp;&amp; ‘Hello World’ 的值永远是 “Hello World”。而 false &amp;&amp; ‘Hello World’ 的值则永远是 false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const result = true &amp;&amp; &apos;Hello World&apos;;</span><br><span class="line">console.log(result);</span><br><span class="line">// output: Hello World</span><br><span class="line"></span><br><span class="line">const result = false &amp;&amp; &apos;Hello World&apos;;</span><br><span class="line">console.log(result);</span><br><span class="line">// output: false</span><br></pre></td></tr></table></figure>
+<p>所以也可以这样改写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123; result &amp;&amp;</span><br><span class="line">  &lt;Table</span><br><span class="line">    list=&#123;result.hits&#125;</span><br><span class="line">    pattern=&#123;searchTerm&#125;</span><br><span class="line">    onDismiss=&#123;this.onDismiss&#125;</span><br><span class="line">  /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户端或者服务端搜索"><a href="#客户端或者服务端搜索" class="headerlink" title="客户端或者服务端搜索"></a>客户端或者服务端搜索</h2><p>在使用 <code>Search</code> 组件的输入栏时，会在客户端过滤这个列表，所以要做的是使用 API 在服务端进行搜索。否则，就只能处理第一次从 <code>componentDidMount()</code> 拿到的默认搜索词的 API 响应<br>可以在主组件中顶一个 <code>onSeachSubmit()</code> 方法，当 <code>Search</code> 组件进行搜索的时候，可以用这个方法来 API 获取结果，顺便在 <code>Search</code> 中增加一个新按钮，这个按钮可以触发搜索请求  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">  class FormP extends Component &#123;</span><br><span class="line"></span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      result: null,</span><br><span class="line">      searchText: DEFAULT_QUERY,</span><br><span class="line">    &#125;;</span><br><span class="line">    this.setSearchTopStories = this.setSearchTopStories.bind(this);</span><br><span class="line">    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);</span><br><span class="line">    this.onSearchChange = this.onSearchChange.bind(this);</span><br><span class="line">    this.onSearchSubmit = this.onSearchSubmit.bind(this);</span><br><span class="line">    this.onDismiss = this.onDismiss.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ....</span><br><span class="line"></span><br><span class="line">  onSearchSubmit(e) &#123;</span><br><span class="line">    const &#123; searchText &#125; = this.state;</span><br><span class="line">    // console.log( searchText);</span><br><span class="line">    this.fetchSearchTopStories(searchText);</span><br><span class="line">    e.preventDefault();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const Search = (&#123; value, onChange, onSubmit, children &#125;) =&gt;</span><br><span class="line">  &lt;form onSubmit=&#123;onSubmit&#125; &gt;</span><br><span class="line">    &lt;input</span><br><span class="line">      type=&quot;text&quot;</span><br><span class="line">      value=&#123;value&#125;</span><br><span class="line">      onChange=&#123;onChange&#125;</span><br><span class="line">    /&gt;</span><br><span class="line">    &lt;button type=&quot;submit&quot;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">  &lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="分页抓取"><a href="#分页抓取" class="headerlink" title="分页抓取"></a>分页抓取</h2><p>改造一下可组合 API 常量，以便于处理分页数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const DEFAULT_QUERY = &apos;redux&apos;;</span><br><span class="line">const PATH_BASE = &apos;https://hn.algolia.com/api/v1&apos;;</span><br><span class="line">const PATH_SEARCH = &apos;/search&apos;;</span><br><span class="line">const PARAM_SEARCH = &apos;query=&apos;;</span><br><span class="line">const PARAM_PAGE = &apos;page=&apos;;</span><br><span class="line">const url = `$&#123;PATH_BASE&#125;$&#123;PATH_SEARCH&#125;?$&#123;PARAM_SEARCH&#125;$&#123;searchTerm&#125;&amp;$&#123;PARAM_PAGE&#125;`;</span><br></pre></td></tr></table></figure>
+<p><code>fetchSearchTopStories()</code> 函数接收分页作为第二个参数。如果不提供第二个参数，它将使用 <code>0</code> 作为初始参数并发起请求。因此 <code>componentDidMount()</code> 和 <code>onSearchSubmit()</code> 方法在第一个请求中默认获取第一页。之后的请求将根据提供的第二个参数抓取下一个页面的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  class App extends Component &#123;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  fetchSearchTopStories(searchTerm, page = 0) &#123;</span><br><span class="line">    fetch(`$&#123;PATH_BASE&#125;$&#123;PATH_SEARCH&#125;?$&#123;PARAM_SEARCH&#125;$&#123;searchTerm&#125;&amp;$&#123;PARAM_PAGE&#125;\</span><br><span class="line">$&#123;page&#125;`)</span><br><span class="line">      .then(response =&gt; response.json())</span><br><span class="line">      .then(result =&gt; this.setSearchTopStories(result))</span><br><span class="line">      .catch(e =&gt; e);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户端缓存"><a href="#客户端缓存" class="headerlink" title="客户端缓存"></a>客户端缓存</h2><p><a href="https://github.com/LbhFront-end/react-pratice/tree/master/my-first-react-app">The Road to learn React 代码</a></p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p><a href="https://github.com/LbhFront-end/react-pratice/tree/master/my-first-react-app">The Road to learn React 代码</a></p>
+<h2 id="代码组织和测试"><a href="#代码组织和测试" class="headerlink" title="代码组织和测试"></a>代码组织和测试</h2><p>本章将专注在几个重要话题来保证在一个规模增长的应用中代码的可维护性。你将了解如何去组织代码，以便在构建你的工程目录和文件时时遵循最佳实践。本章你将学会的另外一个话题是测试，这对你的代码健壮性非常重要。本章也会结合之前的练习项目来为你介绍这几个话题。</p>
+<h2 id="ES6模块：-Import-和-Export"><a href="#ES6模块：-Import-和-Export" class="headerlink" title="ES6模块： Import 和 Export"></a>ES6模块： <code>Import</code> 和 <code>Export</code></h2><p>在 <code>JavaScript ES6</code> 中可以从模块中导入和导出某些功能，这些功能可以是函数、类、组件、常量等等。基本上可以将所有东西都赋值到一个变量上。模块可以是单个文件，或者一个带有入口文件的文件夹  </p>
+<p><code>import</code> 与 <code>export</code> 语句可以让我们在不同的文件共享代码，这些语言有利于代码的分割。代码风格就是将代码分配到多个文件夹中去，以保持代码的重用性和可维护性。前者得以成立时因为可以在不同的文件中导入相同的代码片段，而后者得以成立是因为维护的代码时唯一的代码源</p>
+<p>最后一点是，它能帮助我们思考代码封装。不是所有的功能都需要从一个文件导出。其中一些功能应该只在定义它的文件夹中使用。一个文件导出的功能是这个文件公共 API ，只有导出的功能才能被其他地方重用。遵循了封装的最佳实践</p>
+<p>可以导出一个或者多个变量，称为一个命名的导出  </p>
+<p>file1.js</p>
+<blockquote>
+<p>const firstname = ‘lai’,<br>const lastname = ‘bh’,<br><code>export</code> { firstname , lastname };</p>
+</blockquote>
+<p>并在另外一个文件中引用<br>file2.js</p>
+<blockquote>
+<p><code>import</code> { firstname, lastname } from ‘./file1.js’;<br>console.log(firstname); // lai</p>
+</blockquote>
+<p>也可以用对象的方式导入另外文件的全部变量<br>file2.js</p>
+<blockquote>
+<p><code>import</code> * as person from ‘./file1.js’;<br>console.log(person.firstname); // lai</p>
+</blockquote>
+<p>导入可以有一个别名，可能发生在输出多个文件中有相同命名的导出的时候。<br>file2.js</p>
+<blockquote>
+<p><code>import</code> { firstname as foo } from ‘./file1.js’<br>console.log(foo); // lai</p>
+</blockquote>
+<p>还有一种情况 <code>default</code> 语句，可以被用在以下情况<br>为了导出和导入单一功能<br>为了强调一个模块输出 API 中的主要功能<br>这样可以向后兼容 ES5 只有一个导出物的功能</p>
+<p>file1.js</p>
+<blockquote>
+<p>const lbh = { firstname:’lai’, lastname:’bh’};<br><code>export default</code> lbh;  </p>
+</blockquote>
+<p>可以在导入 <code>default</code> 输出时省略花括号<br>file2.js</p>
+<blockquote>
+<p><code>import</code> developer from ‘./file1.js’<br>console.log(developer);  // { firstname:’lai’,lastname:’bh’}</p>
+</blockquote>
+<p>另外，输入名称可以与导入的 <code>default</code> 名称不一样，也可以将其与命名的导出与导入语句使用同一个名称<br>file1.js</p>
+<blockquote>
+<p>const firstname = ‘lai’,<br>const lastname = ‘bh’,<br>const lbh = { firstname, lastname};<br><code>export</code>{ firstname, lastname};<br><code>export default</code> lbh</p>
+</blockquote>
+<p>file2.js  </p>
+<blockquote>
+<p><code>import</code> lbh, { firstname, lastname } from ‘./file1.js’;<br>console.log(lbh);  // { firstname:’lai’,lastname:’bh’}<br>console.log(firstname, lastname); // (lai,bh)  </p>
+</blockquote>
+<p>在命名的导出中，可以省略多余行直接导出变量  </p>
+<blockquote>
+<p><code>export default</code> firstname = ‘lai’;<br><code>export default</code> lastname = ‘bh’;</p>
+</blockquote>
+<h2 id="代码组织与ES6模块"><a href="#代码组织与ES6模块" class="headerlink" title="代码组织与ES6模块"></a>代码组织与ES6模块</h2><p>可能会用到的模块结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">  index.js</span><br><span class="line">  index.css</span><br><span class="line">  App.js</span><br><span class="line">  App.test.js</span><br><span class="line">  App.css</span><br><span class="line">  Button.js</span><br><span class="line">  Button.test.js</span><br><span class="line">  Button.css</span><br><span class="line">  Table.js</span><br><span class="line">  Table.test.js</span><br><span class="line">  Table.css</span><br><span class="line">  Search.js</span><br><span class="line">  Search.test.js</span><br><span class="line">  Search.css</span><br></pre></td></tr></table></figure>
+<p>这里将组件封装到各自文件中，但是这看起来不是很好。你可以看到非常多的命名冗余，并且只有文件的扩展文字不同。另外一种模块的结构大概类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">  index.js</span><br><span class="line">  index.css</span><br><span class="line">  App/</span><br><span class="line">    index.js</span><br><span class="line">    test.js</span><br><span class="line">    index.css</span><br><span class="line">  Button/</span><br><span class="line">    index.js</span><br><span class="line">    test.js</span><br><span class="line">    index.css</span><br><span class="line">  Table/</span><br><span class="line">    index.js</span><br><span class="line">    test.js</span><br><span class="line">    index.css</span><br><span class="line">  Search/</span><br><span class="line">    index.js</span><br><span class="line">    test.js</span><br><span class="line">    index.css</span><br></pre></td></tr></table></figure>
+<p>这看起来比之前清晰多了。文件名中的 index 名称表示他是这个文件夹的入口文件。这仅仅是一个命名共识，你也可以使用你习惯的命名。在这个模块结构中，一个组件被 JavaScript 文件中组件声明，样式文件，测试共同定义。</p>
+<p>另外一个步骤可能要将 App 组件中的变量抽出。这些变量用来组合出 Hacker News 的 API URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">  index.js</span><br><span class="line">  index.css</span><br><span class="line">  constants/</span><br><span class="line">    index.js</span><br><span class="line">  components/</span><br><span class="line">    App/</span><br><span class="line">      index.js</span><br><span class="line">      test.js</span><br><span class="line">      index..css</span><br><span class="line">    Button/</span><br><span class="line">      index.js</span><br><span class="line">      test.js</span><br><span class="line">      index..css</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>自然这些模块会分割到 src/constants/ 和 src/components/ 中去。现在 src/constants/index.js 文件可能看起来类似下面这样：</p>
+<p>Code Playground: src/constants/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export const DEFAULT_QUERY = &apos;redux&apos;;</span><br><span class="line">export const DEFAULT_HPP = &apos;100&apos;;</span><br><span class="line">export const PATH_BASE = &apos;https://hn.algolia.com/api/v1&apos;;</span><br><span class="line">export const PATH_SEARCH = &apos;/search&apos;;</span><br><span class="line">export const PARAM_SEARCH = &apos;query=&apos;;</span><br><span class="line">export const PARAM_PAGE = &apos;page=&apos;;</span><br><span class="line">export const PARAM_HPP = &apos;hitsPerPage=&apos;;</span><br></pre></td></tr></table></figure>
+<p>App/index.js 文件可以导入这些变量，以便使用。</p>
+<p>Code Playground: src/components/App/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">DEFAULT_QUERY,</span><br><span class="line">DEFAULT_HPP,</span><br><span class="line">PATH_BASE,</span><br><span class="line">PATH_SEARCH,</span><br><span class="line">PARAM_SEARCH,</span><br><span class="line">PARAM_PAGE,</span><br><span class="line">PARAM_HPP,</span><br><span class="line">&#125; from &apos;../constants/index.js&apos;;</span><br></pre></td></tr></table></figure>
+<p>当你使用 index.js 这个命名共识的时候，你可以在相对路径中省略文件名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Code Playground: src/components/App/index.js</span><br><span class="line">import &#123;</span><br><span class="line">  DEFAULT_QUERY,</span><br><span class="line">  DEFAULT_HPP,</span><br><span class="line">  PATH_BASE,</span><br><span class="line">  PATH_SEARCH,</span><br><span class="line">  PARAM_SEARCH,</span><br><span class="line">  PARAM_PAGE,</span><br><span class="line">  PARAM_HPP,</span><br><span class="line">&#125; from &apos;../constants&apos;;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>但是 index.js 文件名称后面发生了什么？这个约定是在 node.js 世界里面被引入的。index 文件是一个模块的入口。它描述了一个模块的公共 API。外部模块只允许通过 index.js 文件导入模块中的共享代码。考虑用下面虚构的模块结构进行演示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">  index.js</span><br><span class="line">  App/</span><br><span class="line">    index.js</span><br><span class="line">  Buttons/</span><br><span class="line">    index.js</span><br><span class="line">    SubmitButton.js</span><br><span class="line">    SaveButton.js</span><br><span class="line">    CancelButton.js</span><br></pre></td></tr></table></figure>
+<p>这个 Buttons/ 文件夹有多个按钮组件定义在了不同的文件中。每个文件都 export default 特定的组件，使组件能够被 Buttons/index.js 导入。Buttons/index.js 文件导入所有不同的表现的按钮，并将他们导出作为模块的公共 API。</p>
+<p>Code Playground: src/Buttons/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import SubmitButton from &apos;./SubmitButton&apos;;</span><br><span class="line">import SaveButton from &apos;./SaveButton&apos;;</span><br><span class="line">import CancelButton from &apos;./CancelButton&apos;;</span><br><span class="line"></span><br><span class="line">export &#123;</span><br><span class="line">  SubmitButton,</span><br><span class="line">  SaveButton,</span><br><span class="line">  CancelButton,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在 src/App/index.js 可以通过定位在 index.js 文件模块的公共 API 导入这些按钮。<br>Code Playground: src/App/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  SubmitButton,</span><br><span class="line">  SaveButton,</span><br><span class="line">  CancelButton</span><br><span class="line">&#125; from &apos;../Buttons&apos;;</span><br></pre></td></tr></table></figure>
+<p>参考链接：<a href="https://leanpub.com/the-road-to-learn-react-chinese">https://leanpub.com/the-road-to-learn-react-chinese</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-06-08-TheRoadtolearnReactPart3.html" title="The Road to learn React Part3">http://laibh.top/2018-06-08-TheRoadtolearnReactPart3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" <i class="fa fa-tag"></i> react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-06-07-TheRoadtolearnReactPart2.html" rel="next" title="The Road to learn React Part2">
+                <i class="fa fa-chevron-left"></i> The Road to learn React Part2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-06-09-templateString.html" rel="prev" title="template_strings">
+                template_strings <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Road-to-learn-React书籍学习笔记-第三章"><span class="nav-number">1.</span> <span class="nav-text">The Road to learn React书籍学习笔记(第三章)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明周期方法"><span class="nav-number">1.1.</span> <span class="nav-text">声明周期方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载过程中有四个生命周期方法，调用顺序是这样的"><span class="nav-number">1.1.1.</span> <span class="nav-text">挂载过程中有四个生命周期方法，调用顺序是这样的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤"><span class="nav-number">1.1.2.</span> <span class="nav-text">当组件的状态或者属性改变的时候用来更新的生命周期如下五个步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件卸载的生命周期只有一个"><span class="nav-number">1.1.3.</span> <span class="nav-text">组件卸载的生命周期只有一个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期详解"><span class="nav-number">1.1.4.</span> <span class="nav-text">生命周期详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#还有一个生命周期方法"><span class="nav-number">1.1.5.</span> <span class="nav-text">还有一个生命周期方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取数据"><span class="nav-number">1.2.</span> <span class="nav-text">获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展操作符"><span class="nav-number">1.3.</span> <span class="nav-text">拓展操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6中数组的扩展运算符"><span class="nav-number">1.3.1.</span> <span class="nav-text">ES6中数组的扩展运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件渲染"><span class="nav-number">1.4.</span> <span class="nav-text">条件渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端或者服务端搜索"><span class="nav-number">1.5.</span> <span class="nav-text">客户端或者服务端搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页抓取"><span class="nav-number">1.6.</span> <span class="nav-text">分页抓取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端缓存"><span class="nav-number">1.7.</span> <span class="nav-text">客户端缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">1.8.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码组织和测试"><span class="nav-number">1.9.</span> <span class="nav-text">代码组织和测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6模块：-Import-和-Export"><span class="nav-number">1.10.</span> <span class="nav-text">ES6模块： Import 和 Export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码组织与ES6模块"><span class="nav-number">1.11.</span> <span class="nav-text">代码组织与ES6模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

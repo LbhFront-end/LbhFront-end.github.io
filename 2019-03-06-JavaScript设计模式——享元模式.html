@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript设计模式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——享元模式享元（flyweight）模式是一种用于性能优化的模式，‘fly’ 在这里是苍蝇的意思，意为">
+<meta name="keywords" content="JavaScript设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript设计模式——享元模式">
+<meta property="og:url" content="http://laibh.top/2019-03-06-JavaScript设计模式——享元模式.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——享元模式享元（flyweight）模式是一种用于性能优化的模式，‘fly’ 在这里是苍蝇的意思，意为">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript设计模式——享元模式">
+<meta name="twitter:description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——享元模式享元（flyweight）模式是一种用于性能优化的模式，‘fly’ 在这里是苍蝇的意思，意为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2019-03-06-JavaScript设计模式——享元模式.html"/>
+
+
+
+
+
+  <title>JavaScript设计模式——享元模式 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2019-03-06-JavaScript设计模式——享元模式.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JavaScript设计模式——享元模式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T11:30:00+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019-03-06-JavaScript设计模式——享元模式.html" class="leancloud_visitors" data-flag-title="JavaScript设计模式——享元模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,729
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习曾探的 《JavaScript设计模式与开发实践》并做记录。</p>
+<p><a href="http://www.ituring.com.cn/book/1632/">书籍的购买链接</a></p>
+<p>设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。</p>
+<p>通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。</p>
+<h1 id="JavaScript设计模式——享元模式"><a href="#JavaScript设计模式——享元模式" class="headerlink" title="JavaScript设计模式——享元模式"></a>JavaScript设计模式——享元模式</h1><p>享元（flyweight）模式是一种用于性能优化的模式，‘fly’ 在这里是苍蝇的意思，意为蝇量级。享元模式的核心是运用共享技术来有效支持大量细粒度的对象。</p>
+<p>如果系统中因为创建了大量类似的对象而导致内存占用过高，享元模式就非常有用了。在 JavaScript 中，浏览器特别是移动端的浏览器分配的内存并不算多，如何节省内存就成了 一件非常有意义的事情。</p>
+<h2 id="初识享元模式"><a href="#初识享元模式" class="headerlink" title="初识享元模式"></a>初识享元模式</h2><p>假设有个内衣工厂，目前的产品有 50 种男式内衣和 50 种女士内衣，为了推销产品，工厂决定生产一些塑料模特来穿上他们的内衣拍成广告照片。 正常情况下需要 50 个男模特和 50 个女模特，然后让他们每人分别穿上一件内衣来拍照。不使用享元模式的情况下，在程序里也许会这样写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Model = <span class="function"><span class="keyword">function</span>(<span class="params">sex,underwear</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">    <span class="keyword">this</span>.underwear = underwear;</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.takePhoto = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'sex='</span>+<span class="keyword">this</span>.sex + <span class="string">'underwear='</span>+<span class="keyword">this</span>.underwear);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">50</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">var</span> maleModel = <span class="keyword">new</span> Model(<span class="string">'male'</span>,<span class="string">'underwear'</span>+i);</span><br><span class="line">    maleModel.takePhoto();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">50</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">var</span> femaleModel = <span class="keyword">new</span> Model(<span class="string">'female'</span>,<span class="string">'underwear'</span>+i);</span><br><span class="line">    femaleModel.takePhoto();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要得到一张照片，每次都需要传入 sex 和 underwear 参数，如上所述，现在一共有 50 种男内衣和 50 种女内衣，所以一共会产生 100 个对象。如果将来生产了 10000 种内衣，那这个程序可能会因为存在如此多的对象已经提前崩溃.</p>
+<p>虽然有 100 种内衣，但很显然并不需要 50 个男模特和 50 个女模特。其实男模特和女模特各自有一个就足够了，他们可以分别穿上不同的内衣来拍照</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 把 underwear 参数从构造函数中移除，构造函数只接收 sex 参数：</span></span><br><span class="line"><span class="keyword">var</span> Model = <span class="function"><span class="keyword">function</span>(<span class="params">sex,underwear</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br><span class="line">Model.prototype.takePhoto = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'sex='</span>+<span class="keyword">this</span>.sex + <span class="string">'underwear='</span>+<span class="keyword">this</span>.underwear);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 分别创建一个男模特对象和一个女模特对象</span></span><br><span class="line"><span class="keyword">var</span> maleModel = <span class="keyword">new</span> Model(<span class="string">'male'</span>);</span><br><span class="line"><span class="keyword">var</span> femaleModel = <span class="keyword">new</span> Model(<span class="string">'female'</span>);</span><br><span class="line"><span class="comment">// 给男模特依次穿上所有的男装，并进行拍照：</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">50</span>;i++)&#123;</span><br><span class="line">    maleModel.underwater = <span class="string">'underwater'</span> + i;</span><br><span class="line">    maleModel.takePhoto();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 给女模特依次穿上所有的男装，并进行拍照：</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">50</span>;i++)&#123;</span><br><span class="line">    femaleModel.underwater = <span class="string">'underwater'</span> + i;</span><br><span class="line">    femaleModel.takePhoto();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="内部状态与外部状态"><a href="#内部状态与外部状态" class="headerlink" title="内部状态与外部状态"></a>内部状态与外部状态</h2><p>享元模式要求将对象的属性划分为内部状态和外部状态（状态在这里通常是指属性）。享元模式的目标是尽量减少共享对象的数量，如何划分它们，下面有几条经验作为指引：</p>
+<ul>
+<li>内部状态存储于对象内部</li>
+<li>内部状态可以被一些对象共享</li>
+<li>内部状态独立于具体的场景，通常不会改变</li>
+<li>外部状态取决于具体的场景，并且根据场景的变化而变化，外部状态不能被共享</li>
+</ul>
+<p>我们可以把所有内部状态相同的对象都指定为同一个共享的对象。而外部状态可以从对象上剥离出来，并存储在外部。</p>
+<p>剥离了外部状态的对象成为共享对象，外部状态在必要的时候被传入共享对象来组装成一个完整的对象。虽然组装外部状态成为了一个完整对象的过程需要一定的时间，但却可以大大减少系统中的对象数量。相比之下，这点时间或许是微不足道的。因此，享元模式是一种用时间换空间的优化模式。</p>
+<p>在上面的例子中，性别是内部状态，内衣是外部状态，通过区分这两种状态，大大减少了系统中的对象数量。通常来说，内部状态有多少种组合，系统中便最多存在多少个对象，因为性别通常只有男女两种，所有该内衣厂商最多需要2个对象。</p>
+<p>使用享元模式的关键是如何区分内部状态和外部状态。可以被对象共享的属性通常被划分为内部状态，如同不管什么样式的衣服，都可以按照性别的不同，穿在同一个男模特或者女模特身上。模特的性别就可以作为内部存储在共享对象内部。而外部状态取决于具体的场景，并根据场景二变化，就像例子中每件衣服都是不同的，它们不能被一些对象共享，因此只能被划分为外部状态。</p>
+<h2 id="享元模式的通用结构"><a href="#享元模式的通用结构" class="headerlink" title="享元模式的通用结构"></a>享元模式的通用结构</h2><p>上面例子中还不是一个完整的享元模式，还存在以下几个问题。</p>
+<ul>
+<li>我们通过构造函数显式 new 出了男女两个 model 对象，在其他系统中，也许这并不是一开始就需要所有的共享对象。</li>
+<li>给 model 对象手动设置了 underwater 外部状态，在更复杂的系统中，这并不是最好的方式，因为外部状态可能会相当复杂，它们与共享对象的联系会变得更加困难。</li>
+</ul>
+<p>我们通过一个对象工厂来解决第一个问题，只有当某种共享对象被真正需要的时候，它从才工厂中被创建出来，对于第二个问题，可以用一个管理器来记录对象相关的外部状态，使得这些外部状态通过某个钩子和共享对象联系起来。</p>
+<h2 id="文件上传的例子"><a href="#文件上传的例子" class="headerlink" title="文件上传的例子"></a>文件上传的例子</h2><p>在微云上传模板的开发中，作者曾经借助享元模式提升了程序的性能。</p>
+<h3 id="对象爆炸"><a href="#对象爆炸" class="headerlink" title="对象爆炸"></a>对象爆炸</h3><p>微云的文件上创功能虽然可以选择依照队列，一个一个排队上传，但也支持同时选择 2000 个文件。每一个文件都对应着一个 JavaScript 上传对象的创建，在第一版开发中，的确往程序里面同时 new 了 2000个 upload 对象，结果可想而知。Chrome 中还勉强能够支撑，IE 下直接进入假死状态。</p>
+<p>微云支持好几种上传方式，比如浏览器插件、Flash 和表单上传等，为了简化例子，作者假设只有插件和 Flash 这两种。不论是插件上传，还是 Flash 上传，原理都是一样的，当用户选择了文件之后，插件和 Flash 都会通知调用 Window 下的一个全局 JavaScript 函数，它的名字是startUpload，用户选择的文件列表被组合成一个数组 files 塞进该函数的参数列表里，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">window</span>.startUpload = <span class="function"><span class="keyword">function</span>(<span class="params">uploadType,files</span>)</span>&#123; <span class="comment">// uploadType 区分是控件还是 flash</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,file;file=files[i++];)&#123;</span><br><span class="line">        <span class="keyword">var</span> uploadObj = <span class="keyword">new</span> Upload(uploadType,file.fileName,file.fileSize);</span><br><span class="line">        uploadObj.init(id++); <span class="comment">// 给 upload 对象设置一个唯一的 id</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Upload = <span class="function"><span class="keyword">function</span>(<span class="params">uploadType,fileName,fileSize</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.uploadType = uploadType;</span><br><span class="line">    <span class="keyword">this</span>.fileName = fileName;</span><br><span class="line">    <span class="keyword">this</span>.fileSize = fileSize;</span><br><span class="line">    <span class="keyword">this</span>.dom = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line">Upload.prototype.init = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">    <span class="keyword">this</span>.dom = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">    <span class="keyword">this</span>.dom.innerHTML = <span class="string">'&lt;span&gt;文件名称:'</span>+ <span class="keyword">this</span>.fileName +<span class="string">', 文件大小: '</span>+<span class="keyword">this</span>.fileSize +<span class="string">'&lt;/span&gt;'</span> + <span class="string">'&lt;button class="delFile"&gt;删除&lt;/button&gt;'</span>; </span><br><span class="line">    <span class="keyword">this</span>.dom.querySelector(<span class="string">'.delFile'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        that.delFile();</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(<span class="keyword">this</span>.dom);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Upload.prototype.delFile = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.fileSize &lt; <span class="number">3000</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dom.parentNode.removeChild(<span class="keyword">this</span>.dom);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">window</span>.confirm(<span class="string">'确定删除该文件吗？'</span>+<span class="keyword">this</span>.fileName))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dom.parentNode.removeChild(<span class="keyword">this</span>.dom);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来分别创建 3 个插件上传对象和三个 Flash 上传对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">startUpload(<span class="string">'plugin'</span>,[</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'1.txt'</span>, <span class="attr">fileSize</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'2.html'</span>, <span class="attr">fileSize</span>: <span class="number">3000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'3.txt'</span>, <span class="attr">fileSize</span>: <span class="number">5000</span> &#125;,</span><br><span class="line">    ]);		</span><br><span class="line">startUpload(<span class="string">'flash'</span>,[</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'4.txt'</span>, <span class="attr">fileSize</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'5.html'</span>, <span class="attr">fileSize</span>: <span class="number">3000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'6.txt'</span>, <span class="attr">fileSize</span>: <span class="number">5000</span> &#125;,</span><br><span class="line">    ]);</span><br></pre></td></tr></table></figure>
+<h3 id="享元模式重构文件上传"><a href="#享元模式重构文件上传" class="headerlink" title="享元模式重构文件上传"></a>享元模式重构文件上传</h3><p>上一节的代码是第一版文件上传，在这段代码中有多少个需要上传的文件，就一共创建了多少个 upload 对象，下面用享元模式重构它。</p>
+<p>首先，我们需要确认插件类型 uploadType 是内部状态，那为什么单单 uploadType 是内部状态，前面说过，划分内部状态和外部状态的关键是主要下面几点：</p>
+<ul>
+<li>内部状态储存于对象内部。</li>
+<li>内部状态可以被一些对象共享。</li>
+<li>内部状态独立于具体的场景，通常不会改变。</li>
+<li>外部状态取决于具体的场景并根据场景而变化外部状态不能被共享。</li>
+</ul>
+<p>在文件上传的例子中，upload 对象必须依赖 uploadType 属性才能工作，这是因为插件上传、Flash 上传、表单上传的实际工作原理有很大的区别，它们各自调用的接口也是不一样的，必须在对象创建之初就明确它是什么类型的插件，才可以在程序的运行过程中，让它们分别调用各自的 start、pause、cancel、del 等方法。</p>
+<p>实际上在微云的真实代码中，虽然插件和 Flash 上传对象最终创建自一个大的工厂类，但它们实际上根据 uploadType 值的不同，分别是来自于两个不同类的对象。</p>
+<p>一旦明确了 uploadType，无论我们使用什么方式上传，这个上传对象都是可以被任何文件共用的。而 fileName 和 fileSize 是根据场景而变化的，每个文件的 fileName 和 fileSize 都不一样，fileName 和 fileSize 没有办法被共享，它们只能被划分为外部状态。</p>
+<h3 id="剥离外部状态"><a href="#剥离外部状态" class="headerlink" title="剥离外部状态"></a>剥离外部状态</h3><p>明确了 uploadType 作为内部状态之后，我们再把其他外部状态从构造函数中抽离出来，Upload 构造函数中只保留 uploadType 参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Upload = <span class="function"><span class="keyword">function</span>(<span class="params">uploadType</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.uploadType = uploadType;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// init 函数也不再需要了，因为 upload 对象初始化的工作被放在了 uploadManager.add 函数中，下面定义的是 删除函数</span></span><br><span class="line">Upload.prototype.delFile = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 开始删除文件之前，需要读取文件的实际大小，而文件的实际大小被存储在外部管理器 uploadManager 中，这里需要 setExternalState 方法给共享对象设置正确的 fileSize。这里表示把当前 id 对应的对象的外部状态都组装到共享对象中</span></span><br><span class="line">    uploadManager.setExternalState(id,<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.fileSize &lt; <span class="number">3000</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dom.parentNode.removeChild(<span class="keyword">this</span>.dom);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">window</span>.confirm(<span class="string">'确定删除该文件吗？'</span>+<span class="keyword">this</span>.fileName))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.dom.parentNode.removeChild(<span class="keyword">this</span>.dom);</span><br><span class="line">    &#125;				</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="工厂进行对象实例化"><a href="#工厂进行对象实例化" class="headerlink" title="工厂进行对象实例化"></a>工厂进行对象实例化</h3><p>接下里定义一个工厂来创建 upload 对象，如果某种内部状态对应的共享对象已经被创建过了，那么直接返回这个对象，否则创建一个新的对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UploadFactory = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> createdFlyWeightObjs = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        create:<span class="function"><span class="keyword">function</span>(<span class="params">uploadType</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(createdFlyWeightObjs[uploadType])&#123;</span><br><span class="line">                <span class="keyword">return</span> createdFlyWeightObjs[uploadType]</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> createdFlyWeightObjs[uploadType] = <span class="keyword">new</span> Upload(uploadType);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<h3 id="管理器封装外部状态"><a href="#管理器封装外部状态" class="headerlink" title="管理器封装外部状态"></a>管理器封装外部状态</h3><p>完善前面提到的 uploadManager 对象，它负责向 UploadFactory 提交创建对象的请求，并用一个 uploadDatabase 对象保存所有 upload 对象的外部状态，以便在程序运行的过程中给 upload 共享对象设置外部状态：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> uploadManager = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> uploadDatabase = &#123;&#125;;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        add:<span class="function"><span class="keyword">function</span>(<span class="params">id,uploadType,fileName,fileSize</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> flyWeightObj = UploadFactory.create(uploadType);</span><br><span class="line">            <span class="keyword">var</span> dom = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">            dom.innerHTML = <span class="string">'&lt;span&gt;文件名称:'</span>+ fileName +<span class="string">', 文件大小: '</span>+fileSize +<span class="string">'&lt;/span&gt;'</span> + <span class="string">'&lt;button class="delFile"&gt;删除&lt;/button&gt;'</span>; </span><br><span class="line">            dom.querySelector(<span class="string">'.delFile'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                flyWeightObj.delFile(id);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="built_in">document</span>.body.appendChild(dom);</span><br><span class="line">            uploadDatabase[id] = &#123;</span><br><span class="line">                fileName:fileName,</span><br><span class="line">                fileSize:fileSize,</span><br><span class="line">                dom:dom</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">return</span> flyWeightObj;</span><br><span class="line">        &#125;,</span><br><span class="line">        setExternalState:<span class="function"><span class="keyword">function</span>(<span class="params">id,flyWeightObj</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> uploadData = uploadDatabase[id];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> uploadData)&#123;</span><br><span class="line">                flyWeightObj[i] = uploadData[i]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>然后是开始触发上传动作的 startUpload函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">window</span>.startUpload = <span class="function"><span class="keyword">function</span>(<span class="params">uploadType,files</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,file;file=files[i++];)&#123;</span><br><span class="line">        <span class="keyword">var</span> uploadObj = uploadManager.add(++id,uploadType,file.fileName,file.fileSize);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后是测试时间，运行下面的代码后，可以发现运行结果跟享元模式是一样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">startUpload(<span class="string">'plugin'</span>,[</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'1.txt'</span>, <span class="attr">fileSize</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'2.html'</span>, <span class="attr">fileSize</span>: <span class="number">3000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'3.txt'</span>, <span class="attr">fileSize</span>: <span class="number">5000</span> &#125;,</span><br><span class="line">    ]);		</span><br><span class="line">startUpload(<span class="string">'flash'</span>,[</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'4.txt'</span>, <span class="attr">fileSize</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'5.html'</span>, <span class="attr">fileSize</span>: <span class="number">3000</span> &#125;,</span><br><span class="line">    &#123;<span class="attr">fileName</span>: <span class="string">'6.txt'</span>, <span class="attr">fileSize</span>: <span class="number">5000</span> &#125;,</span><br><span class="line">    ]);</span><br></pre></td></tr></table></figure>
+<p>享元模式重构之前的代码一共创建了 6 个 upload 对象，而通过享元模式重构之后，对象的数量减少为 2 个，就算现在同时上传 2000 个文件，需要创建的 upload 对象数量依旧是 2。</p>
+<h2 id="享元模式-的适用性"><a href="#享元模式-的适用性" class="headerlink" title="享元模式 的适用性"></a>享元模式 的适用性</h2><p>享元模式是一种很好的性能优化方案，但它也带来了一些复杂性的问题，从前面两组代码的比较可以看出，使用了享元模式之后，我们需要分别维护多一个 factory 对象和 一个 manager 对象，在大部分不必要使用享元模式的环境下，这些开销是可以避免的。</p>
+<p>享元模式带来的好处很大程度上取决于如何使用以及何时使用，一般来说，一下情况发生的时候可以使用享元模式。</p>
+<ul>
+<li>一个程序中使用了大量的相似对象</li>
+<li>由于使用了大量对象，造成很大的内存开销</li>
+<li>对象的大多数状态都可以变为外部状态</li>
+<li>剥离出对象的外部状态之后，可以用相对比较少的共享对象取代大量对象</li>
+</ul>
+<h2 id="再谈内部状态和外部状态"><a href="#再谈内部状态和外部状态" class="headerlink" title="再谈内部状态和外部状态"></a>再谈内部状态和外部状态</h2><p>享元模式的关键是把内部状态和外部状态分离开来，有多少中内部状态的组合，系统便有最多多少个共享对象，而外部状态存储在共享对象的外部，在必要时被传入共享对象来组装成一个完整的对象。现在考虑两种极端的情况，即对象没有外部状态和没有内部状态的时候。</p>
+<h3 id="没有内部状态的享元"><a href="#没有内部状态的享元" class="headerlink" title="没有内部状态的享元"></a>没有内部状态的享元</h3><p>在文件上传的例子中，我们分别进行过插件调用和 Flash 调用，就 <code>startUpload(&#39;plugin&#39;,[])</code> 和 <code>startUpload(flash,[])</code>，导致程序中创建了内部状态不同的两个共享对象。很多网盘都提供了极速上传（控件）和普通上传（Flash）两种模式，如果极速上传不好使的话，用户可以随时切换到普通模式，所以这里确实是需要同时存在两个不同的 upload 共享对象，而不是在一开始就自我判断浏览器可以支持什么插件，就用什么插件上传。</p>
+<p>但不是每个网站都要做得这么复杂，很多小的网站只支持单一的上传方式，如果不考虑极速上传和普通上传之间的切换，这意味着之前的代码中作为内部状态的 uploadType 属性是可以删除的。</p>
+<p>在继续使用享元模式的前提下，构造函数 upload 就变成了无参数的形式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> upload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>其他属性如 fileName，fileSize，dom 依然可以作为外部状态保存在共享对象的外部。在 uploadType 作为内部状态的时候，它可能为空间，也可能为 Flash，所以当时最多可以组合成两个共享对象。而现在没有了内部状态，这意味着只需要唯一的一个共享对象。我们对代码进行改写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UploadFactory = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> uploadObj;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        create:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(uploadObj)&#123;</span><br><span class="line">                <span class="keyword">return</span> uploadObj</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> uploadObj = <span class="keyword">new</span> Upload();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p>管理器部分的代码不需要改动，还是负责剥离和组装外部状态，可以看到，当对象没有内部状态的时候，生产共享对象的工厂实际上变成了一个单例工厂，虽然这时候的共享对象没有内部状态的区分，但还是有剥离外部状态的过程，我们依然倾向于称之为享元模式。</p>
+<h3 id="没有外部状态的享元"><a href="#没有外部状态的享元" class="headerlink" title="没有外部状态的享元"></a>没有外部状态的享元</h3><p>网上许多资料中，经常把 Java 或者 C#的字符串看成享元，这种说法是否正确呢？我们看看下面这段 Java 代码，来分析一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123; </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String args[] )</span></span>&#123; </span><br><span class="line"> String a1 = <span class="keyword">new</span> String( <span class="string">"a"</span> ).intern(); </span><br><span class="line"> String a2 = <span class="keyword">new</span> String( <span class="string">"a"</span> ).intern(); </span><br><span class="line"> System.out.println( a1 == a2 ); <span class="comment">// true </span></span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段 Java 代码里，分别 new 了两个字符串对象 a1 和 a2。intern 是一种对象池技术， new String(“a”).intern()的含义如下</p>
+<ul>
+<li>如果值为 a 的字符串对象已经存在于对象池中，则返回这个对象的引用</li>
+<li>反之，将字符串 a 的对象添加进对象池，并返回这个对象的引用</li>
+</ul>
+<p>所以 a1 == a2 的结果是 true，但这并不是使用了享元模式的结果，享元模式的关键是区别内部状态和外部状态。享元模式的过程是剥离外部状态，并把外部状态保存在其他地方，在合适的时刻再把外部状态组装进共享对象。这里并没有剥离外部状态的过程，a1 和 a2 指向的完全就是同一个对象，所以如果没有外部状态的分离，即使这里使用了共享的技术，但并不是一个纯粹的享元模式。</p>
+<h2 id="对象池"><a href="#对象池" class="headerlink" title="对象池"></a>对象池</h2><p>对象池维护一个装载空闲对象的池子，如果需要对象的时候，不是直接 new，而是转从对象池里获取。如果对象池里没有空闲对象，则创建一个新的对象，当获取出的对象完成它的职责之后， 再进入池子等待被下次获取。</p>
+<p>对象池的原理很好理解，比如我们组人手一本《JavaScript 权威指南》，从节约的角度来讲，这并不是很划算，因为大部分时间这些书都被闲置在各自的书架上，所以我们一开始就只买一本，或者一起建立一个小型图书馆（对象池），需要看书的时候就从图书馆里借，看完了之后再把书还回图书馆。如果同时有三个人要看这本书，而现在图书馆里只有两本，那我们再马上去书店买一本放入图书馆。</p>
+<p>对象池的技术的应用非常广泛，HTTP 连接池和数据库连接池都是其代表应用，在 Web 前端开发中，对象池使用最多的场景大概是跟 DOM 有关的操作，很多空间和时间都消耗在了 DOM 节点上，如何避免频繁地创建和删除 DOM 节点就成了一个有意义的话题。</p>
+<h3 id="对象池的实现"><a href="#对象池的实现" class="headerlink" title="对象池的实现"></a>对象池的实现</h3><p>假设我们在开发一个地图应用，地图上经常会出现一些标志地名的小气泡，我们叫它 toolTip。</p>
+<p>在搜索我家附近地图的时候，页面里出现了 2 个小气泡。当我再搜索附近的兰州拉面馆时，页面中出现了 6 个小气泡。按照对象池的思想，在第二次搜索开始之前，并不会把第一次创建的2 个小气泡删除掉，而是把它们放进对象池。这样在第二次的搜索结果页面里，我们只需要再创建 4 个小气泡而不是 6 个。</p>
+<p>先定义个获取小气泡的工厂，作为对象池的数组称为私有属性被包含在工厂闭包里，这个工厂有两个暴露对外的方法，create 表示获取一个 div 节点，recover 表示回收一个 div 节点：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> toolTipFactory = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> toolTipPool = []; <span class="comment">// toolTip 对象池</span></span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        create:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(toolTipPool.length === <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">                <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">                <span class="keyword">return</span> div;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> toolTipPool.shift(); <span class="comment">// 如果对象池不为空，则从对象池取出一个 dom</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        recover:<span class="function"><span class="keyword">function</span>(<span class="params">tooltipDom</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> toolTipPool.push(tooltipDom); <span class="comment">// 对象池回收 dom</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>拨回进行第一次搜索的时刻，目前需要创建 2 个小气泡节点，为了方便回收，用一个数组 ary 来记录它们：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,str;str=[<span class="string">'A'</span>,<span class="string">'B'</span>][i++];)&#123;</span><br><span class="line">    <span class="keyword">var</span> toolTip = toolTipFactory.create();</span><br><span class="line">    toolTip.innerHTML = <span class="string">'src'</span>;</span><br><span class="line">    ary.push(toolTip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设地图需要开始重新绘制，在此之前把两个节点回收进去对象池：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,toolTip;toolTip = ary[i++])&#123;</span><br><span class="line">    toolTipFactory.recover(toolTip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在创建6个小气泡</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ary = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,str;str=[ <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>][i++];)&#123;</span><br><span class="line">    <span class="keyword">var</span> toolTip = toolTipFactory.create();</span><br><span class="line">    toolTip.innerHTML = <span class="string">'src'</span>;</span><br><span class="line">    ary.push(toolTip);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对象池跟享元模式的思想有点相似，虽然 innerHTML 的值 A、B、C、D 等也可以看成节点的外部状态，但在这里我们并没有主动分离内部状态和外部状态的过程.</p>
+<h3 id="通用对象池实现"><a href="#通用对象池实现" class="headerlink" title="通用对象池实现"></a>通用对象池实现</h3><p>我们还可以在对象池工厂里，把创建对象的具体过程封装起来，实现一个通用的对象池：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objectPoolFactory = <span class="function"><span class="keyword">function</span>(<span class="params">createObjFn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> objectPool = [];</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        create:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> obj = objectPool.length === <span class="number">0</span> ? createObjFn.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>) : objectPool.shift();</span><br><span class="line">        &#125;,</span><br><span class="line">        recover:<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">            objectPool.push(obj);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在可以利用 objectPoolFactory 来创建一个装载一些 iframe 的对象池：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objectPoolFactory = <span class="function"><span class="keyword">function</span>(<span class="params">createObjFn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> objectPool = [];</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        create:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> obj = objectPool.length === <span class="number">0</span> ? createObjFn.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>) : objectPool.shift();</span><br><span class="line">            <span class="keyword">return</span> obj;</span><br><span class="line">        &#125;,</span><br><span class="line">        recover:<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">            objectPool.push(obj);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iframeFactory = objectPoolFactory(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(iframe);</span><br><span class="line"></span><br><span class="line">    iframe.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        iframe.onload = <span class="literal">null</span>; <span class="comment">// 防止 iframe 重复加载的 bug</span></span><br><span class="line">        iframeFactory.recover(iframe); <span class="comment">// iframe 加载完成之后回收节点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> iframe;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iframe1 = iframeFactory.create(); </span><br><span class="line">iframe1.src = <span class="string">'http://baidu.com'</span>; </span><br><span class="line"><span class="keyword">var</span> iframe2 = iframeFactory.create(); </span><br><span class="line">iframe2.src = <span class="string">'http://QQ.com'</span>; </span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">var</span> iframe3 = iframeFactory.create(); </span><br><span class="line">    iframe3.src = <span class="string">'http://163.com'</span>; </span><br><span class="line">&#125;, <span class="number">3000</span> );</span><br></pre></td></tr></table></figure>
+<p>对象池是另外一种性能优化方案，它跟享元模式有一些相似之处，但没有分离内部状态和外部状态这个过程。本章用享元模式完成了一个文件上传的程序，其实也可以用对象池+事件委托来代替实现</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>享元模式是为解决性能问题而生的模式，这根大部分模式的诞生原因都不一样，在一个存在大量相似对象的系统中，享受模式可以很好地解决大量对象带来的性能问题。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2019-03-06-JavaScript设计模式——享元模式.html" title="JavaScript设计模式——享元模式">http://laibh.top/2019-03-06-JavaScript设计模式——享元模式.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript设计模式/" <i class="fa fa-tag"></i> JavaScript设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-02-26-JavaScript设计模式——组合模式.html" rel="next" title="JavaScript设计模式——组合模式">
+                <i class="fa fa-chevron-left"></i> JavaScript设计模式——组合模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-03-09-用Javascript获取页面元素的位置（转）.html" rel="prev" title="用Javascript获取页面元素的位置">
+                用Javascript获取页面元素的位置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript设计模式——享元模式"><span class="nav-number">1.</span> <span class="nav-text">JavaScript设计模式——享元模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识享元模式"><span class="nav-number">1.1.</span> <span class="nav-text">初识享元模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部状态与外部状态"><span class="nav-number">1.2.</span> <span class="nav-text">内部状态与外部状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#享元模式的通用结构"><span class="nav-number">1.3.</span> <span class="nav-text">享元模式的通用结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传的例子"><span class="nav-number">1.4.</span> <span class="nav-text">文件上传的例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象爆炸"><span class="nav-number">1.4.1.</span> <span class="nav-text">对象爆炸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#享元模式重构文件上传"><span class="nav-number">1.4.2.</span> <span class="nav-text">享元模式重构文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剥离外部状态"><span class="nav-number">1.4.3.</span> <span class="nav-text">剥离外部状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂进行对象实例化"><span class="nav-number">1.4.4.</span> <span class="nav-text">工厂进行对象实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理器封装外部状态"><span class="nav-number">1.4.5.</span> <span class="nav-text">管理器封装外部状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#享元模式-的适用性"><span class="nav-number">1.5.</span> <span class="nav-text">享元模式 的适用性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再谈内部状态和外部状态"><span class="nav-number">1.6.</span> <span class="nav-text">再谈内部状态和外部状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#没有内部状态的享元"><span class="nav-number">1.6.1.</span> <span class="nav-text">没有内部状态的享元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有外部状态的享元"><span class="nav-number">1.6.2.</span> <span class="nav-text">没有外部状态的享元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象池"><span class="nav-number">1.7.</span> <span class="nav-text">对象池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象池的实现"><span class="nav-number">1.7.1.</span> <span class="nav-text">对象池的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用对象池实现"><span class="nav-number">1.7.2.</span> <span class="nav-text">通用对象池实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.8.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

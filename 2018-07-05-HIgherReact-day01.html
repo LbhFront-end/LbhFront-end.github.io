@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="React 高级指引学习笔记-第一天深入 JSX在本质上讲， JSX 只是为 React.createElement(component,props,...children) 方法提供的与语法糖   1&amp;lt;MyButton color=&amp;quot;blue&amp;quot; shadowSize = &amp;#123;2&amp;#125;&amp;gt; Click Me &amp;lt;/MyButton&amp;gt; 编译为：">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 高级指引 D1">
+<meta property="og:url" content="http://laibh.top/2018-07-05-HIgherReact-day01.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="React 高级指引学习笔记-第一天深入 JSX在本质上讲， JSX 只是为 React.createElement(component,props,...children) 方法提供的与语法糖   1&amp;lt;MyButton color=&amp;quot;blue&amp;quot; shadowSize = &amp;#123;2&amp;#125;&amp;gt; Click Me &amp;lt;/MyButton&amp;gt; 编译为：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React 高级指引 D1">
+<meta name="twitter:description" content="React 高级指引学习笔记-第一天深入 JSX在本质上讲， JSX 只是为 React.createElement(component,props,...children) 方法提供的与语法糖   1&amp;lt;MyButton color=&amp;quot;blue&amp;quot; shadowSize = &amp;#123;2&amp;#125;&amp;gt; Click Me &amp;lt;/MyButton&amp;gt; 编译为：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-07-05-HIgherReact-day01.html"/>
+
+
+
+
+
+  <title>React 高级指引 D1 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-07-05-HIgherReact-day01.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">React 高级指引 D1</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T19:12:45+08:00">
+                2018-07-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react相关/" itemprop="url" rel="index">
+                    <span itemprop="name">react相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-07-05-HIgherReact-day01.html" class="leancloud_visitors" data-flag-title="React 高级指引 D1">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,315
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="React-高级指引学习笔记-第一天"><a href="#React-高级指引学习笔记-第一天" class="headerlink" title="React 高级指引学习笔记-第一天"></a>React 高级指引学习笔记-第一天</h1><h2 id="深入-JSX"><a href="#深入-JSX" class="headerlink" title="深入 JSX"></a>深入 <code>JSX</code></h2><p>在本质上讲， <code>JSX</code> 只是为 <code>React.createElement(component,props,...children)</code> 方法提供的与语法糖  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyButton color=&quot;blue&quot; shadowSize = &#123;2&#125;&gt; Click Me &lt;/MyButton&gt;</span><br></pre></td></tr></table></figure>
+<p>编译为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.createElement( MyButton , &#123; color : &apos;blue&apos; , shadowSize : 2&#125; , &apos;Click Me&apos; );</span><br></pre></td></tr></table></figure>
+<p>如果没有子代，可以用闭合标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className = &apos;sidebar&apos; /&gt;</span><br></pre></td></tr></table></figure>
+<p>编译为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">React.createElement( &apos;div&apos; , &#123; className : &apos;sidebar&apos; &#125; , null);</span><br></pre></td></tr></table></figure>
+<h2 id="指定-React-元素类型"><a href="#指定-React-元素类型" class="headerlink" title="指定 React 元素类型"></a>指定 <code>React</code> 元素类型</h2><p><code>JSX</code> 的标签名决定了 <code>React</code> 元素的类型<br>大写开头的 <code>JSX</code> 标签标示一个 <code>React</code> 组件，这些标签会被编译为同名变量并被引用，所以如果使用了 <code>&lt;Foo/&gt;</code> 表达式，就必须在作用域先声明 <code>Foo</code> 变量</p>
+<h3 id="React-必须声明"><a href="#React-必须声明" class="headerlink" title="React 必须声明"></a><code>React</code> 必须声明</h3><p>由于 <code>JSX</code> 编译后会调用 <code>React.createElement</code> 方法，所以在 <code>JSX</code> 代码中必须首先声明 <code>React</code> 变量<br>下面的导入都是必须的，尽管在代码中没有直接引用  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import CustomButton from &apos;./CustomButton&apos;;</span><br><span class="line">function WarningButton()&#123;</span><br><span class="line">  return &lt;CustomButton color = &quot;red&quot;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用 <code>&lt;script&gt;</code> 加载 <code>React</code> ，将作用于全局</p>
+<h3 id="点表示法"><a href="#点表示法" class="headerlink" title="点表示法"></a>点表示法</h3><p>使用 <code>JSX</code> 中的点来引用 <code>React</code> 组件，可以方便地从一个模块中导出许多 <code>React</code> 组件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">const MyComponents = &#123;</span><br><span class="line">  DatePicker : function DatePicker(props)&#123;</span><br><span class="line">    return &lt;div&gt; Imagine a &#123; props.color &#125; datepicker here.&lt;/div&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function BlueDatePicker()&#123;</span><br><span class="line">  return &lt;MyCompoents.DatePicker color = &quot;blue&quot;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h3><p>当元素类型以小写字母开头时，它表示一个内置组件，如 <code>&lt;div&gt;</code> 或 <code>&lt;span&gt;</code>,并将字符串 <code>&#39;div&#39;</code> 或 <code>&#39;span&#39;</code> 传递给 <code>React.createElement</code> 。以大写字母开头的类型，如 <code>&lt;Foo /&gt;</code> 编译为 <code>React.createElement(Foo)</code> ，并它正对应与在 <code>JavaScript</code> 文件中定义或导入的组件</p>
+<p>例如，下面的代码将无法按预期运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// 错误！组件名应该首字母大写:</span><br><span class="line">function hello(props) &#123;</span><br><span class="line">  // 正确！div 是有效的 HTML 标签:</span><br><span class="line">  return &lt;div&gt;Hello &#123;props.toWhat&#125;&lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function HelloWorld() &#123;</span><br><span class="line">  // 错误！React 会将小写开头的标签名认为是 HTML 原生标签:</span><br><span class="line">  return &lt;hello toWhat=&quot;World&quot; /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了解决这个问题，我们将 <code>hello</code> 重命名为 <code>Hello</code>，然后使用 <code>&lt;Hello /&gt;</code> 引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">// 正确！组件名应该首字母大写:</span><br><span class="line">function Hello(props) &#123;</span><br><span class="line">  // 正确！div 是有效的 HTML 标签:</span><br><span class="line">  return &lt;div&gt;Hello &#123;props.toWhat&#125;&lt;/div&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function HelloWorld() &#123;</span><br><span class="line">  // 正确！React 能够将大写开头的标签名认为是 React 组件。</span><br><span class="line">  return &lt;Hello toWhat=&quot;World&quot; /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在运行时选择类型"><a href="#在运行时选择类型" class="headerlink" title="在运行时选择类型"></a>在运行时选择类型</h3><p>你不能使用表达式来作为 <code>React</code> 元素的标签。如果你的确想通过表达式来确定 <code>React</code> 元素的类型，请先将其赋值给大写开头的变量。这种情况一般会在你想通过属性值条件渲染组件时出现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; PhotoStory, VideoStory &#125; from &apos;./stories&apos;;</span><br><span class="line"></span><br><span class="line">const components = &#123;</span><br><span class="line">  photo: PhotoStory,</span><br><span class="line">  video: VideoStory</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function Story(props) &#123;</span><br><span class="line">  // 错误！JSX 标签名不能为一个表达式。</span><br><span class="line">  return &lt;components[props.storyType] story=&#123;props.story&#125; /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要解决这个问题，我们需要先将类型赋值给大写开头的变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; PhotoStory, VideoStory &#125; from &apos;./stories&apos;;</span><br><span class="line"></span><br><span class="line">const components = &#123;</span><br><span class="line">  photo: PhotoStory,</span><br><span class="line">  video: VideoStory</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function Story(props) &#123;</span><br><span class="line">  // 正确！JSX 标签名可以为大写开头的变量。</span><br><span class="line">  const SpecificStory = components[props.storyType];</span><br><span class="line">  return &lt;SpecificStory story=&#123;props.story&#125; /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>在 <code>JSX</code> 中有几种不同的方式来指定属性</p>
+<h3 id="使用-JavaScript-表示式"><a href="#使用-JavaScript-表示式" class="headerlink" title="使用 JavaScript 表示式"></a>使用 <code>JavaScript</code> 表示式</h3><p>可以传递任何 <code>{}</code> 包裹的 <code>JavaScript</code> 表示式作为一个属性值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent foo = &#123; 1 + 2 + 3 + 4 &#125;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>if</code> 语句和 <code>for</code> 循环在 <code>JavaScript</code> 中不是表达式，因此它们不能直接在 <code>JSX</code> 中使用，但是可以把它们放在周围的代码中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function NumberDescriber(props)&#123;</span><br><span class="line">  let description;</span><br><span class="line">  if(props.number % 2 == 0)&#123;</span><br><span class="line">    description = &lt;strong&gt;even&lt;/strong&gt;</span><br><span class="line">  &#125; else&#123;</span><br><span class="line">    description = &lt;i&gt;odd&lt;/i&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  return &lt;div&gt;&#123;props.number&#125; is an &#123;description&#125; number &lt;/div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串常量"><a href="#字符串常量" class="headerlink" title="字符串常量"></a>字符串常量</h3><p>可以将字符串常量作为属性值传递，下面的 <code>JSX</code> 是等价的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyCompoent message = &apos;hello world&apos; /&gt;  </span><br><span class="line">&lt;MyConmpoent message = &#123; &apos;hello world&apos; &#125;&gt;</span><br></pre></td></tr></table></figure>
+<p>当传递一个字符串常量时，该值会被解析为 <code>HTML</code> 非转义字符串，所以下面的 <code>JSX</code> 表达式时相同的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyCompoent message = &apos;3&apos; /&gt;  </span><br><span class="line">&lt;MyConmpoent message = &#123; &apos;&lt;3&apos; &#125;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="默认为-True"><a href="#默认为-True" class="headerlink" title="默认为 True"></a>默认为 <code>True</code></h3><p>如果没有给属性值，它默认有属性传值，默认为 <code>true</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyCompoent autocomplete /&gt;  </span><br><span class="line">&lt;MyConmpoent autocomplete  = &#123; true &#125;&gt;</span><br></pre></td></tr></table></figure>
+<p>一般情况下，不建议这么使用，因为它hi与 <code>ES6对象简洁表示法混淆</code>。比如 <code>{foo}</code> 是 <code>{foo: foo}</code> 的简写，而不是 <code>{foo: true}</code>。这里能这样用，是因为它符合 <code>HTML</code> 的做法。</p>
+<h3 id="扩展属性"><a href="#扩展属性" class="headerlink" title="扩展属性"></a>扩展属性</h3><p>如果已经有 <code>props</code> 属性，并且想在 <code>JSX</code> 中传递它，可以使用 <code>...</code> 作为扩展操作符来传递整个属性对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function App1()&#123;</span><br><span class="line">  return &lt;Greeting firstName = &quot;Ben&quot; lastName = &quot;Hector&quot; /&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function App2()&#123;</span><br><span class="line">  const props = &#123; firstName : &apos;Ben&apos; , lastName : &apos;Hector&apos; &#125;;</span><br><span class="line">  return &lt;Greeting &#123;...props&#125; /&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当构造通用容器时，扩展属性会非常有用，然而这样做也有可能让很多不相关的属性，传递到不需要它们的组件中使得代码非常混乱，谨慎这个用法</p>
+<h2 id="子代"><a href="#子代" class="headerlink" title="子代"></a>子代</h2><p>在包含开始和结束标签的 <code>JSX</code> 表达式中，标记之间的内容作为特殊的参数传递 ： <code>props.children</code> ，有几种不同的方法来传递子代</p>
+<h3 id="字符串常量-1"><a href="#字符串常量-1" class="headerlink" title="字符串常量-"></a>字符串常量-</h3><p>可以在开始和结束标签之间放入一个字符串，则 <code>props.children</code> 就是那个字符串，对于很多内置 <code>HTML</code> 元素很有用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent&gt; Hello World! &lt;/MyComponent&gt;</span><br></pre></td></tr></table></figure>
+<p>这是有效的 <code>JSX</code> ，并且 <code>MyComponent</code> 的 <code>props.children</code> 值将会直接是 <code>hello world!</code> 因为 <code>HTML</code> 未转义，所以可以像 <code>HTML</code> 一样写 <code>JSX</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt; This is valid HTML \ JSX at the same time &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>JSX</code> 会移除空行和开始与结尾处的空格。标签邻近的新行也会被移除，字符串常量内部的换行会被压缩成一个空格，所以下面这些都等价：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;Hello World&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  Hello World</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  Hello</span><br><span class="line">  World</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line"></span><br><span class="line">  Hello World</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><p>可以通过子代嵌入更多的 JSX 元素，这对于嵌套显示组件非常有用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyContainer&gt;</span><br><span class="line">  &lt;MyFirstComponent /&gt;</span><br><span class="line">  &lt;MySecondComponent /&gt;</span><br><span class="line">&lt;/MyContainer&gt;</span><br></pre></td></tr></table></figure>
+<p>你可以混合不同类型的子元素，同时用字符串常量和 <code>JSX</code> 子元素，这是 <code>JSX</code> 类似 <code>HTML</code> 的另一种形式，这在 <code>JSX</code> 和 <code>HTML</code> 中都是有效的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  Here is a list:</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li&gt;Item 1&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;Item 2&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><code>React</code> 组件也可以通过数组的形式返回多个元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  // 不需要使用额外的元素包裹数组中的元素</span><br><span class="line">  return [</span><br><span class="line">    // 不要忘记 key :)</span><br><span class="line">    &lt;li key=&quot;A&quot;&gt;First item&lt;/li&gt;,</span><br><span class="line">    &lt;li key=&quot;B&quot;&gt;Second item&lt;/li&gt;,</span><br><span class="line">    &lt;li key=&quot;C&quot;&gt;Third item&lt;/li&gt;,</span><br><span class="line">  ];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="JavaScript-表达式"><a href="#JavaScript-表达式" class="headerlink" title="JavaScript 表达式"></a><code>JavaScript</code> 表达式</h3><p>可以将任何 <code>{}</code> 包裹的 <code>JavaScript</code> 表达式作为子代传递。例如，下面这些表达式是等价的：</p>
+<blockquote>
+<p>\<MyComponent>foo\</MyComponent><br>\<MyComponent>{‘foo’}\</MyComponent></p>
+</blockquote>
+<p>这对于渲染任意长度的 JSX 表达式的列表很有用。例如，下面将会渲染一个 <code>HTML</code> 列表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function Item(props)&#123;</span><br><span class="line">  return &lt;li&gt;&#123; props.message &#125;&lt;/li&gt;</span><br><span class="line">&#125;</span><br><span class="line">function TodoList()&#123;</span><br><span class="line">  const todos = [&apos;finish doc&apos; , &apos;submit pr&apos; , &apos;nag dan to review&apos;];</span><br><span class="line">  return(</span><br><span class="line">    &lt;ul&gt; &#123;todos.map( (message) =&gt; &lt;Item message = &#123; message &#125; key = &#123; message &#125;&gt; )&#125; &lt;/ul&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>JavaScript</code> 表达式可以与其他类型的子代混合使用，这通常对于字符串模板非常有用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Hello(props)&#123;</span><br><span class="line">  return &lt;div&gt; Hello &#123; props.address &#125; !&lt;/div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>通常情况下，插入 <code>JSX</code> 中的 <code>JavaScript</code> 表达式认作字符串, <code>React</code> 或这些内容的列表。然而， <code>props.children</code> 可以像其他属性一样传递任何数据，而不仅仅是 <code>React</code> 元素。例如，如果你使用自定义组件，则可以将调用 <code>props.children</code> 来获得传递的子代</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function Repeat(props)&#123;</span><br><span class="line">  let items = [];</span><br><span class="line">  for(let i = 0; i &lt; props.numTimes; i++)&#123;</span><br><span class="line">    item.push( props.children(i) );</span><br><span class="line">  &#125;</span><br><span class="line">  return &lt;div&gt;&#123; item &#125;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function ListOfTenThings()&#123;</span><br><span class="line">  return(</span><br><span class="line">    &lt;Repeat numTimes = &#123;10&#125;&gt;</span><br><span class="line">      &#123; (index) =&gt; &lt;div key =&#123;index&#125;&gt;This is item &#123;index&#125; in the list &lt;/div&gt; &#125;</span><br><span class="line">    &lt;/Repeat&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传递给自定义组件的子代可以是任何的元素，只要该组件在 <code>React</code> 渲染钱将其转换成 <code>React</code> 能够理解的东西，这个用法并不常见，但是当你想扩展  <code>JSX</code> 时可以使用</p>
+<h3 id="布尔值-、-Null-和-Undefined-被忽略"><a href="#布尔值-、-Null-和-Undefined-被忽略" class="headerlink" title="布尔值 、 Null 和 Undefined 被忽略"></a>布尔值 、 <code>Null</code> 和 <code>Undefined</code> 被忽略</h3><p><code>false</code> 、 <code>null</code> 、 <code>undefined</code> 和 <code>true</code> 都是有效的子代，但它们不会直接被渲染。下面的表达式是等价的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&#123;false&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&#123;null&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&#123;undefined&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;&#123;true&#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>这在根据条件来确定是否渲染 <code>React</code> 元素时非常有用。以下的 <code>JSX</code> 只会在 <code>showHeader</code> 为 <code>true</code> 时渲染 <code>&lt;Header /&gt;</code> 组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;showHeader &amp;&amp; &lt;Header /&gt;&#125;</span><br><span class="line">  &lt;Content /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，<code>JavaScript</code> 中的一些 “<code>falsy</code>” 值(比如数字0)，它们依然会被渲染。例如，下面的代码不会像你预期的那样运行，因为当 <code>props.message</code> 为空数组时，它会打印 <code>0</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;props.messages.length &amp;&amp;</span><br><span class="line">    &lt;MessageList messages=&#123;props.messages&#125; /&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>要解决这个问题，请确保 <code>&amp;&amp;</code> 前面的表达式始终为布尔值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;props.messages.length &gt; 0 &amp;&amp;</span><br><span class="line">    &lt;MessageList messages=&#123;props.messages&#125; /&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>相反，如果你想让类似 <code>false</code> 、<code>true</code> 、<code>null</code> 或 <code>undefined</code> 出现在输出中，你必须先把它转换成字符串 :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  My JavaScript variable is &#123;String(myVariable)&#125;.</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="注解："><a href="#注解：" class="headerlink" title="注解："></a>注解：</h2><p><code>JavaScript</code> 中 <code>falsy</code> 值的例子 (将 <code>falsy</code> 值转换为 <code>false</code> ):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (false)  </span><br><span class="line">if (null)  </span><br><span class="line">if (undefined)  </span><br><span class="line">if (0)  </span><br><span class="line">if (NaN)  </span><br><span class="line">if (&apos;&apos;)  </span><br><span class="line">if (&quot;&quot;)  </span><br><span class="line">if (document.all)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-07-05-HIgherReact-day01.html" title="React 高级指引 D1">http://laibh.top/2018-07-05-HIgherReact-day01.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" <i class="fa fa-tag"></i> react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-06-26-TheRoadtolearnReactPart4.html" rel="next" title="The Road to learn React Part4">
+                <i class="fa fa-chevron-left"></i> The Road to learn React Part4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-07-06-learn-dva-part1.html" rel="prev" title="Dva 学习笔记 (上)">
+                Dva 学习笔记 (上) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-高级指引学习笔记-第一天"><span class="nav-number">1.</span> <span class="nav-text">React 高级指引学习笔记-第一天</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#深入-JSX"><span class="nav-number">1.1.</span> <span class="nav-text">深入 JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指定-React-元素类型"><span class="nav-number">1.2.</span> <span class="nav-text">指定 React 元素类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-必须声明"><span class="nav-number">1.2.1.</span> <span class="nav-text">React 必须声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点表示法"><span class="nav-number">1.2.2.</span> <span class="nav-text">点表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首字母大写"><span class="nav-number">1.2.3.</span> <span class="nav-text">首字母大写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在运行时选择类型"><span class="nav-number">1.2.4.</span> <span class="nav-text">在运行时选择类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性"><span class="nav-number">1.3.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-JavaScript-表示式"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用 JavaScript 表示式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串常量"><span class="nav-number">1.3.2.</span> <span class="nav-text">字符串常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认为-True"><span class="nav-number">1.3.3.</span> <span class="nav-text">默认为 True</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展属性"><span class="nav-number">1.3.4.</span> <span class="nav-text">扩展属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子代"><span class="nav-number">1.4.</span> <span class="nav-text">子代</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串常量-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">字符串常量-</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSX"><span class="nav-number">1.4.2.</span> <span class="nav-text">JSX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-表达式"><span class="nav-number">1.4.3.</span> <span class="nav-text">JavaScript 表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.4.4.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔值-、-Null-和-Undefined-被忽略"><span class="nav-number">1.4.5.</span> <span class="nav-text">布尔值 、 Null 和 Undefined 被忽略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解："><span class="nav-number">1.5.</span> <span class="nav-text">注解：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="核心模块是 Node.js 的心脏，它由一些精简而高效的库组成，为Node.js 提供了基本的 API。本章主要内容：  全局对象 常用工具 事件机制 文件系统访问 HTTP 服务器与客户端  这一章比较重要，所以字数比较多。 Node.js核心模块全局对象JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其他属性都可以在程序的任何地方访问，即全局变量。在浏">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好玩的Nodejs —— Node.js核心模块">
+<meta property="og:url" content="http://laibh.top/2018-09-20-NodeJs-Part4.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="核心模块是 Node.js 的心脏，它由一些精简而高效的库组成，为Node.js 提供了基本的 API。本章主要内容：  全局对象 常用工具 事件机制 文件系统访问 HTTP 服务器与客户端  这一章比较重要，所以字数比较多。 Node.js核心模块全局对象JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其他属性都可以在程序的任何地方访问，即全局变量。在浏">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-09-20-NodeJs-Part4-util.inspect.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="好玩的Nodejs —— Node.js核心模块">
+<meta name="twitter:description" content="核心模块是 Node.js 的心脏，它由一些精简而高效的库组成，为Node.js 提供了基本的 API。本章主要内容：  全局对象 常用工具 事件机制 文件系统访问 HTTP 服务器与客户端  这一章比较重要，所以字数比较多。 Node.js核心模块全局对象JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其他属性都可以在程序的任何地方访问，即全局变量。在浏">
+<meta name="twitter:image" content="http://laibh.top/images/2018-09-20-NodeJs-Part4-util.inspect.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-09-20-NodeJs-Part4.html"/>
+
+
+
+
+
+  <title>好玩的Nodejs —— Node.js核心模块 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-09-20-NodeJs-Part4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">好玩的Nodejs —— Node.js核心模块</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T15:31:54+08:00">
+                2018-09-20
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-09-20-NodeJs-Part4.html" class="leancloud_visitors" data-flag-title="好玩的Nodejs —— Node.js核心模块">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,420
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>核心模块是 Node.js 的心脏，它由一些精简而高效的库组成，为Node.js 提供了基本的 API。本章主要内容：</p>
+<ul>
+<li>全局对象</li>
+<li>常用工具</li>
+<li>事件机制</li>
+<li>文件系统访问</li>
+<li>HTTP 服务器与客户端</li>
+</ul>
+<p>这一章比较重要，所以字数比较多。</p>
+<h2 id="Node-js核心模块"><a href="#Node-js核心模块" class="headerlink" title="Node.js核心模块"></a>Node.js核心模块</h2><h3 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h3><p>JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其他属性都可以在程序的任何地方访问，即全局变量。在浏览器 JavaScript 中，通常 <code>window</code> 是全局对象，而 Node.js 中的全局对象是 <code>global</code>,所有全局变量（除了 global 本身以外）都是 <code>global</code> 对象的属性。</p>
+<h4 id="全局对象与全局变量"><a href="#全局对象与全局变量" class="headerlink" title="全局对象与全局变量"></a>全局对象与全局变量</h4><p><code>global</code> 最根本的作用是作为全局变量的宿主，按照 ECMAScript 的定义，满足一下条件的变量是全局变量：</p>
+<ul>
+<li>在最外层定义的变量</li>
+<li>全局对象的属性</li>
+<li>隐式定义的变量（未定义直接赋值的变量）</li>
+</ul>
+<p>Node.js 中 不可能在最外层定义变量，因为所有用户代码都是属于当前模块的，而模块本身不是最外层上下文。</p>
+<h4 id="process"><a href="#process" class="headerlink" title="process"></a>process</h4><p><code>process</code> 是一个全局变量，即 <code>global</code> 对象的属性，它用于描述当前的 Node.js 进程状态的对象，提供了一个与操作系统的简单接口。通常用于写本地命令行程序的时候。</p>
+<p>以下介绍 <code>process</code> 对象的一些最简单的成员方法。</p>
+<h5 id="process-argv"><a href="#process-argv" class="headerlink" title="process.argv"></a>process.argv</h5><p>命令行参数数组，第一个元素是 <code>node</code>,第二个元素是脚本文件名，从第三个元素开始每个元素是一个运行参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(process.argv);</span><br></pre></td></tr></table></figure>
+<p>将以上代码存储为 argv.js，通过以下命令运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 6.1.7601]</span><br><span class="line">版权所有 (c) 2009 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator&gt;cd Desktop</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop&gt;cd nodeJs</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node argv.js</span><br><span class="line">[ 'E:\\Program Files\\NodeJS\\node.exe',</span><br><span class="line">  'C:\\Users\\Administrator\\Desktop\\nodeJs\\argv.js' ]</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node argv.js 2018 name=lbh --v "Lbh"</span><br><span class="line">[ 'E:\\Program Files\\NodeJS\\node.exe',</span><br><span class="line">  'C:\\Users\\Administrator\\Desktop\\nodeJs\\argv.js',</span><br><span class="line">  '2018',</span><br><span class="line">  'name=lbh',</span><br><span class="line">  '--v',</span><br><span class="line">  'Lbh' ]</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="process-stdout"><a href="#process-stdout" class="headerlink" title="process.stdout"></a>process.stdout</h5><p>是标准输出流，通常使用的 <code>console.log()</code>,想标准输出打印字符，而 <code>process.stdout.write()</code>函数提供了更底层的接口。</p>
+<h5 id="process-stdin"><a href="#process-stdin" class="headerlink" title="process.stdin"></a>process.stdin</h5><p>是标准输入流，初始时它是被暂停的，要想从标准输入读取数据，你必须恢复流，并手动编写流的事件响应函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">process.stdin.resume();</span><br><span class="line"></span><br><span class="line">process.stdin.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    process.stdout.write(<span class="string">'read from console:'</span> + data.toString());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="process-nextTick-callback"><a href="#process-nextTick-callback" class="headerlink" title="process.nextTick(callback)"></a>process.nextTick(callback)</h5><p>为时间循环设置一项任务，NodeJs 会在下次事件循环调响应时调用 callback 。</p>
+<p>因为一个 Node.js 进程只有一个线程，因此在任何时刻都只有一个事件在执行。如果这个事件占用大量的 CPU 时间，执行事件循环中的下一个事件就需要等待很久，因此 Node.js 的一个编程原则就是尽量缩短每个事件的执行时间。 process.nextTick()  提供了一个这样的工具，可以把复杂的工作拆散，变成一个个较小的事件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSometing</span>(<span class="params">args, callback</span>) </span>&#123;</span><br><span class="line">    somethingComplicated(args);</span><br><span class="line">    callback();</span><br><span class="line">&#125;</span><br><span class="line">doSomething(<span class="function"><span class="keyword">function</span> <span class="title">onEnd</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    compute();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>假设 compute() 和 somethingComplicated() 是两个较为耗时的函数，以上的程序在调用  doSomething()  时会先执行 somethingComplicated() ，然后立即调用回调函数，在  onEnd()  中又会执行  compute() 。下面用 process.nextTick()  改写上面的程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">args, callback</span>)</span>&#123;</span><br><span class="line">    somethingComplicated(args);</span><br><span class="line">    process.nextTick(callback);</span><br><span class="line">&#125;</span><br><span class="line">doSomething(<span class="function"><span class="keyword">function</span> <span class="title">onEnd</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    compute();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>改写后的程序会把上面耗时的操作拆分为两个事件，减少每个事件的执行时间，提高事件响应速度。不要使用 setTimeout(fn,0) 代替 process.nextTick(callback) ，前者比后者效率要低得多。</p>
+<p>其他有关的， <a href="http://nodejs.org/api/process.html">process api</a></p>
+<h4 id="console"><a href="#console" class="headerlink" title="console"></a>console</h4><p><code>console</code> 用于提供控制台标准输出，向标准输出流（<code>stdout</code>）或标准错误流（stderr）输出字符。</p>
+<h5 id="console-log"><a href="#console-log" class="headerlink" title="console.log()"></a>console.log()</h5><p>想标准输出流打印字符并换行符结束。<code>console.log</code> 接受若干个参数，如果只有一个参数，则输出这个参数的字符串形式，如果有多个参数，则以类似 C 语言 <code>printf()</code> 命令的格式输出。第一个参数是一个字符串，如果没有参数，只打印一个换行。</p>
+<h5 id="console-error"><a href="#console-error" class="headerlink" title="console.error()"></a>console.error()</h5><p>与 <code>console.log()</code> 用法相同，只是向标准错误流输出。</p>
+<h5 id="console-trace"><a href="#console-trace" class="headerlink" title="console.trace()"></a>console.trace()</h5><p>向标准错误流输出当前的调用栈。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.trace ();</span><br></pre></td></tr></table></figure>
+<p>运行结果为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node consoletrace.js</span><br><span class="line">Trace</span><br><span class="line">    at <span class="built_in">Object</span>.&lt;anonymous&gt; (C:\Users\Administrator\Desktop\nodeJs\consoletrace.js</span><br><span class="line">:<span class="number">1</span>:<span class="number">71</span>)</span><br><span class="line">    at Module._compile (<span class="built_in">module</span>.js:<span class="number">652</span>:<span class="number">30</span>)</span><br><span class="line">    at <span class="built_in">Object</span>.Module._extensions..js (<span class="built_in">module</span>.js:<span class="number">663</span>:<span class="number">10</span>)</span><br><span class="line">    at Module.load (<span class="built_in">module</span>.js:<span class="number">565</span>:<span class="number">32</span>)</span><br><span class="line">    at tryModuleLoad (<span class="built_in">module</span>.js:<span class="number">505</span>:<span class="number">12</span>)</span><br><span class="line">    at <span class="built_in">Function</span>.Module._load (<span class="built_in">module</span>.js:<span class="number">497</span>:<span class="number">3</span>)</span><br><span class="line">    at <span class="built_in">Function</span>.Module.runMain (<span class="built_in">module</span>.js:<span class="number">693</span>:<span class="number">10</span>)</span><br><span class="line">    at startup (bootstrap_node.js:<span class="number">191</span>:<span class="number">16</span>)</span><br><span class="line">    at bootstrap_node.js:<span class="number">612</span>:<span class="number">3</span></span><br><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="常用工具-util"><a href="#常用工具-util" class="headerlink" title="常用工具  util"></a>常用工具  util</h3><p><code>util</code>  是一个 Node.js 核心模块，提供常用函数的集合，用于弥补核心 <code>JavaScript</code> 的功能<br>过于精简的不足。</p>
+<h4 id="util-inherits"><a href="#util-inherits" class="headerlink" title="util.inherits"></a>util.inherits</h4><p>util.inherits(constructor, superConstructor) 是一个实现对象间原型继承的函数。JavaScript 面向对象特性是基于原型的，与常见的基于类的不同。JavaScript 没有提供对象继承的语言级别特性，而是通过原型复制来实现的。</p>
+<p>util.inherits  的用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// util.inherits</span></span><br><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Base</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'base'</span>;</span><br><span class="line">	<span class="keyword">this</span>.base = <span class="number">2018</span>;</span><br><span class="line">	<span class="keyword">this</span>.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'Hello'</span> + <span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Base.prototype.showName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Sub</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'sub'</span>;</span><br><span class="line">&#125;</span><br><span class="line">util.inherits(Sub, Base);</span><br><span class="line"><span class="keyword">var</span> objBase = <span class="keyword">new</span> Base();</span><br><span class="line">objBase.showName();</span><br><span class="line">objBase.sayHello();</span><br><span class="line"><span class="built_in">console</span>.log(objBase);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> objSub = <span class="keyword">new</span> Sub();</span><br><span class="line">objSub.showName();</span><br><span class="line"><span class="comment">// objSub.sayHello();</span></span><br><span class="line"><span class="built_in">console</span>.log(objSub);</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node util.inherits.js</span><br><span class="line">base</span><br><span class="line">Hellobase</span><br><span class="line">Base &#123; name: 'base', base: 2018, sayHello: [Function] &#125;</span><br><span class="line">sub</span><br><span class="line">Sub &#123; name: 'sub' &#125;</span><br></pre></td></tr></table></figure>
+<p>上面例子定义了一个基础对象 Base 和一个继承自 Base  的 Sub ， Base 有三个在构造函数内定义的属性和一个原型中定义的函数，通过 util.inherits  实现继承。可以看到 Sub 仅仅继承了 Base 在原型中定义的函数，而构造函数内部创建的属性不会被 <code>console.log</code> 作为对象的属性输出。如果去掉  objSub.sayHello(); 这行的注释，将会看到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs\util.inherits.js:26</span><br><span class="line">objSub.sayHello();</span><br><span class="line">       ^</span><br><span class="line"></span><br><span class="line">TypeError: objSub.sayHello is not a function</span><br><span class="line">    at Object.&lt;anonymous&gt; (C:\Users\Administrator\Desktop\nodeJs\util.inherits.j</span><br><span class="line">s:26:8)</span><br><span class="line">    at Module._compile (module.js:652:30)</span><br><span class="line">    at Object.Module._extensions..js (module.js:663:10)</span><br><span class="line">    at Module.load (module.js:565:32)</span><br><span class="line">    at tryModuleLoad (module.js:505:12)</span><br><span class="line">    at Function.Module._load (module.js:497:3)</span><br><span class="line">    at Function.Module.runMain (module.js:693:10)</span><br><span class="line">    at startup (bootstrap_node.js:191:16)</span><br><span class="line">    at bootstrap_node.js:612:3</span><br></pre></td></tr></table></figure>
+<h4 id="util-inspect"><a href="#util-inspect" class="headerlink" title="util.inspect"></a>util.inspect</h4><p><code>util.inspect（object, [showHidden], [depth]. [colors]）</code>是一个将任意对象转换为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 <code>object</code> ，即要转换的对象。</p>
+<p><code>showHidden</code> 是一个可选参数，如果值为 <code>true</code>，将会输出更多隐藏信息。</p>
+<p><code>depth</code> 表示最大递归的成熟，如果对象很复杂。可以指定层数以控制输出消息的对少，如果不指定 <code>depth</code>,默认会递归 2 层， 指定 <code>null</code> 表示将不限递归层数完整遍历对象。</p>
+<p><code>colors</code> 的值为true,输出格式将会以 <code>ANSI</code>颜色编码，通常用于在终端显示更漂亮的效果。 </p>
+<p>特别要指出的是， util.inspect  并不会简单地直接把对象转换为字符串，即使该对象定义了 toString  方法也不会调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// util.inspect</span></span><br><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'lbh'</span></span><br><span class="line">	<span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="built_in">console</span>.log(util.inspect(obj));</span><br><span class="line"><span class="built_in">console</span>.log(util.inspect(obj, <span class="literal">true</span>));</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node util.inspect.js</span><br><span class="line">Person &#123; name: 'lbh', toString: [Function] &#125;</span><br><span class="line">Person &#123;</span><br><span class="line">  name: 'lbh',</span><br><span class="line">  toString:</span><br><span class="line">   &#123; [Function]</span><br><span class="line">     [length]: 0,</span><br><span class="line">     [name]: '',</span><br><span class="line">     [arguments]: null,</span><br><span class="line">     [caller]: null,</span><br><span class="line">     [prototype]: &#123; [constructor]: [Circular] &#125; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<p>当设置有颜色的输出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(util.inspect(obj, <span class="literal">true</span>, <span class="literal">true</span>,<span class="number">43</span>));</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<p><img src="/images/2018-09-20-NodeJs-Part4-util.inspect.png" alt="有颜色的 util.inspect"></p>
+<p> util 还提供了 util.isArray() 、 util.isRegExp() 、util.isDate() 、 util.isError()  四个类型测试工具，以及 util.format() 、 util.debug()  </p>
+<p><a href="http://nodejs.org/api/util.html">详情点击</a></p>
+<h3 id="事件驱动-events"><a href="#事件驱动-events" class="headerlink" title="事件驱动  events"></a>事件驱动  events</h3><p><code>events</code>  是 Node.js 最重要的模块，没有“之一”，原因是 Node.js 本身架构就是事件式的，而它提供了唯一的接口，所以堪称 Node.js 事件编程的基石。 <code>events</code> 模块不仅用于用户代码与 Node.js 下层事件循环的交互，还几乎被所有的模块依赖。</p>
+<h4 id="事件发射器"><a href="#事件发射器" class="headerlink" title="事件发射器"></a>事件发射器</h4><p><code>events</code> 模块只提供了一个对象：<code>event.EventEmitter</code>。 <code>EventEmitter</code> 的核心就是事件发射与事件监听器功能的封装。 <code>EventEmitter</code> 的每个事件由一个事件名和若干参数组成，事件名是一个字符串，通常表达一定的语义。对于每一个事件，<code>EventEmitter</code>支持若干个事件监听器。当事件发射时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。</p>
+<p>例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// events</span></span><br><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'listener1'</span>, arg1, arg2);</span><br><span class="line">&#125;);</span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'listener2'</span>, arg1, arg2);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">emitter.emit(<span class="string">'someEvent'</span>, <span class="string">'lbh'</span>, <span class="number">2018</span>);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node events.js</span><br><span class="line">listener1 lbh 2018</span><br><span class="line">listener2 lbh 2018</span><br></pre></td></tr></table></figure>
+<p>以上例子，<code>emitter</code> 为事件 <code>someEvent</code> 注册了两个事件监听器，然后发射了 <code>someEvent</code> 事件。运行结果中可以看到两个事件监听器回调函数先被调用。</p>
+<p> <code>EventEmitter</code> 常用的API。</p>
+<ul>
+<li><code>EventEmitter.on(event, listener)</code> 为指定事件注册一个监听器，接受一个字符串 <code>event</code> 和一个回调函数 <code>listener</code></li>
+<li><code>EventEmitter.emit(event, [arg1], [arg2], [...])</code> 发射 <code>event</code> 事件，传递若干可选参数到事件监听器的参数表。</li>
+<li><code>EventEmitter.once(event, listener)</code>  为事件注册一个单次监听器，即监听器最多会触发一次，触发后就立刻解除该监听器</li>
+<li><code>EventEmitter.removeListener(event, listener)</code> 移除指定事件的某个监听器， <code>listener</code> 必须是该事件已经注册过的监听器。</li>
+<li><code>EventEmitter.removeAllListeners([event])</code> 移除所有事件的所有监听器，如果指定 <code>event</code>，则移除指定事件的所有监听器。</li>
+</ul>
+<p><a href="http://nodejs.org/api/events.html">更多详情点击</a></p>
+<h4 id="error-事件"><a href="#error-事件" class="headerlink" title="error 事件"></a>error 事件</h4><p><code>EventEmitter</code> 定义了一个特殊的事件  <code>error</code> ，它包含了“错误”的语义，我们在遇到异常的时候通常会发射  <code>error</code>  事件。当  <code>error</code> 被发射时， <code>EventEmitter</code> 规定如果没有响应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。我们一般要为会发射  <code>error</code> 事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
+<h4 id="继承-EventEmitter"><a href="#继承-EventEmitter" class="headerlink" title="继承  EventEmitter"></a>继承  EventEmitter</h4><p>大多数时候我们不会直接使用 <code>EventEmitter</code> ，而是在对象中继承它。包括  <code>fs</code> 、 <code>net</code> 、<code>http</code> 在内的，只要是支持事件响应的核心模块都是  <code>EventEmitter</code> 的子类。</p>
+<p>为什么要这样做呢？原因有两点。首先，具有某个实体功能的对象实现事件符合语义，事件的监听和发射应该是一个对象的方法。其次 JavaScript 的对象机制是基于原型的，支持部分多重继承，继承  <code>EventEmitter</code> 不会打乱对象原有的继承关系。</p>
+<h3 id="文件系统-fs"><a href="#文件系统-fs" class="headerlink" title="文件系统  fs"></a>文件系统  fs</h3><p><code>fs</code> 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等 POSIX 文件系统操作。与其他模块不同的是，<code>fs</code> 模块中所有的操作都提供了异步的和同步的两个版本。例如读取文件内容的函数有异步的 <code>fs.readFile()</code> 和同步的 <code>fs.readFileSync()</code> </p>
+<h4 id="fs-readFile"><a href="#fs-readFile" class="headerlink" title="fs.readFile"></a>fs.readFile</h4><p><code>fs.readFile(filename,[encoding],[callback(err,data)])</code>是最简单的读取文件的函数。</p>
+<p><code>fliename</code> 必选参数，表示读取的文件名</p>
+<p><code>encoding</code> 可选，表示文件的字符编码</p>
+<p><code>callback</code> 回调函数提供两个参数 <code>err</code> 和 <code>data</code>，<code>err</code>表示有没有错发生， <code>data</code> 是文件内容。如果指定了 <code>encoding</code>,<code>data</code>  是一个解析后的字符串，否则 <code>data</code> 将会是以 <code>Buffer</code> 形式表示的二进制数据。</p>
+<p>下面的例子读取文本内容，但是不指定编码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fs.readFile</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'content.txt'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(err)&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(err);		</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node fs.readFile.js</span><br><span class="line">&lt;Buffer 54 65 78 74 20 e6 96 87 e6 9c ac e6 96 87 e4 bb b6 e7 a4 ba e4 be 8b&gt;</span><br></pre></td></tr></table></figure>
+<p>这个程序以二进制的模式读取了文件的内容， <code>data</code> 的值是 <code>Buffer</code> 的对象。如果指定了 <code>encoding</code> 指定编码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fs.readFile</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'content.txt'</span>,<span class="string">'utf-8'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(err)&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(err);		</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node fs.readFile.js</span><br><span class="line">Text 文本文件示例</span><br></pre></td></tr></table></figure>
+<p>当读取文件出现错误时， err  将会是  Error  对象。如果 content.text 不存在，运行前面的代码则会出现以下结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node fs.readFile.js</span><br><span class="line">&#123; Error: ENOENT: no such file or directory, open 'C:\Users\Administrator\Desktop</span><br><span class="line">\nodeJs\content.text'</span><br><span class="line">  errno: -4058,</span><br><span class="line">  code: 'ENOENT',</span><br><span class="line">  syscall: 'open',</span><br><span class="line">  path: 'C:\\Users\\Administrator\\Desktop\\nodeJs\\content.text' &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Node.js 的异步编程接口习惯是以函数的最后一个参数为回调函数，通常一个函数只有一个回调函数。回调函数是实际参数中第一个是  err ，其余的参数是其他返回的内容。如果没有发生错误， err 的值会是  null 或 undefined 。如果有错误发生， err 通常是  Error 对象的实例。</p>
+</blockquote>
+<h4 id="fs-readFileSync"><a href="#fs-readFileSync" class="headerlink" title="fs.readFileSync"></a>fs.readFileSync</h4><p><code>fs.readFileSync(filename, [encoding])</code>  是 <code>fs.readFile</code> 同步版本。它接受的参数和  <code>fs.readFile</code> 相同，而读取到的文件内容会以函数返回值的形式返回。如果有错误发生， <code>fs</code> 将会抛出异常，你需要使用  <code>try</code> 和  <code>catch</code> 捕捉并处理异常。</p>
+<p>与同步 I/O 函数不同，Node.js 中异步函数大多没有返回值。</p>
+<h4 id="fs-open"><a href="#fs-open" class="headerlink" title="fs.open"></a>fs.open</h4><p><code>fs.open(path, flags, [mode], [callback(err, fd)])</code> 是 POSIX  open 函数的封装，与 C 语言标准库中的  fopen 函数类似。它接受两个必选参数， path 为文件的路径，flags 可以是以下值。</p>
+<ul>
+<li>r  ：以读取模式打开文件。</li>
+<li>r+ ：以读写模式打开文件。</li>
+<li>w  ：以写入模式打开文件，如果文件不存在则创建。</li>
+<li>w+ ：以读写模式打开文件，如果文件不存在则创建。</li>
+<li>a  ：以追加模式打开文件，如果文件不存在则创建。</li>
+<li>a+ ：以读取追加模式打开文件，如果文件不存在则创建。</li>
+</ul>
+<p>mode 参数用于创建文件时给文件指定权限，默认是 0666。回调函数将会传递一个文件描述符  fd。</p>
+<h4 id="fs-read"><a href="#fs-read" class="headerlink" title="fs.read"></a>fs.read</h4><p><code>fs.read(fd, buffer, offset, length, position, [callback(err, bytesRead,
+buffer)])</code>  是 POSIX  <code>read</code> 函数的封装，相比  <code>fs.readFile</code> 提供了更底层的接口。 <code>fs.read</code>的功能是从指定的文件描述符  <code>fd</code> 中读取数据并写入  <code>buffer</code> 指向的缓冲区对象。</p>
+<p><code>offset</code> 是 <code>buffer</code> 的写入偏移量。</p>
+<p> <code>length</code> 是要从文件中读取的字节数。</p>
+<p> <code>position</code> 是文件读取的起始位置，如果  <code>position</code> 的值为  <code>null</code> ，则会从当前文件指针的位置读取。</p>
+<p><code>callback</code> 回调函数传递 <code>bytesRead</code> 和  <code>buffer</code> ，分别表示读取的字节数和缓冲区对象。</p>
+<p>以下是一个使用  fs.open 和  fs.read 的示例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fs.read</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.open(<span class="string">'content.txt'</span>, <span class="string">'r'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, fd</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (err) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(err);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> buf = <span class="keyword">new</span> Buffer(<span class="number">8</span>);</span><br><span class="line">	fs.read(fd, buf, <span class="number">0</span>, <span class="number">8</span>, <span class="literal">null</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, bytesRead, buffer</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(err);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'bytesRead:'</span> + bytesRead);</span><br><span class="line">		<span class="built_in">console</span>.log(buffer);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop\nodeJs&gt;node fs.read.js</span><br><span class="line">bytesRead:8</span><br><span class="line">&lt;Buffer 54 65 78 74 20 e6 96 87&gt;</span><br></pre></td></tr></table></figure>
+<p>一般来说，除非必要，否则不要使用这种方式读取文件，因为它要求你手动管理缓冲区和文件指针，尤其是在你不知道文件大小的时候，这将会是一件很麻烦的事情</p>
+<p>下表列出了 <code>fs</code> 所有函数的定义和功能</p>
+<table>
+<thead>
+<tr>
+<th>功 能</th>
+<th>异步函数</th>
+<th>同步函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开文件</td>
+<td>fs.open(path,flags, [mode], [callback(err,fd)])</td>
+<td>fs.openSync(path, flags, [mode])</td>
+</tr>
+<tr>
+<td>关闭文件</td>
+<td>fs.close(fd, [callback(err)])</td>
+<td>fs.closeSync(fd)</td>
+</tr>
+<tr>
+<td>读取文件（文件描述符）</td>
+<td>fs.read(fd,buffer,offset,length,position,[callback(err, bytesRead, buffer)])</td>
+<td>fs.readSync(fd, buffer, offset,length, position)</td>
+</tr>
+<tr>
+<td>写入文件（文件描述符）</td>
+<td>fs.write(fd,buffer,offset,length,position,[callback(err, bytesWritten, buffer)])</td>
+<td>fs.writeSync(fd, buffer, offset,length, position)</td>
+</tr>
+<tr>
+<td>读取文件内容</td>
+<td>fs.readFile(filename,[encoding],[callback(err, data)])</td>
+<td>fs.readFileSync(filename,[encoding])</td>
+</tr>
+<tr>
+<td>写入文件内容</td>
+<td>fs.writeFile(filename, data,[encoding],[callback(err)])</td>
+<td>fs.writeFileSync(filename, data,[encoding])</td>
+</tr>
+<tr>
+<td>删除文件</td>
+<td>fs.unlink(path, [callback(err)])</td>
+<td>fs.unlinkSync(path)</td>
+</tr>
+<tr>
+<td>创建目录</td>
+<td>fs.mkdir(path, [mode], [callback(err)])</td>
+<td>fs.mkdirSync(path, [mode])</td>
+</tr>
+<tr>
+<td>删除目录</td>
+<td>fs.rmdir(path, [callback(err)])</td>
+<td>fs.rmdirSync(path)</td>
+</tr>
+<tr>
+<td>读取目录</td>
+<td>fs.readdir(path, [callback(err, files)])</td>
+<td>fs.readdirSync(path)</td>
+</tr>
+<tr>
+<td>获取真实路径</td>
+<td>fs.realpath(path, [callback(err,resolvedPath)])</td>
+<td>fs.realpathSync(path)</td>
+</tr>
+<tr>
+<td>更名</td>
+<td>fs.rename(path1, path2, [callback(err)])</td>
+<td>fs.renameSync(path1, path2)</td>
+</tr>
+<tr>
+<td>截断</td>
+<td>fs.truncate(fd, len, [callback(err)])</td>
+<td>fs.truncateSync(fd, len)</td>
+</tr>
+<tr>
+<td>更改所有权</td>
+<td>fs.chown(path, uid, gid, [callback(err)])</td>
+<td>fs.chownSync(path, uid, gid)</td>
+</tr>
+<tr>
+<td>更改所有权（文件描述符）</td>
+<td>fs.fchown(fd, uid, gid, [callback(err)])</td>
+<td>fs.fchownSync(fd, uid, gid)</td>
+</tr>
+<tr>
+<td>更改所有权（不解析符号链接）</td>
+<td>fs.lchown(path, uid, gid, [callback(err)])</td>
+<td>fs.lchownSync(path, uid, gid)</td>
+</tr>
+<tr>
+<td>更改权限</td>
+<td>fs.chmod(path, mode, [callback(err)])</td>
+<td>fs.chmodSync(path, mode)</td>
+</tr>
+<tr>
+<td>获取文件信息</td>
+<td>fs.stat(path, [callback(err, stats)])</td>
+<td>fs.statSync(path)</td>
+</tr>
+<tr>
+<td>创建硬链接</td>
+<td>fs.link(srcpath, dstpath, [callback(err)])</td>
+<td>fs.linkSync(srcpath, dstpath)</td>
+</tr>
+<tr>
+<td>创建符号链接</td>
+<td>fs.symlink(linkdata, path, [type],[callback(err)])</td>
+<td>fs.symlinkSync(linkdata, path,[type])</td>
+</tr>
+<tr>
+<td>读取链接</td>
+<td>fs.readlink(path, [callback(err,linkString)])</td>
+<td>fs.readlinkSync(path)</td>
+</tr>
+<tr>
+<td>修改文件时间戳</td>
+<td>fs.utimes(path, atime, mtime, [callback(err)])</td>
+<td>fs.utimesSync(path, atime, mtime)</td>
+</tr>
+<tr>
+<td>同步磁盘缓存</td>
+<td>fs.fsync(fd, [callback(err)])</td>
+<td>fs.fsyncSync(fd)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="HTTP-服务器与客户端"><a href="#HTTP-服务器与客户端" class="headerlink" title="HTTP 服务器与客户端"></a>HTTP 服务器与客户端</h3><p>Node.js 标准库提供了 <code>http</code> 模块，其中封装了一个高效的 HTTP 服务器和一个建议的 HTTP 客户端。<code>http.server</code> 是一个基于事件的 HTTP 服务器，它的核心由 Node.js 下层 C++ 部分实现，而接口由 JavaScript 封装，兼顾了高性能与简易性。 http.request 则是一个 HTTP 客户端工具，用于向 HTTP 服务器发起请求，例如实现内容抓取。</p>
+<h4 id="HTTP-服务器"><a href="#HTTP-服务器" class="headerlink" title="HTTP 服务器"></a>HTTP 服务器</h4><p><code>http.Server</code> 是  http  模块中的 HTTP 服务器对象，用 Node.js 做的所有基于 HTTP 协议的系统，如网站、社交应用甚至代理服务器，都是基于  <code>http.Server</code>  实现的。它提供了一套封装级别很低的 API，仅仅是流控制和简单的消息解析，所有的高层功能都要通过它的接口来实现。</p>
+<p>http 服务器的实现在上一节有实现过</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">		<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span></span><br><span class="line">	&#125;);</span><br><span class="line">	res.write(<span class="string">'&lt;h1&gt;Node.js&lt;/h1&gt;'</span>);</span><br><span class="line">	res.end(<span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"HTTP server is listening at port 3000."</span>);</span><br></pre></td></tr></table></figure>
+<p>这段代码中，<code>http.createServer</code> 创建了一个 <code>http.Server</code> 的实例，讲一个函数作为 HTTP 请求处理函数，这个函数接受两个参数，分别是请求对象（<code>req</code>）和响应对象（<code>res</code>）。在函数内，<code>res</code> 显式地写回了 响应代码 200（表示请求成功），指定了响应头为 <code>Content-type：text/html</code>，然后还写入了响应体<code>&lt;h1&gt;Node.js&lt;/h1&gt;</code>通过 <code>res.end</code> 结束并发送。最后该实例还调用了 <code>listen</code> 函数，启动服务器并监听 3000 端口。</p>
+<h5 id="http-Server-的事件"><a href="#http-Server-的事件" class="headerlink" title="http.Server 的事件"></a>http.Server 的事件</h5><p><code>http.Server</code> 是一个基于事件的 HTTP 服务器，所有请求都被封装为独立的事件，开发者只需要对它的事件编写响应函数即可实现 HTTP 服务器的所有功能。它继承自 <code>EventEmitter</code>，提供了一下几个事件。</p>
+<ul>
+<li><code>request</code> ：当客户端请求到来时，该事件被触发，提供两个参数 <code>res</code> 和 <code>req</code> ，分别是 <code>http.ServerRequest</code> 和 <code>http.ServerResponse</code> 的实例，表示请求和响应信息。</li>
+<li><code>connection</code> : 当 TCP 连接建立时，该事件被触发，提供一个参数 <code>socket</code> ，为 <code>net.Socket</code> 的实例。 <code>connection</code> 事件的粒度要大于 <code>request</code> ，因为客户端在 <code>Keep-alive</code> 模式下可能会同一个连接内发送多次请求。</li>
+<li><code>close</code> : 当服务器关闭时，该事件被触发。注意不是在用户连接断开时。</li>
+</ul>
+<p>除此之外还有  <code>checkContinue</code> 、 <code>upgrade</code> 、 <code>clientError</code> 事件，通常我们不需要关心，只有在实现复杂的 HTTP 服务器的时候才会用到。</p>
+<p>在这些事件中，最常用的就是  <code>request</code> 了，因此  <code>http</code> 提供了一个捷径：<code>http.createServer([requestListener])</code> ，功能是创建一个 HTTP 服务器并将<code>requestListener</code> 作为  <code>request</code> 事件的监听函数，这也是我们前面例子中使用的方法。事实上它显式的实现方法是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httpserver.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = <span class="keyword">new</span> http.Server();</span><br><span class="line">server.on(<span class="string">'request'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.writeHead(<span class="string">'200'</span>, &#123;</span><br><span class="line">		<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span></span><br><span class="line">	&#125;);</span><br><span class="line">	res.write(<span class="string">'&lt;h1&gt;Node.js&lt;/h1&gt;'</span>);</span><br><span class="line">	res.end(<span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"HTTP server is listening at port 3000."</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="http-ServerRequest"><a href="#http-ServerRequest" class="headerlink" title="http.ServerRequest"></a>http.ServerRequest</h5><p><code>http.ServerRequest</code>是 HTTP 请求的信息，一般有 <code>http.Server</code> 的 <code>request</code> 事件发送，作为第一个参数传递，通常简称为 <code>request</code> 和 <code>req</code>。<code>ServerRequest</code> 提供一些属性。</p>
+<ul>
+<li><code>data</code> : 当请求体数据到来时，该事件被触发。该事件提供一个参数 <code>chunk</code>，表示接收到的数据，如果该事件没有被监听，那么请求体没有被监听，那么请求体就将会被抛弃，该事件可能会调用多次。</li>
+<li><code>end</code> ： 当请求体数据传输完成时，该事件被触发，此后将不会再有数据到来。</li>
+<li><code>close</code> ： 用户当前请求结束时，该事件被触发。不同于 <code>end</code>，如果用户强制终止了传输，也还是会调用 <code>close</code>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complete</td>
+<td>客户端请求是否已经发送完成</td>
+</tr>
+<tr>
+<td>httpVersion</td>
+<td>HTTP 协议版本，通常是1.0 或是1.1</td>
+</tr>
+<tr>
+<td>method</td>
+<td>HTTP 请求方法，如 GET、POST、PUT、DELETE 等</td>
+</tr>
+<tr>
+<td>url</td>
+<td>原始的请求路劲，例如/static/image/x.jpg</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>HTTP 请求头</td>
+</tr>
+<tr>
+<td>trailers</td>
+<td>HTTP 请求尾（不常见）</td>
+</tr>
+<tr>
+<td>connection</td>
+<td>当前 HTTP 连接套接字，为 net.Socket 的实例</td>
+</tr>
+<tr>
+<td>socket</td>
+<td>connection 属性的别名</td>
+</tr>
+<tr>
+<td>client</td>
+<td>client 属性的别名</td>
+</tr>
+</tbody>
+</table>
+<h5 id="获取-GET-请求内容"><a href="#获取-GET-请求内容" class="headerlink" title="获取 GET 请求内容"></a>获取 GET 请求内容</h5><p> <code>http.ServerRequest</code> 提供的属性里面没有类似 PHP 语言中的 <code>$_GET</code> 或<code>$_POST</code> 的属性，那我们如何接受客户端的表单请求呢？由于 GET 请求直接被嵌入在路径中，URL是完整的请求路径，包括了  ? 后面的部分，因此你可以手动解析后面的内容作为 GET请求的参数。Node.js 的  <code>url</code> 模块中的  <code>parse</code> 函数提供了这个功能，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httpserverrequestget.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">		<span class="string">'Content-Type'</span>: <span class="string">'text/plain'</span></span><br><span class="line">	&#125;);</span><br><span class="line">	res.end(util.inspect(url.parse(req.url, <span class="literal">true</span>)));</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>在浏览器中访问 <a href="http://127.0.0.1:3000/user?name=lbh&amp;email=544289495@qq.com">http://127.0.0.1:3000/user?name=lbh&amp;email=544289495@qq.com</a> 可以看到浏览器返回的结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Url &#123;</span><br><span class="line">  protocol: null,</span><br><span class="line">  slashes: null,</span><br><span class="line">  auth: null,</span><br><span class="line">  host: null,</span><br><span class="line">  port: null,</span><br><span class="line">  hostname: null,</span><br><span class="line">  hash: null,</span><br><span class="line">  search: '?name=lbh&amp;email=544289495@qq.com',</span><br><span class="line">  query: &#123; name: 'lbh', email: '544289495@qq.com' &#125;,</span><br><span class="line">  pathname: '/user',</span><br><span class="line">  path: '/user?name=lbh&amp;email=544289495@qq.com',</span><br><span class="line">  href: '/user?name=lbh&amp;email=544289495@qq.com' &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到， <code>url.parse</code>,原始的path被解析为一个对象，其中 <code>query</code> 就是我们所谓的 GET 请求的内容，而路径则是  <code>pathname</code> 。</p>
+<h5 id="获取-POST-请求内容"><a href="#获取-POST-请求内容" class="headerlink" title="获取 POST 请求内容"></a>获取 POST 请求内容</h5><p>HTTP 协议 1.1 版本提供了8种标准的请求方法，其中最常见的就是 GET 和 POST。相比GET 请求把所有的内容编码到访问路径中，POST 请求的内容全部都在请求体中。<code>http.ServerRequest</code> 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件耗时的工作，譬如上传文件。而很多时候我们可能并不需要理会请求体的内容，恶意的 POST请求会大大消耗服务器的资源。所以 Node.js 默认是不会解析请求体的，当你需要的时候，需要手动来做。让我们看看实现方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httpserverrequestpost.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> post = <span class="string">''</span>;</span><br><span class="line">	req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">		post += chunk;</span><br><span class="line">	&#125;);</span><br><span class="line">	req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		post = querystring.parse(post);</span><br><span class="line">		res.end(util.inspect(post));</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码并没有在请求响应函数中向客户端返回信息，而是定义了一个  post 变量，用于在闭包中暂存请求体的信息。通过  <code>req</code> 的  <code>data</code> 事件监听函数，每当接受到请求体的数据，就累加到  post 变量中。在  <code>end</code> 事件触发后，通过 <code>querystring.parse</code> 将  post 解析为真正的 POST 请求格式，然后向客户端返回。</p>
+<h5 id="http-ServerResponse"><a href="#http-ServerResponse" class="headerlink" title="http.ServerResponse"></a>http.ServerResponse</h5><p><code>http.ServerResponse</code>  是返回给客户端的信息，决定了用户最终能看到的结果。它也是由  <code>http.Server</code> 的  <code>request</code>  事件发送的，作为第二个参数传递，一般简称为 <code>response</code> 或  <code>res</code> 。<br><code>http.ServerResponse</code> 有三个重要的成员函数，用于返回响应头、响应内容以及结束请求。</p>
+<ul>
+<li><p><code>response.writeHead(statusCode, [headers])</code> 向请求的客户端发送响应头。</p>
+<p><code>statusCode</code>是 HTTP 状态码，如200/404等</p>
+<p><code>headers</code> 是一个类似关联数组的对象，表示响应头的每个属性，该函数在一个请求内最多只能调用一次，如果不调用，则会自动生成一个响应头。</p>
+</li>
+<li><p><code>response.write(data, [encoding])</code> 向请求的客户端发送响应内容。</p>
+<p><code>data</code> 是一个 <code>Buffer</code>或字符串，表示要发送的内容。如果 <code>data</code>是字符串，那么需要指定 <code>encoding</code>来说明它的编码方式，默认是 <code>utf-8</code>。如果在 <code>response.end</code> 调用之前， <code>response.write</code> 可以多次调用。</p>
+</li>
+<li><p><code>response.end([data], [encoding])</code> 结束响应，告知客户端所有发送已经完成。当所有要返回的内容发送完毕的时候，该函数 必须 被调用一次。它接受两个可选参数，意义和 <code>response.write</code>  相同。如果不调用该函数，客户端将永远处于等待状态。</p>
+</li>
+</ul>
+<h4 id="HTTP-客户端"><a href="#HTTP-客户端" class="headerlink" title="HTTP 客户端"></a>HTTP 客户端</h4><p><code>http</code>  模块提供了两个函数  <code>http.request</code>  和  <code>http.get</code> ，功能是作为客户端向 HTTP服务器发起请求。</p>
+<p><code>http.request(options, callback)</code>发起 HTTP 请求，接受两个参数，<code>option</code>是一个类似关联数组的对象，表示请求的参数， <code>callback</code> 是请求回调的函数。 <code>option</code>常见的参数如下。</p>
+<ul>
+<li>host ：请求网站的域名或 IP 地址。</li>
+<li>port：请求网站的端口</li>
+<li>method：请求方法，默认GET</li>
+<li>path：请求的相对于根的路径，默认是“/”。 <code>QueryString</code>  应该包含在其中。例如 /search?query=lbh。</li>
+<li>headers：一个关联数组对象，为请求头的内容。</li>
+</ul>
+<p><code>callback</code> 传递一个参数，为 <code>http.ClientResponse</code> 的实例。</p>
+<p><code>http.request</code>  返回一个  <code>http.ClientRequest</code> 的实例。</p>
+<p>下面是一个通过 http.request  发送 POST 请求的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httprequest.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"><span class="keyword">var</span> contents = querystring.stringify(&#123;</span><br><span class="line">	name: <span class="string">'lbh'</span>,</span><br><span class="line">	email: <span class="string">'544289495@qq.com'</span>,</span><br><span class="line">	address: <span class="string">'xxx xx xxx'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> options = &#123;</span><br><span class="line">	host: <span class="string">'www.xxx.com'</span>,</span><br><span class="line">	path: <span class="string">'/application/node/post.php'</span>,</span><br><span class="line">	method: <span class="string">'POST'</span>,</span><br><span class="line">	headers: &#123;</span><br><span class="line">		<span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</span><br><span class="line">		<span class="string">'Content-Length'</span>: contents.length</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> req = http.request(options, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">	res.setEncoding(<span class="string">'utf-8'</span>);</span><br><span class="line">	res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">req.write(contents);</span><br><span class="line">req.end(); <span class="comment">//  不要忘了通过 req.end() 结束请求，否则服务器将不会收到信息。</span></span><br></pre></td></tr></table></figure>
+<p><code>http.get(options, callback)</code> <code>http</code>模块还提供了一个更加简便的方法用于处理GET 请求：</p>
+<p><code>http.get</code>。它是 <code>http.request</code>的简化版，唯一区别在于 <code>http.get</code>自动将请求方法设为了GET请求，同时不需要手动调用 <code>req.end()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httpget.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line">http.get(&#123;</span><br><span class="line">	host: <span class="string">'www.xxx.com'</span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">	res.setEncoding(<span class="string">'utf8'</span>);</span><br><span class="line">	res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="http-ClientRequest"><a href="#http-ClientRequest" class="headerlink" title="http.ClientRequest"></a>http.ClientRequest</h5><p><code>http.ClientRequest</code> </p>
+<p> 是由  <code>http.request</code> 或  <code>http.get</code> 返回产生的对象，表示一个已经产生而且正在进行中的 HTTP 请求。它提供一个  <code>response</code>  事件，即  <code>http.request</code>或  <code>http.get</code>  第二个参数指定的回调函数的绑定对象。我们也可以显式地绑定这个事件的监听函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// httpresponse.js</span></span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> req = http.get(&#123;</span><br><span class="line">	host: <span class="string">'www.xxx.com'</span></span><br><span class="line">&#125;);</span><br><span class="line">req.on(<span class="string">'response'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">	res.setEncoding(<span class="string">'utf8'</span>);</span><br><span class="line">	res.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(data);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>http.ClientRequest</code>  像  <code>http.ServerResponse</code> 一样也提供了  <code>write</code>  和  <code>end</code>  函数，用于向服务器发送请求体，通常用于 POST、PUT 等操作。所有写结束以后必须调用  end函数以通知服务器，否则请求无效。 <code>http.ClientRequest</code>  还提供了以下函数。</p>
+<ul>
+<li><code>request.abort()</code> ：终止正在发送的请求。</li>
+<li><code>request.setTimeout(timeout, [callback])</code> ：设置请求超时时间， <code>timeout</code> 为毫秒数。当请求超时以后， <code>callback</code> 将会被调用。</li>
+</ul>
+<p>此外还有 request.setNoDelay([noDelay]) 、 request.setSocketKeepAlive([enable] , [initialDelay])  等函数，具体内容请参见 Node.js 文档。</p>
+<h5 id="http-ClientResponse"><a href="#http-ClientResponse" class="headerlink" title="http.ClientResponse"></a>http.ClientResponse</h5><p><code>http.ClientResponse</code> 与  <code>http.ServerRequest</code> 相似，提供了三个事件  <code>data</code> 、 <code>end</code> 和  <code>close</code> ，分别在数据到达、传输结束和连接结束时触发，其中  <code>data</code> 事件传递一个参数 <code>chunk</code> ，表示接收到的数据。</p>
+<p><code>http.ClientResponse</code>  也提供了一些属性，用于表示请求的结果状态,如下表</p>
+<table>
+<thead>
+<tr>
+<th>名 称</th>
+<th>含 义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>statusCode</td>
+<td>HTTP 状态码，如 200、404、500</td>
+</tr>
+<tr>
+<td>httpVersion</td>
+<td>HTTP 协议版本，通常是 1.0 或 1.1</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>HTTP 请求头</td>
+</tr>
+<tr>
+<td>trailers</td>
+<td>HTTP 请求尾（不常见）</td>
+</tr>
+</tbody>
+</table>
+<p><code>http.ClientResponse</code> 还提供了以下几个特殊的函数。</p>
+<ul>
+<li><code>response.setEncoding([encoding])</code> ：设置默认的编码，当  <code>data</code> 事件被触发时，数据将会以  <code>encoding</code> 编码。默认值是  <code>null</code> ，即不编码，以  <code>Buffer</code> 的形式存储。常用编码为 <code>utf8</code>。</li>
+<li><code>response.pause()</code> ：暂停接收数据和发送事件，方便实现下载功能。</li>
+<li><code>response.resume()</code> ：从暂停的状态中恢复。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-09-20-NodeJs-Part4.html" title="好玩的Nodejs —— Node.js核心模块">http://laibh.top/2018-09-20-NodeJs-Part4.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-09-18-read-图解HTTP-Part11.html" rel="next" title="深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术">
+                <i class="fa fa-chevron-left"></i> 深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-09-21-NodeJs-Part5上.html" rel="prev" title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）">
+                好玩的Nodejs —— 使用 Node.js进行 Web 开发（上） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js核心模块"><span class="nav-number">1.</span> <span class="nav-text">Node.js核心模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局对象"><span class="nav-number">1.1.</span> <span class="nav-text">全局对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局对象与全局变量"><span class="nav-number">1.1.1.</span> <span class="nav-text">全局对象与全局变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#process"><span class="nav-number">1.1.2.</span> <span class="nav-text">process</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#process-argv"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">process.argv</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#process-stdout"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">process.stdout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#process-stdin"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">process.stdin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#process-nextTick-callback"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">process.nextTick(callback)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#console"><span class="nav-number">1.1.3.</span> <span class="nav-text">console</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#console-log"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">console.log()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#console-error"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">console.error()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#console-trace"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">console.trace()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用工具-util"><span class="nav-number">1.2.</span> <span class="nav-text">常用工具  util</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#util-inherits"><span class="nav-number">1.2.1.</span> <span class="nav-text">util.inherits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#util-inspect"><span class="nav-number">1.2.2.</span> <span class="nav-text">util.inspect</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件驱动-events"><span class="nav-number">1.3.</span> <span class="nav-text">事件驱动  events</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件发射器"><span class="nav-number">1.3.1.</span> <span class="nav-text">事件发射器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#error-事件"><span class="nav-number">1.3.2.</span> <span class="nav-text">error 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承-EventEmitter"><span class="nav-number">1.3.3.</span> <span class="nav-text">继承  EventEmitter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件系统-fs"><span class="nav-number">1.4.</span> <span class="nav-text">文件系统  fs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-readFile"><span class="nav-number">1.4.1.</span> <span class="nav-text">fs.readFile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-readFileSync"><span class="nav-number">1.4.2.</span> <span class="nav-text">fs.readFileSync</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-open"><span class="nav-number">1.4.3.</span> <span class="nav-text">fs.open</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fs-read"><span class="nav-number">1.4.4.</span> <span class="nav-text">fs.read</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-服务器与客户端"><span class="nav-number">1.5.</span> <span class="nav-text">HTTP 服务器与客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-服务器"><span class="nav-number">1.5.1.</span> <span class="nav-text">HTTP 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#http-Server-的事件"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">http.Server 的事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#http-ServerRequest"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">http.ServerRequest</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#获取-GET-请求内容"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">获取 GET 请求内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#获取-POST-请求内容"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">获取 POST 请求内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#http-ServerResponse"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">http.ServerResponse</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-客户端"><span class="nav-number">1.5.2.</span> <span class="nav-text">HTTP 客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#http-ClientRequest"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">http.ClientRequest</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#http-ClientResponse"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">http.ClientResponse</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

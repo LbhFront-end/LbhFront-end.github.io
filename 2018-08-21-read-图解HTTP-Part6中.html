@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="公司上个周末出去玩了，所以没有更新，现在又有项目在身上，所以更新的比较慢。 第六章  HTTP 首部（中）请求首部字段请求首部字段是从客户端往服务器端发送请求报文中所使用的字段，用于补充请求的附加消息、客户端消息、对响应内容相关的优先级等内容。 Accept 1Accept: text/html,application/xhtml+xml, application/xml;q=0.9,*/*;q=">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部">
+<meta property="og:url" content="http://laibh.top/2018-08-21-read-图解HTTP-Part6中.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="公司上个周末出去玩了，所以没有更新，现在又有项目在身上，所以更新的比较慢。 第六章  HTTP 首部（中）请求首部字段请求首部字段是从客户端往服务器端发送请求报文中所使用的字段，用于补充请求的附加消息、客户端消息、对响应内容相关的优先级等内容。 Accept 1Accept: text/html,application/xhtml+xml, application/xml;q=0.9,*/*;q=">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Accept.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Accept-Charset.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Accept-Encoding.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Authorization.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Expect.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-From.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Host.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-If-Match.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-ETag.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-If-Modified-Since.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-If-None-Match.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-If-Range.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-no-If-Range.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Max-Forwards.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Referer.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Age.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-ETag1.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Location.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Server.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Vary.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部">
+<meta name="twitter:description" content="公司上个周末出去玩了，所以没有更新，现在又有项目在身上，所以更新的比较慢。 第六章  HTTP 首部（中）请求首部字段请求首部字段是从客户端往服务器端发送请求报文中所使用的字段，用于补充请求的附加消息、客户端消息、对响应内容相关的优先级等内容。 Accept 1Accept: text/html,application/xhtml+xml, application/xml;q=0.9,*/*;q=">
+<meta name="twitter:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Accept.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-08-21-read-图解HTTP-Part6中.html"/>
+
+
+
+
+
+  <title>深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-08-21-read-图解HTTP-Part6中.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-22T08:55:54+08:00">
+                2018-08-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-08-21-read-图解HTTP-Part6中.html" class="leancloud_visitors" data-flag-title="深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,656
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>公司上个周末出去玩了，所以没有更新，现在又有项目在身上，所以更新的比较慢。</p>
+<h2 id="第六章-HTTP-首部（中）"><a href="#第六章-HTTP-首部（中）" class="headerlink" title="第六章  HTTP 首部（中）"></a>第六章  HTTP 首部（中）</h2><h3 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h3><p>请求首部字段是从客户端往服务器端发送请求报文中所使用的字段，用于补充请求的附加消息、客户端消息、对响应内容相关的优先级等内容。</p>
+<h4 id="Accept"><a href="#Accept" class="headerlink" title="Accept"></a>Accept</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Accept.png" alt="Accept"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml, application/xml;q=0.9,*/*;q=0</span><br></pre></td></tr></table></figure>
+<p>Accept 首部字段可通知服务器，用户代理能够处理的媒体类型及媒体类型的相对优先级。可使用 type/subtype 这种形式，一次指定多种媒体类型。</p>
+<table>
+<thead>
+<tr>
+<th>媒体类型</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文本文件</td>
+<td>text/html, text/plain, text/cs..<br>application/xhtml+xml, application/xml</td>
+</tr>
+<tr>
+<td>图片文件</td>
+<td>image/jpeg, image/gif, image/png</td>
+</tr>
+<tr>
+<td>视频文件</td>
+<td>video/mpeg, video/quicktime</td>
+</tr>
+<tr>
+<td>应用程序使用的二进制文件</td>
+<td>application/octet-stream, application/zip</td>
+</tr>
+</tbody>
+</table>
+<p>比如，如果浏览器不支持 PNG 图片的显示，那 Accept 就不指定 image/png，而指定可处理的 image/gif 和 image/jpeg 等图片类型。</p>
+<p>若想要给显示的媒体类型增加优先级，则使用 q= 来额外表示权重值，用分号（;）进行分隔。权重值 q 的范围是 0~1（可精确到小数点后 3 位），且 1 为最大值。不指定权重 q 值时，默认权重为 q=1.0。</p>
+<p>当服务器提供多种内容时，将会首先返回权重值最高的媒体类型。</p>
+<h4 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="Accept-Charset"></a>Accept-Charset</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Accept-Charset.png" alt="Accept-Charset"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept-Charset</span>: iso-8859-5, unicode-1-1;q=0.8</span><br></pre></td></tr></table></figure>
+<p>Accept-Charset 首部字段可用来通知服务器用户代理支持的字符集及字符集的相对优先顺序。另外，可一次性指定多种字符集。与首部字段 Accept 相同的是可用权重 q 值来表示相对优先级。</p>
+<p>该首字段应用于内容协商机制的服务器驱动协商。</p>
+<h4 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a>Accept-Encoding</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Accept-Encoding.png" alt="Accept-Encoding"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept-Encoding</span>: gzip, deflate</span><br></pre></td></tr></table></figure>
+<p>Accept-Encoding 首部字段用来告知服务器用户代理支持的内容编码及内容编码的优先级顺序。可一次性指定多种内容编码。</p>
+<p>内容编码的例子</p>
+<table>
+<thead>
+<tr>
+<th>内容编码</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gzip</td>
+<td>由文件压缩程序 gzip（GUN zip）生成的编码格式（RFC1952）,采用 Lempel-Ziv 算法（LZ77）以及 32 位循环冗余校验（Cyclic Redundancy Check，通称 CRC）</td>
+</tr>
+<tr>
+<td>compress</td>
+<td>由 UNIX 文件压缩程序 compress 生成的编码格式，采用 Lempel-Ziv-Welch 算法（LZW）</td>
+</tr>
+<tr>
+<td>deflate</td>
+<td>组合使用 zlib 格式（RFC1950）及由 deflate 压缩算法（RFC1951）生成的编码格式</td>
+</tr>
+<tr>
+<td>identity</td>
+<td>不执行压缩或不会变化的默认编码格式</td>
+</tr>
+</tbody>
+</table>
+<p>采用权重 q 值来表示相对优先级，这点与首部字段 Accept 相同。另外，也可使用星号（*）作为通配符，指定任意的编码格式。</p>
+<h4 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a>Accept-Language</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept-Language</span>: zh-cn,zh;q=0.7,en-us,en;q=0.3</span><br></pre></td></tr></table></figure>
+<p>首部字段 Accept-Language 用来告知服务器用户代理能够处理的自然语言集（指中文或英文等），以及自然语言集的相对优先级。可一次指定多种自然语言集。<br>和 Accept 首部字段一样，按权重值 q 来表示相对优先级。在上述图例中，客户端在服务器有中文版资源的情况下，会请求其返回中文版对应的响应，没有中文版时，则请求返回英文版响应。</p>
+<h4 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Authorization.png" alt="Authorization"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Authorization</span>: Basic dWVub3NlbjpwYXNzd29yZA==</span><br></pre></td></tr></table></figure>
+<p>首部字段 Authorization 是用来告知服务器，用户代理的认证信息（证书值）。通常，想要通过服务器认证的用户代理会在接收到返回的401 状态码响应后，把首部字段 Authorization 加入请求中。共用缓存在接收到含有 Authorization 首部字段的请求时的操作处理会略有差异。<br>有关 HTTP 访问认证及 Authorization 首部字段，稍后的章节还会详细说明</p>
+<h4 id="Expect"><a href="#Expect" class="headerlink" title="Expect"></a>Expect</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Expect.png" alt="Expect"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Expect</span>: 100-continue</span><br></pre></td></tr></table></figure>
+<p>客户端使用 Expect 首部字段来告知服务器，期望出现的某些特定行为。因服务器无法理解客户端的期望做出回应而发生错误时，会返回状态码 417 Expection Failed</p>
+<p>客户端可以利用该首部字段，写明所期望的扩展。虽然 HTTP/1.1 规范只定义了 100-continue（状态码 100 Continue 之意）</p>
+<p>等待状态码 100 响应的客户端在发生请求时，需要指定 Expect:100-continue。</p>
+<h4 id="From"><a href="#From" class="headerlink" title="From"></a>From</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-From.png" alt="From"></p>
+<p>首部字段 From 用来告知服务器使用用户代理的用户的电子邮件地址。通常，其使用目的就是为了显示搜索引擎等用户代理的负责人的电子邮件联系方式。使用代理时，应尽可能包含 From 首部字段（但可能会因代理不同，将电子邮件地址记录在 User-Agent 首部字段内）。</p>
+<h4 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Host.png" alt="Host"></p>
+<p>图：虚拟主机运行在同一个 IP 上，因此使用首部字段 Host 加以区分</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Host</span>: www.hackr.jp</span><br></pre></td></tr></table></figure>
+<p>首部字段 Host 会告知服务器，请求的资源所处的互联网主机名和端口号。Host 首部字段在 HTTP/1.1 规范内是唯一一个必须被包含在请求内的首部字段。<br>首部字段 Host 和以单台服务器分配多个域名的虚拟主机的工作机制有很密切的关联，这是首部字段 Host 必须存在的意义。</p>
+<p>请求被发送至服务器时，请求中的主机名会用 IP 地址直接替换解决。但如果这时，相同的 IP 地址下部署运行着多个域名，那么服务器就会无法理解究竟是哪个域名对应的请求。因此，就需要使用首部字段 Host 来明确指出请求的主机名。若服务器未设定主机名，那直接发送一个空值即可。如下所示。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Host:</span></span><br></pre></td></tr></table></figure>
+<h4 id="If-Match"><a href="#If-Match" class="headerlink" title="If-Match"></a>If-Match</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-If-Match.png" alt="If-Match"></p>
+<p>形如 If-xxx 这种样式的请求首部字段，都可称为条件请求。服务器接收到附带条件的请求后，只有判断指定条件为真时，才会执行请求。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-ETag.png" alt="ETag"></p>
+<p>图：只有当 If-Match 的字段值跟 ETag 值匹配一致时，服务器才会接受请求</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">If-Match</span>: "123456"</span><br></pre></td></tr></table></figure>
+<p>首部字段 If-Match，属附带条件之一，它会告知服务器匹配资源所用的实体标记（ETag）值。这时的服务器无法使用弱 ETag 值。（请参照本章有关首部字段 ETag 的说明）<br>服务器会比对 If-Match 的字段值和资源的 ETag 值，仅当两者一致时，才会执行请求。反之，则返回状态码 412 Precondition Failed 的响应。<br>还可以使用星号（*）指定 If-Match 的字段值。针对这种情况，服务器将会忽略 ETag 的值，只要资源存在就处理请求。</p>
+<h4 id="If-Modified-Since"><a href="#If-Modified-Since" class="headerlink" title="If-Modified-Since"></a>If-Modified-Since</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-If-Modified-Since.png" alt="If-Modified-Since"></p>
+<p>图：如果在 If-Modified-Since 字段指定的日期时间后，资源发生了更新，服务器会接受请求</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">If-Modified-Since</span>: Thu, 15 Apr 2004 00:00:00 GMT</span><br></pre></td></tr></table></figure>
+<p>首部字段 If-Modified-Since，属附带条件之一，它会告知服务器若 If-Modified-Since 字段值早于资源的更新时间，则希望能处理该请求。而在指定 If-Modified-Since 字段值的日期时间之后，如果请求的资源都没有过更新，则返回状态码 304 Not Modified 的响应。<br>If-Modified-Since 用于确认代理或客户端拥有的本地资源的有效性。获取资源的更新日期时间，可通过确认首部字段 Last-Modified 来确定。</p>
+<h4 id="If-None-Match"><a href="#If-None-Match" class="headerlink" title="If-None-Match"></a>If-None-Match</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-If-None-Match.png" alt="If-None-Match"></p>
+<p>图：只有在 If-None-Match 的字段值与 ETag 值不一致时，可处理该请求。与 If-Match 首部字段的作用相反</p>
+<p>首部字段 If-None-Match 属于附带条件之一。它和首部字段 If-Match作用相反。用于指定 If-None-Match 字段值的实体标记（ETag）值与请求资源的 ETag 不一致时，它就告知服务器处理该请求。</p>
+<p>在 GET 或 HEAD 方法中使用首部字段 If-None-Match 可获取最新的资源。因此，这与使用首部字段 If-Modified-Since 时有些类似。</p>
+<h4 id="If-Range"><a href="#If-Range" class="headerlink" title="If-Range"></a>If-Range</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-If-Range.png" alt="If-Range"></p>
+<p>首部字段 If-Range 属于附带条件之一。它告知服务器若指定的 If-Range 字段值（ETag 值或者时间）和请求资源的 ETag 值或时间相一致时，则作为范围请求处理。反之，则返回全体资源。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-no-If-Range.png" alt="No-If-Range"></p>
+<p>下面我们思考一下不使用首部字段 If-Range 发送请求的情况。服务器端的资源如果更新，那客户端持有资源中的一部分也会随之无效，当然，范围请求作为前提是无效的。这时，服务器会暂且以状态码 412Precondition Failed 作为响应返回，其目的是催促客户端再次发送请求。这样一来，与使用首部字段 If-Range 比起来，就需要花费两倍的功夫。</p>
+<h4 id="If-Unmodified-Since"><a href="#If-Unmodified-Since" class="headerlink" title="If-Unmodified-Since"></a>If-Unmodified-Since</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">If-Unmodified-Since</span>: Thu, 03 Jul 2012 00:00:00 GMT</span><br></pre></td></tr></table></figure>
+<p>首部字段 If-Unmodified-Since 和首部字段 If-Modified-Since 的作用相反。它的作用的是告知服务器，指定的请求资源只有在字段值内指定的日期时间之后，未发生更新的情况下，才能处理请求。如果在指定日期时间后发生了更新，则以状态码 412 Precondition Failed 作为响应返回。</p>
+<h4 id="Max-Forwards"><a href="#Max-Forwards" class="headerlink" title="Max-Forwards"></a>Max-Forwards</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Max-Forwards.png" alt="Max-Forwards"></p>
+<p>图：每次转发数值减 1。当数值变 0 时返回响应</p>
+<p>通过 TRACE 方法或 OPTIONS 方法，发送包含首部字段 Max-Forwards 的请求时，该字段以十进制整数形式指定可经过的服务器最大数目。服务器在往下一个服务器转发请求之前，Max-Forwards 的值减 1 后重新赋值。当服务器接收到 Max-Forwards 值为 0 的请求时，则不再进行转发，而是直接返回响应。</p>
+<p>使用 HTTP 协议通信时，请求可能会经过代理等多台服务器。途中，如果代理服务器由于某些原因导致请求转发失败，客户端也就等不到服务器返回的响应了。对此，我们无从可知。</p>
+<p>可以灵活使用首部字段 Max-Forwards，针对以上问题产生的原因展开调查。由于当 Max-Forwards 字段值为 0 时，服务器就会立即返回响应，由此我们至少可以对以那台服务器为终点的传输路径的通信状况有所把握。</p>
+<h4 id="Proxy-Authorization"><a href="#Proxy-Authorization" class="headerlink" title="Proxy-Authorization"></a>Proxy-Authorization</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Proxy-Authorization</span>: Basic dGlwOjkpNLAGfFY5</span><br></pre></td></tr></table></figure>
+<p>接收到从代理服务器发来的认证质询时，客户端会发送包含首部字段Proxy-Authorization 的请求，以告知服务器认证所需要的信息。这个行为是与客户端和服务器之间的 HTTP 访问认证相类似的，不同之处在于，认证行为发生在客户端与代理之间。客户端与服务器之间的认证，使用首部字段 Authorization 可起到相同作用。有关 HTTP 访问认证，后面的章节会作详尽阐述。</p>
+<h4 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Range</span>: bytes=5001-10000</span><br></pre></td></tr></table></figure>
+<p>对于只需获取部分资源的范围请求，包含首部字段 Range 即可告知服务器资源的指定范围。上面的示例表示请求获取从第 5001 字节至第10000 字节的资源。</p>
+<p>接收到附带 Range 首部字段请求的服务器，会在处理请求之后返回状态码为 206 Partial Content 的响应。无法处理该范围请求时，则会返回状态码 200 OK 的响应及全部资源。</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Referer.png" alt="Referer"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Referer</span>: http://www.hackr.jp/index.htm</span><br></pre></td></tr></table></figure>
+<p>首部字段 Referer 会告知服务器请求的原始资源的 URI。</p>
+<p>客户端一般都会发送 Referer 首部字段给服务器。但当直接在浏览器的地址栏输入 URI，或出于安全性的考虑时，也可以不发送该首部字段。</p>
+<p>因为原始资源的 URI 中的查询字符串可能含有 ID 和密码等保密信息，要是写进 Referer 转发给其他服务器，则有可能导致保密信息的泄露。</p>
+<p>另外，Referer 的正确的拼写应该是 Referrer，但不知为何，大家一直沿用这个错误的拼写。</p>
+<h4 id="TE"><a href="#TE" class="headerlink" title="TE"></a>TE</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">TE</span>: gzip, deflate;q=0.5</span><br></pre></td></tr></table></figure>
+<p>首部字段 TE 会告知服务器客户端能够处理响应的传输编码方式及相对优先级。它和首部字段 Accept-Encoding 的功能很相像，但是用于传输编码。</p>
+<p>首部字段 TE 除指定传输编码之外，还可以指定伴随 trailer 字段的分块传输编码的方式。应用后者时，只需把 trailers 赋值给该字段值。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">TE</span>: trailers</span><br></pre></td></tr></table></figure>
+<h4 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/201001</span><br></pre></td></tr></table></figure>
+<p>首部字段 User-Agent 会将创建请求的浏览器和用户代理名称等信息传达给服务器。<br>由网络爬虫发起请求时，有可能会在字段内添加爬虫作者的电子邮件地址。此外，如果请求经过代理，那么中间也很可能被添加上代理服务器的名称。</p>
+<h3 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h3><p>响应首部字段是由服务器端向客户端返回响应报文中所使用的字段，用于补充响应的附加消息、服务器消息，以及对客户端的附加要求等消息。</p>
+<h4 id="Accept-Ranges"><a href="#Accept-Ranges" class="headerlink" title="Accept-Ranges"></a>Accept-Ranges</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept-Ranges</span>: bytes</span><br></pre></td></tr></table></figure>
+<p>首部字段 Accept-Ranges 是用来告知客户端服务器是否能处理范围请求，以指定获取服务器端某个部分的资源。</p>
+<p>可指定的字段值有两种，可处理范围请求时指定其为 bytes ，反之则指定其为 none。</p>
+<h4 id="Age"><a href="#Age" class="headerlink" title="Age"></a>Age</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Age.png" alt="Age"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Age</span>: 600</span><br></pre></td></tr></table></figure>
+<p>首部字段 Age 能告知客户端，源服务器在多久前创建了响应。字段值的单位为秒。</p>
+<p>若创建该响应的服务器是缓存服务器，Age 值是指缓存后的响应再次发起认证到认证完成的时间值。代理创建响应时必须加上首部字段 Age。</p>
+<h4 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-ETag1.png" alt="ETag"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ETag</span>: "82e22293907ce725faf67773957acd12"</span><br></pre></td></tr></table></figure>
+<p>首部字段 ETag 告知客户端实体标识。它是一种可将资源以字符串形式做唯一性标识的告知方式。服务器会以没份资源分配对应的 ETag 值。另外，当资源更新时，ETag 值也需要更新。生成 ETag 值时，并没有统一的算法规则，而仅仅是由服务器来分配。</p>
+<p>资源被缓存时，就会被分配唯一性标识。例如，当使用中文版的浏览器访问 <a href="http://www.google.com/">http://www.google.com/</a> 时，就会返回中文版对应的资源，而使用英文版的浏览器访问时，则会返回英文版对应的资源。两者的URI 是相同的，所以仅凭 URI 指定缓存的资源是相当困难的。若在下载过程中出现连接中断、再连接的情况，都会依照 ETag 值来指定资源。</p>
+<h5 id="强-ETag-值和弱-Tag-值"><a href="#强-ETag-值和弱-Tag-值" class="headerlink" title="强 ETag 值和弱 Tag 值"></a>强 ETag 值和弱 Tag 值</h5><p>ETag  中有强 ETag  值和弱 ETag  值之分。</p>
+<p>强 ETag  值，不论实体发生多么细微的变化都会改变其值。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ETag</span>: "usagi-1234"</span><br></pre></td></tr></table></figure>
+<p>弱 ETag  值，只用于提示资源是否相同。只有当资源发生了根本的变化，产生差异才会改变 ETag  值。这时，会在字段值最开始处附加 W/。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ETag</span>: W/"usagi-1234"</span><br></pre></td></tr></table></figure>
+<h4 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Location.png" alt="Location"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Location</span>: http://www.usagidesign.jp/sample.html</span><br></pre></td></tr></table></figure>
+<p>使用首部字段 Location 可以将响应接收方引导至某个与请求 URI 位置不同的资源。</p>
+<p>基本上，该字段会配合 3xx ：Redirection 的响应，提供重定向的URI。</p>
+<p>几乎所有的浏览器在接收到包含首部字段 Location 的响应后，都会强制性地尝试对已提示的重定向资源的访问。</p>
+<h4 id="Proxy-Authenticate"><a href="#Proxy-Authenticate" class="headerlink" title="Proxy-Authenticate"></a>Proxy-Authenticate</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Proxy-Authenticate</span>: Basic realm="Usagidesign Auth"</span><br></pre></td></tr></table></figure>
+<p>首部字段 Proxy-Authenticate 会把由代理服务器所要求的认证信息发送给客户端。</p>
+<p>它与客户端和服务器之间的 HTTP 访问认证的行为相似，不同之处在与其认证行为是在客户端与代理之间进行的，而客户端与服务器之间进行认证时，首部字段 WWW-Authorization 有着相同的作用。</p>
+<h4 id="Retry-After"><a href="#Retry-After" class="headerlink" title="Retry-After"></a>Retry-After</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Retry-After</span>: 120</span><br></pre></td></tr></table></figure>
+<p>首部字段 Retry-After 告知客户端应该在多久之后再次发送请求。主要配合状态码 503 Service Unavailable 响应，或 3xx Redirect 响应一起使用。</p>
+<p>字段值可以指定为具体的日期时间（Wed, 04 Jul 2012 06：34：24GMT 等格式），也可以是创建响应后的秒数。</p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Server.png" alt="Server"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Server</span>: Apache/2.2.17 (Unix)</span><br></pre></td></tr></table></figure>
+<p>首部字段 Server 告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息。不单单会标出服务器上的软件应用名称，还有可能包括版本号和安装时启用的可选项。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Server</span>: Apache/2.2.6 (Unix) PHP/5.2.5</span><br></pre></td></tr></table></figure>
+<h4 id="Vary"><a href="#Vary" class="headerlink" title="Vary"></a>Vary</h4><p><img src="/images/2018-08-17-read-图解HTTP-Part6-Vary.png" alt="Vary"></p>
+<p>图：当代理服务器接收到带有 Vary 首部字段指定获取资源的请求时，如果使用的 Accept-Language 字段的值相同，那么就直接从缓存返回响应。反之，则需要先从源服务器端获取资源后才能作为响应返回</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Vary</span>: Accept-Language</span><br></pre></td></tr></table></figure>
+<p>首部字段 Vary 可对缓存进行控制。源服务器会向代理服务器传达关于本地缓存使用方法的命令。</p>
+<p>从代理服务器接收到源服务器返回包含 Vary 指定项的响应之后，若再要进行缓存，仅对请求中含有相同 Vary 指定首部字段的请求返回缓存。即使对相同资源发起请求，但由于 Vary 指定的首部字段不相同，因此必须要从源服务器重新获取资源。</p>
+<h4 id="WWW-Authenticate"><a href="#WWW-Authenticate" class="headerlink" title="WWW-Authenticate"></a>WWW-Authenticate</h4><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">WWW-Authenticate</span>: Basic realm="Usagidesign Auth"</span><br></pre></td></tr></table></figure>
+<p>首部字段 WWW-Authenticate 用于 HTTP 访问认证。它会告知客户端适用于访问请求 URI 所指定资源的认证方案（Basic 或是 Digest）和带参数提示的质询（challenge）。状态码 401 Unauthorized 响应中，肯定带有首部字段 WWW-Authenticate。</p>
+<p>上述示例中，realm 字段的字符串是为了辨别请求 URI 指定资源所受到的保护策略。有关该首部，请参阅本章之后的内容。</p>
+<p>太长了，内容琐碎，看来要再分一小节了，请求首部字段与响应首部字段，耐心看完后是不是有豁然开朗的喜悦(￣▽￣)~*</p>
+<p>参考链接：<a href="https://book.douban.com/subject/25863515/">https://book.douban.com/subject/25863515/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-08-21-read-图解HTTP-Part6中.html" title="深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部">http://laibh.top/2018-08-21-read-图解HTTP-Part6中.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" <i class="fa fa-tag"></i> http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-08-16-read-图解HTTP-Part6上.html" rel="next" title="深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部">
+                <i class="fa fa-chevron-left"></i> 深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-23-read-图解HTTP-Part6下.html" rel="prev" title="深入浅出HTTP，从开始到放弃（第六章下）—— HTTP 首部">
+                深入浅出HTTP，从开始到放弃（第六章下）—— HTTP 首部 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-HTTP-首部（中）"><span class="nav-number">1.</span> <span class="nav-text">第六章  HTTP 首部（中）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求首部字段"><span class="nav-number">1.1.</span> <span class="nav-text">请求首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept"><span class="nav-number">1.1.1.</span> <span class="nav-text">Accept</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Charset"><span class="nav-number">1.1.2.</span> <span class="nav-text">Accept-Charset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Encoding"><span class="nav-number">1.1.3.</span> <span class="nav-text">Accept-Encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Language"><span class="nav-number">1.1.4.</span> <span class="nav-text">Accept-Language</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Authorization"><span class="nav-number">1.1.5.</span> <span class="nav-text">Authorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Expect"><span class="nav-number">1.1.6.</span> <span class="nav-text">Expect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#From"><span class="nav-number">1.1.7.</span> <span class="nav-text">From</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Host"><span class="nav-number">1.1.8.</span> <span class="nav-text">Host</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-Match"><span class="nav-number">1.1.9.</span> <span class="nav-text">If-Match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-Modified-Since"><span class="nav-number">1.1.10.</span> <span class="nav-text">If-Modified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-None-Match"><span class="nav-number">1.1.11.</span> <span class="nav-text">If-None-Match</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-Range"><span class="nav-number">1.1.12.</span> <span class="nav-text">If-Range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#If-Unmodified-Since"><span class="nav-number">1.1.13.</span> <span class="nav-text">If-Unmodified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Max-Forwards"><span class="nav-number">1.1.14.</span> <span class="nav-text">Max-Forwards</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proxy-Authorization"><span class="nav-number">1.1.15.</span> <span class="nav-text">Proxy-Authorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Range"><span class="nav-number">1.1.16.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Referer"><span class="nav-number">1.1.17.</span> <span class="nav-text">Referer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TE"><span class="nav-number">1.1.18.</span> <span class="nav-text">TE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#User-Agent"><span class="nav-number">1.1.19.</span> <span class="nav-text">User-Agent</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应首部字段"><span class="nav-number">1.2.</span> <span class="nav-text">响应首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Accept-Ranges"><span class="nav-number">1.2.1.</span> <span class="nav-text">Accept-Ranges</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Age"><span class="nav-number">1.2.2.</span> <span class="nav-text">Age</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ETag"><span class="nav-number">1.2.3.</span> <span class="nav-text">ETag</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#强-ETag-值和弱-Tag-值"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">强 ETag 值和弱 Tag 值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Location"><span class="nav-number">1.2.4.</span> <span class="nav-text">Location</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proxy-Authenticate"><span class="nav-number">1.2.5.</span> <span class="nav-text">Proxy-Authenticate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Retry-After"><span class="nav-number">1.2.6.</span> <span class="nav-text">Retry-After</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Server"><span class="nav-number">1.2.7.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vary"><span class="nav-number">1.2.8.</span> <span class="nav-text">Vary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WWW-Authenticate"><span class="nav-number">1.2.9.</span> <span class="nav-text">WWW-Authenticate</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

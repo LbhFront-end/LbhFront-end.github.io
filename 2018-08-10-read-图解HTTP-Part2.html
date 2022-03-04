@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="第二章 简单的 HTTP 协议HTTP协议用于客户端和服务器端之间的通信HTTP 协议和 TCP/IP 协议族内的其他众多的协议相同，用于客户端和服务器之间的通信。请求访问文本或图像等资源的一端称为客户端，而提供资源响应的一端称为服务器端。 应用HTTP协议时，必定是一端担任客户端角色，另一端担任服务器端角色。有时候，按实际情况，两台计算机作为客户端和服务器端的角色有可能会互换，但就仅从一条通信线">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议">
+<meta property="og:url" content="http://laibh.top/2018-08-10-read-图解HTTP-Part2.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="第二章 简单的 HTTP 协议HTTP协议用于客户端和服务器端之间的通信HTTP 协议和 TCP/IP 协议族内的其他众多的协议相同，用于客户端和服务器之间的通信。请求访问文本或图像等资源的一端称为客户端，而提供资源响应的一端称为服务器端。 应用HTTP协议时，必定是一端担任客户端角色，另一端担任服务器端角色。有时候，按实际情况，两台计算机作为客户端和服务器端的角色有可能会互换，但就仅从一条通信线">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信1.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信2.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信3.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-Trace追踪路径.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-CONNECT要求用隧道协议连接代理.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量1.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量2.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量3.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-持久连接-管线化.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-没有Cookie消息状态下的请求.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-第%202%20次以后存有%20Cookie%20信息状态的请求.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议">
+<meta name="twitter:description" content="第二章 简单的 HTTP 协议HTTP协议用于客户端和服务器端之间的通信HTTP 协议和 TCP/IP 协议族内的其他众多的协议相同，用于客户端和服务器之间的通信。请求访问文本或图像等资源的一端称为客户端，而提供资源响应的一端称为服务器端。 应用HTTP协议时，必定是一端担任客户端角色，另一端担任服务器端角色。有时候，按实际情况，两台计算机作为客户端和服务器端的角色有可能会互换，但就仅从一条通信线">
+<meta name="twitter:image" content="http://laibh.top/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-08-10-read-图解HTTP-Part2.html"/>
+
+
+
+
+
+  <title>深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-08-10-read-图解HTTP-Part2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T10:55:12+08:00">
+                2018-08-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-08-10-read-图解HTTP-Part2.html" class="leancloud_visitors" data-flag-title="深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,057
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第二章-简单的-HTTP-协议"><a href="#第二章-简单的-HTTP-协议" class="headerlink" title="第二章 简单的 HTTP 协议"></a>第二章 简单的 HTTP 协议</h2><h3 id="HTTP协议用于客户端和服务器端之间的通信"><a href="#HTTP协议用于客户端和服务器端之间的通信" class="headerlink" title="HTTP协议用于客户端和服务器端之间的通信"></a>HTTP协议用于客户端和服务器端之间的通信</h3><p>HTTP 协议和 TCP/IP 协议族内的其他众多的协议相同，用于客户端和服务器之间的通信。请求访问文本或图像等资源的一端称为客户端，而提供资源响应的一端称为服务器端。</p>
+<p>应用HTTP协议时，必定是一端担任客户端角色，另一端担任服务器端角色。有时候，按实际情况，两台计算机作为客户端和服务器端的角色有可能会互换，但就仅从一条通信线路来说，服务器端和客户端的角色是确定的，而用HTTP协议能够明确区分哪端是客户端，哪端是服务器端。</p>
+<h3 id="通过请求和响应的交换达成通信"><a href="#通过请求和响应的交换达成通信" class="headerlink" title="通过请求和响应的交换达成通信"></a>通过请求和响应的交换达成通信</h3><p>请求必定由客户端发送，而服务器端回复响应</p>
+<p>HTTP协议规定，请求从客户端发出，最后服务器端响应该请求并返回。换句话说，肯定是先从客户端开始建立通信的，服务器端在没有接受到请求之前不会发送响应。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信1.png" alt="通过请求和响应的交换达成通信"></p>
+<p>下面则是从客户端发送某个HTTP服务器端的请求报文中的内容</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET/index.htm HTTP/1.1</span><br><span class="line"><span class="attribute">HOST</span>: hackr.jp</span><br></pre></td></tr></table></figure>
+<p>起始行开头的GET表示请求访问服务器的类型，称为方法（method）。随后的字符串/index.htm指明了请求访问的资源对象，也叫做请求URI(request-URI)。最后的HTTP/1.1，即HTTP的版本号，用来提示客户端使用的HTTP协议功能。</p>
+<p>综合来看，这段请求内容的意思是：请求访问某台HTTP服务器上的 /index.htm页面资源。</p>
+<p>请求报文是由请求方法、请求URL、协议版本、可选的请求首部字段和内容实体构成的。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信2.png" alt="通过请求和响应的交换达成通信"></p>
+<p>图：请求报文的构成</p>
+<p>请求首部字段及内容实体后面会作详细说明。接受到请求的服务器，会将请求内容的处理结果以响应的形式返回</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Tue, 10 Jul 2012 06:50:15 GMT</span><br><span class="line"><span class="attribute">Content-Length</span>: 362</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>在起始行开头的HTTP/1.1表示服务器对应的HTTP版本。</p>
+<p>紧挨着的200 OK表示请求的处理结果的状态码（status code）和原因短语（reason-phrase）。下一行显示了创建响应的日期时间，是首部字段（header field）内的一个属性。接着以一空行分隔，之后的内容称为资源实体的主体（entity body）。</p>
+<p>响应报文基本上由协议版本、状态码（表示请求成功或失败的数字代码）、用以解释状态码的原因短语、可选的响应首部字段以及实体主体构成。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-通过请求和响应的交换达成通信3.png" alt="通过请求和响应的交换达成通信"></p>
+<p>图：响应报文的构成</p>
+<h3 id="HTTP是不保存状态的协议"><a href="#HTTP是不保存状态的协议" class="headerlink" title="HTTP是不保存状态的协议"></a>HTTP是不保存状态的协议</h3><p>HTTP是一种不保存状态，即无状态（stateless）协议。HTTP协议自身不对请求和响应之间的通信状态进行保存。也就是说在HTTP这个级别，协议对于发送的请求或响应都不做持久化处理</p>
+<p>使用HTTP协议，每当有新的请求发送时，就会有对应的新响应产生。协议本身并不保留之前的一切的请求或响应报文的信息。这是为了更快地处理大量事务，确保协议的可伸缩性，而特意把HTTP协议设计成如此简单的。可是，随着Web的不断发展，因无状态而导致业务处理变得棘手的情况增多了。比如，用户登录到一家购物网站，即使他跳转到该站的其他页面后，也需要能继续保持登录状态。针对这个实例，网站为了能够掌握是谁送出的请求，需要保存用户的状态。</p>
+<p>HTTP/1.1 虽然是无状态协议，但为了实现期望的保持状态功能，于是引入了Cookie技术。有了Cookie再用HTTP协议通信，就可以管理状态了。</p>
+<h3 id="请求-URI-定位资源"><a href="#请求-URI-定位资源" class="headerlink" title="请求 URI 定位资源"></a>请求 URI 定位资源</h3><p>HTTP协议使用URI定位互联网上的资源。正是因为URI的特定功能，在互利网上任意位置的资源都能访问到。</p>
+<p>当客户端请求在访问资源而发送请求时，URI需要将作为请求报文中请求URI包含在内。指定请求URI的方式有很多。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">URI为完整的请求URI</span></span><br><span class="line">GET http://laibh.top/2018/08/09/2018-08-09-read-图解HTTP-Part2 </span><br><span class="line"></span><br><span class="line">在首部字段Host中写明网络域名或IP地址</span><br><span class="line"><span class="keyword">GET</span> <span class="string">/2018/08/09/2018-08-09-read-图解HTTP-Part2</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: laibh.top</span><br></pre></td></tr></table></figure>
+<p>除此之外，如果不是访问特定资源而是对服务器本身发起请求，可以用一个*来替代请求URI。下面这个例子就是查询HTTP服务端支持的HTTP的方法种类</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">*</span> HTTP/1.1</span><br></pre></td></tr></table></figure>
+<h3 id="告知服务器意图的-HTTP-方法"><a href="#告知服务器意图的-HTTP-方法" class="headerlink" title="告知服务器意图的 HTTP 方法"></a>告知服务器意图的 HTTP 方法</h3><p>HTTP/1.1中可以使用的方法</p>
+<h4 id="GET-获取资源"><a href="#GET-获取资源" class="headerlink" title="GET: 获取资源"></a>GET: 获取资源</h4><p>GET方法用来请求访问已被URI识别的资源。指定的资源服务器端解析后返回响应内容。也就是说，如果请求的资源时文本，那就保持原样返回；如果是像CGI（Common Gateway Interface,通用网关接口）那样的程序，则返回经过执行后的输出结果</p>
+<p>使用<strong>GET</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>GET /index.html HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a></td>
+</tr>
+<tr>
+<td>响应</td>
+<td>返回 index.html 的页面资源</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>GET /index.html HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a><br>If-Modified-Since: Thu,12 Jul 2012 07:30:00 GMT</td>
+</tr>
+<tr>
+<td>响应</td>
+<td>仅返回2017年7月12号7点30分以后更新过的index.html页面资源。如果未有内容更新，则以状态码304 Not Modified 作为响应返回</td>
+</tr>
+</tbody>
+</table>
+<h4 id="POST-传输实体主体"><a href="#POST-传输实体主体" class="headerlink" title="POST: 传输实体主体"></a>POST: 传输实体主体</h4><p>POST方法用来传输实体的主体</p>
+<p>虽然用GET方法也可以传输实体的主体，但一般不用GET方法进行传输，而用POST方法。虽说POST的功能与GET很相似，但POST的主要目的并不是获取响应的主体内容。</p>
+<p>使用<strong>POST</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>POST /submit.cgi HTTP/1.1<br>Host:  <a href="http://www.hackr.jp">www.hackr.jp</a><br>Content-Length:1560（1560字节的数据）</td>
+</tr>
+<tr>
+<td>响应</td>
+<td>返回submit.cgi接受数据的处理结果</td>
+</tr>
+</tbody>
+</table>
+<h4 id="PUT-传输文件"><a href="#PUT-传输文件" class="headerlink" title="PUT: 传输文件"></a>PUT: 传输文件</h4><p>PUT方法用来传输文件。就像FTP协议的文件上传一样，要求在请求报文的主体中包含文件内容，然后保存到请求URI指定的位置。</p>
+<p>但是鉴于HTTP/1.1的PUT方法自身不带验证机制，任何人都可以上传文件，存在安全性问题，因此一般的Web网站不使用该方法。若配合Web应用程序的验证机制，或架构设计采用REST(REpresentational State Transfer,表征状态转移)标准的同类Web网络，就可能会开放使用PUT方法</p>
+<p>使用<strong>PUT</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>PUT/example.html HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a><br>Content-Type: text/html<br>Content-Lenght: 1560（1560字节的数据）</td>
+</tr>
+<tr>
+<td>响应（请求执行成功了，但没有数据返回）</td>
+<td>响应返回状态码204 Not Content(比如：该html已存在于服务器上)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="HEAD-获得报文首部"><a href="#HEAD-获得报文首部" class="headerlink" title="HEAD: 获得报文首部"></a>HEAD: 获得报文首部</h4><p>HEAD方法和GET方法一样，只是不返回报文主体部分。用于确认URI的有效性以及资源更新的日期时间等。</p>
+<p>使用<strong>HEAD</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>HEAD /index.html HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a></td>
+</tr>
+<tr>
+<td>响应</td>
+<td>返回 index.html 有关的响应首部</td>
+</tr>
+</tbody>
+</table>
+<h4 id="DELETE-删除文件"><a href="#DELETE-删除文件" class="headerlink" title="DELETE: 删除文件"></a>DELETE: 删除文件</h4><p>DELETE方法用来删除文件，是与PUT相反的方法。DELETE方法按请求URI删除指定的资源。但是，HTTP/1.1的DELETE方法本身和PUT方法一样不带验证机制，所以一般的Web网站也不使用DELETE方法。当配合Web应用程序的验证机制，或遵守REST标准时还是有可能会开放使用的。</p>
+<p>使用<strong>DELETE</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>DELETE /example.html HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a></td>
+</tr>
+<tr>
+<td>响应</td>
+<td>响应返回状态码204 Not Content(比如：该html已从服务器上删除)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="OPTIONS-询问支持的方法"><a href="#OPTIONS-询问支持的方法" class="headerlink" title="OPTIONS: 询问支持的方法"></a>OPTIONS: 询问支持的方法</h4><p>OPTIONS方法用来查询针对请求URI指定的资源支持的方法</p>
+<p>使用<strong>OPTIONS</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>OPTIONS HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a></td>
+</tr>
+<tr>
+<td>响应</td>
+<td>HTTP/1.1 200 OK<br>Allow: GET,POST,HEAD,OPTIONS（返回服务器支持的方法）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Trace-追踪路径"><a href="#Trace-追踪路径" class="headerlink" title="Trace: 追踪路径"></a>Trace: 追踪路径</h4><p>TRACE方法是让Web服务器端将之前的请求通信环回客户端的方法。</p>
+<p>发送请求时，在Max-Forwards首部字段中填入数值，每经过一个服务器端就将数字减1，当数值刚好减到0时，就停止继续传输，最后接受请求的服务器端则可以返回状态码200 OK 的响应</p>
+<p>客户端通过TRACE方法可以查询发送出去的请求是怎么样被加工修改/篡改的。这是因为，请求想要连接到源目标服务器可能会通过代理中转。TRACE方法就是用来确认连接过程中发生的一系列操作。</p>
+<p>但是，TRACE方法本来就不怎么常用，再加上它容易引发XST(Cross-Site Tracing,跨域追踪)攻击，通常就更不会用到了。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-Trace追踪路径.png" alt="Trace: 追踪路径"></p>
+<p>使用<strong>TRACE</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>TRACE HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a> <br>Max-Forwards: 2</td>
+</tr>
+<tr>
+<td>响应</td>
+<td>HTTP/1.1 200 OK<br>Content-Type: messgae/http<br>TRACE HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a> <br>Max-Forwards: 2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="CONNECT-要求用隧道协议连接代理"><a href="#CONNECT-要求用隧道协议连接代理" class="headerlink" title="CONNECT: 要求用隧道协议连接代理"></a>CONNECT: 要求用隧道协议连接代理</h4><p>CONNECT 方法要求与代理服务器通信建立隧道，实现隧道协议进行TCP通信。主要使用SSL（Secure Sockets Layer,安全套接层）和TLS(Transport Layer Security,传输层安全)协议把通信内容加密后经网络隧道传输</p>
+<p>CONNECT方法的格式如下所示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONNECT 代理服务器名： 端口名 HTTP版本</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-CONNECT要求用隧道协议连接代理.png" alt="CONNECT: 要求用隧道协议连接代理"></p>
+<p>使用<strong>CONNECT</strong>方法的请求响应的例子</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求</td>
+<td>CONNECT proxy.hackr.jp:8080 HTTP/1.1<br>Host: <a href="http://www.hackr.jp">www.hackr.jp</a></td>
+</tr>
+<tr>
+<td>响应</td>
+<td>HTTP/1.1 200 OK (之后进入网络隧道)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="使用方法下达命令"><a href="#使用方法下达命令" class="headerlink" title="使用方法下达命令"></a>使用方法下达命令</h3><p>想请求URI指定的资源发送请求报文时，采用称为方法的命令。</p>
+<p>方法的作用用于，可以指定请求的资源按期望产生的某种行为。方法中有GET、POST、HEAD等</p>
+<p>下表列出了HTTP/1.0 和 HTTP/1.1支持的方法。另外，方法名区别大小写，注意用大写字母</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+<th>支持的HTTP协议版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>获取资源</td>
+<td>1.0、1.1</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>传输实体主体</td>
+<td>1.0、1.1</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>传输文件</td>
+<td>1.0、1.1</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>获得报文首部</td>
+<td>1.0、1.1</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>删除文件</td>
+<td>1.0、1.1</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>询问支持的方法</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>追踪路径</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>要求用隧道协议连接代理</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>LINK</td>
+<td>建立和资源之间的联系</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>UNLINK</td>
+<td>断开连接关系</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+<p>在这里列举的众多方法中，LINK和UNLINK已被HTTP/1.1废弃，不再支持</p>
+<h3 id="持久连接节省通信量"><a href="#持久连接节省通信量" class="headerlink" title="持久连接节省通信量"></a>持久连接节省通信量</h3><p>HTTP协议的初始版本中，每进行一次HTTP通信就要断开一次TCP连接。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量1.png" alt="持久连接节省通信量"></p>
+<p>以当年的通信情况来说，因为都是些容量很小的文本传输，所以即使这样的也没有多大问题。可随着HTTP的普及，文档中包含着大量图片的情况多了起来。比如，使用浏览器浏览一个包含多张图片的HTML页面时，在发送请求访问HTML页面资源的同时，也会请求该HTML页面里包含的其他资源。因此，每次的请求都会造成无谓的TCP连接建立和断开，增加通信量的开销。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量2.png" alt="持久连接节省通信量"></p>
+<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><p>为了解决上述TCP连接的问题，HTTP/1.1和一部分的HTTP/1.0想出了持久连接（HTTP Persistent Connections,也称为HTTP keep-alive或HTTP connection reuse）的方法。持久连接的特点是，只要任意一端没有明确提出断开连接，则保持TCP连接状态。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-持久连接节省通信量3.png" alt="持久连接节省通信量"></p>
+<p>持久连接旨在建立1次TCP连接后进行多次请求和响应的交互。持久连接的好处在于减少TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使得HTTP请求和响应能够更早地结束，这样Web页面的显示速度也就相应提高了。</p>
+<p>在HTTP/1.1中，所有的连接默认都是持久连接，但在HTTP/1.0内并未标准化。虽然有一部分服务器通过非标准的手段实现了持久连接，但服务器端不一定能够支持持久连接。毫无疑问，除了服务器端，客户端也需要支持持久连接。</p>
+<h4 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h4><p>持久连接使得多次请求以管线化（pipelining）方式发送成为可能。从前发送请求后需等待并收到响应，才能发送下一个请求。管线化技术出现后，不用等待响应亦可直接发送下一个请求。这样能够做到同时并行发送多个请求，而不需要一个接一个地等待响应了。</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-持久连接-管线化.png" alt="管线化"></p>
+<p>比如：当请求一个包含10张图片的HTML Web页面，与挨个连接相比，用持久连接可以让请求更快结束。而管线化技术则比持久连接还要快。请求次数越多，时间差就越明显。</p>
+<h3 id="使用-Cookie-的状态管理"><a href="#使用-Cookie-的状态管理" class="headerlink" title="使用 Cookie 的状态管理"></a>使用 Cookie 的状态管理</h3><p>HTTP是无状态协议，它不对之前发生过的请求和响应的状态进行管理。也就是说，无法根据之前的状态进行本次的请求处理。</p>
+<p>假设要求登录认证的Web页面本身无法进行状态的管理（不记录已登录的状态），那么每次跳转新页面不是再次登录，就是要在每次请求报文中附加参数来管理登录状态。</p>
+<p>不可否认，无状态协议当然也有它的优点，由于不必保存状态，自然可减少服务器的CPU以及内存资源的消耗。从另一个侧面来说，也正是HTTP协议本身是非常简单的，所以才会被应用到各种场景里面。如果让服务器管理全部客户端状态会变成负担。</p>
+<p>保留无状态这个特征的同时又要解决类似的矛盾问题，于是引入了Cookie技术。Cookie技术通过在请求和响应报文中写入了Cookie信息来控制客户端的状态。</p>
+<p>Cookie会根据从服务端发送的响应报文内的一个叫做Set-Cookie的首部字段消息，通知客户端保存Cookie。当下次客户端再次往服务器发送请求时，客户端会自动在请求报文中加入Cookie后发出去。</p>
+<p>服务器端发现客户端发送来的Cookie后，会去检查究竟是从哪一个客户端发送的连接请求，然后比对服务器端上的记录，最后得到之前的状态消息。</p>
+<ul>
+<li><p>没有 Cookie消息状态下的请求</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-没有Cookie消息状态下的请求.png" alt="使用 Cookie 的状态管理"></p>
+</li>
+<li><p>第 2 次以后（存有 Cookie 信息状态）的请求</p>
+<p><img src="/images/2018-08-10-read-图解HTTP-Part2-第 2 次以后存有 Cookie 信息状态的请求.png" alt="第 2 次以后（存有 Cookie 信息状态）的请求"></p>
+</li>
+</ul>
+<p>上图展示了发生Cookie交互的情景，HTTP请求报文和响应报文的内容如下。</p>
+<ol>
+<li><p>请求报文（没有Cookie消息的状态）</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> reader <span class="string">/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: hark.jp</span><br><span class="line">*首部字段内没有Cookie相关消息</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>响应报文（服务器端生成Cookie消息）</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date:Date</span>: Thu, 12 Jul 2012 07:12:20 GMT</span><br><span class="line"><span class="attribute">Server</span>: Apache＜Set-Cookie: sid=1342077140226724; path=/; expires=Wed,10-Oct-12 07:12:20 GMT＞</span><br><span class="line"><span class="attribute">Content-Type</span>: text/plain; charset=UTF-8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>请求报文（自动发送保存着的Cookie消息）</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/image/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: hackr.jp</span><br><span class="line"><span class="attribute">Cookie</span>: sid = 1342077140226724</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>参考链接：<a href="https://book.douban.com/subject/25863515/">https://book.douban.com/subject/25863515/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-08-10-read-图解HTTP-Part2.html" title="深入浅出HTTP，从开始到放弃（第二章）—— 简单的 HTTP 协议">http://laibh.top/2018-08-10-read-图解HTTP-Part2.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" <i class="fa fa-tag"></i> http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-08-09-read-图解HTTP-Part1.html" rel="next" title="深入浅出HTTP，从开始到放弃（第一章）—— 了解Web网络基础">
+                <i class="fa fa-chevron-left"></i> 深入浅出HTTP，从开始到放弃（第一章）—— 了解Web网络基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-10-JavaScipt数据结构与算法Part1.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第一章）—— JavaScript简介">
+                为什么我要放弃javaScript数据结构与算法（第一章）—— JavaScript简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章-简单的-HTTP-协议"><span class="nav-number">1.</span> <span class="nav-text">第二章 简单的 HTTP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP协议用于客户端和服务器端之间的通信"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP协议用于客户端和服务器端之间的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过请求和响应的交换达成通信"><span class="nav-number">1.2.</span> <span class="nav-text">通过请求和响应的交换达成通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP是不保存状态的协议"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP是不保存状态的协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求-URI-定位资源"><span class="nav-number">1.4.</span> <span class="nav-text">请求 URI 定位资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#告知服务器意图的-HTTP-方法"><span class="nav-number">1.5.</span> <span class="nav-text">告知服务器意图的 HTTP 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GET-获取资源"><span class="nav-number">1.5.1.</span> <span class="nav-text">GET: 获取资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POST-传输实体主体"><span class="nav-number">1.5.2.</span> <span class="nav-text">POST: 传输实体主体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUT-传输文件"><span class="nav-number">1.5.3.</span> <span class="nav-text">PUT: 传输文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HEAD-获得报文首部"><span class="nav-number">1.5.4.</span> <span class="nav-text">HEAD: 获得报文首部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DELETE-删除文件"><span class="nav-number">1.5.5.</span> <span class="nav-text">DELETE: 删除文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OPTIONS-询问支持的方法"><span class="nav-number">1.5.6.</span> <span class="nav-text">OPTIONS: 询问支持的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Trace-追踪路径"><span class="nav-number">1.5.7.</span> <span class="nav-text">Trace: 追踪路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CONNECT-要求用隧道协议连接代理"><span class="nav-number">1.5.8.</span> <span class="nav-text">CONNECT: 要求用隧道协议连接代理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法下达命令"><span class="nav-number">1.6.</span> <span class="nav-text">使用方法下达命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久连接节省通信量"><span class="nav-number">1.7.</span> <span class="nav-text">持久连接节省通信量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#持久连接"><span class="nav-number">1.7.1.</span> <span class="nav-text">持久连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管线化"><span class="nav-number">1.7.2.</span> <span class="nav-text">管线化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Cookie-的状态管理"><span class="nav-number">1.8.</span> <span class="nav-text">使用 Cookie 的状态管理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

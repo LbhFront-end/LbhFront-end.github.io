@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="源码," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="知其然知其所以然，框架工的自我尝试进阶 React源码浅析知识点： React Api createElement、createContext、JSX=&amp;gt;JS、ConcurrentMode、Ref、Component、Suspense、Hooks React 中的更新创建 ReactDOM.render、Fiber、UpdateQueue、FiberRoot、Update、expiratio">
+<meta name="keywords" content="源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React源码浅析">
+<meta property="og:url" content="http://laibh.top/2019-06-29-React源码浅析.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="知其然知其所以然，框架工的自我尝试进阶 React源码浅析知识点： React Api createElement、createContext、JSX=&amp;gt;JS、ConcurrentMode、Ref、Component、Suspense、Hooks React 中的更新创建 ReactDOM.render、Fiber、UpdateQueue、FiberRoot、Update、expiratio">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.464Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React源码浅析">
+<meta name="twitter:description" content="知其然知其所以然，框架工的自我尝试进阶 React源码浅析知识点： React Api createElement、createContext、JSX=&amp;gt;JS、ConcurrentMode、Ref、Component、Suspense、Hooks React 中的更新创建 ReactDOM.render、Fiber、UpdateQueue、FiberRoot、Update、expiratio">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2019-06-29-React源码浅析.html"/>
+
+
+
+
+
+  <title>React源码浅析 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2019-06-29-React源码浅析.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">React源码浅析</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-29T09:30:54+08:00">
+                2019-06-29
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019-06-29-React源码浅析.html" class="leancloud_visitors" data-flag-title="React源码浅析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,777
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>知其然知其所以然，框架工的自我尝试进阶</p>
+<h2 id="React源码浅析"><a href="#React源码浅析" class="headerlink" title="React源码浅析"></a>React源码浅析</h2><p>知识点：</p>
+<p><strong>React Api</strong></p>
+<p><code>createElement</code>、<code>createContext</code>、<code>JSX=&gt;JS</code>、<code>ConcurrentMode</code>、<code>Ref</code>、<code>Component</code>、<code>Suspense</code>、<code>Hooks</code></p>
+<p><strong>React 中的更新创建</strong></p>
+<p><code>ReactDOM.render</code>、<code>Fiber</code>、<code>UpdateQueue</code>、<code>FiberRoot</code>、<code>Update</code>、<code>expirationTime</code></p>
+<p><strong>Fiber Scheduler</strong></p>
+<p><code>scheduleWork</code>、<code>batchedUpdates</code>、<code>performWork</code>、<code>performUnitOfWork</code>、<code>requestWork</code>、<code>react scheduler</code>、<code>renderRoot</code></p>
+<p><strong>开始更新</strong></p>
+<p><code>beginWork以及优化</code>、<code>各类组件的更新过程</code>、<code>调节子节点的过程</code></p>
+<p><strong>完成各个节点的更新</strong></p>
+<p><code>completeUnitOfWork</code>、<code>虚拟DOM对比</code>、<code>completeWork</code>、<code>错误捕获处理</code>、<code>unwindwork</code>、<code>完成整棵树更新</code></p>
+<p><strong>提交更新</strong></p>
+<p><code>commitRoot整体流程</code>、<code>开发时的帮助方法</code>、<code>提交快照</code>、<code>提交DOM插入</code>、<code>提交DOM更新</code>、<code>提交DOM删除</code>、<code>提交所有生命周期</code></p>
+<p><strong>各功能的实现功能</strong></p>
+<p><code>context的实现过程</code>、<code>ref的实现过程</code>、<code>hydrate的实现过程</code>、<code>React的事件体系</code></p>
+<p><strong>Suspense</strong></p>
+<p><code>更新优先级的概念</code>、<code>更新挂起的概念</code>、<code>Suspense组件更新</code>、<code>timeout处理</code>、<code>retry重新尝试渲染</code>、<code>lazy组件更新</code></p>
+<p><strong>Hooks</strong></p>
+<p><code>核心原理</code>、<code>useState</code>、<code>useEffect</code>、<code>useContent</code>、<code>其他Hooks API</code></p>
+<h3 id="React-Api-相关"><a href="#React-Api-相关" class="headerlink" title="React Api 相关"></a>React Api 相关</h3><h4 id="React-js"><a href="#React-js" class="headerlink" title="React.js"></a>React.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">const React = &#123;</span><br><span class="line">    Children:&#123;</span><br><span class="line">        map,</span><br><span class="line">        forEach,</span><br><span class="line">        count,</span><br><span class="line">        toArray,</span><br><span class="line">        only</span><br><span class="line">    &#125;,</span><br><span class="line">    createRef,</span><br><span class="line">    Component,</span><br><span class="line">    PureComponent,</span><br><span class="line">    createContext,</span><br><span class="line">    forWardRef,</span><br><span class="line">    lazy,</span><br><span class="line">    memo,</span><br><span class="line">    Fragment:REACT_FRAGMENT_TYPE,</span><br><span class="line">    StrictMode:REACT_STRICT_MODE_TYPE,</span><br><span class="line">    SuspenseLREACT_SUSPENSE_TYPE,</span><br><span class="line">    createElement:__DEV__?createElementWithValidation:createElement,</span><br><span class="line">    cloneElement:__DEV__?cloneElementWithValidation:cloneElement,</span><br><span class="line">    isValidElement:isValidElement,</span><br><span class="line">    version:ReactVersion,</span><br><span class="line">    __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:ReactSharedInternals,</span><br><span class="line">&#125;</span><br><span class="line">if (enableStableConcurrentModeAPIs) &#123;</span><br><span class="line">  React.ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;</span><br><span class="line">  React.Profiler = REACT_PROFILER_TYPE;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">  React.unstable_ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;</span><br><span class="line">  React.unstable_Profiler = REACT_PROFILER_TYPE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default React;</span><br></pre></td></tr></table></figure>
+<h4 id="ReactElement-js"><a href="#ReactElement-js" class="headerlink" title="ReactElement.js"></a>ReactElement.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br></pre></td><td class="code"><pre><span class="line">// hasOwnProperty 方法返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是知否有指定的键）</span><br><span class="line">const hasOwnProperty = Object.prototype.hasOwnProperty;</span><br><span class="line">// 内建的props</span><br><span class="line">const RESERVED_PROPS = &#123;</span><br><span class="line">  key: true,</span><br><span class="line">  ref: true,</span><br><span class="line">  __self: true,</span><br><span class="line">  __source: true,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">let specialPropKeyWarningShown, specialPropRefWarningShown;</span><br><span class="line">// 判断是否是合法的 ref</span><br><span class="line">function hasValidRef(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &apos;ref&apos;)) &#123;</span><br><span class="line">      /**</span><br><span class="line">      * getOwnPropertyDescriptor 返回指定对象上自有属性描述符（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）</span><br><span class="line">      * get 方法。获取该属性的访问器函数（getter）。如果没有访问器，该值为 undefined</span><br><span class="line">      */</span><br><span class="line">      const getter = Object.getOwnPropertyDescriptor(config, &apos;ref&apos;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.ref !== undefined;</span><br><span class="line">&#125;</span><br><span class="line">// 判断是否是合法的 key</span><br><span class="line">function hasValidKey(config) &#123;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (hasOwnProperty.call(config, &apos;key&apos;)) &#123;</span><br><span class="line">      const getter = Object.getOwnPropertyDescriptor(config, &apos;key&apos;).get;</span><br><span class="line">      if (getter &amp;&amp; getter.isReactWarning) &#123;</span><br><span class="line">        return false;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return config.key !== undefined;</span><br><span class="line">&#125;</span><br><span class="line">// 定义了 key 不合法抛出的警告</span><br><span class="line">function defineKeyPropWarningGetter(props, displayName) &#123;</span><br><span class="line">  const warnAboutAccessingKey = function() &#123;</span><br><span class="line">    if (!specialPropKeyWarningShown) &#123;</span><br><span class="line">      specialPropKeyWarningShown = true;</span><br><span class="line">      warningWithoutStack(</span><br><span class="line">        false,</span><br><span class="line">        &apos;%s: `key` is not a prop. Trying to access it will result &apos; +</span><br><span class="line">          &apos;in `undefined` being returned. If you need to access the same &apos; +</span><br><span class="line">          &apos;value within the child component, you should pass it as a different &apos; +</span><br><span class="line">          &apos;prop. (https://fb.me/react-special-props)&apos;,</span><br><span class="line">        displayName,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  warnAboutAccessingKey.isReactWarning = true;</span><br><span class="line">  Object.defineProperty(props, &apos;key&apos;, &#123;</span><br><span class="line">    get: warnAboutAccessingKey,</span><br><span class="line">    configurable: true,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line">// 定义了 ref 不合法抛出的警告</span><br><span class="line">function defineRefPropWarningGetter(props, displayName) &#123;</span><br><span class="line">  const warnAboutAccessingRef = function() &#123;</span><br><span class="line">    if (!specialPropRefWarningShown) &#123;</span><br><span class="line">      specialPropRefWarningShown = true;</span><br><span class="line">      warningWithoutStack(</span><br><span class="line">        false,</span><br><span class="line">        &apos;%s: `ref` is not a prop. Trying to access it will result &apos; +</span><br><span class="line">          &apos;in `undefined` being returned. If you need to access the same &apos; +</span><br><span class="line">          &apos;value within the child component, you should pass it as a different &apos; +</span><br><span class="line">          &apos;prop. (https://fb.me/react-special-props)&apos;,</span><br><span class="line">        displayName,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  warnAboutAccessingRef.isReactWarning = true;</span><br><span class="line">  Object.defineProperty(props, &apos;ref&apos;, &#123;</span><br><span class="line">    get: warnAboutAccessingRef,</span><br><span class="line">    configurable: true,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Factory method to create a new React element. This no longer adheres to</span><br><span class="line"> * the class pattern, so do not use new to call it. Also, no instanceof check</span><br><span class="line"> * will work. Instead test $$typeof field against Symbol.for(&apos;react.element&apos;) to check</span><br><span class="line"> * if something is a React Element.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;*&#125; type</span><br><span class="line"> * @param &#123;*&#125; key</span><br><span class="line"> * @param &#123;string|object&#125; ref</span><br><span class="line"> * @param &#123;*&#125; self A *temporary* helper to detect places where `this` is</span><br><span class="line"> * different from the `owner` when React.createElement is called, so that we</span><br><span class="line"> * can warn. We want to get rid of owner and replace string `ref`s with arrow</span><br><span class="line"> * functions, and as long as `this` and owner are the same, there will be no</span><br><span class="line"> * change in behavior.</span><br><span class="line"> * @param &#123;*&#125; source An annotation object (added by a transpiler or otherwise)</span><br><span class="line"> * indicating filename, line number, and/or other information.</span><br><span class="line"> * @param &#123;*&#125; owner</span><br><span class="line"> * @param &#123;*&#125; props</span><br><span class="line"> * @internal</span><br><span class="line"> */</span><br><span class="line">const ReactElement = function(type, key, ref, self, source, owner, props) &#123;</span><br><span class="line">  const element = &#123;</span><br><span class="line">    // This tag allows us to uniquely identify this as a React Element</span><br><span class="line">    $$typeof: REACT_ELEMENT_TYPE,</span><br><span class="line"></span><br><span class="line">    // Built-in properties that belong on the element</span><br><span class="line">    type: type,</span><br><span class="line">    key: key,</span><br><span class="line">    ref: ref,</span><br><span class="line">    props: props,</span><br><span class="line"></span><br><span class="line">    // Record the component responsible for creating this element.</span><br><span class="line">    _owner: owner,</span><br><span class="line">  &#125;;</span><br><span class="line"> // 开发环境的一些内容</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    // The validation flag is currently mutative. We put it on</span><br><span class="line">    // an external backing store so that we can freeze the whole object.</span><br><span class="line">    // This can be replaced with a WeakMap once they are implemented in</span><br><span class="line">    // commonly used development environments.</span><br><span class="line">    element._store = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    // To make comparing ReactElements easier for testing purposes, we make</span><br><span class="line">    // the validation flag non-enumerable (where possible, which should</span><br><span class="line">    // include every environment we run tests in), so the test framework</span><br><span class="line">    // ignores it.</span><br><span class="line">    Object.defineProperty(element._store, &apos;validated&apos;, &#123;</span><br><span class="line">      configurable: false,</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: true,</span><br><span class="line">      value: false,</span><br><span class="line">    &#125;);</span><br><span class="line">    // self and source are DEV only properties.</span><br><span class="line">    Object.defineProperty(element, &apos;_self&apos;, &#123;</span><br><span class="line">      configurable: false,</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: false,</span><br><span class="line">      value: self,</span><br><span class="line">    &#125;);</span><br><span class="line">    // Two elements created in two different places should be considered</span><br><span class="line">    // equal for testing purposes and therefore we hide it from enumeration.</span><br><span class="line">    Object.defineProperty(element, &apos;_source&apos;, &#123;</span><br><span class="line">      configurable: false,</span><br><span class="line">      enumerable: false,</span><br><span class="line">      writable: false,</span><br><span class="line">      value: source,</span><br><span class="line">    &#125;);</span><br><span class="line">    if (Object.freeze) &#123;</span><br><span class="line">      Object.freeze(element.props);</span><br><span class="line">      Object.freeze(element);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return element;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 创建并返回给定类型的新ReactElement。</span><br><span class="line"> * See https://reactjs.org/docs/react-api.html#createelement</span><br><span class="line"> */</span><br><span class="line">export function createElement(type, config, children) &#123;</span><br><span class="line">  let propName;</span><br><span class="line"></span><br><span class="line">  // Reserved names are extracted</span><br><span class="line">  const props = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  let key = null;</span><br><span class="line">  let ref = null;</span><br><span class="line">  let self = null;</span><br><span class="line">  let source = null;</span><br><span class="line"></span><br><span class="line">  if (config != null) &#123;</span><br><span class="line">    if (hasValidRef(config)) &#123;</span><br><span class="line">      ref = config.ref;</span><br><span class="line">    &#125;</span><br><span class="line">    if (hasValidKey(config)) &#123;</span><br><span class="line">      key = &apos;&apos; + config.key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self = config.__self === undefined ? null : config.__self;</span><br><span class="line">    source = config.__source === undefined ? null : config.__source;</span><br><span class="line">    // 如果不是内建的props以及本身拥有的属性，将剩余的属性传入到新的props对象中</span><br><span class="line">    for (propName in config) &#123;        </span><br><span class="line">      if (</span><br><span class="line">        hasOwnProperty.call(config, propName) &amp;&amp;</span><br><span class="line">        !RESERVED_PROPS.hasOwnProperty(propName)</span><br><span class="line">      ) &#123;</span><br><span class="line">        props[propName] = config[propName];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 子对象可以是多个参数，并且这些参数会传输到新分配的props对象上。</span><br><span class="line">  const childrenLength = arguments.length - 2;</span><br><span class="line">  if (childrenLength === 1) &#123;</span><br><span class="line">    props.children = children;</span><br><span class="line">  &#125; else if (childrenLength &gt; 1) &#123;</span><br><span class="line">    const childArray = Array(childrenLength);</span><br><span class="line">    for (let i = 0; i &lt; childrenLength; i++) &#123;</span><br><span class="line">      childArray[i] = arguments[i + 2];</span><br><span class="line">    &#125;</span><br><span class="line">    if (__DEV__) &#123;</span><br><span class="line">      if (Object.freeze) &#123;</span><br><span class="line">        Object.freeze(childArray);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    props.children = childArray;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 解析默认属性</span><br><span class="line">  if (type &amp;&amp; type.defaultProps) &#123;</span><br><span class="line">    const defaultProps = type.defaultProps;</span><br><span class="line">    for (propName in defaultProps) &#123;</span><br><span class="line">      if (props[propName] === undefined) &#123;</span><br><span class="line">        props[propName] = defaultProps[propName];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  if (__DEV__) &#123;</span><br><span class="line">    if (key || ref) &#123;</span><br><span class="line">      const displayName =</span><br><span class="line">        typeof type === &apos;function&apos;</span><br><span class="line">          ? type.displayName || type.name || &apos;Unknown&apos;</span><br><span class="line">          : type;</span><br><span class="line">      if (key) &#123;</span><br><span class="line">        defineKeyPropWarningGetter(props, displayName);</span><br><span class="line">      &#125;</span><br><span class="line">      if (ref) &#123;</span><br><span class="line">        defineRefPropWarningGetter(props, displayName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return ReactElement(</span><br><span class="line">    type,</span><br><span class="line">    key,</span><br><span class="line">    ref,</span><br><span class="line">    self,</span><br><span class="line">    source,</span><br><span class="line">    ReactCurrentOwner.current,</span><br><span class="line">    props,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 返回一个生成给定类型的ReactElements的函数。（已废弃）</span><br><span class="line"> * See https://reactjs.org/docs/react-api.html#createfactory</span><br><span class="line"> */</span><br><span class="line">export function createFactory(type) &#123;</span><br><span class="line">  const factory = createElement.bind(null, type);</span><br><span class="line">  // Expose the type on the factory and the prototype so that it can be</span><br><span class="line">  // easily accessed on elements. E.g. `&lt;Foo /&gt;.type === Foo`.</span><br><span class="line">  // This should not be named `constructor` since this may not be the function</span><br><span class="line">  // that created the element, and it may not even be a constructor.</span><br><span class="line">  // Legacy hook: remove it</span><br><span class="line">  factory.type = type;</span><br><span class="line">  return factory;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function cloneAndReplaceKey(oldElement, newKey) &#123;</span><br><span class="line">  const newElement = ReactElement(</span><br><span class="line">    oldElement.type,</span><br><span class="line">    newKey,</span><br><span class="line">    oldElement.ref,</span><br><span class="line">    oldElement._self,</span><br><span class="line">    oldElement._source,</span><br><span class="line">    oldElement._owner,</span><br><span class="line">    oldElement.props,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  return newElement;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 以 element 元素为样板克隆并返回新的 React 元素</span><br><span class="line"> * See https://reactjs.org/docs/react-api.html#cloneelement</span><br><span class="line"> */</span><br><span class="line">export function cloneElement(element, config, children) &#123;</span><br><span class="line">  invariant(</span><br><span class="line">    !(element === null || element === undefined),</span><br><span class="line">    &apos;React.cloneElement(...): The argument must be a React element, but you passed %s.&apos;,</span><br><span class="line">    element,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  let propName;</span><br><span class="line"></span><br><span class="line">  // 复制原来的props</span><br><span class="line">  const props = Object.assign(&#123;&#125;, element.props);</span><br><span class="line"></span><br><span class="line">  // 提取内建props相关的值</span><br><span class="line">  let key = element.key;</span><br><span class="line">  let ref = element.ref;</span><br><span class="line">  // Self is preserved since the owner is preserved.</span><br><span class="line">  const self = element._self;</span><br><span class="line">  // Source is preserved since cloneElement is unlikely to be targeted by a transpiler, and the original source is probably a better indicator of the true owner.</span><br><span class="line">  const source = element._source;</span><br><span class="line"></span><br><span class="line">  // Owner will be preserved, unless ref is overridden</span><br><span class="line">  let owner = element._owner;</span><br><span class="line"></span><br><span class="line">  if (config != null) &#123;</span><br><span class="line">    if (hasValidRef(config)) &#123;</span><br><span class="line">      // Silently steal the ref from the parent.</span><br><span class="line">      ref = config.ref;</span><br><span class="line">      owner = ReactCurrentOwner.current;</span><br><span class="line">    &#125;</span><br><span class="line">    if (hasValidKey(config)) &#123;</span><br><span class="line">      key = &apos;&apos; + config.key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Remaining properties override existing props</span><br><span class="line">    let defaultProps;</span><br><span class="line">    if (element.type &amp;&amp; element.type.defaultProps) &#123;</span><br><span class="line">      defaultProps = element.type.defaultProps;</span><br><span class="line">    &#125;</span><br><span class="line">    for (propName in config) &#123;</span><br><span class="line">      if (</span><br><span class="line">        hasOwnProperty.call(config, propName) &amp;&amp;</span><br><span class="line">        !RESERVED_PROPS.hasOwnProperty(propName)</span><br><span class="line">      ) &#123;</span><br><span class="line">        if (config[propName] === undefined &amp;&amp; defaultProps !== undefined) &#123;</span><br><span class="line">          // Resolve default props</span><br><span class="line">          props[propName] = defaultProps[propName];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          props[propName] = config[propName];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Children can be more than one argument, and those are transferred onto</span><br><span class="line">  // the newly allocated props object.</span><br><span class="line">  const childrenLength = arguments.length - 2;</span><br><span class="line">  if (childrenLength === 1) &#123;</span><br><span class="line">    props.children = children;</span><br><span class="line">  &#125; else if (childrenLength &gt; 1) &#123;</span><br><span class="line">    const childArray = Array(childrenLength);</span><br><span class="line">    for (let i = 0; i &lt; childrenLength; i++) &#123;</span><br><span class="line">      childArray[i] = arguments[i + 2];</span><br><span class="line">    &#125;</span><br><span class="line">    props.children = childArray;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return ReactElement(element.type, key, ref, self, source, owner, props);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 验证对象是否为ReactElement。</span><br><span class="line"> * See https://reactjs.org/docs/react-api.html#isvalidelement</span><br><span class="line"> * @param &#123;?object&#125; object</span><br><span class="line"> * @return &#123;boolean&#125; True if `object` is a ReactElement.</span><br><span class="line"> * @final</span><br><span class="line"> */</span><br><span class="line">export function isValidElement(object) &#123;</span><br><span class="line">  return (</span><br><span class="line">    typeof object === &apos;object&apos; &amp;&amp;</span><br><span class="line">    object !== null &amp;&amp;</span><br><span class="line">    object.$$typeof === REACT_ELEMENT_TYPE</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ReactElement</code> 通过 <code>createElement</code> 创建的，传入三个参数：</p>
+<ul>
+<li><p>type（指代 <code>ReactElement</code>的类型）</p>
+<ul>
+<li>字符串。<code>&#39;div&#39;</code>等，被称为 <code>HostComponent</code></li>
+<li>Class。继承自 <code>Component</code>或者 <code>PureComponent</code>的组件，称为 <code>ClassComponent</code></li>
+<li>方法。<code>functinal Component</code></li>
+<li>原生。<code>Fragment</code>、<code>AsyncModel</code>、<code>Symbol</code></li>
+</ul>
+</li>
+<li><p>config</p>
+</li>
+<li>children</li>
+</ul>
+<p><code>ReactElement</code>只是一个用来承载信息的容器，里面有几个信息：</p>
+<ul>
+<li><code>type</code>，用来判断如何创建节点</li>
+<li><code>key</code>和 <code>ref</code>这些特殊信息</li>
+<li><code>props</code>新的属性内容</li>
+<li><code>$$type</code>用于确定是否属于 <code>ReactElement</code></li>
+</ul>
+<h4 id="ReactBaseClasses-js"><a href="#ReactBaseClasses-js" class="headerlink" title="ReactBaseClasses.js"></a>ReactBaseClasses.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">import ReactNoopUpdateQueue from &apos;./ReactNoopUpdateQueue&apos;;</span><br><span class="line">/**</span><br><span class="line"> * Base class helpers for the updating state of a component.</span><br><span class="line"> */</span><br><span class="line">const emptyObject = &#123;&#125;;</span><br><span class="line">function Component(props, context, updater) &#123;</span><br><span class="line">  this.props = props;</span><br><span class="line">  this.context = context;</span><br><span class="line">  // If a component has string refs, we will assign a different object later.</span><br><span class="line">  this.refs = emptyObject;</span><br><span class="line">  // We initialize the default updater but the real one gets injected by the renderer.</span><br><span class="line">  this.updater = updater || ReactNoopUpdateQueue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Component.prototype.isReactComponent = &#123;&#125;;</span><br><span class="line">// 核心方法</span><br><span class="line">Component.prototype.setState = function(partialState, callback) &#123;</span><br><span class="line">  invariant(</span><br><span class="line">    typeof partialState === &apos;object&apos; ||</span><br><span class="line">      typeof partialState === &apos;function&apos; ||</span><br><span class="line">      partialState == null,</span><br><span class="line">    &apos;setState(...): takes an object of state variables to update or a &apos; +</span><br><span class="line">      &apos;function which returns an object of state variables.&apos;,</span><br><span class="line">  );</span><br><span class="line">  // DOM 实现的</span><br><span class="line">  this.updater.enqueueSetState(this, partialState, callback, &apos;setState&apos;);</span><br><span class="line">&#125;;</span><br><span class="line">// 强制更新</span><br><span class="line">Component.prototype.forceUpdate = function(callback) &#123;</span><br><span class="line">  this.updater.enqueueForceUpdate(this, callback, &apos;forceUpdate&apos;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">function ComponentDummy() &#123;&#125;</span><br><span class="line">ComponentDummy.prototype = Component.prototype;</span><br><span class="line"></span><br><span class="line">function PureComponent(props, context, updater) &#123;</span><br><span class="line">  this.props = props;</span><br><span class="line">  this.context = context;</span><br><span class="line">  // If a component has string refs, we will assign a different object later.</span><br><span class="line">  this.refs = emptyObject;</span><br><span class="line">  this.updater = updater || ReactNoopUpdateQueue;</span><br><span class="line">&#125;</span><br><span class="line">const pureComponentPrototype = (PureComponent.prototype = new ComponentDummy());</span><br><span class="line">pureComponentPrototype.constructor = PureComponent;</span><br><span class="line">// Avoid an extra prototype jump for these methods.</span><br><span class="line">Object.assign(pureComponentPrototype, Component.prototype);</span><br><span class="line">// isPureComponent 属性便于 REACT-DOM 后面辨认是否是纯组件</span><br><span class="line">pureComponentPrototype.isPureReactComponent = true;</span><br><span class="line"></span><br><span class="line">export &#123;Component, PureComponent&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="ReactCreateRef-js"><a href="#ReactCreateRef-js" class="headerlink" title="ReactCreateRef.js"></a>ReactCreateRef.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export function createRef()&#123;</span><br><span class="line">    const refObject = &#123;</span><br><span class="line">        current:null,</span><br><span class="line">    &#125;</span><br><span class="line">    return refObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Refs 提供了一种方式，允许我们访问 DOM 节点或者在 render 方法中创建的 React 元素。</p>
+<p>使用 Refs 的情况：</p>
+<ul>
+<li>管理焦点，文本选择或者媒体播放</li>
+<li>触发强制动画</li>
+<li>集成第三方 DOM 库</li>
+</ul>
+<p>使用 Refs 的方法：</p>
+<ul>
+<li>string ref</li>
+<li>function</li>
+<li>createRef</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">export default class RefDemo extends React.Component &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.objRef = React.createRef();</span><br><span class="line">    // &#123;current:null&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      this.refs.stringRef.textContent = &apos;string ref got&apos;</span><br><span class="line">      this.methodRef.textContent = &apos;method ref got&apos;</span><br><span class="line">      this.objRef.current.textContent = &apos;obj ref got&apos;</span><br><span class="line">    &#125;, 1000)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;&gt;</span><br><span class="line">        &lt;p ref=&quot;stringRef&quot;&gt;span1&lt;/p&gt;</span><br><span class="line">        &lt;p ref=&#123;ele =&gt; (this.methodRef = ele)&#125;&gt;span3&lt;/p&gt;</span><br><span class="line">        &lt;p ref=&#123;this.objRef&#125;&gt;span3&lt;/p&gt;</span><br><span class="line">      &lt;/&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="forwardRef-js"><a href="#forwardRef-js" class="headerlink" title="forwardRef.js"></a>forwardRef.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export default function forwardRef(render:(props,ref))&#123;</span><br><span class="line">    return&#123;</span><br><span class="line">        $$typeof:REACT_FORWARD_REF_TYPE,</span><br><span class="line">        render,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React.forwardRef 会创建一个 React 组件，这个组件能够将其接受的 ref 属性转发到其组件树下的另一个组件中。</p>
+<p>主要使用的是：</p>
+<ul>
+<li>转发 refs 到 DOM 组件</li>
+<li>在高阶组件中转发 refs</li>
+</ul>
+<p>React.forwardRef 接受渲染函数作为参数。React 将使用 props 和 refs 作为参数来调用此函数。此函数应该返回 React 节点。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// PureComponent</span><br><span class="line">const TargetComponent = React.forwardRef((props,ref)=&gt;&#123;</span><br><span class="line">    &lt;input type=&quot;text&quot; ref=&#123;ref&#125; /&gt;</span><br><span class="line">&#125;)</span><br><span class="line">        </span><br><span class="line">export default class Comp extends React.Component&#123;</span><br><span class="line">    constructor()&#123;</span><br><span class="line">        super();</span><br><span class="line">        this.ref = React.createRef();</span><br><span class="line">    &#125;</span><br><span class="line">    componentDidMount()&#123;</span><br><span class="line">        this.ref.current.value = &apos;ref get input&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    render()&#123;</span><br><span class="line">        return &lt;TargetComponent ref=&#123;this.ref&#125;/&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ReactContext.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">export function createContext(defaultValue,calculateChangedBits)&#123;</span><br><span class="line">    if(calculateChangedBits === undefined)&#123;</span><br><span class="line">        calculateChangedBits = null;</span><br><span class="line">    &#125;     </span><br><span class="line">    const context = &#123;</span><br><span class="line">        $$typeof:REACT_CONTEXT_TYPE,</span><br><span class="line">        _calculateChangedBits:calculateChangedBits,</span><br><span class="line">        _currentValue:defaultValue,</span><br><span class="line">        _currentValue2:defaultValue,</span><br><span class="line">        Provider:null,</span><br><span class="line">        Consumer:null</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    context.Provider = &#123;</span><br><span class="line">        $$typeof:REACT_PROVIDER_TYPE,</span><br><span class="line">        _context:context</span><br><span class="line">    &#125;</span><br><span class="line">    if(__DEV__)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        context.Consumer = context;</span><br><span class="line">    &#125;    </span><br><span class="line">    return context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ReactLazy-js"><a href="#ReactLazy-js" class="headerlink" title="ReactLazy.js"></a>ReactLazy.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">lazy</span>(<span class="params">ctor:(</span>)=&gt;<span class="title">Thenable</span>&lt;<span class="title">T</span>,<span class="title">R</span>&gt;)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        $$<span class="keyword">typeof</span>:REACT_LAZY_TYPE,</span><br><span class="line">        <span class="comment">// 类 promise</span></span><br><span class="line">        _ctor:ctor,</span><br><span class="line">        _status:<span class="number">-1</span>,</span><br><span class="line">        <span class="comment">// 加载完返回的结果</span></span><br><span class="line">        _result:<span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h4><p>简单用法：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState,useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> ()=&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> [name,setName] = useState(<span class="string">'lbh'</span>);</span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'component update'</span>)</span><br><span class="line">        <span class="comment">// 解除绑定</span></span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'unbind'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,[])</span><br><span class="line">    <span class="keyword">return</span>(</span><br><span class="line">    &lt;&gt;</span><br><span class="line">        &lt;p&gt;My name is:&#123;name&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;input type="text" value=&#123;name&#125; onChange=&#123;e=&gt;setName(e.target.value)&#125;&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ReactChildren-js"><a href="#ReactChildren-js" class="headerlink" title="ReactChildren.js"></a>ReactChildren.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br></pre></td><td class="code"><pre><span class="line">const SEPARATOP = &apos;.&apos;;</span><br><span class="line">const SUBSEPARATOR = &apos;:&apos;;</span><br><span class="line">function escape(key)&#123;</span><br><span class="line">    const escapeRegex = /[=:]/g;</span><br><span class="line">    const escaperLookup = &#123;</span><br><span class="line">        &apos;=&apos;:&apos;=0&apos;,</span><br><span class="line">        &apos;:&apos;:&apos;=2&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    const escapedString = (&apos;&apos;+key).replace(escapeRegex,function(match)&#123;</span><br><span class="line">        return escapeLookup[match];</span><br><span class="line">    &#125;)</span><br><span class="line">    return &apos;$&apos; + escapedString;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let didWarnAboutMaps = false;</span><br><span class="line">const userProviderKeyEscapeRegex = /\/+/g;</span><br><span class="line">function escapeUserProvidedKey(text)&#123;</span><br><span class="line">    return (&apos;&apos;+text).replace(userProviderKeyEscapeRegex,&apos;$&amp;/&apos;);</span><br><span class="line">&#125;</span><br><span class="line">// 对象池</span><br><span class="line">const POOL_SIZE = 10;</span><br><span class="line">const traverseContextPool = [];</span><br><span class="line">function getPooledTraverseContext(mapResult,keyPrefix,mapFunction,mapContext)&#123;</span><br><span class="line">    if(traverseContextPool.length)&#123;</span><br><span class="line">        const traverseContext = traverseContextPool.pop();</span><br><span class="line">        traverseContext.result = mapResult;</span><br><span class="line">        traverseContext.keyPrefix = keyPrefix;</span><br><span class="line">        traverseContext.func = mapFunction;</span><br><span class="line">        traverseContext.context = mapContext;</span><br><span class="line">        traverseContext.count = 0;</span><br><span class="line">        return traverseContext;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            result:mapResult,</span><br><span class="line">            keyPrefix:keyPrefix,</span><br><span class="line">            func:mapFunction,</span><br><span class="line">            context:mapContext,</span><br><span class="line">            count:0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 释放对象属性，少于指定长度时，将对象push 对象池</span><br><span class="line">function releaseTravserContext(traverseContext)&#123;</span><br><span class="line">    traverseContext.result = null;</span><br><span class="line">    traverseContext.keyPrefix = null;</span><br><span class="line">    traverseContext.func = null;</span><br><span class="line">    traverseContext.context = null;</span><br><span class="line">    traverseContext.count = 0;</span><br><span class="line">    if(traverseContextPool.length &lt; POOL_SIZE)&#123;</span><br><span class="line">        traverseContextPool.push(traverseContext)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 核心</span><br><span class="line">function traverseAllChildrenImpl(</span><br><span class="line">  children,</span><br><span class="line">  nameSoFar,</span><br><span class="line">  callback,</span><br><span class="line">  traverseContext,</span><br><span class="line">) &#123;</span><br><span class="line">  const type = typeof children;</span><br><span class="line"></span><br><span class="line">  if (type === &apos;undefined&apos; || type === &apos;boolean&apos;) &#123;</span><br><span class="line">    children = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  let invokeCallback = false;</span><br><span class="line"></span><br><span class="line">  if (children === null) &#123;</span><br><span class="line">    invokeCallback = true;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    switch (type) &#123;</span><br><span class="line">      case &apos;string&apos;:</span><br><span class="line">      case &apos;number&apos;:</span><br><span class="line">        invokeCallback = true;</span><br><span class="line">        break;</span><br><span class="line">      case &apos;object&apos;:</span><br><span class="line">        switch (children.$$typeof) &#123;</span><br><span class="line">          case REACT_ELEMENT_TYPE:</span><br><span class="line">          case REACT_PORTAL_TYPE:</span><br><span class="line">            invokeCallback = true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (invokeCallback) &#123;</span><br><span class="line">    callback(</span><br><span class="line">      traverseContext,</span><br><span class="line">      children,</span><br><span class="line">      nameSoFar === &apos;&apos; ? SEPARATOR + getComponentKey(children, 0) : nameSoFar,</span><br><span class="line">    );</span><br><span class="line">    return 1;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  let child;</span><br><span class="line">  let nextName;</span><br><span class="line">  let subtreeCount = 0; </span><br><span class="line">  const nextNamePrefix =</span><br><span class="line">    nameSoFar === &apos;&apos; ? SEPARATOR : nameSoFar + SUBSEPARATOR;</span><br><span class="line"></span><br><span class="line">  if (Array.isArray(children)) &#123;</span><br><span class="line">    for (let i = 0; i &lt; children.length; i++) &#123;</span><br><span class="line">      child = children[i];</span><br><span class="line">      nextName = nextNamePrefix + getComponentKey(child, i);</span><br><span class="line">      subtreeCount += traverseAllChildrenImpl(</span><br><span class="line">        child,</span><br><span class="line">        nextName,</span><br><span class="line">        callback,</span><br><span class="line">        traverseContext,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    const iteratorFn = getIteratorFn(children);</span><br><span class="line">    if (typeof iteratorFn === &apos;function&apos;) &#123;</span><br><span class="line">      const iterator = iteratorFn.call(children);</span><br><span class="line">      let step;</span><br><span class="line">      let ii = 0;</span><br><span class="line">      while (!(step = iterator.next()).done) &#123;</span><br><span class="line">        child = step.value;</span><br><span class="line">        nextName = nextNamePrefix + getComponentKey(child, ii++);</span><br><span class="line">        subtreeCount += traverseAllChildrenImpl(</span><br><span class="line">          child,</span><br><span class="line">          nextName,</span><br><span class="line">          callback,</span><br><span class="line">          traverseContext,</span><br><span class="line">        );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; else if (type === &apos;object&apos;) &#123;</span><br><span class="line">      let addendum = &apos;&apos;;</span><br><span class="line">      const childrenString = &apos;&apos; + children;</span><br><span class="line">      invariant(</span><br><span class="line">        false,</span><br><span class="line">        &apos;Objects are not valid as a React child (found: %s).%s&apos;,</span><br><span class="line">        childrenString === &apos;[object Object]&apos;</span><br><span class="line">          ? &apos;object with keys &#123;&apos; + Object.keys(children).join(&apos;, &apos;) + &apos;&#125;&apos;</span><br><span class="line">          : childrenString,</span><br><span class="line">        addendum,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return subtreeCount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function traverseAllChildren(children,callback,traverseContext)&#123;</span><br><span class="line">    if(children === null)&#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    return traverseAllChildrenImpl(children,&apos;&apos;,callback,traverseContext)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getComponentKey(component,index)&#123;</span><br><span class="line">    if(</span><br><span class="line">        typeof component === &apos;object&apos; &amp;&amp; </span><br><span class="line">        component !== null &amp;&amp;</span><br><span class="line">        component.key != null</span><br><span class="line">    )&#123;</span><br><span class="line">        return escape(component.key);</span><br><span class="line">    &#125;</span><br><span class="line">    return index.toString(36);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function forEachSingleChild(bookKeeping,child,name)&#123;</span><br><span class="line">    const &#123; func, context &#125; = bookKeeping;</span><br><span class="line">    func.call(context,child,bookKeeping.count++);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function forEachChildren(children, forEachFunc, forEachContext) &#123;</span><br><span class="line">  if (children == null) &#123;</span><br><span class="line">    return children;</span><br><span class="line">  &#125;</span><br><span class="line">  const traverseContext = getPooledTraverseContext(</span><br><span class="line">    null,</span><br><span class="line">    null,</span><br><span class="line">    forEachFunc,</span><br><span class="line">    forEachContext,</span><br><span class="line">  );</span><br><span class="line">  traverseAllChildren(children, forEachSingleChild, traverseContext);</span><br><span class="line">  releaseTraverseContext(traverseContext);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function mapSingleChildIntoContext(bookKeeping, child, childKey) &#123;</span><br><span class="line">  const &#123;result, keyPrefix, func, context&#125; = bookKeeping;</span><br><span class="line"></span><br><span class="line">  let mappedChild = func.call(context, child, bookKeeping.count++);</span><br><span class="line">  if (Array.isArray(mappedChild)) &#123;</span><br><span class="line">    mapIntoWithKeyPrefixInternal(mappedChild, result, childKey, c =&gt; c);</span><br><span class="line">  &#125; else if (mappedChild != null) &#123;</span><br><span class="line">    if (isValidElement(mappedChild)) &#123;</span><br><span class="line">      mappedChild = cloneAndReplaceKey(</span><br><span class="line">        mappedChild,</span><br><span class="line">        keyPrefix +</span><br><span class="line">          (mappedChild.key &amp;&amp; (!child || child.key !== mappedChild.key)</span><br><span class="line">            ? escapeUserProvidedKey(mappedChild.key) + &apos;/&apos;</span><br><span class="line">            : &apos;&apos;) +</span><br><span class="line">          childKey,</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">    result.push(mappedChild);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function mapIntoWithKeyPrefixInternal(children,array,prefix,func,context)&#123;</span><br><span class="line">    let escapedPrefix = &apos;&apos;;</span><br><span class="line">    if(prefix != null)&#123;</span><br><span class="line">        escapedPrefix = escapeUserProvidedKey(prefix)+&apos;/&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    const traverseContext = getPooledTraverseContext(</span><br><span class="line">        array,</span><br><span class="line">        escapedPrefix,</span><br><span class="line">        func,</span><br><span class="line">        context</span><br><span class="line">    )</span><br><span class="line">    traverseAllChildren(children,mapSingleChildIntoContext,traverseContext);</span><br><span class="line">    releaseTraverseContext(traverseContext);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function mapChildren(children,func,context)&#123;</span><br><span class="line">    if(children == null)&#123;</span><br><span class="line">        return children;</span><br><span class="line">    &#125;</span><br><span class="line">    const result = [];</span><br><span class="line">    mapIntoWithKeyPrefixInternal(children,result,null,func,context);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function countChildren(children)&#123;</span><br><span class="line">    return traverseAllChildren(children,()=&gt;null,null);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function toArray(children)&#123;</span><br><span class="line">    const result = [];</span><br><span class="line">    mapIntoWithKeyPrefixInternal(children,result,null,child =&gt; child)</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function onlyChild(children) &#123;</span><br><span class="line">  invariant(</span><br><span class="line">    isValidElement(children),</span><br><span class="line">    &apos;React.Children.only expected to receive a single React element child.&apos;,</span><br><span class="line">  );</span><br><span class="line">  return children;</span><br><span class="line">&#125;</span><br><span class="line">export &#123;</span><br><span class="line">	forEachChild as forEach,</span><br><span class="line">    mapChildren as map,</span><br><span class="line">    countChildren as count,</span><br><span class="line">    onlyChild as only,</span><br><span class="line">    toArray,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要方法流程图：</p>
+<pre class="mermaid">graph TD
+A(开始)
+contextPool(contextPool)
+mapIntoWithKeyPrefixInternal(mapIntoWithKeyPrefixInternal)
+traverseAllChildren(traverseAllChildren)
+traverseAllChildrenImpl(traverseAllChildrenImpl)
+mapSingleChildrenContext(mapSingleChildrenContext)
+是否多个节点{是否多个节点}
+isArray{isArray}
+循环每个节点((循环每个节点))
+对每个节点调用mapFunc返回map之后的节点(对每个节点调用mapFunc返回map之后的节点)
+往result中推入clone节点并替换key(往result中推入clone节点并替换key)
+A --> mapIntoWithKeyPrefixInternal
+mapIntoWithKeyPrefixInternal -. 开始的时候获取 .-> contextPool
+mapIntoWithKeyPrefixInternal -. 结束之后归还 .-> contextPool
+mapIntoWithKeyPrefixInternal --> traverseAllChildren
+traverseAllChildren --> traverseAllChildrenImpl
+traverseAllChildrenImpl --> 是否多个节点
+是否多个节点 --Y--> 循环每个节点
+是否多个节点 --N--> mapSingleChildrenContext
+循环每个节点 --> traverseAllChildrenImpl
+mapSingleChildrenContext --> 对每个节点调用mapFunc返回map之后的节点
+对每个节点调用mapFunc返回map之后的节点 --> isArray
+isArray --Y--> mapIntoWithKeyPrefixInternal
+isArray --N--> 往result中推入clone节点并替换key</pre>
+
+<h4 id="ReactContext-js"><a href="#ReactContext-js" class="headerlink" title="ReactContext.js"></a>ReactContext.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">export function createCOntext(defaultValue,calculateChangedBits)&#123;</span><br><span class="line">    if(calculateChangedBits === undefined)&#123;</span><br><span class="line">        calculateChangedBits = null;</span><br><span class="line">    &#125;</span><br><span class="line">    const context = &#123;</span><br><span class="line">        $$typeof:REACT_CONTEXT_TYPE,</span><br><span class="line">        _calculateChangeBits:calculateChangeBits,</span><br><span class="line">        _currentValue:defaultValue,</span><br><span class="line">        _currentValue2:defaultValue,</span><br><span class="line">        Provider:null,</span><br><span class="line">        Consumer:null</span><br><span class="line">    &#125;</span><br><span class="line">    context.Provider = &#123;</span><br><span class="line">        $$typeof:REACT_PROVIDER_TYPE,</span><br><span class="line">        _context:context,</span><br><span class="line">    &#125;</span><br><span class="line">    context.Consumer = context;</span><br><span class="line">    return context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="memo-js"><a href="#memo-js" class="headerlink" title="memo.js"></a>memo.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">memo</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"> type: React$ElementType,</span></span></span><br><span class="line"><span class="function"><span class="params"> compare?: (oldProps: Props, newProps: Props</span>) =&gt; <span class="title">boolean</span>,</span></span><br><span class="line"><span class="function">    )</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        $$<span class="keyword">typeof</span>:REACT_MEMO_TYPE,</span><br><span class="line">        type,</span><br><span class="line">        compare:compare === <span class="literal">undefined</span> ? <span class="literal">null</span> : compare,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建更新的方式"><a href="#创建更新的方式" class="headerlink" title="创建更新的方式"></a>创建更新的方式</h3><p>主要是下面的知识点：</p>
+<p><code>ReactDOM.render</code>、<code>ReactDOM.render</code>、<code>setState</code>、<code>forceUpdate</code></p>
+<p>步骤：</p>
+<ul>
+<li>创建 ReactRoot</li>
+<li>创建 FiberRoot 和 RootFiber</li>
+<li>创建更新</li>
+</ul>
+<h4 id="ReactDOM-js"><a href="#ReactDOM-js" class="headerlink" title="ReactDOM.js"></a>ReactDOM.js</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// ReactDOM</span><br><span class="line">const ReactDOM = &#123;</span><br><span class="line">    createPortal,</span><br><span class="line">    findDOMNode(</span><br><span class="line">    componentOrElement,</span><br><span class="line">    )&#123;</span><br><span class="line">        if (componentOrElement == null) &#123;</span><br><span class="line">          return null;</span><br><span class="line">        &#125;</span><br><span class="line">        if (componentOrElement.nodeType === ELEMENT_NODE) &#123;</span><br><span class="line">          return componentOrElement;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    // REACTElememt,DOM包裹节点，回调方法</span><br><span class="line">    hydrate(element,container,callback)&#123;</span><br><span class="line">        return legacyRenderSubtreeIntoContainer(</span><br><span class="line">        	null,</span><br><span class="line">            element,</span><br><span class="line">            container,</span><br><span class="line">            // 协调更新的选项</span><br><span class="line">            true,</span><br><span class="line">            callback</span><br><span class="line">        )</span><br><span class="line">    &#125;,</span><br><span class="line">    render(element,container,callback)&#123;</span><br><span class="line">        return legacyRenderSubtreeIntoContainer(</span><br><span class="line">            null,</span><br><span class="line">            element,</span><br><span class="line">            container,</span><br><span class="line">            false,</span><br><span class="line">            callback</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>render 与 hydrate 方法都可以传入三个参数，包括 ReactElement、DOM包裹节点和渲染结束后执行的回调方法，返回 <code>legacyRenderSubtreeIntoContainer</code> 方法执行的结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">function legacyRenderSubtreeIntoContainer(</span><br><span class="line"> parentComponent,</span><br><span class="line"> children,</span><br><span class="line"> container,</span><br><span class="line"> forceHydrate,</span><br><span class="line"> callback</span><br><span class="line">)&#123;</span><br><span class="line">     let root;</span><br><span class="line">     if(!root)&#123;</span><br><span class="line">         root = container._reactRootContainer = legacyCreateRootFromDOMContainer(</span><br><span class="line">             container,</span><br><span class="line">             forceHydrate,</span><br><span class="line">         )</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">function legacyCreateRootFromDOMContainer(</span><br><span class="line"> container,</span><br><span class="line"> forceHydrate,</span><br><span class="line">)&#123;</span><br><span class="line">     const shouldHydrate = forceHydrate || shouldHydrateDueToLegacyHeuristic(container);</span><br><span class="line">     // 没有ssr的情况</span><br><span class="line">     if(!shouldHydrate)&#123;</span><br><span class="line">         let rootSibling;</span><br><span class="line">         while((rootSibling = container.lastChild))&#123;</span><br><span class="line">             // 删除 container 下面的所有子节点</span><br><span class="line">             container.removeChild(rootSibling)</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;     </span><br><span class="line">     const isConcurrent = false;</span><br><span class="line">     return new ReactRoot(container,isConcurrent,shouldHydrate)</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function shouldHydrateDueToLegacyHeuristic()&#123;</span><br><span class="line">    const rootElement = getReactRootElementInContainer(container);</span><br><span class="line">    return !!(</span><br><span class="line">        rootElement &amp;&amp; </span><br><span class="line">        // 普通element节点</span><br><span class="line">        rootElement.nodeType === ELEMENT_NODE &amp;&amp; </span><br><span class="line">        // data-reactroot 老版本ssr的节点</span><br><span class="line">        rootElement.hasAttribute(ROOT_ATTRIBUTE_NAME)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function getReactRootElementInContainer(container)&#123;</span><br><span class="line">    if(!container)&#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    // 判断节点</span><br><span class="line">    if(container.nodeType === DOCUMENT_NODE)&#123;</span><br><span class="line">        return container.documentElement;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return container.firstChild;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先判断 root 是否不存在，不存在调用<code>legacyCreateRootFromDOMContainer</code>，传入 <code>container</code>,<code>forceHydrate</code>两个参数。<code>legacyCreateRootFromDOMContainer</code>函数创建了一个 <code>ReactRoot</code>，而 <code>forceHydrate</code>布尔类型参数在 <code>hydrate</code> 传入 <code>true</code>,在 <code>render</code> 里面传入 <code>false</code>。前者是服务器渲染，后者是客户端渲染。服务器渲染当服务器呈现标记的节点，React 会保留它并附加事件处理程序，从而具有高性能的首屏加载，客户端渲染当初始DOM与当前 DOM 存在差异，则可能会更改节点。可以看到 如果是 <code>false</code>会 <code>container.removeChild(rootSibling)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">function ReactRoot(</span><br><span class="line"> container,</span><br><span class="line"> isConcurrent,</span><br><span class="line"> hydrate</span><br><span class="line">)&#123;</span><br><span class="line">     const root = DOMRender.createContainer(container,isConcurrent,hydrate);</span><br><span class="line">     this._internalRoot = root;</span><br><span class="line"> &#125;</span><br><span class="line">// react-reconciler/inline.dom</span><br><span class="line">function createContainer(</span><br><span class="line"> containerInfo,</span><br><span class="line">  isConcurrent,</span><br><span class="line">  hydrate</span><br><span class="line">)&#123;</span><br><span class="line">     // 创建 FiberRoot</span><br><span class="line">     return createFiberRoot(container,isConcurrent,hydrate)</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">// ReactFiberRoot</span><br><span class="line">export function createFiberRoot(</span><br><span class="line">  containerInfo,</span><br><span class="line">  isConcurrent,</span><br><span class="line">  hydrate,</span><br><span class="line">): FiberRoot &#123;</span><br><span class="line">    // </span><br><span class="line">  const uninitializedFiber = createHostRootFiber(isConcurrent);</span><br><span class="line"></span><br><span class="line">  let root;</span><br><span class="line">  if (enableSchedulerTracing) &#123;</span><br><span class="line">    root = &#123;</span><br><span class="line">      current: uninitializedFiber,</span><br><span class="line">      containerInfo: containerInfo,</span><br><span class="line">      pendingChildren: null,</span><br><span class="line"></span><br><span class="line">      earliestPendingTime: NoWork,</span><br><span class="line">      latestPendingTime: NoWork,</span><br><span class="line">      earliestSuspendedTime: NoWork,</span><br><span class="line">      latestSuspendedTime: NoWork,</span><br><span class="line">      latestPingedTime: NoWork,</span><br><span class="line"></span><br><span class="line">      didError: false,</span><br><span class="line"></span><br><span class="line">      pendingCommitExpirationTime: NoWork,</span><br><span class="line">      finishedWork: null,</span><br><span class="line">      timeoutHandle: noTimeout,</span><br><span class="line">      context: null,</span><br><span class="line">      pendingContext: null,</span><br><span class="line">      hydrate,</span><br><span class="line">      nextExpirationTimeToWorkOn: NoWork,</span><br><span class="line">      expirationTime: NoWork,</span><br><span class="line">      firstBatch: null,</span><br><span class="line">      nextScheduledRoot: null,</span><br><span class="line"></span><br><span class="line">      interactionThreadID: unstable_getThreadID(),</span><br><span class="line">      memoizedInteractions: new Set(),</span><br><span class="line">      pendingInteractionMap: new Map(),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    root = &#123;</span><br><span class="line">      current: uninitializedFiber,</span><br><span class="line">      containerInfo: containerInfo,</span><br><span class="line">      pendingChildren: null,</span><br><span class="line"></span><br><span class="line">      earliestPendingTime: NoWork,</span><br><span class="line">      latestPendingTime: NoWork,</span><br><span class="line">      earliestSuspendedTime: NoWork,</span><br><span class="line">      latestSuspendedTime: NoWork,</span><br><span class="line">      latestPingedTime: NoWork,</span><br><span class="line"></span><br><span class="line">      didError: false,</span><br><span class="line"></span><br><span class="line">      pendingCommitExpirationTime: NoWork,</span><br><span class="line">      finishedWork: null,</span><br><span class="line">      timeoutHandle: noTimeout,</span><br><span class="line">      context: null,</span><br><span class="line">      pendingContext: null,</span><br><span class="line">      hydrate,</span><br><span class="line">      nextExpirationTimeToWorkOn: NoWork,</span><br><span class="line">      expirationTime: NoWork,</span><br><span class="line">      firstBatch: null,</span><br><span class="line">      nextScheduledRoot: null,</span><br><span class="line">    &#125;;</span><br><span class="line">    uninitializedFiber.stateNode = root;</span><br><span class="line">    return root;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2019-06-29-React源码浅析.html" title="React源码浅析">http://laibh.top/2019-06-29-React源码浅析.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" <i class="fa fa-tag"></i> 源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-06-25-regExp.html" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-07-03-从leetCode学习JavaScript数据结构与基础算法.html" rel="prev" title="从leetCode学习JavaScript数据结构与基础算法">
+                从leetCode学习JavaScript数据结构与基础算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React源码浅析"><span class="nav-number">1.</span> <span class="nav-text">React源码浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Api-相关"><span class="nav-number">1.1.</span> <span class="nav-text">React Api 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#React-js"><span class="nav-number">1.1.1.</span> <span class="nav-text">React.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactElement-js"><span class="nav-number">1.1.2.</span> <span class="nav-text">ReactElement.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactBaseClasses-js"><span class="nav-number">1.1.3.</span> <span class="nav-text">ReactBaseClasses.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactCreateRef-js"><span class="nav-number">1.1.4.</span> <span class="nav-text">ReactCreateRef.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#forwardRef-js"><span class="nav-number">1.1.5.</span> <span class="nav-text">forwardRef.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactLazy-js"><span class="nav-number">1.1.6.</span> <span class="nav-text">ReactLazy.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hooks"><span class="nav-number">1.1.7.</span> <span class="nav-text">Hooks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactChildren-js"><span class="nav-number">1.1.8.</span> <span class="nav-text">ReactChildren.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactContext-js"><span class="nav-number">1.1.9.</span> <span class="nav-text">ReactContext.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memo-js"><span class="nav-number">1.1.10.</span> <span class="nav-text">memo.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建更新的方式"><span class="nav-number">1.2.</span> <span class="nav-text">创建更新的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ReactDOM-js"><span class="nav-number">1.2.1.</span> <span class="nav-text">ReactDOM.js</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

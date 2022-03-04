@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 欢迎进入Nodejs的世界一个典型的Node Web 应用程序大体上来说，Node和JavaScript的优势之一是它们的单线程编程模型。在为浏览器编写代码时，我们写的指令序列一次执行一条，代码不是并行执行。然后对于用户界面来说，这样是不合理的：没有哪个用户想在浏览器执行网络访问或文件获取这样的低速操作时干等着">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— 欢迎进入Nodejs的世界">
+<meta property="og:url" content="http://laibh.top/2018-11-28-NodeJs2-Part1.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 欢迎进入Nodejs的世界一个典型的Node Web 应用程序大体上来说，Node和JavaScript的优势之一是它们的单线程编程模型。在为浏览器编写代码时，我们写的指令序列一次执行一条，代码不是并行执行。然后对于用户界面来说，这样是不合理的：没有哪个用户想在浏览器执行网络访问或文件获取这样的低速操作时干等着">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-11-28-NodeJs2-Part1-非阻塞I-O.png">
+<meta property="og:image" content="http://laibh.top/images/2018-11-28-NodeJs2-Part1-事件轮询.png">
+<meta property="og:image" content="http://laibh.top/images/2018-11-28-NodeJs2-Part1-Node与V8.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— 欢迎进入Nodejs的世界">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 欢迎进入Nodejs的世界一个典型的Node Web 应用程序大体上来说，Node和JavaScript的优势之一是它们的单线程编程模型。在为浏览器编写代码时，我们写的指令序列一次执行一条，代码不是并行执行。然后对于用户界面来说，这样是不合理的：没有哪个用户想在浏览器执行网络访问或文件获取这样的低速操作时干等着">
+<meta name="twitter:image" content="http://laibh.top/images/2018-11-28-NodeJs2-Part1-非阻塞I-O.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-11-28-NodeJs2-Part1.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— 欢迎进入Nodejs的世界 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-11-28-NodeJs2-Part1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— 欢迎进入Nodejs的世界</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T14:30:54+08:00">
+                2018-11-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-11-28-NodeJs2-Part1.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— 欢迎进入Nodejs的世界">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,806
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="欢迎进入Nodejs的世界"><a href="#欢迎进入Nodejs的世界" class="headerlink" title="欢迎进入Nodejs的世界"></a>欢迎进入Nodejs的世界</h2><h3 id="一个典型的Node-Web-应用程序"><a href="#一个典型的Node-Web-应用程序" class="headerlink" title="一个典型的Node Web 应用程序"></a>一个典型的Node Web 应用程序</h3><p>大体上来说，Node和JavaScript的优势之一是它们的单线程编程模型。在为浏览器编写代码时，我们写的指令序列一次执行一条，代码不是并行执行。然后对于用户界面来说，这样是不合理的：没有哪个用户想在浏览器执行网络访问或文件获取这样的低速操作时干等着。为了解决这个问题，浏览器引入了事件机制：在你点击按钮时，就有一个事件被触发，还有一个之前定义的函数会跑起来。这种机制可以规避一些线程编程中经常出现的问题，比如资源死锁和竞态条件。</p>
+<h4 id="非阻塞I-O"><a href="#非阻塞I-O" class="headerlink" title="非阻塞I/O"></a><strong>非阻塞I/O</strong></h4><p>在服务端编程中，访问磁盘和网络这样的I/O请求会比较慢。Node用三种技术来解决这个问题：时间、异步API、非阻塞I/O。非阻塞I/O是底层术语，你的程序可以在做其他事件时发起一个请求来获取网络资源，然后当网络操作完成时，将会运行一个回调函数来处理这个操作的结果。</p>
+<p><img src="/images/2018-11-28-NodeJs2-Part1-非阻塞I-O.png" alt="非阻塞I-O"></p>
+<p>上图展示了一个典型的 Node Web 应用程序，它用Web 应用库Express来处理商店的订单流程。为了购买产品，浏览器发起了一个请求，然后应用程序检查库存，为用户创建一个账号，发回执邮件，并返回一个JSON HTTP 响应给浏览器。同时在做的其他事件有：发送了一封回执邮件，更新了数据库来保存用户的详细消息和订单。运行平台是并发操作的，因为它用了非阻塞I/O。</p>
+<p>数据库是通过网络访问的。Node中的网络访问也是非阻塞的。用了 libuv 库来访问操作系统的非阻塞网络操作。在Linux/macOS/Windows 中的实现时不同的，但是我们只需要会操作数据库的 JavaScript 库就好了。例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.insert(query,err =&gt; &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后，Node 就会帮你完成那些经过高度优化的非阻塞网络操作。</p>
+<p>访问硬盘也差不多，但又不完全一样。在生成了回执邮件并从硬盘中读取邮件模板时，libuv借助线程池模拟出了一种使用非阻塞调用的假象。管理线程池是个苦差事，想较而言，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">email.send(<span class="string">'template.ejs'</span>,(err,html) =&gt; &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面这样的代码就要容易理解得多了。</p>
+<p>在进行速度较慢的处理时让Node能够做其他事情，是使用带非阻塞I/O的异步API真正的好处，即使你只有一个单线程、单线程的Node Web 应用，它也可以同时处理上千个网络访客发起的连接。要知道Node是怎么做到的，得先研究一下事件轮询。</p>
+<h4 id="事件轮询"><a href="#事件轮询" class="headerlink" title="事件轮询"></a><strong>事件轮询</strong></h4><p>仔细研究上图的“响应浏览器的请求”的那部分。在这个应用程序中，Node内置了HTTP服务器库，即核心模块 http.server ，负责用流、事件、Node的HTTP请求解析器的组合来处理请求，是本地代码。可以使用Express Web 应用库添加的回调函数，也是由它触发的。这个回调函数又会触发数据查询语句，最终应用程序会用 HTTP 发送 JSON 作为响应。整个过程用了三个非阻塞网络调用：一个用于请求，一个用于数据库，还有一个用于响应。Node 是如何调用这些网络操作的呢？由事件轮询（event loop）。下图展示了如何用事件轮询完成这三个网络操作。</p>
+<p><img src="/images/2018-11-28-NodeJs2-Part1-事件轮询.png" alt="事件轮询"></p>
+<p>事件轮询是单向运行的先入先出队列，它要经过几个阶段，轮询中每个迭代都要运行的重要阶段在上图展示出来了。首先是计时器开始执行，这些计时器都是用 JavaScript 函数 setTimeout 和 setInterval 安排好的。接下来是运行 I/O 回调，即触发你的回调函数。轮询阶段会去获取新的I/O事件，最后是用 setImmediate 安排回调。这是一个特例，因为它允许你将回调安排在当前队列中的I/O回调完成之后立即执行。</p>
+<h3 id="ES2105、Node和V8"><a href="#ES2105、Node和V8" class="headerlink" title="ES2105、Node和V8"></a>ES2105、Node和V8</h3><p>从Node6开始可以使用默认函数参数、剩余参数、spread操作符、for…of循环、模块字符串、结构、生成器等很多新特征。<a href="https://node.green/">点击这里</a> 查看Node支持的ES2015特性。</p>
+<p>在ES5及之前，我们使用 prototype 对象来创建类似类的结构：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">&#125;</span><br><span class="line">User.prototype.method = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Node6和ES2015，写成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>()</span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;&#125;</span><br><span class="line">    method()&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Node还支持了子类、超类和静态方法。</p>
+<p>const 和 let  是从Node 4 开始支持的。Node 还有原生的 promise 和 生成器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].map(<span class="function"><span class="params">n</span> =&gt;</span> n*<span class="number">2</span>).filter(<span class="function"><span class="params">n</span> =&gt;</span> n &gt; <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>生成器能把异步I/O变成同步编程分隔。Koa Web 应用库中用到了生成器。Koa使用promise 和其他生成器就可以抛开层层嵌套的回调，在值上 yield。</p>
+<p>ES2105的模板字符串在Node中也非常好用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.body = <span class="string">`</span></span><br><span class="line"><span class="string">	&lt;div&gt;</span></span><br><span class="line"><span class="string">		&lt;h1&gt;Hello&lt;/h1&gt;</span></span><br><span class="line"><span class="string">		&lt;p&gt;Welcome,<span class="subst">$&#123;user.name&#125;</span>!&lt;/p&gt;</span></span><br><span class="line"><span class="string">	&lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>箭头函数，在Node中，一般需要两个参数，因为回调的第一个参数通常是错误对象，这时候需要用括号把参数括起来</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'package.json'</span>,(err,text) =&gt; <span class="built_in">console</span>.log(<span class="string">'Length:'</span>,text.length));</span><br></pre></td></tr></table></figure>
+<p>在ES5及之前的版本的语言中，在函数中定义函数会把 this 引用变成全局对象。因为这个问题，下面按ES5写的类容易出错</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 构造器</span></span><br><span class="line">    <span class="keyword">this</span>.id = id;</span><br><span class="line">&#125;</span><br><span class="line">User.prototype.load = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> query = <span class="string">'SELECT * FROM users WHERE id = ?'</span>；</span><br><span class="line">    sql.query(query,<span class="keyword">this</span>,id,<span class="function"><span class="keyword">function</span>(<span class="params">err,users</span>)</span>&#123;</span><br><span class="line">        self.name = users[<span class="number">0</span>].name;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给 self.name 赋值那行代码不能写成 this.name 。因为这个函数的 this 是全局变量。常用的解决办法就是在函数的入口将 this 赋值给一个变量，但箭头函数的绑定没有这个问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(id)&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    load()&#123;</span><br><span class="line">        <span class="keyword">const</span> query = <span class="string">'SELECT * FROM users WHERE id = ?'</span>;</span><br><span class="line">        sql.query(query,<span class="keyword">this</span>.id,(err,users) =&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = users[<span class="number">0</span>].name;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Node-与-V8"><a href="#Node-与-V8" class="headerlink" title="Node 与 V8"></a><strong>Node 与 V8</strong></h4><p>Node 的动力源自 V8 JavaScript 引擎，是由服务于 Google Chrome 的 Chromiun 项目组开发的。V8 的一个值得称道的特性是它会被 JavaScript 直接编译成机器码，另外它还有一些代码优化特性，所以Node 才会这么快。</p>
+<p><img src="/images/2018-11-28-NodeJs2-Part1-Node与V8.png" alt="Node软件栈"></p>
+<p>Node的另一个本地部件 libuv ，是负责处理I/O。V8负责 JavaScript 代码的解释和执行。用C++绑定层可将 libuv 和 V8 结合起来。</p>
+<h4 id="使用特性组"><a href="#使用特性组" class="headerlink" title="使用特性组"></a><strong>使用特性组</strong></h4><p>Node 包含了V8提供的ES2015特性。这些特性分为shipping、staged 和 in progress 三组。shipping 组件的特性是默认开启的，staged 和 in progress 组的特性则需要用命令行参数开启。如果想使用 staged 特性，可以在运行 Node 时加上参数 –harmony。in progress 特性稳定性较差，需要具体的特性参数来开启。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node --v8-option | grep "in progress"</span><br></pre></td></tr></table></figure>
+<p>上面指令可以来查询当前可用的 ”in progress“ 特性。不同版本执行后的结果也是不一样的。</p>
+<h4 id="了解-Node-的发布计划"><a href="#了解-Node-的发布计划" class="headerlink" title="了解 Node 的发布计划"></a><strong>了解 Node 的发布计划</strong></h4><p>Node的发行版分为长期支持版（LTS）、当前版和每日构建版三组。有些人可能喜欢更新不那么频繁的 LTS，对于那些难以管理频繁更新的大公司来说，这个版本可能更好。但如果你想跟上性能和功能的改进，当前版更合适。</p>
+<h4 id="安装-Node"><a href="#安装-Node" class="headerlink" title="安装 Node"></a><strong>安装 Node</strong></h4><p>你可以直接上官网下载对用的操作系统的版本。这里我个人用的是 <a href="https://github.com/creationix/nvm">nvm</a> 版本管理，自由切换版本。有兴趣可以点击了解</p>
+<h3 id="Node-自带的工具"><a href="#Node-自带的工具" class="headerlink" title="Node 自带的工具"></a>Node 自带的工具</h3><p>Node 自带了一个包管理器，以及从文件和网络 I/O 到 zlib 压缩等无所不包的核心 JavaScript模块，还有一个调试器。npm 包管理器是这个基础设施中的重要组成部分</p>
+<h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a><strong>npm</strong></h4><p>命令行工具 npm是用 npm 调用的。你可以用它来安装 npm注册中心里的包，也可以用它来查找和分享你自己的项目，开源的和闭源的都行。注册中心里的每个 npm 包都会有个页面显示它的自述文件、作者和下载统计信息。<br>另外，npm 还是一家提供 npm 服务的公司的名字。这家公司为企业提供商业服务，包括托管私有的 npm包。你可以按月支付服务费，把公司的源码托管给他们，这样你的 JavaScript开发人员就可以用 npm轻松安装你的私有包了。</p>
+<p>npm要求 Node项目所在的目录下有一个 package.json文件。创建 package.json文件的最简单方法是使用 npm。在命令行中输入下面这些命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir example-project</span><br><span class="line">cd example-project</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+<p>打开 package.json，你会看到简单的 JSON 格式的项目描述信息。如果你现在用带有参数<code>--save</code> 的 npm命令从 npm 网站上安装一个包，它会自动更新你的 package.json文件。试着输入 <code>npm install</code> ，或简写为 <code>npm i</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save express</span><br></pre></td></tr></table></figure>
+<p>打开 package.json，应该会看到 dependencies 属性下面新增加的 express 。另外，看一下node_modules 文件夹，你会看到新创建的 express目录。里面是刚安装的那个版本的 Express。你也可以用  –global 参数做全局安装。应尽可能地将包安装在项目里，但对于用在 Node JavaScript代码之外的命令行工具，全局安装更合适。比如用 npm 安装命令行工具 ESLint 时，我们采用全局安装。</p>
+<p>Node还自带了很多非常实用的库，统称为核心模块。</p>
+<h4 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a><strong>核心模块</strong></h4><p>Node的核心模块相当于其他语言的标准库，它们是编写服务器端 JavaScript 所需要的工具。JavaScript 标准本身没有任何处理网络的东西，甚至连处理文件I/O的东西都没有。Node以最少的代码给它加上了文件和TCP/IP网络功能，使其成为了一个可用的服务器端编程语言。</p>
+<p><strong>文件系统</strong></p>
+<p>Node 不仅有文件系统(fs、path)、TCP客户端和服务端库（net）、HTTP库（http和https）和域名解析库（dns），还有一些经常用来写判断的断言库（assert），以及一个用来查询平台消息的操作系统库（os）</p>
+<p>Node 还有一些独有库。事件模块是一个处理事件的小型库，Node的大多数API都是以它为基础来做的。比如说，流模块用事件模块提供了一个处理流数据的抽象接口。因为Node 中的所有数据流用的都是同样的API，所以可以轻松组装出来软件组件。如果有一个文件流读取器，就可以很方便地把它跟压缩数据的 zlib 连接在一起，然后这个 zlib 再连接一个文件流写入器，从而形成一个文件流处理管道。</p>
+<p>下面代码中，用Node 的 fs 模块创建了读和写流，然后把它们通过另外一个流（gzip）连接起来传输数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>);</span><br><span class="line"><span class="keyword">const</span> gzip = zlib.createGzip();</span><br><span class="line"><span class="keyword">const</span> outStream = fs.createWriteStream(<span class="string">'output.js.gz'</span>);</span><br><span class="line"></span><br><span class="line">fs.createReadStream(<span class="string">'./node-stream.js'</span>).pipe(gzip).pipe(outStream);</span><br></pre></td></tr></table></figure>
+<p><strong>网络</strong></p>
+<p>在Node 中搭一个服务器只需要加载 http 模块，然后给它一个函数。这个函数有两个参数，即请求和响应。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">8080</span>;</span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req,res</span>) =&gt;</span>&#123;</span><br><span class="line">    res.end(<span class="string">'Hello world'</span>);    </span><br><span class="line">&#125;);</span><br><span class="line">server.listen(port,()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Server listening on http://localhost:%s'</span>,port);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>将上面的代码保存到hellow.js文件中，用 node hello.js 运行它，就可以在 <a href="http://locahost:8080">http://locahost:8080</a> 看到这段消息。</p>
+<h4 id="调试器"><a href="#调试器" class="headerlink" title="调试器"></a><strong>调试器</strong></h4><p>Node 自带调试器支持单步执行  REPL（读取-计算-输出-循环）。这个调试器在工作时会用一个网络协议跟你的程序对话。带着 debug 参数运行城西，就可以对这个程序开启调试器。比如要调试上面的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node debug hello.js</span><br></pre></td></tr></table></figure>
+<p>然后可以看到下面的输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt; Debugger listening on ws://127.0.0.1:9229/55258211-4e9c-444c-90eb-9f84c28fb532</span><br><span class="line"></span><br><span class="line">&lt; For help see https://nodejs.org/en/docs/inspector</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 1 (<span class="keyword">function</span> (exports, require, module, __filename, __dirname) &#123; const http = r</span></span><br><span class="line">equire('http');</span><br><span class="line">  2 const port = 8080;</span><br><span class="line">  3 const server = http.createServer((req,res) =&gt;&#123;</span><br></pre></td></tr></table></figure>
+<p>我们可以在代码中的任何地方添加 debugger 语句来设置断点。遇到 debugger 语句后，调试器就会把程序停住，然后你可以输入命令。比如说，你写了一个 REST API来为新用户创建账号，但发现代码貌似没有把新用户密码的散列值写到数据库里。你可以在 User 类的 save 方法那里加一个 debugger ，然后单步执行每一条指令，看看发生了什么。</p>
+<p><strong>交互式调试</strong></p>
+<p>Node支持 Chrome调试协议。如果要用 Chrome的开发者工具调试一段脚本，可以在运行程序时加上  –inspect 参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node --inspect --debug-brk</span><br></pre></td></tr></table></figure>
+<p>这样 Node 就会启动调试器，并停在第一行。它会输出一个 URL 到控制台，你可以在Chrome 中打开这个 URL，然后用 Chrome的调试器进行调试。Chrome的调试器可以一行行地执行代码，还能显示每个变量和对象的值。这要比在代码里敲 console.log 好得多。</p>
+<h3 id="三种主流的Node程序"><a href="#三种主流的Node程序" class="headerlink" title="三种主流的Node程序"></a>三种主流的Node程序</h3><p>Node 程序主要分成三种类型：Web 应用程序、命令行工具和后台程序、桌面程序。提供单页应用的简单程序、REST微服务已经全栈的Web应用都属于Web应用程序。npm/gulp和webpack 都属于Node写的命令行工具。后台程序就是后台服务，比如PM2进程管理器。桌面程序一般是用Electron框架写的软件，Electron用Node作为基于Web 的桌面应用的后台。Atom 和 Studio Code 文本编辑器都属于这一类。</p>
+<h4 id="Web-应用程序"><a href="#Web-应用程序" class="headerlink" title="Web 应用程序"></a><strong>Web 应用程序</strong></h4><p>Node 是服务端JavaScript平台，所以用它搭建Web应用程序是理所当然的事件。既然客户端和服务端用的都是 JavaScript ，代码难免会有在这两种环境里重用的机会。Node Web 应用一般是用 Express 这样的框架写的。创建一个新目录，安装Express 模板，来快速创建一个Express Web 应用程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir hello_express</span><br><span class="line">cd hello_express</span><br><span class="line">npm intt -y</span><br><span class="line">npm i express --S</span><br></pre></td></tr></table></figure>
+<p>把代码存到 server.js 中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line">app.get(<span class="string">'/'</span>,(req,res) =&gt;&#123;</span><br><span class="line">    res.send(<span class="string">'Hello World!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>,()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Express web app on localhost:3000'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>接着输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p>启动这个监听端口3000的 Node Web 服务器。在浏览器打开就可以看到 res.send 里面的文本了。</p>
+<h4 id="命令行工具和后台程序"><a href="#命令行工具和后台程序" class="headerlink" title="命令行工具和后台程序"></a><strong>命令行工具和后台程序</strong></h4><p>Node 可以用来编写命令行工具，比如 JavaScript 开发人员所用的进程管理器和转义器。它可以作为一种方便的方式来编写其他操作的命令行工具，比如图片转换、控制媒体文件的播放的脚本等。</p>
+<p>下面的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cli.js</span></span><br><span class="line"><span class="keyword">const</span> [nodePath, scriptPath, name]= process.argv;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Hello'</span>,name,nodePath,scriptPath);</span><br></pre></td></tr></table></figure>
+<p>然后运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node cli.js yourName</span><br></pre></td></tr></table></figure>
+<p>会打印出来</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello yourName</span><br></pre></td></tr></table></figure>
+<p>这里用了解构，从 process.argv 中拉取第三个参数。所有 Node 程序都可以访问 process 对象，这是用户向程序中传递参数的基础。</p>
+<p>Node 命令行还可以做其他事情。如果在程序的开头加上 <code>#！</code>,并赋予其执行许可（ chmod +x cli.js ），shell 就可以在调用程序时使用 Node。也就是说可以像运行其他 shell 脚本那样运行 Node程序。在类 Unix系统中用下面这样的代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env node</span></span><br></pre></td></tr></table></figure>
+<p>这样你就可以用 Node代替 shell脚本。也就是说 Node可以跟其他任何命令行工具配合，包括后台程序。Node程序可以由 cron调用，也可以作为后台程序运行。</p>
+<h4 id="桌面程序"><a href="#桌面程序" class="headerlink" title="桌面程序"></a><strong>桌面程序</strong></h4><p>如果你用过 Atom或 Visual Studio Code文本编辑器，那就用过 Node。Electron框架用 Node做后台，所以只要需要访问硬盘或网络，Electron 就会用到 Node。Electron 还用 Node 来管理依赖项，也就是说你可以用 npm往 Electron项目里添加包。</p>
+<p><a href="https://github.com/electron/electron-quick-start">Electron</a></p>
+<h4 id="适合-Node-的应用程序"><a href="#适合-Node-的应用程序" class="headerlink" title="适合 Node 的应用程序"></a><strong>适合 Node 的应用程序</strong></h4><p>我们已经看过一些能用 Node搭建的应用程序了，但 Node擅长的领域不止于此。Node一般用来创建实时的 Web 应用，这几乎无所不包，从直接面对用户的聊天服务器到采集分析数据的后台程序都属于此类。在 JavaScript中，函数是一等对象，Node又有内建的事件模型，所以用它来写异步实时程序比用其他脚本语言更自然。<br>如果你要搭建传统的模型视图控制器（MVC）Web 应用，用 Node 也很适合。Ghost 等一些流行的博客引擎就是用 Node 搭建的。在搭建这几种类型的 Web 应用程序方面，Node 是一个经过实践检验的平台。虽然开发风格跟用 PHP的 WordPress不同，但 Ghost支持的功能是类似的，包括模板和多用户管理区。<br>Node还能做一些用其他语言很难做到的事情。它是基于 JavaScript的，所以在 Node中能运行浏览器中的 JavaScript。复杂的客户端应用可以经过改造在 Node服务器上运行，让服务器进行预渲染，从而加快页面在浏览器中的渲染速度，也有利于搜索引擎进行索引。<br>最后，如果你想要搭建一个桌面端或移动端应用，建议试一下 Electron，它也是由 Node 支撑起来的。现在 Web用户界面的体验跟桌面端应用一样丰富，Electron桌面端应用足以抗衡本地Web应用，还能缩短开发时间。Electron支持三种主流操作系统，所以你可以在 Windows、Linux和 macOS上重用这些代码。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Node 是用来搭建 JavaScript 应用程序的平台，基于事件和非阻塞的特性</li>
+<li>V8 被用作 JavaScript 运行</li>
+<li>libuv 是提供快速、跨平台、非阻塞I/O的本地库</li>
+<li>被称为核心模块的Node 标准库很精巧，为 JavaScript 添加了磁盘I/O</li>
+<li>Node 自带了一个调试器和依赖管理器(npm)</li>
+<li>Node 可以用于搭建 Web应用程序、命令行工具、甚至桌面程序。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-11-28-NodeJs2-Part1.html" title="Nodejs实战 —— 欢迎进入Nodejs的世界">http://laibh.top/2018-11-28-NodeJs2-Part1.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-11-26-前端必备的Nginx学习.html" rel="next" title="前端必备的Nginx学习">
+                <i class="fa fa-chevron-left"></i> 前端必备的Nginx学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-28-TypeScript.html" rel="prev" title="TypeScript 入门">
+                TypeScript 入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#欢迎进入Nodejs的世界"><span class="nav-number">1.</span> <span class="nav-text">欢迎进入Nodejs的世界</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一个典型的Node-Web-应用程序"><span class="nav-number">1.1.</span> <span class="nav-text">一个典型的Node Web 应用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#非阻塞I-O"><span class="nav-number">1.1.1.</span> <span class="nav-text">非阻塞I/O</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件轮询"><span class="nav-number">1.1.2.</span> <span class="nav-text">事件轮询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES2105、Node和V8"><span class="nav-number">1.2.</span> <span class="nav-text">ES2105、Node和V8</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-与-V8"><span class="nav-number">1.2.1.</span> <span class="nav-text">Node 与 V8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用特性组"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用特性组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#了解-Node-的发布计划"><span class="nav-number">1.2.3.</span> <span class="nav-text">了解 Node 的发布计划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Node"><span class="nav-number">1.2.4.</span> <span class="nav-text">安装 Node</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-自带的工具"><span class="nav-number">1.3.</span> <span class="nav-text">Node 自带的工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#npm"><span class="nav-number">1.3.1.</span> <span class="nav-text">npm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核心模块"><span class="nav-number">1.3.2.</span> <span class="nav-text">核心模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试器"><span class="nav-number">1.3.3.</span> <span class="nav-text">调试器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三种主流的Node程序"><span class="nav-number">1.4.</span> <span class="nav-text">三种主流的Node程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Web-应用程序"><span class="nav-number">1.4.1.</span> <span class="nav-text">Web 应用程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令行工具和后台程序"><span class="nav-number">1.4.2.</span> <span class="nav-text">命令行工具和后台程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#桌面程序"><span class="nav-number">1.4.3.</span> <span class="nav-text">桌面程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适合-Node-的应用程序"><span class="nav-number">1.4.4.</span> <span class="nav-text">适合 Node 的应用程序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dva," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="dva 学习笔记dva 学习笔记 代码 3.入门课React 没有有解决的问题React 本身只是一个 DOM 的抽象层，使用组件构建虚拟 DOM开发大应用要解决的问题通信：组件之间如何通信数据流：数据如何和视图串联起来？ 路由和数据如何绑定？ 如何编写异步逻辑？ 通信问题组件会发生三种通信想子组件发消息向父组件发消息向其他组件发消息   React 只提供了一种通信手段：传参   组件通信的例子">
+<meta name="keywords" content="dva">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dva 学习笔记 (中)">
+<meta property="og:url" content="http://laibh.top/2018-07-09-learn-dva-part2.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="dva 学习笔记dva 学习笔记 代码 3.入门课React 没有有解决的问题React 本身只是一个 DOM 的抽象层，使用组件构建虚拟 DOM开发大应用要解决的问题通信：组件之间如何通信数据流：数据如何和视图串联起来？ 路由和数据如何绑定？ 如何编写异步逻辑？ 通信问题组件会发生三种通信想子组件发消息向父组件发消息向其他组件发消息   React 只提供了一种通信手段：传参   组件通信的例子">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dva 学习笔记 (中)">
+<meta name="twitter:description" content="dva 学习笔记dva 学习笔记 代码 3.入门课React 没有有解决的问题React 本身只是一个 DOM 的抽象层，使用组件构建虚拟 DOM开发大应用要解决的问题通信：组件之间如何通信数据流：数据如何和视图串联起来？ 路由和数据如何绑定？ 如何编写异步逻辑？ 通信问题组件会发生三种通信想子组件发消息向父组件发消息向其他组件发消息   React 只提供了一种通信手段：传参   组件通信的例子">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-07-09-learn-dva-part2.html"/>
+
+
+
+
+
+  <title>Dva 学习笔记 (中) | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-07-09-learn-dva-part2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Dva 学习笔记 (中)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T20:10:45+08:00">
+                2018-07-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react相关/" itemprop="url" rel="index">
+                    <span itemprop="name">react相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-07-09-learn-dva-part2.html" class="leancloud_visitors" data-flag-title="Dva 学习笔记 (中)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,404
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="dva-学习笔记"><a href="#dva-学习笔记" class="headerlink" title="dva 学习笔记"></a><code>dva</code> 学习笔记</h1><p><a href="https://github.com/LbhFront-end/learn-dva"><code>dva</code> 学习笔记 代码</a></p>
+<h2 id="3-入门课"><a href="#3-入门课" class="headerlink" title="3.入门课"></a>3.入门课</h2><h2 id="React-没有有解决的问题"><a href="#React-没有有解决的问题" class="headerlink" title="React 没有有解决的问题"></a><code>React</code> 没有有解决的问题</h2><p><code>React</code> 本身只是一个 <code>DOM</code> 的抽象层，使用组件构建虚拟 <code>DOM</code><br>开发大应用要解决的问题<br>通信：组件之间如何通信<br>数据流：数据如何和视图串联起来？ 路由和数据如何绑定？ 如何编写异步逻辑？</p>
+<h2 id="通信问题"><a href="#通信问题" class="headerlink" title="通信问题"></a>通信问题</h2><p>组件会发生三种通信<br>想子组件发消息<br>向父组件发消息<br>向其他组件发消息  </p>
+<p><code>React</code> 只提供了一种通信手段：传参  </p>
+<h3 id="组件通信的例子"><a href="#组件通信的例子" class="headerlink" title="组件通信的例子"></a>组件通信的例子</h3><p><code>step 1</code><br>父组件拿到子组件的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Son extends React.Component &#123;</span><br><span class="line">  render()&#123;</span><br><span class="line">    return &lt;input /&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Father extends React.Compoent &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;div&gt;</span><br><span class="line">      &lt;Son /&gt;</span><br><span class="line">      &lt;p&gt; 这里显示 Son 组件的内容</span><br><span class="line">    &lt;/div&gt;；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Father&gt;,mountNode);</span><br></pre></td></tr></table></figure>
+<p><code>step 2</code><br>子组件通过父组件传入的函数，将自己的值再传回父组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Son extends React.Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;input onChange = &#123; this.props.onChange &#125;&gt;</span><br><span class="line">&#125;</span><br><span class="line">class Father extends React.Component &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    super();</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      son: &quot;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    this.changeHandler = this.changeHandler.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line">  changeHandler(e)&#123;</span><br><span class="line">    this.SetState(&#123; son: e.target.value &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return &lt;div&gt;</span><br><span class="line">      &lt;Son onChange = &#123; changeHandler &#125;&gt;</span><br><span class="line">      &lt;p&gt;这里展示 Son 组件的内容 &#123; this.state.son &#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数据流问题"><a href="#数据流问题" class="headerlink" title="数据流问题"></a>数据流问题</h2><p>数据流方案<br><code>Flux</code> ，单项数据流方案， <code>Redux</code> 为代表<br><code>Reactive</code> ,响应式数据流方案 <code>Mobx</code> 为代表  </p>
+<h3 id="流行的数据流方案"><a href="#流行的数据流方案" class="headerlink" title="流行的数据流方案"></a>流行的数据流方案</h3><p>路由： <code>React-Router</code><br>架构： <code>Redux</code><br>异步操作： <code>Readux-saga</code><br>缺点：引入多个库，项目结构复杂  </p>
+<h3 id="dva-是什么"><a href="#dva-是什么" class="headerlink" title="dva  是什么"></a><code>dva</code>  是什么</h3><p><code>dva</code> 是体验技术部开发的 <code>React</code> 应用框架，将上面三个 <code>React</code> 工具库包装在一起，简化了  <code>API</code> ,让开发 <code>React</code> 应用更加快捷和方便<br>`dva = React-Router + Redux + Readux -saga</p>
+<h3 id="dva-应用的最简结构"><a href="#dva-应用的最简结构" class="headerlink" title="dva 应用的最简结构"></a><code>dva</code> 应用的最简结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import dva from &apos;dva&apos;;</span><br><span class="line">const App = () =&gt; &lt;div&gt; Hello dva&lt;/div&gt;;</span><br><span class="line"></span><br><span class="line">//创建应用</span><br><span class="line">const app = dva();</span><br><span class="line"></span><br><span class="line">//注册视图</span><br><span class="line">app.router( () =&gt; &lt;App/&gt;)</span><br><span class="line"></span><br><span class="line">//启动应用</span><br><span class="line">app.start(&apos;#root&apos;);</span><br></pre></td></tr></table></figure>
+<h3 id="数据流图"><a href="#数据流图" class="headerlink" title="数据流图"></a>数据流图</h3><p><code>State</code> ===(<strong>connect</strong>)== <code>View</code> ==(<strong>dispatch</strong>)== <code>Action</code> == <code>State</code></p>
+<p><code>State</code> : 一个对象，保存这个应用状态<br><code>View</code> : <code>React</code> 组件构成的视图层<br><code>Action</code> : 一个对象，描述事件<br><code>connect</code>方法 : 一个函数，绑定 <code>State</code> 到 <code>View</code><br><code>dispatch</code> 方法 : 一个函数，发送 <code>Action</code> 到 <code>State</code> </p>
+<h3 id="State-和-view"><a href="#State-和-view" class="headerlink" title="State 和 view"></a><code>State</code> 和 <code>view</code></h3><p><code>State</code> 是存储数据的地方，收到 <code>Action</code> 后，就会更新数据<br><code>View</code> 是 <code>React</code> 组件构成的 <code>UI</code> 层，从 <code>State</code> 获取到数据后，就渲染成 <code>HTML</code> 代码。只要 <code>State</code> 有变化， <code>View</code> 就会自动更新</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p><code>Action</code> 是用来描述 <code>UI</code> 层事件的一个对象  </p>
+<blockquote>
+<p>{ type:’click-submit-button’, payload: this.form.data }</p>
+</blockquote>
+<h3 id="connect-方法"><a href="#connect-方法" class="headerlink" title="connect 方法"></a><code>connect</code> 方法</h3><p><code>connect</code> 是一个函数，绑定 <code>State</code> 到 <code>View</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; connect &#125; from &apos;dva&apos;</span><br><span class="line"></span><br><span class="line">function mapStateToProps(state) &#123;</span><br><span class="line">  return &#123; todos: state.todos &#125;;</span><br><span class="line">&#125;</span><br><span class="line">connect(mapStateToProps)(App);</span><br></pre></td></tr></table></figure>
+<p><code>connect</code> 方法返回的也是一个 <code>React</code> 组件，通常称为容器组件，因为它是原始的 <code>UI</code> 组件的容器，即在外面包了一层 <code>State</code><br><code>connect</code> 方法传入的第一个参数是 <code>mapStateToProps</code> 函数， <code>mapStateToprops</code> 函数会返回一个对象，用于建立 <code>State</code> 到 <code>Props</code> 的映射关系</p>
+<h3 id="dispatch-方法"><a href="#dispatch-方法" class="headerlink" title="dispatch 方法"></a><code>dispatch</code> 方法</h3><p><code>dispatch</code> 是一个函数方法，用来将 <code>Action</code> 发送给 <code>State</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch(&#123; type:&apos;click-submit&apos;, payload: this.form.data &#125;)</span><br></pre></td></tr></table></figure>
+<p>被 <code>connect</code> 的 <code>Component</code> 会自动在 <code>props</code> 中拥有 <code>dispatch</code> 方法</p>
+<h2 id="dva-应用的最简结构（带-model）"><a href="#dva-应用的最简结构（带-model）" class="headerlink" title="dva 应用的最简结构（带 model）"></a><code>dva</code> 应用的最简结构（带 <code>model</code>）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 创建应用</span><br><span class="line">const app = dva();</span><br><span class="line"></span><br><span class="line">// 注册 Model</span><br><span class="line">app.model(&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">  state: 0,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    add(state) &#123; return state + 1&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  effects: &#123;</span><br><span class="line">    *addAfterSecond(action, (call, put))&#123;</span><br><span class="line">      yield call(delay,1000);</span><br><span class="line">      yield put(&#123; type: &apos;add&apos;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 注册视图</span><br><span class="line">app.router( () =&gt; &lt;ConnectedApp /&gt;);</span><br><span class="line"></span><br><span class="line">// 启动应用</span><br><span class="line">app.start(&apos;#root&apos;);</span><br></pre></td></tr></table></figure>
+<h3 id="app-model"><a href="#app-model" class="headerlink" title="app.model"></a><code>app.model</code></h3><p><code>dva</code> 提供 <code>app.model</code> 这个对象，所有应用逻辑都定义在它上面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const app = dva();</span><br><span class="line"></span><br><span class="line">// 新增这一行</span><br><span class="line">app.model(&#123; /**/&#125;);</span><br><span class="line"></span><br><span class="line">app.router( () =&gt; &lt;App/&gt;);</span><br><span class="line">app.start(&apos;#root&apos;);</span><br></pre></td></tr></table></figure>
+<h3 id="Model-对象的例子"><a href="#Model-对象的例子" class="headerlink" title="Model 对象的例子"></a><code>Model</code> 对象的例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  namespace: &apos;count&apos;,</span><br><span class="line">  state: 0,</span><br><span class="line">  reducers: &#123;</span><br><span class="line">    add(state) &#123; return state + 1 &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  effects: &#123;</span><br><span class="line">    *addAfter1Second(action, &#123; call,put &#125;) &#123;</span><br><span class="line">      yield call(delay,1000);</span><br><span class="line">      yield put(&#123; type: &apos;add&apos;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Model-对象的属性"><a href="#Model-对象的属性" class="headerlink" title="Model 对象的属性"></a><code>Model</code> 对象的属性</h3><p><code>namespace</code>: 当前 <code>Model</code> 的名称，整个应用的 <code>State</code> ，由多个小的 <code>Model</code> 的 <code>State</code> 以 <code>namespace</code> 为 <code>key</code> 合成<br><code>state</code>: 该 <code>Model</code> 当前的状态。数据保存在这里，直接决定了视图层的输出<br><code>reducers</code>: <code>Action</code> 处理器，处理同步动作，用来算出最新的 <code>state</code><br><code>effects</code>: <code>Action</code> 处理器，处理异步动作</p>
+<h4 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a><code>Reducer</code></h4><p><code>Reducer</code> 是 <code>Action</code> 处理器，用来处理同步操作，可以看做是 <code>state</code> 的计算器，它的作用是根据 <code>Action</code> ，从上一个 <code>State</code> 算出当前的 <code>State</code><br>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// count + 1</span><br><span class="line">function add(state) &#123; return state + 1; &#125;</span><br><span class="line"></span><br><span class="line">//往 [] 里添加一个新的 todo</span><br><span class="line">function addTodo(state, action)&#123; return [...state, action.payload]; &#125;</span><br><span class="line"></span><br><span class="line">//往 &#123; todos: [], loading: true &#125; 里添加一个新的 todo,并标记 loading 为 false</span><br><span class="line">function addTodo(state, action)&#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    ...state,</span><br><span class="line">    todos: state.todos.concat(action.payload),</span><br><span class="line">    loading: false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a><code>Effect</code></h4><p><code>Action</code> 处理器，处理异步动作，基于 <code>Redux-sga</code> 实现。 <code>Effect</code> 指的是副作用。根据函数式编程，计算以外的操作都属于 <code>Effect</code> ，典型的就是 <code>I/O</code> 操作，数据库读写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function *addAfter1Second(action. &#123; put, all&#125;) &#123;</span><br><span class="line">  yield(delay, 1000);</span><br><span class="line">  yield put(&#123; type: &apos;add&apos;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a><code>Generator</code> 函数</h3><p><code>Effect</code> 是一个 <code>Generator</code> 函数，内部使用 <code>yield</code> 关键字，标识每一步的操作 （无论同步或者是异步）</p>
+<h3 id="call-和-put"><a href="#call-和-put" class="headerlink" title="call 和 put"></a><code>call</code> 和 <code>put</code></h3><p><code>dva</code> 提供多个 <code>effect</code> 函数内部的处理函数，比较常用的是 <code>call</code> 和 <code>put</code></p>
+<h2 id="总例子"><a href="#总例子" class="headerlink" title=" 总例子"></a> 总例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">app.model(&#123;</span><br><span class="line"> namespace: &apos;count&apos;;</span><br><span class="line"> state: &#123;</span><br><span class="line"> record: 0,</span><br><span class="line"> current: 0,</span><br><span class="line"> &#125;,</span><br><span class="line"> reducers: &#123;</span><br><span class="line">  add(state) &#123;</span><br><span class="line">    const newCurrent = state.current + 1;</span><br><span class="line">    return &#123;</span><br><span class="line">      ...state,</span><br><span class="line">      record: newCurrent &gt; state.record ? newCurrent: state.record,</span><br><span class="line">      current: newCurrent,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  minus(state) &#123;</span><br><span class="line">    return &#123; ...state, current: state.current - 1&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"> &#125;,</span><br><span class="line"> effects: &#123;</span><br><span class="line">  *add(action ,&#123; call ,put&#125;)&#123;</span><br><span class="line">    yield call( delay ,1000);</span><br><span class="line">    yield put(&#123; type: &apos;minus&apos;&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"> &#125;,</span><br><span class="line"> subscriptions: &#123;</span><br><span class="line">  keyboardWatcher(&#123; dispatch &#125;) &#123;</span><br><span class="line">    key( &apos;⌘+up, ctrl+up&apos;, () =&gt; &#123; dispatch(&#123; type:&apos;add&apos;&#125;)&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-07-09-learn-dva-part2.html" title="Dva 学习笔记 (中)">http://laibh.top/2018-07-09-learn-dva-part2.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dva/" <i class="fa fa-tag"></i> dva</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-07-06-learn-dva-part1.html" rel="next" title="Dva 学习笔记 (上)">
+                <i class="fa fa-chevron-left"></i> Dva 学习笔记 (上)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-07-09-learn-dva-Part3.html" rel="prev" title="Dva 学习笔记 (下)">
+                Dva 学习笔记 (下) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dva-学习笔记"><span class="nav-number">1.</span> <span class="nav-text">dva 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-入门课"><span class="nav-number">1.1.</span> <span class="nav-text">3.入门课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-没有有解决的问题"><span class="nav-number">1.2.</span> <span class="nav-text">React 没有有解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通信问题"><span class="nav-number">1.3.</span> <span class="nav-text">通信问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组件通信的例子"><span class="nav-number">1.3.1.</span> <span class="nav-text">组件通信的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据流问题"><span class="nav-number">1.4.</span> <span class="nav-text">数据流问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#流行的数据流方案"><span class="nav-number">1.4.1.</span> <span class="nav-text">流行的数据流方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dva-是什么"><span class="nav-number">1.4.2.</span> <span class="nav-text">dva  是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dva-应用的最简结构"><span class="nav-number">1.4.3.</span> <span class="nav-text">dva 应用的最简结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据流图"><span class="nav-number">1.4.4.</span> <span class="nav-text">数据流图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State-和-view"><span class="nav-number">1.4.5.</span> <span class="nav-text">State 和 view</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action"><span class="nav-number">1.5.</span> <span class="nav-text">Action</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#connect-方法"><span class="nav-number">1.5.1.</span> <span class="nav-text">connect 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch-方法"><span class="nav-number">1.5.2.</span> <span class="nav-text">dispatch 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dva-应用的最简结构（带-model）"><span class="nav-number">1.6.</span> <span class="nav-text">dva 应用的最简结构（带 model）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#app-model"><span class="nav-number">1.6.1.</span> <span class="nav-text">app.model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-对象的例子"><span class="nav-number">1.6.2.</span> <span class="nav-text">Model 对象的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-对象的属性"><span class="nav-number">1.6.3.</span> <span class="nav-text">Model 对象的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reducer"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">Reducer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Effect"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">Effect</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator-函数"><span class="nav-number">1.6.4.</span> <span class="nav-text">Generator 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call-和-put"><span class="nav-number">1.6.5.</span> <span class="nav-text">call 和 put</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总例子"><span class="nav-number">1.7.</span> <span class="nav-text"> 总例子</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

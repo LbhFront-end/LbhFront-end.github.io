@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dva," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="dva 学习笔记dva 学习笔记 代码 使用 Dva 开发复杂 SPA动态加载 model利用 webpack 的 require.ensure 来实现 model 的动态加载 123456789101112131415161718192021222324252627function RouterConfig(&amp;#123; history, app&amp;#125;) &amp;#123;  const rou">
+<meta name="keywords" content="dva">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dva 学习笔记 (下)">
+<meta property="og:url" content="http://laibh.top/2018-07-09-learn-dva-Part3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="dva 学习笔记dva 学习笔记 代码 使用 Dva 开发复杂 SPA动态加载 model利用 webpack 的 require.ensure 来实现 model 的动态加载 123456789101112131415161718192021222324252627function RouterConfig(&amp;#123; history, app&amp;#125;) &amp;#123;  const rou">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dva 学习笔记 (下)">
+<meta name="twitter:description" content="dva 学习笔记dva 学习笔记 代码 使用 Dva 开发复杂 SPA动态加载 model利用 webpack 的 require.ensure 来实现 model 的动态加载 123456789101112131415161718192021222324252627function RouterConfig(&amp;#123; history, app&amp;#125;) &amp;#123;  const rou">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-07-09-learn-dva-Part3.html"/>
+
+
+
+
+
+  <title>Dva 学习笔记 (下) | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-07-09-learn-dva-Part3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Dva 学习笔记 (下)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T22:17:12+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react相关/" itemprop="url" rel="index">
+                    <span itemprop="name">react相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-07-09-learn-dva-Part3.html" class="leancloud_visitors" data-flag-title="Dva 学习笔记 (下)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,296
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="dva-学习笔记"><a href="#dva-学习笔记" class="headerlink" title="dva 学习笔记"></a><code>dva</code> 学习笔记</h1><p><a href="https://github.com/LbhFront-end/learn-dva"><code>dva</code> 学习笔记 代码</a></p>
+<h2 id="使用-Dva-开发复杂-SPA"><a href="#使用-Dva-开发复杂-SPA" class="headerlink" title="使用 Dva 开发复杂 SPA"></a>使用 <code>Dva</code> 开发复杂 <code>SPA</code></h2><h2 id="动态加载-model"><a href="#动态加载-model" class="headerlink" title="动态加载 model"></a>动态加载 <code>model</code></h2><p>利用 <code>webpack</code> 的 <code>require.ensure</code> 来实现 <code>model</code> 的动态加载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function RouterConfig(&#123; history, app&#125;) &#123;</span><br><span class="line">  const routes = [</span><br><span class="line">    &#123;</span><br><span class="line">      path: &apos;/&apos;,</span><br><span class="line">      name: &apos;IndexPage&apos;,</span><br><span class="line">      getComponent(nextState, cb) &#123;</span><br><span class="line">        require.ensure( [], (require) =&gt; &#123;</span><br><span class="line">          registerModel(app,require(&apos;./models/dashboard&apos;));</span><br><span class="line">          cb(null, require(&apos;./routers/IndexPage&apos;));</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      path:&apos;/users&apos;,</span><br><span class="line">      name:&apos;UsersPage&apos;,</span><br><span class="line">      getComponent(nextState, cb) &#123;</span><br><span class="line">        require.ensure(nextState, cb) &#123;</span><br><span class="line">          require.ensure( [],(require) =&gt;&#123;</span><br><span class="line">            registerModel(app, require(&apos;./models/users&apos;));</span><br><span class="line">            cb(null, require(&apos;./routes/Users&apos;))</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ];</span><br><span class="line">  return &lt;Router history = &#123; history &#125; routes = &#123; routes &#125; /&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，在视图切换到这个路由的时候，对应的 <code>model</code> 就会被加载。同理，也可以做 <code>model</code> 的动态移除，不过，一般情况下是不需要移除的</p>
+<h2 id="使用-model-共享全局信息"><a href="#使用-model-共享全局信息" class="headerlink" title="使用 model 共享全局信息"></a>使用 <code>model</code> 共享全局信息</h2><p><code>model</code> 可以动态加载，也可以移除。从这个角度看，<code>model</code> 是可以有不同生命周期的，有些可以与功能视图伴随，而有些可以贯穿整个应用的生命周期。</p>
+<p>从业务逻辑看，不少场景是可以做全局的 <code>model</code> ，例如我们在路由之间的前进后退， <code>model</code> 可以用于在路由间共享数据，比较典型的，像列表页和详情页的互相转换，可以用同一份 <code>model</code> 去共享他们的数据</p>
+<p>注意，如果当前应用中记载了不止一个 <code>model</code> ，在其中一个 <code>effect</code> 里做 <code>select</code> 操作，是可以获取另外一个 <code>state</code>的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*foo(action, &#123; select &#125;) &#123;</span><br><span class="line">  const &#123; a, b&#125; = yield select();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="model-的复用"><a href="#model-的复用" class="headerlink" title="model 的复用"></a><code>model</code> 的复用</h2><p>有时候，业务上可能会遇到期望把一些外部关联比较少的 <code>model</code> 拆出来的需求，可能会拆出来一个 <code>model</code> ，然后用不同的视图容器去 <code>connect</code> 它</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  namespace: &apos;reusable&apos;,</span><br><span class="line">  state: &#123;&#125;,</span><br><span class="line">  reducers: &#123;&#125;,</span><br><span class="line">  effrcts: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以，在业务上，可能出现的使用情况就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">              ContainerA &lt;-- ModelA</span><br><span class="line">                   |</span><br><span class="line">    ------------------------------</span><br><span class="line">    |                            |</span><br><span class="line">ContainerB &lt;-- reusable     ContainerC &lt;-- reusable</span><br></pre></td></tr></table></figure>
+<p>这里面，<code>ContainerB</code> 和 <code>ContainerC</code> 是 <code>ContainerA</code> 的下属，它们的逻辑结构一致，只是展现不同。我们可以让它们分别 <code>connect</code> 同一个 <code>model</code> ，注意，这个时候，<code>model</code> 的修改会同时影响到两个视图，因为 <code>model</code> 在 <code>state</code> 中是直接以 <code>namespace</code> 作 <code>key</code> 存放的，实际上只有一份实例</p>
+<h2 id="动态扩展-model"><a href="#动态扩展-model" class="headerlink" title="动态扩展 model"></a>动态扩展 <code>model</code></h2><p>可能会遇到的业务逻辑： 几个业务视图长得差不多， <code>model</code> 也存在少量的差别</p>
+<p>在这种情况下可以复用同一个 <code>model</code> ，但这么做，对于维护是一种挑战，很可能改变其中一个，对另外一个造成了影响，所以在这种情况下，扩展是比较好的选择</p>
+<p>扩展要做的事情：<br>新增一些东西<br>覆盖一些原来的东西<br>根据条件动态创建一些东西  </p>
+<p><code>dva</code> 中的每个 <code>model</code> ，实际上都是普通的 <code>JavaScript</code> 对象，包含 </p>
+<p><code>namespace</code><br><code>state</code><br><code>reducers</code><br><code>effects</code><br><code>subscription</code></p>
+<p>从这个角度上看，我们要新增或者覆盖的一些东西，都会比较容易。比如使用 <code>Object.assign</code> 来进行对象的复制属性，就可以把新的内容添加或者覆盖到原有的对象上。</p>
+<p>注意这里有两级，<code>model</code> 结构中的 <code>state</code>，<code>reducers</code>，<code>effects</code>，<code>subscriptions</code>都是对象结构，需要分别在这一级去做 <code>assign</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function reacteModel(options) &#123;</span><br><span class="line">  const &#123; namespace, param &#125; = options;</span><br><span class="line">  return &#123;</span><br><span class="line">    namespace: `demo$&#123;namespace&#125;`,</span><br><span class="line">    states: &#123;&#125;,</span><br><span class="line">    reducers: &#123;&#125;,</span><br><span class="line">    effects: &#123;</span><br><span class="line">      *foo() &#123;</span><br><span class="line">        // 这里可以根据param来确定下面这个call的参数</span><br><span class="line">        yield call()</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const modelA = createModel(&#123; namespace: &apos;A&apos;, param :&#123; type: &apos;A&apos;&#125;&#125;);</span><br><span class="line">const modelA = createModel(&#123; namespace: &apos;B&apos;, param :&#123; type: &apos;B&apos;&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="长流程的业务逻辑"><a href="#长流程的业务逻辑" class="headerlink" title="长流程的业务逻辑"></a>长流程的业务逻辑</h2><p>例如复杂的表单提交，中间会需要去发起多种对视图状态的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">*submit(action, &#123;put,call,select&#125;) &#123;</span><br><span class="line">  const formData = yield select(state =&gt; &#123;</span><br><span class="line">    const buyModel = state.buy;</span><br><span class="line">    const context = state.context;</span><br><span class="line">    const &#123; stock &#125; = buyModel;</span><br><span class="line">    return &#123;</span><br><span class="line">      uuid: context.uuid,</span><br><span class="line">      market: stock &amp;&amp; stock.code,</span><br><span class="line">      stockName: stock &amp;&amp; stock.name,</span><br><span class="line">      price: String(buyModel.price),</span><br><span class="line"></span><br><span class="line">      //委托数量</span><br><span class="line">      entrustAmount: String(buyModel.count),</span><br><span class="line">      totalBalance: buyModel.totalBalance,</span><br><span class="line">      availableTzbBanlance: buyModel.availableTzbBalance,</span><br><span class="line">      availableDepositBalance: buyModel.availableDepositBalance,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  const result = yield call(post, &apos;/h5/entrust_buy&apos;,formDate, &#123;loading: true&#125;);</span><br><span class="line"></span><br><span class="line">  if(result.success)&#123;</span><br><span class="line">    toast(&#123;</span><br><span class="line">      type: &apos;success&apos;,</span><br><span class="line">      content: &apos;委托已受理&apos;,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // 成功之后再获取一次现价，并填入</span><br><span class="line">    // yield put(&#123;type: &apos;fetchQuotation&apos;, payload: stock&#125;);</span><br><span class="line">    yield put(&#123; type: &apos;entrustNoChange&apos;, payload: result.result &amp;&amp; result.result.entrustNo &#125;);</span><br><span class="line"></span><br><span class="line">    // 清空输入框内容</span><br><span class="line">    yield put(&#123; type: &apos;searchQueryChange&apos;, value: &apos;&apos; &#125;);</span><br><span class="line"></span><br><span class="line">    // 403时，需要验证密码再重新提交</span><br><span class="line">    if (!result.success &amp;&amp; result.resultCode === 403) &#123;</span><br><span class="line">      yield put(&#123; type: &apos;checkPassword&apos;, payload: &#123;&#125; &#125;);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 失败之后也需要更新投资宝和保证金金额</span><br><span class="line">    if (result.result) &#123;</span><br><span class="line">      yield put(&#123; type: &apos;balanceChange&apos;, payload: result.result &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 重新获取最新可撤单列表</span><br><span class="line">    yield put(&#123; type: &apos;fetchRevockList&apos; &#125;);</span><br><span class="line"></span><br><span class="line">    // 返回的结果里面如果有uuid, 用新的uuid替换</span><br><span class="line">    if (result.uuid) &#123;</span><br><span class="line">      yield put(&#123; type: &apos;context/updateUuid&apos;, payload: result.uuid &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在一个 <code>effect</code> 中可以使用多个 <code>put</code> 来分别调用 <code>reducer</code> 来更新状态<br>存在另外一些流程，在 <code>effect</code> 中可能会存在多个异步的服务调用，比如说，要调用一次服务端的验证，成功之后再去提交数据，这时候在一个 <code>effect</code> 中就会存在多个 <code>call</code> 操作了</p>
+<h2 id="使用-take-操作进行事件监听"><a href="#使用-take-操作进行事件监听" class="headerlink" title="使用 take 操作进行事件监听"></a>使用 <code>take</code> 操作进行事件监听</h2><p>一个流程的变动，需要扩散到若干其他 <code>model</code> 中，在 <code>redux-sage</code> 中提供了 <code>take</code> 和 <code>takeLatest</code> 这两个操作， <code>dva</code> 是 <code>redux-saga</code> 的封装，也是可以用这种操作</p>
+<p>假设我们有一个事件处理的代码  </p>
+<blockquote>
+<p>someSource.on( ‘click’, event =&gt; doSomething(event))</p>
+</blockquote>
+<p>这段代码转成 <code>generator</code> 来表达，就是下面的这个形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function* sage() &#123;</span><br><span class="line">  while(true) &#123;</span><br><span class="line">    const event = yield take(&apos;click&apos;);</span><br><span class="line">    doSomething(event)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们 可以在 <code>dva</code> 中使用 <code>take</code> 操作来监听 <code>action</code></p>
+<h2 id="多任务调度"><a href="#多任务调度" class="headerlink" title="多任务调度"></a>多任务调度</h2><p>上述大多都是串行执行方式，这是业务中最常见的多任务执行方式，只需逐个 <code>yield call</code> 就可以了</p>
+<p>有时候我们可能希望多个任务以外一些方式执行</p>
+<p>并行： 若干个任务之间不存在依赖关系，并且后续操作对它们的结果无依赖<br>竞争： 若干个任务之间，只要有一个执行完成，就进入下一个环节<br>子任务： 若干个任务，并行执行，但必须全部做完之后，下一个环节才继续执行</p>
+<h2 id="任务的并执行"><a href="#任务的并执行" class="headerlink" title="任务的并执行"></a>任务的并执行</h2><p>可以通过以下方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [result1, result2] = yield [</span><br><span class="line">  call(service1, param1),</span><br><span class="line">  call(service2, param2)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>把多个要并行执行的东西放在一个数组里，就可以并行执行，等所有的都结束后进行下一个环节，类似 <code>promise.all</code> 操作，一般有些集成界面，比如 <code>dashboard</code> ，其中各组件之间业务的管理较小，就可以用这种方式去分别加载数据，此时，整体加载时间只取决于时间最长的那个</p>
+<p>如果把 <code>yield []</code> 误写成 <code>yield* []</code> 就会顺序执行</p>
+<h2 id="任务的竞争"><a href="#任务的竞争" class="headerlink" title="任务的竞争"></a>任务的竞争</h2><p>多任务的竞争关系，可以通过以下方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const &#123; data, timeout &#125; = yield race(&#123;</span><br><span class="line">  data: call(server, &apos;some data&apos;),</span><br><span class="line">  timeout: call(delay, 1000)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">if(data)&#123;</span><br><span class="line">  put(&#123; type:&apos;DATA_RECEIVED&apos;, data&#125;);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">  put(&#123; type:&apos;TIMEOUT_ERROR&apos;&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="跨-model-的通信"><a href="#跨-model-的通信" class="headerlink" title="跨 model 的通信"></a>跨 <code>model</code> 的通信</h2><p>在业务复杂的情况下，我们可能会对 <code>model</code> 进行拆分，往往又会遇到一些比较复杂的事情  </p>
+<p>一个流程贯穿整个 <code>model</code> </p>
+<p>父容器A，子容器B，二者各自 <code>connect</code> 了不同的 <code>model A</code> 和 <code>B</code><br>父容器中有一个操作，分三个步骤：<br><code>model A</code> 中某个 <code>effect</code> 处理第一步<br><code>call model B</code> 中的某个 <code>effect</code> 去处理第二步<br>第二步结束后，再返回 <code>model A</code> 中做第三步<br>在 <code>dva</code> 中，可以用 <code>namespace</code> 去指定接受 <code>action</code> 的 `model ，所以可以通过类似这样的方式去组合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yield call(&#123; type: &apos;a/foo&apos; &#125;);</span><br><span class="line">yield call(&#123; type: &apos;b/foo&apos; &#125;);</span><br><span class="line">yield call(&#123; type: &apos;a/bar&apos; &#125;);</span><br></pre></td></tr></table></figure>
+<p>甚至，还可以利用 <code>take</code> 命令，在另外一个 <code>model</code> 的某个 <code>effect</code> 中插入逻辑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*effectA() &#123;</span><br><span class="line">  yield call(service1);</span><br><span class="line">  yield put(&#123; type: &apos;service1Success&apos; &#125;);</span><br><span class="line">  // 如果我们复用这个effect，但要在这里加一件事，怎么办？</span><br><span class="line">  yield call(service2);</span><br><span class="line">  yield put(&#123; type: &apos;service2Success&apos; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以利用之前我们说的 <code>take</code> 命令：</p>
+<blockquote>
+<p>yield take(‘a/service1Success’);</p>
+</blockquote>
+<p>这样，可以在外部往里面添加一个并行操作，通过这样的组合可以处理一些组合流程。但实际情况下，我们可能要处理的不仅仅是 <code>effect</code> ，很可能视图组件中还存在后续逻辑，在某个 <code>action</code> 执行之后，还需要再做某些事情。</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yield call(&#123; type: &apos;a/foo&apos; &#125;);</span><br><span class="line">yield call(&#123; type: &apos;b/foo&apos; &#125;);</span><br><span class="line">// 如果这里是要在组件里面做某些事情，怎么办？</span><br></pre></td></tr></table></figure>
+<p>可以利用一些特殊手段把流程延伸出来到组件里。比如说，我们通常在组件中 <code>dispatch</code> 一个 <code>action</code> 的时候，不会处理后续事情，但可以修改这个过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">  dispatch(&#123; type: &apos;reusable/addLog&apos;, payload: &#123; data: 9527, resolve, reject &#125; &#125;);</span><br><span class="line">&#125;)</span><br><span class="line">.then((data) =&gt; &#123;</span><br><span class="line">  console.log(`after a long time, $&#123;data&#125; returns`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>注意这里，我们是把 <code>resolve</code> 和 <code>reject</code> 传到 <code>action</code> 里面了，所以，只需在 <code>effect</code> 里面这样处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  const result = yield call(service1);</span><br><span class="line">  yield put(&#123; type: &apos;service1Success&apos;, payload: result &#125;);</span><br><span class="line">  resolve(result);</span><br><span class="line">&#125;</span><br><span class="line">catch (error) &#123;</span><br><span class="line">  yield put(&#123; type: &apos;service1Fail&apos;, error &#125;);</span><br><span class="line">  reject(ex);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，就实现了跨越组件、模型的复杂的长流程的调用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-07-09-learn-dva-Part3.html" title="Dva 学习笔记 (下)">http://laibh.top/2018-07-09-learn-dva-Part3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dva/" <i class="fa fa-tag"></i> dva</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-07-09-learn-dva-part2.html" rel="next" title="Dva 学习笔记 (中)">
+                <i class="fa fa-chevron-left"></i> Dva 学习笔记 (中)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-09-read-图解HTTP-Part1.html" rel="prev" title="深入浅出HTTP，从开始到放弃（第一章）—— 了解Web网络基础">
+                深入浅出HTTP，从开始到放弃（第一章）—— 了解Web网络基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dva-学习笔记"><span class="nav-number">1.</span> <span class="nav-text">dva 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Dva-开发复杂-SPA"><span class="nav-number">1.1.</span> <span class="nav-text">使用 Dva 开发复杂 SPA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态加载-model"><span class="nav-number">1.2.</span> <span class="nav-text">动态加载 model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-model-共享全局信息"><span class="nav-number">1.3.</span> <span class="nav-text">使用 model 共享全局信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-的复用"><span class="nav-number">1.4.</span> <span class="nav-text">model 的复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态扩展-model"><span class="nav-number">1.5.</span> <span class="nav-text">动态扩展 model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长流程的业务逻辑"><span class="nav-number">1.6.</span> <span class="nav-text">长流程的业务逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-take-操作进行事件监听"><span class="nav-number">1.7.</span> <span class="nav-text">使用 take 操作进行事件监听</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多任务调度"><span class="nav-number">1.8.</span> <span class="nav-text">多任务调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务的并执行"><span class="nav-number">1.9.</span> <span class="nav-text">任务的并执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务的竞争"><span class="nav-number">1.10.</span> <span class="nav-text">任务的竞争</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨-model-的通信"><span class="nav-number">1.11.</span> <span class="nav-text">跨 model 的通信</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

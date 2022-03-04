@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 存储数据本章内容：  关系型数据库：PostgreSQL 非关系型数据库：MongoDB ACID 类 云数据库和存储服务  关系型数据库关系型数据库以关系代数和集合论为理论基础。用模式指定各种数据类型的格式和这些数据类型之间的关系。例如，做社交网络时会有 User 和 Post 类型，它们之间还会有一对多的关">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— 存储数据">
+<meta property="og:url" content="http://laibh.top/2018-12-21-NodeJs2-Part8.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 存储数据本章内容：  关系型数据库：PostgreSQL 非关系型数据库：MongoDB ACID 类 云数据库和存储服务  关系型数据库关系型数据库以关系代数和集合论为理论基础。用模式指定各种数据类型的格式和这些数据类型之间的关系。例如，做社交网络时会有 User 和 Post 类型，它们之间还会有一对多的关">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-12-21-NodeJs2-Part7-定义表shell.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-21-NodeJs2-Part7-定义表pgAdmin.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— 存储数据">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 存储数据本章内容：  关系型数据库：PostgreSQL 非关系型数据库：MongoDB ACID 类 云数据库和存储服务  关系型数据库关系型数据库以关系代数和集合论为理论基础。用模式指定各种数据类型的格式和这些数据类型之间的关系。例如，做社交网络时会有 User 和 Post 类型，它们之间还会有一对多的关">
+<meta name="twitter:image" content="http://laibh.top/images/2018-12-21-NodeJs2-Part7-定义表shell.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-21-NodeJs2-Part8.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— 存储数据 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-21-NodeJs2-Part8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— 存储数据</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T11:30:00+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-21-NodeJs2-Part8.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— 存储数据">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  15,278
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h2><p>本章内容：</p>
+<ul>
+<li>关系型数据库：PostgreSQL</li>
+<li>非关系型数据库：MongoDB</li>
+<li>ACID 类</li>
+<li>云数据库和存储服务</li>
+</ul>
+<h3 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h3><p>关系型数据库以关系代数和集合论为理论基础。用模式指定各种数据类型的格式和这些数据类型之间的关系。例如，做社交网络时会有 User 和 Post 类型，它们之间还会有一对多的关系，然后用结构化查询语言（SQL）发起数据查询，比如“给我ID 为 123 的用户名下的所有帖子”，用 SQL 表示就是：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> post <span class="keyword">WHERE</span> user_id = <span class="number">123</span></span><br></pre></td></tr></table></figure>
+<h3 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h3><p>在 Node 程序中，MySQL 和 PostgreSQL 都是常用的关系型数据库。选择看个人喜好。</p>
+<h4 id="安装和配置"><a href="#安装和配置" class="headerlink" title="安装和配置"></a><strong>安装和配置</strong></h4><p>Postgres 的安装（win）,从 <a href="https://postgresql.org">https://postgresql.org</a> 下载安装器。<a href="https://jingyan.baidu.com/article/359911f5a7374a57ff030644.html">安装和配置教程</a></p>
+<p>win 启动：psql -h localhost -U postgres</p>
+<h4 id="从-Node-中连接-Postgres"><a href="#从-Node-中连接-Postgres" class="headerlink" title="从 Node 中连接 Postgres"></a><strong>从 Node 中连接 Postgres</strong></h4><p>在 Node 中与 Postgres 交互最受欢迎的包就是 pgm，也可以用 npm包装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pg --save</span><br></pre></td></tr></table></figure>
+<p>连接数据库</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pg = <span class="built_in">require</span>(<span class="string">'pg'</span>);</span><br><span class="line"><span class="comment">// 配置连接参数</span></span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> pg.Client(&#123; <span class="attr">database</span>: <span class="string">'articles'</span> &#125;);</span><br><span class="line">db.connect(<span class="function">(<span class="params">err,client</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connected to database'</span>,db.database);</span><br><span class="line">    <span class="comment">// 关闭数据库连接 Node 进程可以退出</span></span><br><span class="line">    db.end();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>期间报的一些错误例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">role "Administrator" does not exist</span><br><span class="line">role "Administrator" is not permitted to log in</span><br></pre></td></tr></table></figure>
+<p>可以通过 pgAdmin4 进行可视化的配置，创建新的角色并且赋予一些功能，例如可以登入或者是设定为超级用户。</p>
+<h4 id="定义表"><a href="#定义表" class="headerlink" title="定义表"></a><strong>定义表</strong></h4><p>首先像下面这样定义表，确定表中存储的数据形式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pg = <span class="built_in">require</span>(<span class="string">'pg'</span>);</span><br><span class="line"><span class="comment">// 配置连接参数</span></span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> pg.Client(&#123; <span class="attr">database</span>: <span class="string">'articles'</span> &#125;);</span><br><span class="line">db.connect(<span class="function">(<span class="params">err, client</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connected to database'</span>, db.database);</span><br><span class="line">    db.query(<span class="string">`CREATE TABLE IF NOT EXISTS snippets(id SERIAL,PRIMARY KEY(id),body text)`</span>, (err, result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Created table "snippets"'</span>);</span><br><span class="line">        <span class="comment">// 关闭数据库连接 Node 进程可以退出</span></span><br><span class="line">        db.end();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>可以shell 里面看到该table 表</p>
+<p><img src="/images/2018-12-21-NodeJs2-Part7-定义表shell.png" alt="定义表"></p>
+<p>或者是通过 pgAdmin 查看</p>
+<p><img src="/images/2018-12-21-NodeJs2-Part7-定义表pgAdmin.png" alt="定义表"></p>
+<h4 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a><strong>插入数据</strong></h4><p>表定义好了后，可以像下面这样使用 INSERT 查询插入数据。如果不指定 id，PostgreSQL 会自动生成一个。要想知道生成ID 是什么，需要在查询语句里加上 RETURNING id,然后可以在回调函数的结果集参数中得到id的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">db.connect(<span class="function">(<span class="params">err, client</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connected to database'</span>, db.database);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> body = <span class="string">'hello world'</span>;</span><br><span class="line">    db.query(<span class="string">`</span></span><br><span class="line"><span class="string">      INSERT INTO snippets (body) VALUES (</span></span><br><span class="line"><span class="string">        '<span class="subst">$&#123;body&#125;</span>'</span></span><br><span class="line"><span class="string">      )</span></span><br><span class="line"><span class="string">      RETURNING id</span></span><br><span class="line"><span class="string">    `</span>, (err, result) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">            <span class="keyword">const</span> id = result.rows[<span class="number">0</span>].id;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Inserted row with id %s'</span>, id);</span><br><span class="line">            db.end();</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a><strong>更新数据</strong></h4><p>插入数据后，可以像下面的 UPDATE 查询更新数据。受影响的记录数放在查询结果中的 rowCount 属性上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">db.connect(<span class="function">(<span class="params">err, client</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connected to database'</span>, db.database);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> body = <span class="string">'hello world'</span>;</span><br><span class="line">    db.query(<span class="string">`</span></span><br><span class="line"><span class="string">      INSERT INTO snippets (body) VALUES ('<span class="subst">$&#123;body&#125;</span>') RETURNING id;</span></span><br><span class="line"><span class="string">    `</span>, (err, result) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">            <span class="keyword">const</span> id = result.rows[<span class="number">0</span>].id;</span><br><span class="line">            <span class="keyword">const</span> updatedBody = <span class="string">'greetings, world'</span>;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Inserted row with id %s'</span>, id);</span><br><span class="line"></span><br><span class="line">            db.query(<span class="string">`</span></span><br><span class="line"><span class="string">            UPDATE snippets SET body = '<span class="subst">$&#123;updatedBody&#125;</span>' WHERE id = <span class="subst">$&#123;id&#125;</span>;</span></span><br><span class="line"><span class="string">            `</span>,(err,result) =&gt;&#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">                <span class="built_in">console</span>.log();</span><br><span class="line">                db.end();</span><br><span class="line">            &#125;);            </span><br><span class="line">        &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a><strong>查询数据</strong></h4><p>关系型数据库的能量主要体现在复杂的数据查询上，查询语句使用 SELECT ,例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.query(<span class="string">`</span></span><br><span class="line"><span class="string">	SELECT * FROM snippets ORDER BY id;</span></span><br><span class="line"><span class="string">`</span>,(err,result)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(result.rows);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.postgresql.org/docs/11/">Postgresql v11文档</a></p>
+<h3 id="Knex"><a href="#Knex" class="headerlink" title="Knex"></a>Knex</h3><p>很多开发人员不喜欢把 SQL 直接放在代码里，希望有一个抽象层隔离一下。因为用字符串拼接 SQL 语句太繁琐了，而且查询可能会变得越来越难以理解和维护。对于 JavaScript 来说更是如此，因为在 ES6 模板常量出来之前，它连表示多行字符串的语法都没有。</p>
+<p>Knex是一个轻便的 SQL 抽象包，它被称为查询构建器。我们可以通过查询构建器的声明式 API 构造出 SQL 字符串，Knex 的 API 简单直白：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">knex(&#123; <span class="attr">client</span>:<span class="string">'mysql'</span>&#125;)</span><br><span class="line">	.select()</span><br><span class="line">	.from(<span class="string">'users'</span>)</span><br><span class="line">	.where(&#123; <span class="attr">id</span>:<span class="string">'123'</span>&#125;)</span><br><span class="line">	,toSQL();</span><br></pre></td></tr></table></figure>
+<p>这段代码会生成一个 MySQL 的参数化 SQL 查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">`users`</span> <span class="keyword">where</span> <span class="string">`id`</span> = ?</span><br></pre></td></tr></table></figure>
+<h4 id="查询构建器"><a href="#查询构建器" class="headerlink" title="查询构建器"></a><strong>查询构建器</strong></h4><p>尽管业界在 20世纪 80年代中期就确立了 ANSI 和 ISO SQL 标准。不过直到现在，大多数数据库用的仍然是自己的 SQL 方言。但 PostgreSQL 是个例外，它遵循了 SQL:2008 标准。查询构建器能在支持多种数据库的同时消除各种 SQL 方言的差异，提供一个统一的 SQL 生成接口。对于经常要在不同的数据库技术之间进行切换的团队来说，查询构建器提供的好处不言而喻。</p>
+<p>Knex.js 支持的数据库有：</p>
+<ul>
+<li>PostgreSQL</li>
+<li>MSSQL</li>
+<li>MYSQL</li>
+<li>MariaDB</li>
+<li>SQLite3</li>
+<li>Oracle</li>
+</ul>
+<p>Knex 支持 promise 和 Node 风格的回调</p>
+<h4 id="用-Knex-实现连接和查询"><a href="#用-Knex-实现连接和查询" class="headerlink" title="用 Knex 实现连接和查询"></a><strong>用 Knex 实现连接和查询</strong></h4><p>Knex 不像其他查询构建器，它还可以根据选定的数据库驱动连接数据库并执行查询语句：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db(<span class="string">'articles'</span>)</span><br><span class="line">    .select(<span class="string">'title'</span>)</span><br><span class="line">    .where(&#123;<span class="attr">title</span>:<span class="string">'Today’s News'</span>&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">articles</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(articles);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Knex 查询默认返回 promise,但也提供了 .asCallback 方法，可以按照惯例支持回调函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db(<span class="string">'articles'</span>)</span><br><span class="line">    .select(<span class="string">'title'</span>)</span><br><span class="line">    .where(&#123;<span class="attr">title</span>:<span class="string">'Today’s News'</span>&#125;)</span><br><span class="line">    .asCallback(<span class="function">(<span class="params">err,articles</span>) =&gt;</span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    	<span class="built_in">console</span>.log(articles);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>下面代码用 sqlit3s实现了简单的 Article 模型，将它保存为 db.js 。安装依赖 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install knex@~0.12.0 sqlite3@~3.1.0 --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> knex = <span class="built_in">require</span>(<span class="string">'knex'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> db = knex(&#123;</span><br><span class="line">    client: <span class="string">'sqlite3'</span>,</span><br><span class="line">    connection: &#123;</span><br><span class="line">        filename: <span class="string">'tldr.sqlite'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    useNullAsDefault: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> db.schema.createTableIfNotExists(<span class="string">'articles'</span>, table =&gt; &#123;</span><br><span class="line">        table.increments(<span class="string">'id'</span>).primary();</span><br><span class="line">        table.string(<span class="string">'title'</span>);</span><br><span class="line">        table.text(<span class="string">'content'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.Article = &#123;</span><br><span class="line">    all() &#123;</span><br><span class="line">        <span class="keyword">return</span> db(<span class="string">'articles'</span>).orderBy(<span class="string">'title'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    find(id) &#123;</span><br><span class="line">        <span class="keyword">return</span> db(<span class="string">'articles'</span>).where(&#123; id &#125;).first();</span><br><span class="line">    &#125;,</span><br><span class="line">    create(data) &#123;</span><br><span class="line">        <span class="keyword">return</span> db(<span class="string">'articles'</span>).insert(data);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">delete</span>(id) &#123;</span><br><span class="line">        <span class="keyword">return</span> db(<span class="string">'articles'</span>).del().where(&#123; id &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在可以用 db.Article 添加 Article 记录了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line">db().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    ab.Article.create(&#123;</span><br><span class="line">        title: <span class="string">'my article'</span>,</span><br><span class="line">        content: <span class="string">'article content'</span></span><br><span class="line">    &#125;).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        ad.Article.all().then(<span class="function"><span class="params">articles</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(articles);</span><br><span class="line">            process.exit();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123; <span class="keyword">throw</span> err &#125;);</span><br></pre></td></tr></table></figure>
+<p>SQLite 几乎不需要配置，不用启动服务器守护进程，也不用在程序外面创建数据库。SQLite 把所有东西都写到一个文件里。运行前面的代码后，当前目录下会有一个 .sqlite 文件。删掉这个文件就能把数据库抹掉：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm articles.sqlite</span><br></pre></td></tr></table></figure>
+<p>SQLite 还有内存模式，完全不用往硬盘里写东西。在进行自动化测试时，一般会用这种模式降低运行时间，带有：memory: 的特殊文件名会启用内容模式。在启用内存模式后，如果有多个连接，那么每个连接都会有自己的私有数据库：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = knex(&#123;</span><br><span class="line">    client: <span class="string">'sqlite3'</span>,</span><br><span class="line">    connection: &#123;</span><br><span class="line">        filename: <span class="string">'tldr.sqlite'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    useNullAsDefault: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="切换数据库"><a href="#切换数据库" class="headerlink" title="切换数据库"></a><strong>切换数据库</strong></h4><p>因为用了 Knex,所以把之前代码换成 PostgreSQL 很容易，跟 PostgreSQL 服务器交互需要用到 pg 包，要将其安装好并跑起来。把 pg 包安装，并用 PostgreSQL 的 createdb 命令创建对应的数据库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install pg --save </span><br><span class="line">createdb articles</span><br></pre></td></tr></table></figure>
+<p>只要修改 Knex 的配置就能换成这个新数据库。对外的 API 和使用还是一样的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = knex(&#123;</span><br><span class="line">    client: <span class="string">'pg'</span>,</span><br><span class="line">    connection:&#123;</span><br><span class="line">        database: <span class="string">'articles'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>注意抽象漏洞</strong></p>
+<p>查询构建器能够对 SQL 语法做标准化处理，但改变不了数据库的行为。有些特性只有特定数据库提供支持，而且对于同样的查询，不同的数据库可能会有不同的行为，比如下面这两个特定主键的方法：</p>
+<ul>
+<li>table.increments(‘id’).primary();</li>
+<li>table.integer(‘id’).primary()</li>
+</ul>
+<p>在 SQLite3 上都没有问题，但在 PostgreSQL 上插入记录时，第二个会出错。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"null value in column "</span>id<span class="string">" violates not-null constraint"</span></span><br></pre></td></tr></table></figure>
+<p>在 SQLite 上，如果插入的记录主键为 Null,不管是否配置自增长主键，都会自动赋给它一个自增长的 ID 。而 PostgreSQL 只有主键显式定义为自增长主键时才会如此处理。这样的行为差异很多，并且有些差异导致的错误可能无法轻易发现。如果切换数据库，一定要进行充分的测试。</p>
+<h3 id="MySQL-和-PostgreSQL"><a href="#MySQL-和-PostgreSQL" class="headerlink" title="MySQL 和 PostgreSQL"></a>MySQL 和 PostgreSQL</h3><p>MySQL 和 PostgreSQL 都是成熟高效的数据库系统，并且对于很多项目来说，它们几乎没有什么差别。直到项目需要扩张时，开发人员才会感觉到它们在接口边缘或接口之下的差异。</p>
+<p>得注意的差别：</p>
+<ul>
+<li>PostgreSQL 支持一些表达能力更强的数据类型，比如数组、JSON 和用户定义的类型；</li>
+<li>PostgreSQL 自带全文搜索功能；</li>
+<li>PostgreSQL 全面支持 ANSI SQL:2008 标准；</li>
+<li>PostgreSQL 的复制功能不如 MySQL 强大，或者说没有经受过那么严苛的考验；</li>
+<li>MySQL 资历更老、社区更大，有更多的工具和资源；</li>
+<li>MySQL 有很多有微妙差别的分支（比如 MariaDB 和 WebScaleSQL 这些受到 Facebook、Google、Twitter 等公司支持的版本）</li>
+<li>MySQL 的可插拔存储引擎不太好理解，管理和调优也有一定的难度。不过换个角度来看，这也意味着可以对它的性能做更精细的控制。</li>
+</ul>
+<p>选哪个数据库并不会影响项目成功与否，所以不要在这个问题上纠结。如果有必要，以后也可以做数据库迁移，但 PostgreSQL 应该足以满足你对功能特性和扩展能力的需求。但如果你恰好要对数据库的评估选型负责，则有必要熟悉一下 ACID 保证</p>
+<h3 id="ACID-保证"><a href="#ACID-保证" class="headerlink" title="ACID 保证"></a>ACID 保证</h3><p>ACID（原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）和耐用性（Durability）） 是对数据库事务的一组要求：原子性、一致性、隔离线和耐用性。这些术语的确切定义可能会变。但一般来说，系统对 ACID 保证越严格，在性能上作出的让步就越大。开发人员用ACID 分类来交流不同方案所做的妥协，比如在聊 NoSQL 系统时。</p>
+<h4 id="原子性：无论成败，事务必须整体执行"><a href="#原子性：无论成败，事务必须整体执行" class="headerlink" title="原子性：无论成败，事务必须整体执行"></a><strong>原子性：无论成败，事务必须整体执行</strong></h4><p>原子性事务不能被部分执行：或者整个操作都完成了，或者数据库保持原样。比如说要删除某个用户的所有理论，如果作为一个事务的话，或者全部删除了，或者一条也没有删。最终不能是有些删除，有些还保持原来的状态，甚至在系统出错或断电后，仍然保持原子性。原子性：不可再分。</p>
+<h4 id="一致性：始终确保约束条件"><a href="#一致性：始终确保约束条件" class="headerlink" title="一致性：始终确保约束条件"></a><strong>一致性：始终确保约束条件</strong></h4><p>成功完成的事务必须符合系统中定义的所有数据完整性约束。比如主键必须唯一、数据要符合某种特定的模式，或者外键指向存在的实体。产生不一致状态的事务一般也会失败，然后小问题是可以自动解决的，比如将数据转换成正确的形态。</p>
+<h4 id="隔离性：并发事务不会互相干扰"><a href="#隔离性：并发事务不会互相干扰" class="headerlink" title="隔离性：并发事务不会互相干扰"></a><strong>隔离性：并发事务不会互相干扰</strong></h4><p>不管是并发还是线性执行，隔离性事务的执行结果应该都是一样的。系统的隔离水平会直接影响它执行并发操作的能力。全局锁是一种比较低幼的隔离方式，由于在事务期间会把整个数据库锁住，所以只能串行处理事务。这是很强的隔离性保证，但效率也极低；那些跟事务完全没有关联的数据库集根本不应该被锁住（比如说，一个用户添加评论时不应该导致另一个用户无法更行自己的个人资料）。在现实情况中，数据库系统会提供精细的和有选择性的锁模式（比如锁自己的个人资料）。在现实情况中，数据库系统会提供更加精细的和有选择性的锁模式（比如锁表、锁记录和锁数据域），以实现各种程序的隔离水平。更复杂的系统甚至有可能会采用隔离水平最低的锁模式，乐观地执行所有事务，直到检测到冲突时才会逐步细化锁模式。</p>
+<h4 id="耐用性：事务是永久性的"><a href="#耐用性：事务是永久性的" class="headerlink" title="耐用性：事务是永久性的"></a><strong>耐用性：事务是永久性的</strong></h4><p>事务的耐用性是对持久性生效的保证，在重启，断电、系统错误甚至是硬件失效的情况下，持续化的效果依然不受影响。比如 SQLite 内存模式下的事务就很没有耐用性，进程退出后所有数据都没有了。而在 SQLite 把数据写到硬盘中时，事务的耐用性就很好了，因为机器重启后数据还在。</p>
+<p>这看起来好像很简单：只要把数据写到硬盘里就好了，事务就有耐用性了。但硬盘 I/O 是比较慢的操作，即便程序规模增长比较温和时，I/O 操作也会迅速变成性能瓶颈。为了保证系统性能，有些数据库会提供不同的耐用性折中方案。</p>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><p>非关系模型的数据存储统称为 NoSQL 。因为现在有些 NoSQL 数据库确实支持 SQL ，所以 NoSQL 的含义更接近非关系型，或者被当做不仅是 SQL 的缩写。</p>
+<p>下面举一些 NoSQL 的范式以及相应的数据库的例子：</p>
+<ul>
+<li>键-值/元组存储——DynamoDB、LevelDB、Redis、etcd、Aerospike、Berkeley DB</li>
+<li>图存储——Neo4J、OrientDB</li>
+<li>文档存储——CouthDB、MongoDB、RRDtool</li>
+<li>列存储——Cassandra、HBase</li>
+<li>时间序列存储——Graphite、InfluxDB、RRDtool</li>
+<li>多范式——Couchbase（文档数据库、键/值存储、分布式缓存）</li>
+</ul>
+<p>NoSQL 官网上有更完整的 NoSQL 数据库列表。<br>如果你只用过关系型数据库，可能不太容易接受 NoSQL 的概念，因为 NoSQL 的用法经常会违反你已经习惯了的最佳实践：没有模式定义、重复的数据、松散的强制性约束。NoSQL 系统经常会将赋予数据库的责任放到应用程序上。这看起来可能会很乱。</p>
+<p>般情况下，只要一小部分访问模式就会创建大量的数据库工作负载，比如生成程序登录画面的查询，需要获取很多域对象。在关系型数据库中，要提高读取性能时一般会做非规范化，给客户端的域查询要经过预处理并形成可以降低查询次数的形态</p>
+<p>一般来说，NoSQL 数据默认就是非规范化的，甚至会跳过域建模。这样就不会在数据模型上做过多工作，修改起来会更迅速，并形成更简单、更好执行的设计。</p>
+<h3 id="分布式数据库"><a href="#分布式数据库" class="headerlink" title="分布式数据库"></a>分布式数据库</h3><p>程序可以在垂直和水平两个方向上扩展，垂直扩展是指增加机器的能力，水平扩展是增加机器的数量。垂直扩展一般会更简单，但受限于一台机器所能达到的硬件水平，而且成本上升很快。相对来说，水平扩展时，系统的能力是随着处理器和机器的增加而增长的。因为要协调更多动态组件，所以会增加复杂性。所有增加的系统最终都会达到一个点，之后只能做水平扩展。</p>
+<p>分布式数据库从一开始就是按照水平扩展设计的。把数据存储在多台机器上解决了单点故障问题，可以提升耐用性。很多关系型系统都可以用分片、主/从、主/主复制等形态进行一定的水平扩展，但不会超过几百个节点。比如 MySQL 集群的上限是 255节点。而分布式数据库可以有几千个节点。</p>
+<h3 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h3><p>MongoDB 是面向对象的分布式数据库，使用它的 Node 开发人员特别多。时髦的 MEAN 栈中的 M 就是 MongoDB（另外三个是 Express、Angular 和 Node），一般我们刚开始接触 Node 时遇到的第一个数据库就是它。</p>
+<p>MongoDB 受到的批评和争议非常多。尽管如此，它仍然是很多开发人员的主存储。很多著名公司都部署了 MongoDB，包括 Adobe、LinkedIn、eBay，甚至欧洲粒子物理研究所（CERN）的大型强子对撞机组件上都在用它。</p>
+<p>MongoDB 数据库把文档存储在无模式的数据集中。不需要预先为文档定义模式，同一个数据集中的文档也不用遵循相同的模式。这给了 MongoDB 很大的灵活性，但程序要因此承担起保证数据一致性的责任，确保文档的结构是可预测的。</p>
+<h4 id="安装和配置-1"><a href="#安装和配置-1" class="headerlink" title="安装和配置"></a><strong>安装和配置</strong></h4><p>不同系统上的 MongoDB 安装是不一样的。MacOS 上就是简单的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mongodb</span><br></pre></td></tr></table></figure>
+<p>MongoDB 服务器是用可执行文件 mongod 启动的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config /usr/local/etc/mongod.conf</span><br></pre></td></tr></table></figure>
+<p>Christian Amor Kvalheim 的官方 mongodb 包是最受欢迎的 MongoDB 驱动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mongodb@^2.1.0 --save</span><br></pre></td></tr></table></figure>
+<p>Windows 用户注意一下，这个驱动的安装需要 Microsoft Visual Studio 的 msbuild.exe</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; MongoClient &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>);</span><br><span class="line">MongoClient.connect(<span class="string">'mongodb://localhost:27017/articles'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">db</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Client ready'</span>);</span><br><span class="line">        db.close();</span><br><span class="line">    &#125;, <span class="built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<p>连接成功的处理器会得到一个数据库客户端实例，所有数据库命令都是交给它执行的。</p>
+<p>大部分数据库交互都是通过 collection API 完成的：</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>collection.insert(doc)</td>
+<td>插入一个或多个文档</td>
+</tr>
+<tr>
+<td>collection.find(query)</td>
+<td>找出跟查询匹配的文档</td>
+</tr>
+<tr>
+<td>collection.remove(query)</td>
+<td>移除跟查询匹配的文档</td>
+</tr>
+<tr>
+<td>collection.drop()</td>
+<td>移除整个数据集</td>
+</tr>
+<tr>
+<td>collection.update(query)</td>
+<td>更新跟查询匹配的文档</td>
+</tr>
+<tr>
+<td>collection.count(query)</td>
+<td>对跟查询匹配的文档计数</td>
+</tr>
+<tr>
+<td>collection.insertOne(query)</td>
+<td>插入单个文档</td>
+</tr>
+<tr>
+<td>collection.insertMany([doc1,doc2])</td>
+<td>插入多个文档</td>
+</tr>
+<tr>
+<td>collection.findOne(query)</td>
+<td>找出一个跟查询匹配的文档</td>
+</tr>
+<tr>
+<td>collection.updateMany(query)</td>
+<td>更新所有跟查询匹配的文档</td>
+</tr>
+</tbody>
+</table>
+<h4 id="插入文档"><a href="#插入文档" class="headerlink" title="插入文档"></a><strong>插入文档</strong></h4><p>collection.insertOne 将单个对象作为文档存到数据集里，成功处理器会得到一个包含操作元信息的对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; MongoClient &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>);</span><br><span class="line">MongoClient.connect(<span class="string">'mongodb://localhost:27017/articles'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">db</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Client ready'</span>);</span><br><span class="line">        <span class="keyword">const</span> article = &#123;</span><br><span class="line">            title: <span class="string">'I like cake'</span>,</span><br><span class="line">            content: <span class="string">'It is quite good'</span></span><br><span class="line">        &#125;;</span><br><span class="line">        db.collection(<span class="string">'articles'</span>)</span><br><span class="line">            .insertOne(article)</span><br><span class="line">            .then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">// 如果文档中没有_id,会创建一个新的 ID，insertedId 就是那个ID</span></span><br><span class="line">                <span class="built_in">console</span>.log(result.insertedId);</span><br><span class="line">                <span class="comment">// 定义文档的原始对象中增加了一个新属性_id</span></span><br><span class="line">                <span class="built_in">console</span>.log(article._id);</span><br><span class="line">                db.close();</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;, <span class="built_in">console</span>.error);</span><br></pre></td></tr></table></figure>
+<p>insertMany 的用法也差不多，只是参数是包含多个对象的数组。insertMany 的结果不再是一个 insertedId，而是包含多个 ID 的 insertedIds 数组，ID 的顺序跟作为参数的数组中的文档顺序一样</p>
+<h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a><strong>查询</strong></h4><p>从数据集中读取文档的方法（比如 find、update 和 remove ）都会有一个查询参数，用来匹配文档。最简单的查询就是一个对象，MongoDB 会匹配结构和值相同的文档。比如下面这个查询会匹配所有标题为 ‘I like cake’ 的文档。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.collection(<span class="string">'articles'</span>)</span><br><span class="line">    .find(&#123; <span class="attr">title</span>: <span class="string">'I like cake'</span> &#125;)</span><br><span class="line">    .toArray()</span><br><span class="line">    .then(<span class="function"><span class="params">results</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(results);</span><br><span class="line">        db.close();</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>或者基于查询操作符匹配：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.collection(<span class="string">'articles'</span>)</span><br><span class="line"><span class="comment">// 标题以“cake”结尾的文档，大小写敏感</span></span><br><span class="line">  .find(&#123;<span class="attr">title</span>: &#123; <span class="attr">$regex</span>: <span class="regexp">/cake$/</span>I &#125;&#125;)</span><br></pre></td></tr></table></figure>
+<p>MongoDB 查询语言中的查询操作符很多，比如：</p>
+<ul>
+<li><code>$eq</code>——等于某个值；</li>
+<li><code>$neq</code>——不等于某个值；</li>
+<li><code>$in</code>——在数组中；</li>
+<li><code>$nin</code>——不在数组中;</li>
+<li><code>$lt</code>、<code>$lte</code>、<code>$gt</code>、<code>$gte</code>——大于/小于或等于比较值；</li>
+<li><code>$near</code>——地理位置值在某个区域附近；</li>
+<li><code>$not</code>、<code>$and</code>、<code>$or</code>、<code>$nor</code>——逻辑操作符。</li>
+</ul>
+<p>这些操作符几乎可以组合出所有查询条件，创造出可读性强、精巧的、富有表达力的查询语句。更多与查询和查询操作符有关的内容请浏览 Query and Projection Operators 网站。</p>
+<p>用 MongoDB 实现 Article API </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; MongoClient, ObjectID &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>);</span><br><span class="line"><span class="keyword">let</span> db;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> MongoClient</span><br><span class="line">        .connect(<span class="string">'mongodb://localhost:27017/articles'</span>)</span><br><span class="line">        .then(<span class="function">(<span class="params">client</span>) =&gt;</span> &#123;</span><br><span class="line">            db = client;</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.Article = &#123;</span><br><span class="line">    all() &#123;</span><br><span class="line">        <span class="keyword">return</span> db.collection(<span class="string">'articles2'</span>).find().sort(&#123; <span class="attr">title</span>: <span class="number">1</span> &#125;).toArray();</span><br><span class="line">    &#125;,</span><br><span class="line">    find(_id) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> _id !== <span class="string">'object'</span>) _id = ObjectID(_id);</span><br><span class="line">        <span class="keyword">return</span> db.collection(<span class="string">'articles2'</span>).findOne(&#123; _id &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    create(data) &#123;</span><br><span class="line">        <span class="keyword">return</span> db.collection(<span class="string">'articles2'</span>).insertOne(data, &#123; <span class="attr">w</span>: <span class="number">1</span> &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">delete</span>(_id) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> _id !== <span class="string">'object'</span>) _id = ObjectID(_id);</span><br><span class="line">        <span class="keyword">return</span> db.collection(<span class="string">'articles2'</span>).deleteOne(&#123; _id &#125;, &#123; <span class="attr">w</span>: <span class="number">1</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用法示范:</p>
+<p>连接数据库返回的 promise，然后用 Article 的 create 方法创建了一篇文章。再加载所有文章，输出。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line">db().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    db.Article.create(&#123; <span class="attr">title</span>: <span class="string">'An title'</span> &#125;).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        db.Article.all().then(<span class="function"><span class="params">articles</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(articles);</span><br><span class="line">            process.exit();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="使用-MongoDB-标识"><a href="#使用-MongoDB-标识" class="headerlink" title="使用 MongoDB 标识"></a><strong>使用 MongoDB 标识</strong></h4><p>MongoDB 的标识是二进制 JSON （BSON）格式的。文档上的 _id 是一个 JavaScript 对象，其内部封装了 BSON 格式的 objectID。BSON 格式是文档在 MongoDB 内部的表示和传输格式，它比 JSON 的空间利用率高，解析速度快，也就是说可以用更低的带宽达成更快的数据库交互。</p>
+<p>BSON 格式的 ObjectID 并不是随机的字节序列，它编码了ID 何时在何处生成的元数据。比如 ObjectID 的前四个字节，它们是时间戳。因此文档中没有必要再单独保存一个 createdAt 时间戳：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> id = <span class="keyword">new</span> ObjectID(<span class="number">61</span>bd7f57bf1532835dd6174b); </span><br><span class="line"><span class="comment">// getTimestamp 返回 JavaScript 日期： 2016-07-08T14:49:05.000Z</span></span><br><span class="line">id.getTimestamp();</span><br></pre></td></tr></table></figure>
+<p><a href="https://docs.mongodb.com/manual/reference/method/ObjectId/">ObjectID 格式的更多信息</a></p>
+<p>在终端输出是，ObjectID 表面上看起来可能像字符串一样，但实际上是对象。所以在进行比较，解释器会报告说两个看起来完全一样的值是不同的，因为它们是指向不同对象的引用值。这就是典型的对象比较陷阱。</p>
+<p>下面的代码两次提取相同的对象。我们试图用 Node 自带的 assert 模板断言这两个 ID 或者说对象是相对的，结果却失败了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; MongoClient &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>);</span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>)</span><br><span class="line">MongoClient.connect(<span class="string">'mongodb://localhost:27017/articles'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">db</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Client ready'</span>);</span><br><span class="line">        <span class="keyword">const</span> Articles = db.collection(<span class="string">'articles'</span>)</span><br><span class="line">        Articles.find().toArray().then(<span class="function"><span class="params">articles</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> article1 = articles[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">return</span> Articles.findOne().then(<span class="function"><span class="params">article2</span> =&gt;</span> &#123;</span><br><span class="line">                assert.equal(article1._id, article2._id);</span><br><span class="line">                db.close();</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p>ObjectID 有个 equal 方法，所有的 _id 都可以用这个方法判断它们是否相等。另外，你也可以将标识强制转换为字符串进行比较，或者用 assert 模块的 deepEquals 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">article1._id.equals(article2._id); </span><br><span class="line"><span class="built_in">String</span>(article1._id) === <span class="built_in">String</span>(article2._id); </span><br><span class="line">assert.deepEqual(article1._id, article2._id);</span><br></pre></td></tr></table></figure>
+<p>传给 mongodb 驱动的标识必须是 BSON 格式的 ObjectID。ObjectID 构造器可以将字符串转换成 ObjectID：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; ObjectID &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>); </span><br><span class="line"><span class="keyword">const</span> stringID = <span class="string">'577f6b45549a3b991e1c3c18'</span>; </span><br><span class="line"><span class="keyword">const</span> bsonID = <span class="keyword">new</span> ObjectID(stringID);</span><br></pre></td></tr></table></figure>
+<p>要尽可能保持 BSON 格式。在 BSON 和字符串之间的相互转换会以牺牲性能为代价，这违背了 MongoDB 把 BSON 格式的标识交给客户端的初衷。请参阅 BSON 官网了解 BSON 格式的详细信息。</p>
+<h4 id="使用复制集"><a href="#使用复制集" class="headerlink" title="使用复制集"></a><strong>使用复制集</strong></h4><p>MongoDB 的分布式功能，多个 mongod 进程可以作为复制集的节点/成员运行。复制集是由一个主节点和无数从节点组成的。复制集中的每个成员都会分到唯一的端口和目录存储自己的数据。各个实例不能共享端口和目录，并且在启动之前这些目录必须是已经存在了。</p>
+<p>下面代码为每个成员创建唯一的目录，并从端口 27017 开始按顺序启动它们。如果不想让 mongod 在后台运行（命令中不带 &amp;），可以为每个 mongod 命令开一个新的终端标签。</p>
+<p>启动一个复制集</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ./mongodata/db0 ./mongodata/db1 ./mongodata/db2 </span><br><span class="line">// 确保没有其他 mongod 实例运行</span><br><span class="line">pkill mongod</span><br><span class="line">// 让已有实例有时间关停</span><br><span class="line">sleep 3</span><br><span class="line">mongod --port 27017 --dbpath ./rs0-data/db0 --replSet rs0 &amp; </span><br><span class="line">mongod --port 27018 --dbpath ./rs0-data/db1 --replSet rs0 &amp; </span><br><span class="line">m</span><br></pre></td></tr></table></figure>
+<p>复制集跑起来之后，MongoDB 需要执行一些初始化操作。你需要连接到希望让它做主节点的那个实例（默认是 27017），并像下面这样调用 rs.initiate()。然后把这些实例作为成员添加到复制集中。注意要提供所连机器的主机名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mongo --eval "rs.initiate()" </span><br><span class="line">mongo --eval "rs.add('`hostname`:27017')"</span><br><span class="line">mongo --eval "rs.add('`hostname`:27018')" </span><br><span class="line">mongo --eval "rs.add('`hostname`:27019')"</span><br></pre></td></tr></table></figure>
+<p>在建立连接时，MongoDB 客户端需要知道所有的复制集成员，但并不要求所有成员都在线。连上之后就可以照常使用了。</p>
+<p>创建复制集</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> os = <span class="built_in">require</span>(<span class="string">'os'</span>); </span><br><span class="line"><span class="keyword">const</span> &#123; MongoClient &#125; = <span class="built_in">require</span>(<span class="string">'mongodb'</span>); </span><br><span class="line"><span class="keyword">const</span> hostname = os.hostname(); </span><br><span class="line"><span class="keyword">const</span> members = [ </span><br><span class="line"> <span class="string">`<span class="subst">$&#123;hostname&#125;</span>:27018`</span>, </span><br><span class="line"> <span class="string">`<span class="subst">$&#123;hostname&#125;</span>:27017`</span>, </span><br><span class="line"> <span class="string">`<span class="subst">$&#123;hostname&#125;</span>:27019`</span> </span><br><span class="line">]; </span><br><span class="line"><span class="comment">// test 是数据库名；rs0是复制集的名称</span></span><br><span class="line">MongoClient.connect(<span class="string">`mongodb://<span class="subst">$&#123;members.join(<span class="string">','</span>)&#125;</span>/test?replSet=rs0`</span>)</span><br><span class="line">.then(<span class="function"><span class="params">db</span> =&gt;</span> &#123; </span><br><span class="line"> <span class="comment">// replSetGetStatus会输出复制集的成员信息和元数据</span></span><br><span class="line"> db.admin().replSetGetStatus().then(<span class="function"><span class="params">status</span> =&gt;</span> &#123;</span><br><span class="line"> <span class="built_in">console</span>.log(status); </span><br><span class="line"> db.close(); </span><br><span class="line"> &#125;); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>即便有节点崩溃，但只要仍在运行的 mongod 节点不少于两个，系统就能继续工作。如果主节点崩溃了，系统会自动推举一个从节点升为主节点。</p>
+<h4 id="了解写关注"><a href="#了解写关注" class="headerlink" title="了解写关注"></a><strong>了解写关注</strong></h4><p>在使用 MongoDB 时，开发人员能够对性能和安全上的折中选项做精细的控制，以满足程序不同区域的需要。要想不出意外，必须掌握 MongoDB 的写关注和读关注这两个概念，特别是在复制集中的节点不断增多时。</p>
+<p>写关注本质上是个数量值，表明 MongoDB 在返回操作整体成功的响应之前，需要把数据成功写入多少个 mongod 实例。如果不特别指明，写关注的默认值是 1，即确保数据成功写入至少一个节点。对于重要数据而言，这样的保证水平是不够的。如果在数据复制到其他节点之前，这个节点下线了，那数据可能就丢了。</p>
+<p>从程序角度来说，实际上是经常希望把写关注设为0，即程序根本不想为 MongoDB 的响应而等待：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection(<span class="string">'data'</span>).insertOne(data,&#123;<span class="attr">w</span>:<span class="number">0</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>写关注为0时性能水平达到最高，但同时耐用性保证降到最低，一般只在临时或不重要的数据上使用（比如写日志或缓存）</p>
+<p>在连到复制集上时，写关注可以大于1，把数据复制到更多节点上可以降低其丢失的风险，但代价是操作延时会更长</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.collection(<span class="string">'data'</span>).insertOne(data,&#123;<span class="attr">w</span>:<span class="number">2</span>&#125;);</span><br><span class="line">db.collection(<span class="string">'data'</span>).insertOne(data,&#123;<span class="attr">w</span>:<span class="number">5</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>写关注也可以随着集群中节点数量的变化而变化，当写关注被设为 majority 时，MongoDB 能自行动态调整它的值。此时数据一定会写入至少 50% 的可用节点：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.collection(<span class="string">'data'</span>).insertOne(data,&#123;<span class="attr">w</span>:<span class="string">'majority'</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>默认值的写关注1可能无法保证重要数据的安全。如果在数据复制到其他节点之前，这个节点下线了，那数据可能就丢了。</p>
+<p>写关注大于1时，可以确保在继续操作之前数据会写入多个 mongodb 实例上。在同一台机器上运行多个实例确实可以提高数据的安全性，但出现系统性故障时，比如硬盘空间或RAM 耗光了，这样的配置是无济于事的。如果把节点分布在多台机器上，并确保写入操作会传播到这些节点上时，可以保证数据不受机器故障的影响，但同样，整个数据中心都出现问题就不行了，并且写操作会更慢。把节点部分到多个数据中心可以保证数据不受数据中心级故障的影响，但将数据复制到多个数据中心性能影响非常大。</p>
+<p>保障越多，系统越慢，也越复杂。不仅 MongoDB 如此，所有数据存储都这样。没有完美的解决方案，你需要决定将程序各部分的风险水平控制在什么范围内</p>
+<h3 id="键-值存储"><a href="#键-值存储" class="headerlink" title="键/值存储"></a>键/值存储</h3><p>键/值存储中的所有记录都是由一个键值对构成的。大多数键/值 系统都不对值的数据类型、长度和结构做限制。在键/值数据库看来，值是不透明的原子：数据库不知道，或者说不关心值的数据类型，并且值作为一个整体，不会切分或访问其中的部分数据。在关系型数据库中，数据一行行地存在表中，每一行都被分成了预先定义好的列。但键/值存储跟它相反。其把管理数据格式的任务交给了应用程序。</p>
+<p>键/值存储经常出现在程序性能的关键路径上。理想情况下，值应该是按照用最少的读取次数完成任务的标准来摆放的。相较于其他数据库来说，键/值存储的查询功能比较简单。复杂查询最好是预先计算好的。否则应该放在程序里，而不是交给数据库执行。有了这样的限制，数据库的性能特征就更容易理解和预测了。</p>
+<p>像Redis 和 Memcached 这些最火的键/值存储经常用来做易失性存储（进程退出后数据就没了）。避免写盘操作是提升性能的最佳方式。如果数据可以重新生成，或者丢了也没有太多关系，这种折中是可以接受的，比如作为缓存和存储用户会话数据。</p>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><p>Redis 是热门的结构化内存数据库，尽管很多人认为 Redis 是键/值 存储，但实际上键和值都是 Redis 所支持的众多数据结构中的一种，它还支持很多实用的基础结构。</p>
+<p>Redis 原生支持的数据结构包括：</p>
+<ul>
+<li>字符串</li>
+<li>散列表</li>
+<li>列表</li>
+<li>集合</li>
+<li>有序表</li>
+</ul>
+<p>Redis 还有很多实用的功能：</p>
+<ul>
+<li>位图数据——直接在值上进行位操作</li>
+<li>地理位置索引——存储带半径查询的地理位置数据</li>
+<li>频道——一种发布/订阅数据传递机制</li>
+<li>TTL——数据可以有过期时间，过期之后自动清除</li>
+<li>LRU逐出——有选择地移除最近不用的数据，以便维持内存的利用率</li>
+<li>HyperLogLog——用很低的内存占用求集合基数的高性能算法（不需要存储所有成员）</li>
+<li>复制、集群和分区——水平扩展和数据耐用性</li>
+<li>Lua脚本——可以用 Redis 添加自定义的命令</li>
+</ul>
+<p>Redis 真的是一个超强的多面手，<a href="http://redis.io/commands">http://redis.io/commands</a> 上有更详细的介绍。</p>
+<h4 id="安装和配置-2"><a href="#安装和配置-2" class="headerlink" title="安装和配置"></a><strong>安装和配置</strong></h4><p>可以用系统上的包管理工具安装 Redis。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i redis</span><br></pre></td></tr></table></figure>
+<p>用可执行文件 redis-server 启动服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /usr/local/etc/redis.conf</span><br></pre></td></tr></table></figure>
+<p>服务器默认的监听端口是 6397。</p>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a><strong>初始化</strong></h4><p>Redis 客户端实例使用 redis  npm 包的 createClient 函数创建的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>);</span><br><span class="line"><span class="keyword">const</span> db = redis.createClient(<span class="number">6379</span>, <span class="string">'127.0.0.1'</span>);</span><br></pre></td></tr></table></figure>
+<p>这个函数以端口和服务器的主机地址为参数。如果 Redis 运行在本机的默认端口上，则无须提供参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = redis.createClient();</span><br></pre></td></tr></table></figure>
+<p>因为 Redis 客户端实例是一个 EventEmitter，所以我们可以通过它监听各种 Redis 状态事件。不用等着连接准备好再向客户端发送命令，这些命令会缓存到连接就绪。</p>
+<p>连接到 Redis 监听状态事件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>);</span><br><span class="line"><span class="keyword">const</span> db = redis.createClient();</span><br><span class="line">db.on(<span class="string">'connect'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'Redis client connected to server.'</span>));</span><br><span class="line">db.on(<span class="string">'ready'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'Redis server is ready'</span>));</span><br><span class="line">db.on(<span class="string">'error'</span>, err =&gt; <span class="built_in">console</span>.log(<span class="string">'Redis error'</span>, err));</span><br></pre></td></tr></table></figure>
+<p>出现连接或客户端方面的问题时会触发错误处理器。如果发生了 error 事件，但没有监听该事件的错误处理器，程序会抛出错误然后退出。Node 中的所有 EventEmitter 都是这样的。如果连接失败后有错误处理器，Redis 客户端会尝试重新连接。</p>
+<h4 id="处理键-值对"><a href="#处理键-值对" class="headerlink" title="处理键/值对"></a><strong>处理键/值对</strong></h4><p>Redis 可以当做普通的键/值存储用，支持字符串和任何二进制数据。分别用 get  和 set 方法读写键/值对：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'color'</span>,<span class="string">'red'</span>,err=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br><span class="line">db.get(<span class="string">'color'</span>,(err,value) =&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Got：'</span>,value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果写入的键已经存在，那么原来的值会被覆盖掉。如果读取的键不存在，则会得到值 null，而不会被当做错误。</p>
+<p>下面这些命令是用来获取和处理值的：</p>
+<ul>
+<li>append</li>
+<li>decr</li>
+<li>decrby</li>
+<li>get</li>
+<li>getrange</li>
+<li>getset</li>
+<li>incr</li>
+<li>incrby</li>
+<li>incrbyfloat</li>
+<li>mget</li>
+<li>mset</li>
+<li>msetnx</li>
+<li>psetex</li>
+<li>set</li>
+<li>setex</li>
+<li>setnx</li>
+<li>setrange</li>
+<li>strlen</li>
+</ul>
+<h4 id="处理键"><a href="#处理键" class="headerlink" title="处理键"></a><strong>处理键</strong></h4><p>exists 可以检查某个键是否存在，它能接受任何数据类型：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.exists(<span class="string">'users'</span>.(err,doseExist) =&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'users exists:'</span>,doesExist);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>除了 exists，下面这些命令都可以用在键上，任何类型的值都可以（这些命令可以接受字符串、集合、列表等类型）</p>
+<ul>
+<li>del</li>
+<li>exists</li>
+<li>rename</li>
+<li>renamex</li>
+<li>sort</li>
+<li>scan</li>
+<li>type</li>
+</ul>
+<h4 id="编码与数据类型"><a href="#编码与数据类型" class="headerlink" title="编码与数据类型"></a><strong>编码与数据类型</strong></h4><p>在 Redis 服务器里面。键和值是二进制对象，跟传给客户端时所用的编码没关系。所有有效的 JavaScript 字符串（UCS2/UTF16）都是有效的键或值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'greeting'</span>,<span class="string">'你好'</span>,redis.print);</span><br><span class="line">db.get(<span class="string">'greeting'</span>,redis.print);</span><br><span class="line">db.set(<span class="string">'icon'</span>,<span class="string">'?'</span>,redis.print);</span><br><span class="line">db.get(<span class="string">'icon'</span>,redis.print);</span><br></pre></td></tr></table></figure>
+<p>默认情况下，在写入时会将键和值强制转换成 字符串。比如说，如果设定某个键的值是数字，那么读取这条记录时，得到的键将会是个字符串：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'colors'</span>,<span class="number">1</span>,(err) =&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br><span class="line">db.get(<span class="string">'colors'</span>,(err,value)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log((<span class="string">'Got: %s as %s'</span>, value, <span class="keyword">typeof</span> value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Redis 客户端会默默将数字、布尔值和日期转换成字符串，它也乐意接受缓冲区对象。除此之外，设定其他任何 JavaScript 类型（比如对象、数字、正则表达式）的值时，客户端都会发出一个不应被忽略的警告：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'users'</span>,&#123;&#125;,redis.print);</span><br><span class="line"><span class="comment">// Deprecated: The SET command contains a argument of type Object. This is converted to "[object Object]" by using .toString() now and will return an error from v.3.0 on. Please handle this in your code to make sure everything works as you intended it to.</span></span><br></pre></td></tr></table></figure>
+<p>将来这会变成错误，所以一定要让程序确保传给 Redis 客户端的数据类型是正确的</p>
+<p><strong>1.陷阱：单值和多值数组</strong></p>
+<p>如果值是包含多个值的数组，那么客户端会报一个很神秘的错误，即“ReplyError：ERR syntax error”：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'users'</span>, [<span class="string">'Alice'</span>, <span class="string">'Bob'</span>], redis.print);</span><br></pre></td></tr></table></figure>
+<p>但如果数组中只有一个值，则不会报错</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.set(<span class="string">'user'</span>, [<span class="string">'Alice'</span>], redis.print); </span><br><span class="line">db.get(<span class="string">'user'</span>, redis.print);</span><br></pre></td></tr></table></figure>
+<p><strong>2. 带缓冲区的二进制数据</strong></p>
+<p>Redis 可以存储任何二进制数据，也就是说它可以存储任何类型的数据。Node 客户端对这一功能的支持是用 Node 的 Buffer 类型实现的。当 Redis 客户端收到缓冲区类型的键或值时，会原封不动地将这些字节发给 Redis 服务器。为了避免可能会出现的数据破坏或性能损失，客户端不会进行缓冲区和字符串之间的类型转换比如说，如果要把硬盘或网络上的数据直接写到 Redis中，那么直接写缓冲区里的数据明显会比先把数据转成字符串再写更高效。</p>
+<p><strong>缓冲区</strong>：缓冲区是 Node 核心文件和网络 API 默认提供的结果。它们是二进制数据连续块的容器，在 JavaScript 还没有自己的原生二进制数据类型（Unit8Array,Float32Array 等）时就已经在 Node 中了。现在它是 Unit8Array 的特殊子类。Buffer API 在 Node 中是可以全局访问的，用它不需要 require 任何东西。</p>
+<p>Redis 最近添加了一些操作字符串上单个位的命令，在处理缓冲区时也可以用：</p>
+<ul>
+<li>bitcount</li>
+<li>bitfield</li>
+<li>bitop</li>
+<li>setbit</li>
+<li>bitpos</li>
+</ul>
+<h4 id="使用散列表"><a href="#使用散列表" class="headerlink" title="使用散列表"></a><strong>使用散列表</strong></h4><p>散列表是键/值对的数据集。hmset 命令的参数是一个键和一个表示散列键/值对的对象。hmget 可以读出这个包含键/值对的对象。代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设定散列表键/值对</span></span><br><span class="line">db.hmset(<span class="string">'camping'</span>, &#123;</span><br><span class="line">  shelter: <span class="string">'2-person tent'</span>,</span><br><span class="line">  cooking: <span class="string">'campstove'</span></span><br><span class="line">&#125;, redis.print)</span><br><span class="line"><span class="comment">// 获取camping.cooking 的值</span></span><br><span class="line">db.hmget(<span class="string">'camping'</span>, <span class="string">'cooking'</span>, (err, value) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Will be cooking with:'</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 以数组形式获取散列键</span></span><br><span class="line">db.hkeys(<span class="string">'camping'</span>,(err,keys)=&gt;&#123;</span><br><span class="line">  <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">  keys.forEach(<span class="function"><span class="params">key</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">` <span class="subst">$&#123;key&#125;</span>`</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Redis 散列表中不能存储带嵌入结构的对象，只能有一层。</p>
+<p>下面这些是操作散列表的命令：</p>
+<ul>
+<li>hdel</li>
+<li>hexists</li>
+<li>hget</li>
+<li>hset</li>
+<li>hgetall</li>
+<li>hincrby</li>
+<li>hincrbyfloat</li>
+<li>hkeys</li>
+<li>hmget</li>
+<li>hmset</li>
+<li>hset</li>
+<li>hsetnx</li>
+<li>hstrlen</li>
+<li>hvals</li>
+<li>hscan</li>
+</ul>
+<h4 id="使用列表"><a href="#使用列表" class="headerlink" title="使用列表"></a><strong>使用列表</strong></h4><p>列表是包含字符串值的有序数据集，可以存在同一值的多个副本。列表在概念上跟数组类似。最好当做是栈（LIFO:后进先出）或队列（FIFO：先进先出）来用。</p>
+<p>下面的代码演示了如何将值存到列表中然后读取出来。 lpush 命令向列表中添加一个值。lrange 命令按范围读取，有起始和结束索引。因为-1表示列表中的最后一个元素，所以下例中的 lrange 会取出列表中的所有元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">client.lpush(<span class="string">'tasks'</span>,<span class="string">'Paint the bikeshed red'</span>,redis.print);</span><br><span class="line">client.lpush(<span class="string">'tasks'</span>,<span class="string">'Paint the bikeshed green'</span>.redis.print);</span><br><span class="line">client.lrange(<span class="string">'tasks'</span>,<span class="number">0</span>,<span class="number">-1</span>,(err,items) =&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    items.forEach(<span class="function"><span class="params">item</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">` <span class="subst">$&#123;item&#125;</span>`</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>列表既没有提供确定某个值是否存在其中的方法，也没有提供确定某个值的索引的方法。我们只能通过手动遍历获取这些消息，但做这件事效率很低，应该尽量避免，如果你确实需要这样的功能，应该考虑使用其他数据结构，比如集合，甚至可以跟列表配合使用。为了充分利用各种功能特性，把数据复制到多个数据结构中是正常的。</p>
+<p>操作列表的命令：</p>
+<ul>
+<li>blpop</li>
+<li>brpop</li>
+<li>lindex</li>
+<li>llen</li>
+<li>lpop</li>
+<li>lpush</li>
+<li>lpushx</li>
+<li>lrange</li>
+<li>lrem</li>
+<li>lset</li>
+<li>ltrim</li>
+<li>rpop</li>
+<li>rpush</li>
+<li>rpushx</li>
+</ul>
+<p><strong>使用集合</strong></p>
+<p>集合时无序数据集，其中不允许有重复值，集合是一种高性能的数据结构，检查成员、添加和移除记录都可以在 O(1)时间内完成，所以其非常适合对性能要求比较高的任务:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.sadd(<span class="string">'admins'</span>,<span class="string">'Alice'</span>,redis,print);</span><br><span class="line">db.sadd(<span class="string">'admins'</span>,<span class="string">'Bob'</span>,redis,print);</span><br><span class="line">db.sadd(<span class="string">'admins'</span>,<span class="string">'Alice'</span>,redis,print);</span><br><span class="line">db.smembers(<span class="string">'admins'</span>,(err,members) =&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(members);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>下面这些是操作集合的命令：</p>
+<ul>
+<li>sadd</li>
+<li>scard</li>
+<li>sdiff</li>
+<li>sdiffstore</li>
+<li>sinter</li>
+<li>sinterstore</li>
+<li>sismember</li>
+<li>smembers</li>
+<li>spop</li>
+<li>srandmember</li>
+<li>sunion</li>
+<li>sunionstore</li>
+<li>sscan</li>
+</ul>
+<h4 id="用频道实现发布-订阅功能"><a href="#用频道实现发布-订阅功能" class="headerlink" title="用频道实现发布/订阅功能"></a><strong>用频道实现发布/订阅功能</strong></h4><p>Redis 不仅仅是传统意义上的数据存储系统，它还提供了频道，频道是可以实现发布/订阅功能的数据传输机制。聊天和博彩等实时程序都需要这样的功能。</p>
+<p>Redis 客户端既可以订阅频道上的消息，也可以向频道发布消息。发给频道的消息会传递给所有订阅频道的客户端。发布者不需要知道谁是订阅者，订阅者也不知道发布者是谁。将发布者和订阅者解耦是种强大清晰的模式。</p>
+<p>下面的例子用 Redis 的发布/订阅功能实现的聊天服务器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>);</span><br><span class="line"><span class="comment">// 为每个连接到聊天服务器的用户定义的配置逻辑</span></span><br><span class="line"><span class="keyword">const</span> server = net.createServer(<span class="function"><span class="params">socket</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 为每个用户创建订阅客户端</span></span><br><span class="line">  <span class="keyword">const</span> subscriber = redis.createClient();</span><br><span class="line">  subscriber.subscribe(<span class="string">'main'</span>);</span><br><span class="line">  <span class="comment">// 从频道收到消息后显示给用户看</span></span><br><span class="line">  subscriber.on(<span class="string">'message'</span>, (channel, message) =&gt; &#123;</span><br><span class="line">    socket.write(<span class="string">`Channel <span class="subst">$&#123;channel&#125;</span>：<span class="subst">$&#123;message&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为每个用户创建发布客户端</span></span><br><span class="line">  <span class="keyword">const</span> publisher = redis.createClient();</span><br><span class="line">  <span class="comment">// 用户输入消息后，发布它</span></span><br><span class="line">  socket.on(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">    publisher.publish(<span class="string">'main'</span>, data);</span><br><span class="line">  &#125;);</span><br><span class="line">  socket.on(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 如果用户断开了连接，结束订阅客户端</span></span><br><span class="line">    subscriber.unsubscribe(<span class="string">'main'</span>);</span><br><span class="line">    subscriber.end(<span class="literal">true</span>);</span><br><span class="line">    publisher.end(<span class="literal">true</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="提高性能"><a href="#提高性能" class="headerlink" title="提高性能"></a><strong>提高性能</strong></h4><p>npm 包 hiredis 是从 JavaScript 到官方 Hiredis 的 C 语言库的本地绑定。Hiredis 能显著提 Node Redis 程序的性能，特别是在大型数据库上使用 sunion、sinter、lrange 和 zrange 这些操作时.</p>
+<p>只要装好 hiredis，redis 包下次启动时就会自动检测到 hiredis，然后自动使用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hiredis --save</span><br></pre></td></tr></table></figure>
+<p>hiredis 几乎没什么缺点，但因为它是从 C 代码编译来的，所以在某些平台上构建 hiredis 可能会受到一些限制，或者比较复杂。跟所有本地添加包一样，升级 Node 后可能需要用 npm rebuild 重新构建 hiredis</p>
+<h3 id="嵌入式数据库"><a href="#嵌入式数据库" class="headerlink" title="嵌入式数据库"></a>嵌入式数据库</h3><p>使用嵌入式数据库时不需要安装或管理一个外部服务器，它是嵌入在程序进程里运行的。程序一般通过直接的过程调用跟嵌入式数据库通信，不需要通过进程间通信（IPC）通道或网络。</p>
+<p>因为很多时候程序要做成自包含的，所以只能选嵌入式数据库（比如移动端或桌面程序），嵌入式数据库也可以用在 Web 服务器上，经常用来实现高吞吐性的功能，比如用户会话或缓存，有时甚至会作为主存储。</p>
+<p>Node 和 Electron 程序中常用的嵌入式数据库有：</p>
+<ul>
+<li>SQLite</li>
+<li>LevelDB</li>
+<li>Aerospike</li>
+<li>EJDB</li>
+<li>NeDB</li>
+<li>LokiJS</li>
+<li>Lowdb</li>
+</ul>
+<p>NeDB、LokiJS 和 Lowdb 都是用纯 JavaScript 写的，天生就适合嵌入到 Node 和 Electron 程序中。尽管有 SQLite 这样著名的可嵌入式关系型数据库，但大多数嵌入式数据库都是简单的键/值 或文档存储。</p>
+<h3 id="LevelDB"><a href="#LevelDB" class="headerlink" title="LevelDB"></a>LevelDB</h3><p>LevelDB 是 Google 在 2011 年初开发的嵌入式持久化键/值存储，最开始是要给 Chrome 里实现的 IndexedDB 做后台存储的。LevelDB 的设计理念源于 Google 的 Bigtable 数据库。它的竞争对手是 Berkley DB、Tokyo/Kyoto Cabinet 和 Aerospike 这些数据库，可以把它当作最小功能集的嵌入式 Redis。跟大多数嵌入式数据库一样，LevelDB 也不是多线程的，不支持使用同一个底层文件存储的多实例，所以无法脱离程序的封装分布式使用。</p>
+<p>LevelDB 中的键是按字典顺序排好序的，值是用 Google 的 Snappy 压缩算法压缩过的。跟Redis 之类的内存数据库不同，LevelDB 总是把数据写到硬盘上，所以总的数据容量不受机器内存的限制。</p>
+<p>LevelDB 只提供了几个一看就明白的操作命令：Get、Put、Del 和 Batch。LevelDB 还能用快照捕获当前的数据库状态，创建能在数据集上前后移动的双向循环器。创建循环器也会隐含着创建快照，后续写操作无法改变循环器见到的数据。</p>
+<p>LevelDB 还形成了一些支脉，演化出了其他一些数据库。由于有数量众多的支脉，LevelDB自身反而可以变得越来越简单：</p>
+<ul>
+<li>Facebook 的 RocksDB</li>
+<li>Hyperdex 的 HyperLevelDB</li>
+<li>Basho 的 Riak</li>
+<li>Mojang（Minecraft 的创作者）的 leveldb-mcpe</li>
+<li>用于比特币项目的 bitcoin/leveldb</li>
+</ul>
+<h4 id="LevelUP-与-LevelDOWN"><a href="#LevelUP-与-LevelDOWN" class="headerlink" title="LevelUP 与 LevelDOWN "></a><strong>LevelUP 与 LevelDOWN </strong></h4><p>Node 中对 LevelDB 提供支持的是 LevelUP 和 LevelDOWN 包。LevelDOWN 用 C++简单直白地将 LevelDB 绑定到 Node上，我们不太可能直接跟它交互。LevelUP 对 LevelDOWN 的 API 做了封装，为我们提供了更方便、也更习惯的 Node 接口。LevelUP 还增加了一些功能，包括键/值编码、JSON、等待数据库打开的写缓存，以及将 LevelDB 循环器接口封装在了 Node 流中。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a><strong>安装</strong></h4><p>在 Node 程序中使用 LevelDB 最方便的地方就是它是嵌入式的：所有需要的东西都可以用 npm 安装。不需要安装任何额外的软件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install level -S</span><br></pre></td></tr></table></figure>
+<p>level 包里封装了 LevelUP 和 LevelDOWN，提供了预先配置好用 LevelDOWN 做后台的LevelUP API。level 提供的 LevelUP API 在 LevelUP 的介绍文件里</p>
+<h4 id="API-概览"><a href="#API-概览" class="headerlink" title="API 概览"></a><strong>API 概览</strong></h4><p>LevelDB 客户端存储和获取数据的主要方式如下：</p>
+<ul>
+<li>db.put(key,value,callback)——存储键值对</li>
+<li>db.get(key,callback)——获取指定键的值</li>
+<li>db.del(key,callback)——移除指定键的值</li>
+<li>db.batch().write()——执行指定键的值</li>
+<li>db.batch().write()——执行批处理</li>
+<li>db.createKeyStream(options)——创建数据库中键的流</li>
+<li>db.createValueStream(options)——创建数据库中值的流</li>
+</ul>
+<h4 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a><strong>初始化</strong></h4><p>初始化 level 需要提供一个存储数据的路径，如果指定的目录不存在，则会自动创建，人们一般会用 .db 做这个目录的后缀。</p>
+<p>初始化 level 数据库</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> level = <span class="built_in">require</span>(<span class="string">'level'</span>)</span><br><span class="line"><span class="keyword">const</span> db = level(<span class="string">'./app.db'</span>, &#123;</span><br><span class="line">  valueEncoding: <span class="string">'json'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>调用过 level（） 后，返回的 LevelUP实例可以马上接受命令，以同步方式执行。在 LevelDB 存储打开之前发出的命令会缓存起来，一直等到存储打开。</p>
+<h4 id="键-值编码"><a href="#键-值编码" class="headerlink" title="键/值编码"></a><strong>键/值编码</strong></h4><p>因为 LevelDB 中的键和值可以是任何类型的数据，所以程序要负责处理数据的序列化和反序列化。可以将 LevelUP 配置为直接支持下面这些数据类型：</p>
+<ul>
+<li>utf8</li>
+<li>json</li>
+<li>binary</li>
+<li>id</li>
+<li>hex</li>
+<li>ascii</li>
+<li>base64</li>
+<li>ucs2</li>
+<li>utf16le</li>
+</ul>
+<p>键/值默认都是 UTF-8 的字符串。上面代码中，键仍然是 UTF-8 字符串，但值是用JSON 编码/解码的。经过 JSON 编码后，在某种程序上来讲，对象或数组这样的结构化数据的存储和获取都可以用 MongoDB 那样的文档存储一样了。但并不像真正的文档存储，LevelDB 没有办法读取值里面的键，值是不透明的。用户也可以用自己定制的编码，比如说想 MessagePack 这样的结构化数据形态。</p>
+<h4 id="键-值对的读写"><a href="#键-值对的读写" class="headerlink" title="键/值对的读写"></a><strong>键/值对的读写</strong></h4><p>核心 API 很简单：用 put(key,value)写，用 get(key) 读，用 del(key)删除。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> level = <span class="built_in">require</span>(<span class="string">'level'</span>)</span><br><span class="line"><span class="keyword">const</span> db = level(<span class="string">'./app.db'</span>, &#123;</span><br><span class="line">  valueEncoding: <span class="string">'json'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> key = <span class="string">'user'</span>;</span><br><span class="line"><span class="keyword">const</span> value = &#123;</span><br><span class="line">  name: <span class="string">'Alice'</span></span><br><span class="line">&#125;</span><br><span class="line">db.put(key, value, err =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  db.get(key, (err, result) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'got value:'</span>, value);</span><br><span class="line">    db.del(key, (err) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'value was deleted'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>如果把值放到已经存在的键上，旧值会被覆盖。当视图读取的键不存在时会发生错误。错误对象的类型是 NotFoundError,还有个特殊的属性 err.notFound,可以把它跟其他错误区分开。大部分数据库一般不会将其作为错误，但因为 LevelDB 没有提供检查某个键是否存在的地方，所以 LevelUP 需要区分不存在的值和未定义的值。与 get 不同，del 不存在的键不会报错。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.get(<span class="string">'this-key-does-not-exist'</span>,(err,value)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(err &amp;&amp; !err.notFound) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="keyword">if</span>(err &amp;&amp; err.notFound) <span class="keyword">return</span> <span class="built_in">console</span>.log(<span class="string">'Value was not found'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Value was found:'</span>,value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>所有的数据读写操作都可以通过一个可选的参数改变当前操作的编码，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.put(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]), <span class="string">'0xFF0099'</span>, options, (err) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  db.get(<span class="keyword">new</span> <span class="built_in">Uint8Array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]), options, (err, value) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="可插拔的后台"><a href="#可插拔的后台" class="headerlink" title="可插拔的后台"></a><strong>可插拔的后台</strong></h4><p>把 LevelUP/LevelDOWN 分开还有个好处，LevelUP 可以用其他数据库做存储后台。所有能用 MemoDown API 封装的东西都可以变成 LevelUP 的存储后台，从而允许你用完全相同的 API 跟这些数据存储交互。</p>
+<p>下面这些数据库都可以做 LevelUP 的存储后台：</p>
+<ul>
+<li>MySQL</li>
+<li>Redis</li>
+<li>MongoDB</li>
+<li>JSON 文件</li>
+<li>Google 电子表格</li>
+<li>AWS DynamoDB</li>
+<li>Windows Azure 表存储</li>
+<li>浏览器 Web 存储（IndexedDB/localStorage）</li>
+</ul>
+<p>拥有了这种可以轻松切换存储介质，甚至可以编写自己的存储后台的功能，我们就可以用一套数据库 API 应对各种情况和环境，用一套数据库 API 掌握一切。</p>
+<p>memdown 是比较常用的后台，它把值都存在内存里，就像使用内存模式的 SQLite 一样，非常适合放在测试环境里降低测试配置和重置的成本。</p>
+<p>安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S levelup memdown</span><br></pre></td></tr></table></figure>
+<p>通过 LevelUP 使用 memdown</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> level = <span class="built_in">require</span>(<span class="string">'levelup'</span>)</span><br><span class="line"><span class="keyword">const</span> memdown = <span class="built_in">require</span>(<span class="string">'memdown'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对于 memdown 来说，这里的路径可以是任意字符串，因为它根本不需要硬盘</span></span><br><span class="line"><span class="keyword">const</span> db = level(<span class="string">'./level-articles.db'</span>, &#123;</span><br><span class="line">  keyEncoding: <span class="string">'json'</span>,</span><br><span class="line">  valueEncoding: <span class="string">'json'</span>,</span><br><span class="line">  <span class="comment">// 唯一的区别是将db参数设定为 memdown</span></span><br><span class="line">  db: memdown</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面的例子用了之前的 level 包，因为它只是 LevelUP 的封装，但如果你不想用 level 中的 LevelDOWN ，可以直接用 LevelUP,以免因为 LevelDOWN 形成了对 LevelDB的依赖。</p>
+<h4 id="模块化数据库"><a href="#模块化数据库" class="headerlink" title="模块化数据库"></a><strong>模块化数据库</strong></h4><p>下面是一些可以通过 npm 包实现的 LevelDB 模块化功能：</p>
+<ul>
+<li>原子更新</li>
+<li>自增长的键</li>
+<li>地址位置查询</li>
+<li>实时更新流</li>
+<li>LRU 逐出</li>
+<li>Map/reduce 任务</li>
+<li>主/主复制</li>
+<li>主/从复制</li>
+<li>SQL 查询</li>
+<li>二级索引</li>
+<li>触发器</li>
+<li>版本化数据</li>
+</ul>
+<h3 id="昂贵的序列化和反序列化"><a href="#昂贵的序列化和反序列化" class="headerlink" title="昂贵的序列化和反序列化"></a>昂贵的序列化和反序列化</h3><p>JSON 操作是昂贵的阻塞式操作。在进程将数据装进 JSON ，或从 JSON 中取出数据时，根本做不了别的事情。大多数序列化格式都是如此。所以序列化操作一般都是 Web 服务器上的瓶颈。要想降低影响，最好的方法就是减少这种操作的频率和要处理的数据量。</p>
+<p>改变序列化格式（比如 MessagePack 或 Protocol Buffer）可能会加快处理速度，但在考虑改变序列化之前，要尽可能先降低负载和优化序列化/反序列化步骤来改善性能。</p>
+<p>JSON.stringify 和 JSON.parse 是原生函数。已经充分优化过了，但是在需要处理以兆字节为单位的数据时，还是很容易垮掉。下面例子是序列化和反序列化 10MB 数据的性能表现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bytes = <span class="built_in">require</span>(<span class="string">'pretty-bytes'</span>);</span><br><span class="line"><span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">20000</span>; i++)&#123;</span><br><span class="line">    obj[i] = &#123;</span><br><span class="line">        [<span class="built_in">Math</span>.random()]:<span class="built_in">Math</span>.random</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span>serialise<span class="string">''</span>);</span><br><span class="line"><span class="keyword">const</span> jsonString = <span class="built_in">JSON</span>.stringfy(obj);</span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">'serialise'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Serialise Size:'</span>,byte(Buffer.byteLength(jsonstring)));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Deserialise'</span>);</span><br><span class="line"><span class="keyword">const</span> obj2 = <span class="built_in">JSON</span>.parse(jsonString);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'deserialise'</span>);</span><br></pre></td></tr></table></figure>
+<p>在一台装了 Node 6.2.2 的 2015 3.1GHZ Intel Core i7MacBook Pro 上，对这将近 10MB 的数据，序列化几乎用了 140 毫秒，反序列化用了 335 毫秒。这样的负载放到 Web 服务器上就是场灾难，因为这些步骤是阻塞式的，只能串行处理。在序列化时，这样的服务器每秒大概只能处理 7 个请求，反序列化时每秒只处理 3 个</p>
+<h3 id="浏览器内存储"><a href="#浏览器内存储" class="headerlink" title="浏览器内存储"></a>浏览器内存储</h3><p>Node 采用的异步编程模型可以适用于很多场景，因为对大多数 Web 程序来说，最大的瓶颈就是 I/O 。所以利用客户端数据既可以降低服务器负载，还可以提升用户体验，这是效果最显著的做法，不用等着程序在网上跑来跑去取数据的用户会很开心。客户端存储还可以提高程序的可用性，因为即便用户或者服务掉线了，程序里有些功能还是可以用的。</p>
+<h4 id="Web-存储：localStorage-和-sessionStorage"><a href="#Web-存储：localStorage-和-sessionStorage" class="headerlink" title="Web 存储：localStorage 和 sessionStorage"></a><strong>Web 存储：localStorage 和 sessionStorage</strong></h4><p>Web 存储定义了简单的键/值存储，其在客户端和移动端浏览器上都有很好的支持。域可以用 Web 存储在浏览器里保存一定量的数据，即便是经过网站刷新、标签页关闭，甚至浏览器关闭后，这些数据仍然存储。Web 存储是客户端持久化的首选，简单朴素是它的优势。</p>
+<p>有两种 Web 存储 API ,localStorage 和 sessionStorage。sessionStorage 的 API 跟 localStorage 一样，只是持久化行为不同。虽然它们存储的数据在页面重新加载之后都会得到保留，但 sessionStorage 数据只会保留到页面会话结束（标签或浏览器关闭时），并且不能在不同的浏览器窗口之间共享。</p>
+<p>开发 Web 存储API 是为了克服浏览器 cookie 的限制。确切地说，cookie 不适合在多个活动标签间共享同一域的数据。如果用户要跨域多个标签完成一项任务，可以用 sessionStorage 保存这些标签共享的状态数据，从而省掉因网络传输带来的开销。</p>
+<p>要保留跨越多个会话、标签和窗口的长期数据，cookie 也不好用。设计 localStorage 就是为了解决这些问题。不同的浏览器有不同的数据存储空间上限。移动端浏览器只有 5MB 的存储空间。</p>
+<p><strong>API 概览</strong></p>
+<p>localStorage API 提供的方法包括：</p>
+<ul>
+<li>localStorage.setItem(key,value)——存储键值对</li>
+<li>localStorage.getItem(key)——获取指定键对应的值</li>
+<li>localStorage.removeItem(key)——移除指定键对应的值</li>
+<li>localStorage.clear()——移除所有键值对</li>
+<li>localStorage.key(index)——获取指定索引处的值</li>
+<li>localStorage.length——localStorage 中的键总数</li>
+</ul>
+<h4 id="值的读写"><a href="#值的读写" class="headerlink" title="值的读写"></a><strong>值的读写</strong></h4><p>键和值只能是字符串，如果提供的值不是字符串，会被强制转换成字符串。这种转换用的 <code>toString</code>。不会产生JSON 字符串。所以对象的序列化结果就是 [object object]。因为要想在 Web 存储中存放比较复杂的数据类型，只能让应用程序做转换处理。下面是在 localStorage 中存放 JSON 的例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> examplePreferences = &#123;</span><br><span class="line">  temperature: <span class="string">'Celcius'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 写时序列化</span></span><br><span class="line">localStorage.setItem(<span class="string">'perferences'</span>, <span class="built_in">JSON</span>.stringify(examplePreferences));</span><br><span class="line"><span class="comment">// 读取时反序列化</span></span><br><span class="line"><span class="keyword">const</span> perferences = <span class="built_in">JSON</span>.parse(localStorage.getItem(<span class="string">'perferences'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Loaded preferences:'</span>, perferences);</span><br></pre></td></tr></table></figure>
+<p>访问 Web 存储中的数据是同步操作，也就是说执行读写操作时，Web 存储会阻塞 UI 线程，但因为 速度相当快，在工作负载比较小时，用户察觉不出来这种变化。但是，还是应该尽量避免过度读写，尤其要避免出现大量数据的读写操作。可惜 Web worker 无法访问 Web 存储，所以所有读写只能在主 UI 线程中进行。</p>
+<p>Web 存储 API 没有查询功能，不能按范围选择键，或者搜查特定的值，只能通过键来访问数据项。如果想要实现搜索功能，只能自己维护一套索引，或者数据集非常小的话，可以进行循环遍历，下面就是对 localStorage 中的所有键进行循环遍历</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAllKeys</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.keys(localStorage);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAllKeysAndValues</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> getAllKeys()</span><br><span class="line">    .reduce(<span class="function">(<span class="params">obj, str</span>) =&gt;</span> &#123;</span><br><span class="line">      obj[str] = localStorage.getItem(str);</span><br><span class="line">      <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;, &#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 得到所有的值</span></span><br><span class="line"><span class="keyword">const</span> allValues = getAllKeys().map(<span class="function"><span class="params">key</span> =&gt;</span> localStorage.getItem(key))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 作为对象输出</span></span><br><span class="line"><span class="built_in">console</span>.log(getAllKeysAndValues());</span><br></pre></td></tr></table></figure>
+<p>跟大多数键/值存储一样，Web 存储中的键也只有一个命名空间。比如说，我们不能分别为 posts 和 comments 创建各自的存储。不过可以通过给键增前缀的方式创建‘命名空间’，比如下面的这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(<span class="string">`/posts/<span class="subst">$&#123;posts.id&#125;</span>`</span>, post);</span><br><span class="line">localStorage.setItem(<span class="string">`/comments/<span class="subst">$&#123;comments.id&#125;</span>`</span>, comments);</span><br></pre></td></tr></table></figure>
+<p>获取某个命名空间中中的所有数据：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getNamespaceItems</span>(<span class="params">namespace</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> getAllKeys().filter(<span class="function"><span class="params">key</span> =&gt;</span> key.startsWith(namespace));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getNamespaceItems(<span class="string">'/exampleNamespace'</span>));</span><br></pre></td></tr></table></figure>
+<p>这样会循环遍历 localStorage 中所有的键，所以如果数据项比较多，要考虑一下对性能的影响。因为 localStorage API 是永不的，所以用起来限制还是比较多。比如说，对于那些以 JSON 序列化数据为参数，并返回结果也是这样的数据的函数，你可能会用 localStorage 缓存记忆（memoize）它的结果。</p>
+<p>用 localStorage 持久化记忆</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以后调用时如果参数相同，可以直接返回之前记住的结果</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoizedExpensiveOperation</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> key = <span class="string">`/memoized/<span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(data)&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">const</span> memoizedResult = localStorage.getItem(key);</span><br><span class="line">  <span class="keyword">if</span> (memoizedResult !== <span class="literal">null</span>) <span class="keyword">return</span> memoizedResult;</span><br><span class="line">  <span class="comment">// 完成高成本工作</span></span><br><span class="line">  <span class="keyword">const</span> result =  expensiveWork(data);</span><br><span class="line">  <span class="comment">// 将结果保存到 localStorage 中，以后就不用再次计算</span></span><br><span class="line">  localStorage.setItem(key, result);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过只有操作特别慢的时候，记住结果的收益才会大于序列化/反序列化处理的开销（比如加密算法）。因此最好使用 localStorage 节省因为要在网络上传输数据而开销的时间。</p>
+<p>Web 存储确实会受到限制，但只要使用它得当。依然是简单而且强大的工具。</p>
+<h4 id="localForage"><a href="#localForage" class="headerlink" title="localForage"></a><strong>localForage</strong></h4><p>Web   存储的主要缺点主是它的阻塞式同步 API 和某些浏览器中有限的存储空间。除了 Web 存储，大多数浏览器都支持 WebSQL 或者是 IndexedDB，或者同时支持两种存储。它们都是非阻塞，并且存储空间比 Web 的大。</p>
+<p>但是不建议用 Web 存储直接用。WebSQL 已经被废弃了，它的继任者是 IndexedDB,提供的 API 即不友好，也不简洁。要想在浏览器中用非阻塞的方式存储数据，可以用一种标准化的非标配工具，其中来自 Mozilla 的 localForage 库。</p>
+<p>API 概览：</p>
+<p>localForage 的接口基本上与 Web 存储是一样的，只不过是异步非阻塞方式的：</p>
+<ul>
+<li>localforage.setItem(key,value,callback)——存储键值对</li>
+<li>localforage.getItem(key,callback)——获取指定的键的值</li>
+<li>localforage.removeItem(key,callback)——移除指定键的值</li>
+<li>localforage.clear(callback)——移除所有的键值对</li>
+<li>localforage.key(index,callback)——获取指定索引的值</li>
+<li>localforage.keys(callback)——获取所有的键</li>
+<li>localforage.iterate(iterate,callback)——循环遍历键值对</li>
+</ul>
+<h4 id="读和写"><a href="#读和写" class="headerlink" title="读和写"></a><strong>读和写</strong></h4><p>localForage API 中有 promise 和回调两种方式。</p>
+<p> localStorage 和 localForage 的数据读取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// localStorage 同步阻塞</span></span><br><span class="line"><span class="keyword">const</span> value = localStorage.getItem(key);</span><br><span class="line"><span class="built_in">console</span>.log(value);</span><br><span class="line"></span><br><span class="line"><span class="comment">// localforage 使用 promise 的异步非阻塞方式</span></span><br><span class="line">localforage.getItem(key)</span><br><span class="line">  .then(<span class="function"><span class="params">value</span> =&gt;</span> <span class="built_in">console</span>.log(value));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用回调的异步非阻塞的方式</span></span><br><span class="line">localforage.getItem(key, (err, value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>localForage 会在底层使用当前浏览器环境中最好的存储机制。如果有 IndexedDB,就使用它。否则就尝试 WebSQL,接着就是 Web 存储。这些存储的优先级是可以配置的，设置是可以禁止使用某种存储：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不用 localStorage</span></span><br><span class="line">localforage.setDriver([localforage.INDEXEDDB, localforage.WEBSQL]);</span><br></pre></td></tr></table></figure>
+<p>localForage 可以存储字符串之外的其他类型的数据。它支持大多数的 JS 原始类型，比如数组或者是对象，以及二进制数据类型：TypeArray、ArrayBuffer和 Blob 。IndexedDB是唯一支持二进制数据存储的后台，也就是说后台用的是 WebSQL 和 localStorage ，会有编组开销：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.all([</span><br><span class="line">  localforage.setItem(<span class="string">'number'</span>, <span class="number">3</span>),</span><br><span class="line">  localforage.setItem(<span class="string">'object'</span>, &#123; <span class="attr">key</span>: <span class="string">'value'</span> &#125;),</span><br><span class="line">  localforage.setItem(<span class="string">'typedArray'</span>, <span class="keyword">new</span> <span class="built_in">Uint32Array</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]))</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>将 API 做成跟 Web 存储一样让 localForage 用起来也简单，也解决了很多缺点和兼容性问题。</p>
+<h3 id="存储托管"><a href="#存储托管" class="headerlink" title="存储托管"></a>存储托管</h3><p>使用存储托管不需要管理自己的服务器端存储，可以迅速尝试所有工具，甚至无需自己搭建自己的数据库主机就能部署对外开放的生成程序。但部署自己的数据存储越来越简单，很多云服务提供商都有预先配置好的服务器映像，安装了运行所选数据库所需的全部软件，并且全都配置好了。</p>
+<h4 id="简单存储服务"><a href="#简单存储服务" class="headerlink" title="简单存储服务"></a><strong>简单存储服务</strong></h4><p>Amazon 的简单存储服务（S3）是一种远程文件托管服务，包含在大受欢迎的 ASW 包中，用 S3存储和托管开放的文件有成本上的优势。它是云端的文件系统。可以用 RESTful HTTP 调用将文件和不超过 2KB的元数据上传到桶中。然后通过 HTTP GET 或 BitTorrent 协议访问这些内容。</p>
+<p>我们可以对桶中及其中的内容进行各种访问许可配置，包括基于时间的访问。还可以给桶里的内容指定一个生存期（TTL），生存期过后会从桶中删除，再也访问不到。将 S3 数据提升到内容交付网络（CDN）中也很容易。AWS 提供了 CloudFront CDN,可以轻松链接到你的文件，然后用很低的延时提供给全世界。</p>
+<p>S3 可以存储任何文件，只要不超过 5TB，任何格式都可以。在处理要作为一个整体来访问的、不怎么变化的大块数据时，S3 的表现最好。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Node 既能用关系型数据库，也能用 NoSQL 数据库</li>
+<li>简单的 pg 模块很擅长处理 SQL 语言</li>
+<li>Knex 模块可以使用几个数据库</li>
+<li>ACID 是一组数据库事务属性，也可以保证安全性</li>
+<li>MongoDB 是使用 JavaScript 的 NoSQL 数据库</li>
+<li>Redis 是可以当做数据库和缓存用的数据结构化存储</li>
+<li>LevelDB 是源自 Google 高速键/值对存储，可以将字符串映射到值</li>
+<li>LevelDB 是模块化数据库</li>
+<li>基于 Web 的存储，包括 LocalForage 和 localStorge ，可以将数据保存在浏览器中，</li>
+<li>可以用 Amazon S3 这样的存储服务把数据保存到云提供商那里</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-21-NodeJs2-Part8.html" title="Nodejs实战 —— 存储数据">http://laibh.top/2018-12-21-NodeJs2-Part8.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/前端面试题目汇总摘录-JS 编程篇.html" rel="next" title="前端面试题目汇总摘录（JS 编程篇）">
+                <i class="fa fa-chevron-left"></i> 前端面试题目汇总摘录（JS 编程篇）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-28-(转)深入浅出JavaScript运行进制.html" rel="prev" title="（转）深入浅出JavaScript 运行机制">
+                （转）深入浅出JavaScript 运行机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储数据"><span class="nav-number">1.</span> <span class="nav-text">存储数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关系型数据库"><span class="nav-number">1.1.</span> <span class="nav-text">关系型数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PostgreSQL"><span class="nav-number">1.2.</span> <span class="nav-text">PostgreSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装和配置"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装和配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从-Node-中连接-Postgres"><span class="nav-number">1.2.2.</span> <span class="nav-text">从 Node 中连接 Postgres</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义表"><span class="nav-number">1.2.3.</span> <span class="nav-text">定义表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入数据"><span class="nav-number">1.2.4.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新数据"><span class="nav-number">1.2.5.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询数据"><span class="nav-number">1.2.6.</span> <span class="nav-text">查询数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Knex"><span class="nav-number">1.3.</span> <span class="nav-text">Knex</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询构建器"><span class="nav-number">1.3.1.</span> <span class="nav-text">查询构建器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用-Knex-实现连接和查询"><span class="nav-number">1.3.2.</span> <span class="nav-text">用 Knex 实现连接和查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#切换数据库"><span class="nav-number">1.3.3.</span> <span class="nav-text">切换数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-和-PostgreSQL"><span class="nav-number">1.4.</span> <span class="nav-text">MySQL 和 PostgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID-保证"><span class="nav-number">1.5.</span> <span class="nav-text">ACID 保证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原子性：无论成败，事务必须整体执行"><span class="nav-number">1.5.1.</span> <span class="nav-text">原子性：无论成败，事务必须整体执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一致性：始终确保约束条件"><span class="nav-number">1.5.2.</span> <span class="nav-text">一致性：始终确保约束条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离性：并发事务不会互相干扰"><span class="nav-number">1.5.3.</span> <span class="nav-text">隔离性：并发事务不会互相干扰</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#耐用性：事务是永久性的"><span class="nav-number">1.5.4.</span> <span class="nav-text">耐用性：事务是永久性的</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NoSQL"><span class="nav-number">1.6.</span> <span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式数据库"><span class="nav-number">1.7.</span> <span class="nav-text">分布式数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB"><span class="nav-number">1.8.</span> <span class="nav-text">MongoDB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装和配置-1"><span class="nav-number">1.8.1.</span> <span class="nav-text">安装和配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入文档"><span class="nav-number">1.8.2.</span> <span class="nav-text">插入文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">1.8.3.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-MongoDB-标识"><span class="nav-number">1.8.4.</span> <span class="nav-text">使用 MongoDB 标识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用复制集"><span class="nav-number">1.8.5.</span> <span class="nav-text">使用复制集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#了解写关注"><span class="nav-number">1.8.6.</span> <span class="nav-text">了解写关注</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#键-值存储"><span class="nav-number">1.9.</span> <span class="nav-text">键/值存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">1.10.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装和配置-2"><span class="nav-number">1.10.1.</span> <span class="nav-text">安装和配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">1.10.2.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理键-值对"><span class="nav-number">1.10.3.</span> <span class="nav-text">处理键/值对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理键"><span class="nav-number">1.10.4.</span> <span class="nav-text">处理键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编码与数据类型"><span class="nav-number">1.10.5.</span> <span class="nav-text">编码与数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用散列表"><span class="nav-number">1.10.6.</span> <span class="nav-text">使用散列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用列表"><span class="nav-number">1.10.7.</span> <span class="nav-text">使用列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用频道实现发布-订阅功能"><span class="nav-number">1.10.8.</span> <span class="nav-text">用频道实现发布/订阅功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提高性能"><span class="nav-number">1.10.9.</span> <span class="nav-text">提高性能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入式数据库"><span class="nav-number">1.11.</span> <span class="nav-text">嵌入式数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LevelDB"><span class="nav-number">1.12.</span> <span class="nav-text">LevelDB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LevelUP-与-LevelDOWN"><span class="nav-number">1.12.1.</span> <span class="nav-text">LevelUP 与 LevelDOWN </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.12.2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API-概览"><span class="nav-number">1.12.3.</span> <span class="nav-text">API 概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化-1"><span class="nav-number">1.12.4.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键-值编码"><span class="nav-number">1.12.5.</span> <span class="nav-text">键/值编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#键-值对的读写"><span class="nav-number">1.12.6.</span> <span class="nav-text">键/值对的读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可插拔的后台"><span class="nav-number">1.12.7.</span> <span class="nav-text">可插拔的后台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模块化数据库"><span class="nav-number">1.12.8.</span> <span class="nav-text">模块化数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#昂贵的序列化和反序列化"><span class="nav-number">1.13.</span> <span class="nav-text">昂贵的序列化和反序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器内存储"><span class="nav-number">1.14.</span> <span class="nav-text">浏览器内存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Web-存储：localStorage-和-sessionStorage"><span class="nav-number">1.14.1.</span> <span class="nav-text">Web 存储：localStorage 和 sessionStorage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#值的读写"><span class="nav-number">1.14.2.</span> <span class="nav-text">值的读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#localForage"><span class="nav-number">1.14.3.</span> <span class="nav-text">localForage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读和写"><span class="nav-number">1.14.4.</span> <span class="nav-text">读和写</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储托管"><span class="nav-number">1.15.</span> <span class="nav-text">存储托管</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单存储服务"><span class="nav-number">1.15.1.</span> <span class="nav-text">简单存储服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.16.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

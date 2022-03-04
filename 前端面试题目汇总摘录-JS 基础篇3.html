@@ -1,0 +1,2049 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="温故而知新，保持空杯心态,复习到一半的时间，突然发现了 前端面试之道，按学习这本书的路径来 JS 基础3监控前端监控一般分为三种，页面埋点、性能监控以及异常监控 页面埋点页面埋点一般会监控下面几个数据：  PV/UV 停留时长 流量来源 用户交互  实现的思路分成两种，手写埋点和无埋点的方式 第一种自主选择需要监控的数据然后在相应的地方写入代码，这种方式灵活性很大，唯一的缺点就是工作量大，每个需要">
+<meta name="keywords" content="前端面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题目汇总摘录（JS 基础篇3）">
+<meta property="og:url" content="http://laibh.top/前端面试题目汇总摘录-JS 基础篇3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="温故而知新，保持空杯心态,复习到一半的时间，突然发现了 前端面试之道，按学习这本书的路径来 JS 基础3监控前端监控一般分为三种，页面埋点、性能监控以及异常监控 页面埋点页面埋点一般会监控下面几个数据：  PV/UV 停留时长 流量来源 用户交互  实现的思路分成两种，手写埋点和无埋点的方式 第一种自主选择需要监控的数据然后在相应的地方写入代码，这种方式灵活性很大，唯一的缺点就是工作量大，每个需要">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-性能监控.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-UDP.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-TCP.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-状态机.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-三次握手.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-断开连接四次握手.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-滑动窗口1.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-滑动窗口2.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-TLS握手协议.png">
+<meta property="og:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-二进制传输.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试题目汇总摘录（JS 基础篇3）">
+<meta name="twitter:description" content="温故而知新，保持空杯心态,复习到一半的时间，突然发现了 前端面试之道，按学习这本书的路径来 JS 基础3监控前端监控一般分为三种，页面埋点、性能监控以及异常监控 页面埋点页面埋点一般会监控下面几个数据：  PV/UV 停留时长 流量来源 用户交互  实现的思路分成两种，手写埋点和无埋点的方式 第一种自主选择需要监控的数据然后在相应的地方写入代码，这种方式灵活性很大，唯一的缺点就是工作量大，每个需要">
+<meta name="twitter:image" content="http://laibh.top/images/前端面试题目汇总摘录-JS%20基础篇3-性能监控.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/前端面试题目汇总摘录-JS 基础篇3.html"/>
+
+
+
+
+
+  <title>前端面试题目汇总摘录（JS 基础篇3） | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/前端面试题目汇总摘录-JS 基础篇3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">前端面试题目汇总摘录（JS 基础篇3）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T09:30:54+08:00">
+                2019-04-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/前端面试题目汇总摘录-JS 基础篇3.html" class="leancloud_visitors" data-flag-title="前端面试题目汇总摘录（JS 基础篇3）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  14,230
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>温故而知新，保持空杯心态,复习到一半的时间，突然发现了 <a href="https://yuchengkai.cn/docs/frontend">前端面试之道</a>，按学习这本书的路径来</p>
+<h2 id="JS-基础3"><a href="#JS-基础3" class="headerlink" title="JS 基础3"></a>JS 基础3</h2><h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><p>前端监控一般分为三种，页面埋点、性能监控以及异常监控</p>
+<h3 id="页面埋点"><a href="#页面埋点" class="headerlink" title="页面埋点"></a>页面埋点</h3><p>页面埋点一般会监控下面几个数据：</p>
+<ul>
+<li>PV/UV</li>
+<li>停留时长</li>
+<li>流量来源</li>
+<li>用户交互</li>
+</ul>
+<p>实现的思路分成两种，手写埋点和无埋点的方式</p>
+<p>第一种自主选择需要监控的数据然后在相应的地方写入代码，这种方式灵活性很大，唯一的缺点就是工作量大，每个需要监控的地方都要插入代码</p>
+<p>另一种的无埋点的方式基本不需要开发者手写埋点，而是统计所有的事件并且定时上报，这种方式虽然没有前一种繁琐，但是因为统计的是所有事件，所以还需要后期过滤出需要的数据</p>
+<h3 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h3><p>可以使用浏览器期自带的  <a href="https://link.juejin.im/?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FAPI%2FPerformance">Performance API</a> 来实现功能。一行代码就可以获得页面中各种详细的性能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">performance.getEntriesByType(<span class="string">'navigation'</span>)</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">[</span></span><br><span class="line"><span class="comment">    PerformanceNavigationTiming:&#123;</span></span><br><span class="line"><span class="comment">        connectEnd: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        connectStart: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        decodedBodySize: 0</span></span><br><span class="line"><span class="comment">        domComplete: 22873.60000000001</span></span><br><span class="line"><span class="comment">        domContentLoadedEventEnd: 22690.200000000004</span></span><br><span class="line"><span class="comment">        domContentLoadedEventStart: 22689.999999999996</span></span><br><span class="line"><span class="comment">        domInteractive: 22689.999999999996</span></span><br><span class="line"><span class="comment">        domainLookupEnd: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        domainLookupStart: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        duration: 22873.700000000015</span></span><br><span class="line"><span class="comment">        encodedBodySize: 0</span></span><br><span class="line"><span class="comment">        entryType: "navigation"</span></span><br><span class="line"><span class="comment">        fetchStart: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        initiatorType: "navigation"</span></span><br><span class="line"><span class="comment">        loadEventEnd: 22873.700000000015</span></span><br><span class="line"><span class="comment">        loadEventStart: 22873.60000000001</span></span><br><span class="line"><span class="comment">        name: ""</span></span><br><span class="line"><span class="comment">        nextHopProtocol: ""</span></span><br><span class="line"><span class="comment">        redirectCount: 0</span></span><br><span class="line"><span class="comment">        redirectEnd: 0</span></span><br><span class="line"><span class="comment">        redirectStart: 0</span></span><br><span class="line"><span class="comment">        requestStart: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        responseEnd: 726.4000000000124</span></span><br><span class="line"><span class="comment">        responseStart: 3.9999999999906777</span></span><br><span class="line"><span class="comment">        secureConnectionStart: 0</span></span><br><span class="line"><span class="comment">        serverTiming: []</span></span><br><span class="line"><span class="comment">        startTime: 0</span></span><br><span class="line"><span class="comment">        transferSize: 0</span></span><br><span class="line"><span class="comment">        type: "back_forward"</span></span><br><span class="line"><span class="comment">        unloadEventEnd: 0</span></span><br><span class="line"><span class="comment">        unloadEventStart: 0</span></span><br><span class="line"><span class="comment">        workerStart: 0</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">]</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-性能监控.png" alt="性能监控"></p>
+<h3 id="异常监控"><a href="#异常监控" class="headerlink" title="异常监控"></a>异常监控</h3><p>对于代码运行错误，通常的办法是使用 window.onerror 拦截报错，该方法能拦截到大部分的详细报错信息，但是也有例外的</p>
+<ul>
+<li>对于跨域的代码运行错误会显示 script error 对于这种情况需要给 script 标签添加 crossorigin 属性</li>
+<li>对于某些浏览器可能不会显示调用栈信息，这种情况可以通过 arguments.callee.caller 来做栈递归</li>
+</ul>
+<p>对于异步代码来说，可以使用 catch 的方式捕获错误。比如 Promise 可以直接使用 catch 函数，async await 可以使用 try catch</p>
+<p>线上的代码是经过压缩的，打包的时候要设置 sourceMap</p>
+<h2 id="常考的面试题目：UDP-与-TCP-的区别是什么？"><a href="#常考的面试题目：UDP-与-TCP-的区别是什么？" class="headerlink" title="常考的面试题目：UDP 与 TCP 的区别是什么？"></a>常考的面试题目：UDP 与 TCP 的区别是什么？</h2><h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>UDP 协议是面向无连接，不需要在正式传递数据之前先连接双方，然后 UDP 协议只是数据报文的搬运工，不保证有序且不丢失的传递到对端，并且 UDP 协议也没有任何控制流量的算法，总的来说 UDP 相较于 TCP 更加的轻便</p>
+<h3 id="面向无连接"><a href="#面向无连接" class="headerlink" title="面向无连接"></a>面向无连接</h3><p>UDP 不要跟 TCP 一样在发送数据前进行三次握手建立连接，想发数据就可以发送了。</p>
+<p>并且也只是数据的搬运工，不会对数据进行拆分和拼接操作。</p>
+<p>具体来说：</p>
+<ul>
+<li>在发送端，应用层将数据传递给传输层的 UDP 协议，UDP 只会给数据增加一个 UDP 头标识下是 UDP 协议，然后就传递给应用层了</li>
+<li>在接收端，网络层将数据传递给传输层，UDP 只去除 IP 报文头就传递给应用层，不会任何拼接操作。</li>
+</ul>
+<h3 id="不可靠性"><a href="#不可靠性" class="headerlink" title="不可靠性"></a>不可靠性</h3><p>不可靠性体现在无连接上，通信都不需要建立连接，想发就发。不用备份，也不用关心对方是否已经正确接收到数据。UDP 没有拥塞控制，一直会以恒定的速度发送数据，即使网络条件不好，也不会对发送速率进行调整。这样实现的弊端是在网络条件不好的情况下可能会导致丢包，但是优点很明显是在某些实时性要求很高的场景（如电话会议）就需要使用 UDP 而不是 TCP</p>
+<h3 id="高效"><a href="#高效" class="headerlink" title="高效"></a>高效</h3><p>UDP 的头部开销小，只有八字节，相比 TCP 的至少二十字节要小得多，在传输数据报文时是很高效的。</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-UDP.png" alt="UDP"></p>
+<p>UDP 头部包含了以下几个数据：</p>
+<ul>
+<li>两个十六位的端口号，分别为源端口（可选字段）和目标端口</li>
+<li>整个数据报文的长度</li>
+<li>整个数据报文的检验和（IPv4 可选字段），该字段用于发现头部信息和数据中的错误</li>
+</ul>
+<h3 id="传输方式"><a href="#传输方式" class="headerlink" title="传输方式"></a>传输方式</h3><p>UDP 不止支持一对一的传输方式，同样支持一对多，多对一的方式，也就说说 UDP 提供了单播，多播，广播的功能。</p>
+<h3 id="适用的场景"><a href="#适用的场景" class="headerlink" title="适用的场景"></a>适用的场景</h3><p>在很多实时性要求很高的地方都可以看到 UDP 的身影</p>
+<h4 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h4><p>如果使用基于 TCP 的协议，TCP 会严格控制传输的正确性，一旦有某个数据对端没有收到，就会停下来直到对端收到这个数据。这种问题在网络条件不错的情况下不会有问题，但是如果网络差就会变成画面卡着，然后在继续播放下一帧的情况。</p>
+<p>TCP 这种情况下会降低用户体验，不适合</p>
+<h4 id="王者荣耀"><a href="#王者荣耀" class="headerlink" title="王者荣耀"></a>王者荣耀</h4><p>作者说不知道王者荣耀底层是使用了什么协议，但是对于这种实时性很高的游戏来说，UDP 是跑不了的。用户体量相当大的情况下，如果使用 TCP 连接可能会出现服务器不够用情况，因为每台服务器可供支撑的 TCP 连接数据是有限制的。</p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-TCP.png" alt="TCP"></p>
+<p>对于TCP 头部来说，以下几个字段是很重要的</p>
+<ul>
+<li>Sequence number，这个序号保证了 TCP 传输的报文都是有序的，对端可以通过序号顺序的拼接报文</li>
+<li>Acknowledgement Number，这个序号表示数据接收端期望接受的下一个字节编号是多少，同时也表示上一序号的数据已经收到</li>
+<li>Window Size,窗口大小，表示还能接受多少字节的数据，用于流量控制</li>
+<li>标识符<ul>
+<li>UGR=1：该字段为一表示本数据报的数据部分包含紧急信息，是一个高优先级数据报文，此时紧急指针有效。紧急数据一定位于当前数据包数据部分的最前面，紧急指标标明了紧急数据的尾部。</li>
+<li>ACK=1：该字段为一表示确认号字段有效。此外，TCP 还规定在连接建立后传送的所有报文段都必须要把 ACK 置为一</li>
+<li>PSH=1：该字段为一表示接收端应该立即将数据 push 给应用层，而不是等到缓冲区满后再提交</li>
+<li>RST=1：该字段为一表示当前 TCP 连接出现严重问题，可能需要重新建立连接，也可以用于拒绝非法的报文段和拒绝连接请求</li>
+<li>SYN=1：当 SYN = 1,ACK=0时，表示当前报文段是一个连接请求报文。当 SYN=1,ACK=1时，表示当前报文daunt是一个同意连接的应答报文</li>
+<li>FIN=1：该字段为一表示此报文是一个释放连接的请求报文</li>
+</ul>
+</li>
+</ul>
+<h3 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h3><p>TCP 的状态机是很复杂的，并且与建立连接时的握手息息相关</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-状态机.png" alt="状态机"></p>
+<p>一个重要的性能指标 RTT.该指标表示发送端发送数据到接收到对端所需的往返时间</p>
+<h3 id="建立连接三次握手"><a href="#建立连接三次握手" class="headerlink" title="建立连接三次握手"></a>建立连接三次握手</h3><p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-三次握手.png" alt="三次握手"></p>
+<p>首先假设主动发起请求的一端为客户端，被动连接的一端称为服务端。不管是客户端还是服务端，TCP 连接建立完后都可以发送和接收数据，所以 TCP 是一个全双工的协议。</p>
+<p>起初，两端都是 CLOSED 状态，在通信开始前，双方都会建立 TCB,服务端创建完TCB 后便进入 LISTEN 状态，此时开始等待客户端发送数据</p>
+<h4 id="第一次握手"><a href="#第一次握手" class="headerlink" title="第一次握手"></a>第一次握手</h4><p>客户端向服务端发送连接请求报文段，该报文段中包含自身数据通讯初始序号。请求发送后，客户端便进入 SYN-SENT 状态</p>
+<h4 id="第二次握手"><a href="#第二次握手" class="headerlink" title="第二次握手"></a>第二次握手</h4><p>服务端收到连接请求报文段后，如果同意连接，则会发送一个应答，该应答中也会包含自身的数据通讯初始序号，发送完成后便进入 SYN-RECEIVED 状态。</p>
+<h4 id="第三次握手"><a href="#第三次握手" class="headerlink" title="第三次握手"></a>第三次握手</h4><p>当客户端收到连接同意的应答后，还要向服务端发送一个确认报文。客户端发完这个报文段后便进入 ESTABLISHED 状态，服务端接收到这个应答后也进入 ESTABLISHED 状态，此时连接建立成功</p>
+<p>第三次握手中可以包含数据，通过快速打开（TFO）技术就可以实现这一功能。其中只要涉及到握手的协议，都可以使用类似 TFO 方式，客户端和服务端存储相同的 cookie ，下次握手发出 cookie 达到减少 RTT 的目的。</p>
+<p><strong>为什么TCP 建立连接需要三次握手，明明两次就可以建立起连接？</strong></p>
+<p>因为这是为了防止出现失效的连接请求报文段被服务端接收后，从而产生错误。</p>
+<p>如果客户端发送了一个连接报文请求A，但是因为网络原因造成了超时，这时 TCP 会启动超时重传的机制再次发送一个连接请求报文B。此时请求顺利达到服务器，服务端应答完就建立了请求，然后接受数据后释放了连接。</p>
+<p>假设这时候请求 A 在两端关闭后终于达到了服务端，那么此时服务端会认为客户端有需要建立 TCP 连接，从而应答了该请求并进入了 ESTABLISHED 状态，但是实际上客户端是 CLOSED 状态，那么就会导致服务端一直等待，造成资源的浪费。</p>
+<p>在建立连接中，任意一端掉线，TCP 都会重发 SYN 包，一般会重试5次，在建立连接可能遇到 SYN Flood 攻击。遇到这种情况可以选择调低重试次数或者干脆在不能处理的情况下拒绝请求。</p>
+<h3 id="断开连接四次握手"><a href="#断开连接四次握手" class="headerlink" title="断开连接四次握手"></a>断开连接四次握手</h3><p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-断开连接四次握手.png" alt="四次握手"></p>
+<p>TCP 是全双工的，在断开连接时两端都需要发送 FIN 和 ACK</p>
+<h4 id="第一次握手-1"><a href="#第一次握手-1" class="headerlink" title="第一次握手"></a>第一次握手</h4><p>若客户端 A 认为数据发送完成，则它需要向服务端 B 发送连接释放请求。</p>
+<h4 id="第二次握手-1"><a href="#第二次握手-1" class="headerlink" title="第二次握手"></a>第二次握手</h4><p>B 收到连接释放请求后，会告诉应用层就要释放 TCP 连接，然后会发送 ACK 包，并进入 CLOSE_WAIT 状态，此时表明 A 到 B 的连接已经释放，不再接收 A 发的数据了。但是因为 TCP 连接是双工的，所以 B 依旧可以发送数据给 A</p>
+<h4 id="第三次握手-1"><a href="#第三次握手-1" class="headerlink" title="第三次握手"></a>第三次握手</h4><p>B 如果此时还有没有发完的数据会继续发送，完毕后向 A 发送连接释放请求，然后 B 便进入 LAST-ACK 状态。通过延迟确认的技术（通常有时间限制，否则对方会误认为需要重传），可以将第二次和第三次握手合并，延迟 ACK 包的发送</p>
+<h4 id="第四次握手"><a href="#第四次握手" class="headerlink" title="第四次握手"></a>第四次握手</h4><p>A 收到释放请求后，向 B 发送确认应答，A 进入 TIME-WAIT 状态。该状态会持续 2MSL(最大生存期，指报文段在网络中生存的时间，超时会被抛弃)时间，若该时间段内没有 B 的重发请求的话，就会进入 CLOSED 状态。当 B 收到确认应答后，也便进入 CLOSED 状态</p>
+<p><strong>为什么 A 要进入 TIME-WAIT 状态，等待 2MSL 时间后再进入CLOSED 状态？</strong></p>
+<p>为了保证 B 能接受到 A 的确认应答，若 A 发完确认应答后直接进入 CLOSED 状态，如果确认应答因为网络问题一直没有到达，那么会造成 B 不能正常关闭</p>
+<h2 id="ARQ-协议"><a href="#ARQ-协议" class="headerlink" title="ARQ 协议"></a>ARQ 协议</h2><p>ARQ 协议也就是超时重传机制。通过确认和超时机制保证了数据的正确送达，ARQ 协议包含停止等待 ARQ 和连续 ARQ 两种协议</p>
+<h3 id="停止等待-ARQ"><a href="#停止等待-ARQ" class="headerlink" title="停止等待 ARQ"></a>停止等待 ARQ</h3><h4 id="正常传输协议"><a href="#正常传输协议" class="headerlink" title="正常传输协议"></a>正常传输协议</h4><p>只要 A 向 B 发送一段报文，都要停止发送并且启动一个定时器，等待对端应答，在定时器内接收到对端应答就取消定时器并发送下一段报文</p>
+<h4 id="报文丢失或者出错"><a href="#报文丢失或者出错" class="headerlink" title="报文丢失或者出错"></a>报文丢失或者出错</h4><p>在报文传输过程中可能会出现丢包，这时候超过定时器设定的时间就会再次发送丢失的数据直到对端响应，所以需要每次都备份发送的数据</p>
+<p>即使报文正常传输到对端，有可能出现在传输过程中的报文出错的问题。这时候对端会抛弃该报文并等待 A 端重传</p>
+<p>一般定时器设定的时间会大于一个 RTT 的平均时间</p>
+<h4 id="ACK-超时或者丢失"><a href="#ACK-超时或者丢失" class="headerlink" title="ACK 超时或者丢失"></a>ACK 超时或者丢失</h4><p>对端传输的应答也可能出现丢失或者超时的情况，那么超过定时器时间 A 端照样会重报文，这时候 B 端会接收到相同序号的报文之后丢弃该报文并重传应答，直到 A 端发送下一个序号的报文。</p>
+<p>在超时的情况下也可能会出现应答很迟到达，这时候 A 端会判断该序号是否已经接收过，如果接收过只需要丢弃应答即可。</p>
+<p>假设在良好的网络环境中，每次发送数据都需要等待片刻肯定是不能接受的，这个协议看起来不是很高效。</p>
+<h3 id="连续ARQ"><a href="#连续ARQ" class="headerlink" title="连续ARQ"></a>连续ARQ</h3><p>在连续 ARQ 中，发送端拥有一个发送窗口，可以在没有收到应答的情况下持续发送窗口内的数据，这样相比停止等待 ARQ 协议来说减少了等待时间，提高了效率</p>
+<h4 id="累计确认"><a href="#累计确认" class="headerlink" title="累计确认"></a>累计确认</h4><p>连续 ARQ 中，接收端会持续不断收到报文，如果和停止等待 ARQ 中接收一个报文就发送一个应答一样，就太浪费资源了。通过累计确认，可以在收到多个报文以后统一回复一个应答报文。报文中的 ACK 标示位可以用来告诉发送端这个序号之前的数据已经全部接收到了，下次请发送这个序号后的数据。</p>
+<p>但是累计确认也有一个弊端，在连续接收报文时，可能会遇到接收到序号5 的报文后，并未接收到序号6 的报文，然而序号7 的报文已经接收。遇到这种情况，ACK 只能回复 6，这样就会造成发送端重复发送数据的情况。</p>
+<h4 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h4><p>TCP 中，两端其实都维护者窗口，分别为发送端窗口和接收端窗口</p>
+<p>发送端窗口包含已经发送但未收到应答的数据和可以发送但是未发送的数据</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-滑动窗口1.png" alt="滑动窗口1"></p>
+<p>发送端窗口是由接收端窗口剩余大小决定的。接收方会把当前接收窗口的剩余大小写入应答报文，发送端收到应答后根据该值和当前网络拥塞情况设置发送窗口的大小，所以发送窗口的大小是不断变化的。</p>
+<p>当发送端接收到应答报文后，会随着窗口进入滑动。</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-滑动窗口2.png" alt="滑动窗口2"></p>
+<p>滑动窗口是一个很重要概念，它帮助了 TCP 实现了流量控制的功能。接收方通过报文告知发送方还可以发送多少数据，从而保证了接收方能够来得及接收数据，防止出现接收方带宽已满，但是发送方还是一直发送数据的情况。</p>
+<h4 id="zero-窗口"><a href="#zero-窗口" class="headerlink" title="zero 窗口"></a>zero 窗口</h4><p>在发送报文的过程中，可能会遇到对端出现零窗口的情况，在该情况下，发送端会停止发送数据，并启动 persistent timer.该定时器会定时发送请求给对端，让对端告知窗口大小。在重试次数超过一定次数后，可能会中断 TCP 链接。</p>
+<h3 id="拥塞处理"><a href="#拥塞处理" class="headerlink" title="拥塞处理"></a>拥塞处理</h3><p>拥塞处理和流量控制不同，后者是作用于接收方，保证接收方来得及接收数据，而后者是作用于网络，防止过多的数据拥塞网络，避免出现网络负载过大的情况。</p>
+<p>拥塞处理包括了四个算法，分别是：慢开始，拥塞避免，快速重传，快递恢复</p>
+<h4 id="慢开始算法"><a href="#慢开始算法" class="headerlink" title="慢开始算法"></a>慢开始算法</h4><p>慢开始算法，就是在传输开始时将发送窗口慢慢指数等级扩大，从而避免一开始就传输最大量数据导致网络阻塞。</p>
+<p>慢开始算法步骤具体如下：</p>
+<ol>
+<li>连接初始设置拥塞窗口（Congestion Window）为 1 MSS(一个分段的最大数据量)</li>
+<li>每过一个 RTT 将窗口大小乘二</li>
+<li>指数级增加肯定不能没有限制的，所以有一个阈值限制，当窗口大于阈值就会启动拥塞避免算法</li>
+</ol>
+<h4 id="拥塞避免算法"><a href="#拥塞避免算法" class="headerlink" title="拥塞避免算法"></a>拥塞避免算法</h4><p>拥塞避免算法相比简单点，每过一个 RTT 窗口大小只加一，这样就能避免指数级增长导致网络拥塞，慢慢将大小调整到最佳值</p>
+<p>在传输过程中可能定时器超时的情况，这时候 TCP 会认为网络拥塞，会马上进行一下步骤：</p>
+<ol>
+<li>将阈值设定为当前拥塞窗口的一半</li>
+<li>将拥塞窗口设定为 1MSS</li>
+<li>启动拥塞避免算法</li>
+</ol>
+<h4 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h4><p>快速重传一般和快恢复一起出现。一旦接收端收到的报文出现失序的情况，接收端只会回复最后一个顺序正确的报文序号。如果发送端收到三个重复的 ACK ,无需等待定时器超时而是启动快速重传算法。具体是：<br>TCP Taho 的实现：</p>
+<ul>
+<li>将阈值设为当前阈值的一般</li>
+<li>将拥塞窗口设为 1MSS</li>
+<li>重新开始慢开始算法</li>
+</ul>
+<p>TCP Reno 实现：</p>
+<ul>
+<li>拥塞窗口减半</li>
+<li>将阈值设定为当前拥塞窗口</li>
+<li>进入块恢复阶段（重发对端需要的包，一旦接收到一个新的 ACK 答复就退出该阶段），这种方在丢失多个包的情况下就不那么友好了</li>
+<li>使用拥塞避免算法</li>
+</ul>
+<h4 id="TCP-New-Ren-改进后的快恢复"><a href="#TCP-New-Ren-改进后的快恢复" class="headerlink" title="TCP New Ren 改进后的快恢复"></a>TCP New Ren 改进后的快恢复</h4><p><strong>TCP New Reno</strong> 算法改进了之前 <strong>TCP Reno</strong> 算法的缺陷。在之前，快恢复中只要收到一个新的 ACK 包，就会退出快恢复。</p>
+<p>在 <strong>TCP New Reno</strong> 中，TCP 发送方先记下三个重复 ACK 的分段的最大序号。</p>
+<p>假如我有一个分段数据是 1 ~ 10 这十个序号的报文，其中丢失了序号为 3 和 7 的报文，那么该分段的最大序号就是 10。发送端只会收到 ACK 序号为 3 的应答。这时候重发序号为 3 的报文，接收方顺利接收的话就会发送 ACK 序号为 7 的应答。这时候 TCP 知道对端是有多个包未收到，会继续发送序号为 7 的报文，接收方顺利接收并会发送 ACK 序号为 11 的应答，这时发送端认为这个分段接收端已经顺利接收，接下来会退出快恢复阶段。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>TCP建立连接需要三次握手，断开连接需要四次握手</li>
+<li>滑动窗口解决了数据的丢包、顺序不对和流量控制的问题</li>
+<li>拥塞窗口实现了对流量的控制，保证全天候环境下最优的传递数据</li>
+</ul>
+<h2 id="HTTP-以及-TLS"><a href="#HTTP-以及-TLS" class="headerlink" title="HTTP 以及 TLS"></a>HTTP 以及 TLS</h2><h3 id="HTTP-请求的内容"><a href="#HTTP-请求的内容" class="headerlink" title="HTTP 请求的内容"></a>HTTP 请求的内容</h3><p>HTTP 请求由三部分组成，分别是：</p>
+<ul>
+<li>请求行</li>
+<li>首部</li>
+<li>实体</li>
+</ul>
+<p>请求行基本由请求方法、URL、版本协议组成。</p>
+<p>请求方法分很多种，POST,GET,HEAD,OPTION,等等，更多具体的<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods">点击这里</a></p>
+<h3 id="副作用和幂等"><a href="#副作用和幂等" class="headerlink" title="副作用和幂等"></a>副作用和幂等</h3><p>副作用是指对服务器上的资源做改变，搜素是无副作用的，注册是副作用的。</p>
+<p>幂等指发送 M 和 N 次请求（两者不同且大于1），服务器上资源的状态一致，比如注册10个和11个账号是不幂等的，对文章进行更改10次和11次是幂等的。因为前者多了一个账号（资源），后者只是更新同一个资源</p>
+<p>在规范的应用场景来说，Get 多用于无副作用的，幂等的场景，例如搜索关键字。Post 多用于副作用的，不幂等的场景，例如注册</p>
+<p>技术上来说：</p>
+<ul>
+<li>Get 请求能缓存，Post 不能</li>
+<li>Post 相对 Get 安全一点，因为GET 请求都包含在 URL 里面，且会被浏览器保存历史记录。而 Post 不会，但是在抓包的情况下是一样的。</li>
+<li>URL 有长度限制，会影响 GET 请求，但是这个长度限制是浏览器限制的，不是 RFC 规定的</li>
+<li>Post 支持更多的编码并且不对数据类型限制</li>
+</ul>
+<h3 id="首部"><a href="#首部" class="headerlink" title="首部"></a>首部</h3><p>首部分成请求首部和响应首部，并且部分首部两种通用。下面是常见的首部</p>
+<h4 id="通用首部"><a href="#通用首部" class="headerlink" title="通用首部"></a>通用首部</h4><table>
+<thead>
+<tr>
+<th>通用字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cache-Control</td>
+<td>控制缓存的行为</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>浏览器想要优先使用的连接类型，比如 keep-alive</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>创建报文的时间</td>
+</tr>
+<tr>
+<td>Pragma</td>
+<td>报文指令</td>
+</tr>
+<tr>
+<td>Via</td>
+<td>代理服务器相关信息</td>
+</tr>
+<tr>
+<td>Transfer-Encoding</td>
+<td>制定报文主体的传输编码方式</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>要求客户端升级协议</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>在内容中可能存在错误</td>
+</tr>
+</tbody>
+</table>
+<p>具体解释的可以<a href="http://laibh.top/2018-08-16-read-%E5%9B%BE%E8%A7%A3HTTP-Part6%E4%B8%8A.html">点击这里</a></p>
+<h4 id="请求首部"><a href="#请求首部" class="headerlink" title="请求首部"></a>请求首部</h4><table>
+<thead>
+<tr>
+<th>请求首部</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accept</td>
+<td>能正确接收的媒体类型</td>
+</tr>
+<tr>
+<td>Accept-Charset</td>
+<td>能正确接收的字符集</td>
+</tr>
+<tr>
+<td>Accept-Encoding</td>
+<td>能正确接收的编码格式列表</td>
+</tr>
+<tr>
+<td>Accept-Language</td>
+<td>能正确接收的语言列表</td>
+</tr>
+<tr>
+<td>Expect</td>
+<td>期待服务端的指定行为</td>
+</tr>
+<tr>
+<td>From</td>
+<td>请求方邮箱地址</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>服务器的域名</td>
+</tr>
+<tr>
+<td>If-Match</td>
+<td>两端资源标记比较</td>
+</tr>
+<tr>
+<td>If-Modified-Since</td>
+<td>本地资源未修改返回 304（比较时间）</td>
+</tr>
+<tr>
+<td>If-None-Match</td>
+<td>本地资源未修改返回 304（比较标记）</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>客户端信息</td>
+</tr>
+<tr>
+<td>Max-Forwards</td>
+<td>限制可被代理以及网关转发的次数</td>
+</tr>
+<tr>
+<td>Proxy-Authorization</td>
+<td>向代理服务器发送验证信息</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>请求某个内容的一部分</td>
+</tr>
+<tr>
+<td>Referer</td>
+<td>表示浏览器所访问的前一个页面</td>
+</tr>
+<tr>
+<td>TE</td>
+<td>传输编码方式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="响应首部"><a href="#响应首部" class="headerlink" title="响应首部"></a>响应首部</h4><table>
+<thead>
+<tr>
+<th>响应头部</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accept-Ranges</td>
+<td>是否支持某些种类的范围</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>资源在代理缓存中存在的时间</td>
+</tr>
+<tr>
+<td>ETag</td>
+<td>资源标识</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>客户端重定向到某个 URL</td>
+</tr>
+<tr>
+<td>Proxy-Authenticate</td>
+<td>想代理服务器发送验证信息</td>
+</tr>
+<tr>
+<td>Server</td>
+<td>服务器名字</td>
+</tr>
+<tr>
+<td>WWW-Authenticate</td>
+<td>获取资源需要的验证信息</td>
+</tr>
+</tbody>
+</table>
+<h4 id="实体首部"><a href="#实体首部" class="headerlink" title="实体首部"></a>实体首部</h4><table>
+<thead>
+<tr>
+<th>实体首部</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allow</td>
+<td>资源的正确请求方式</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>内容编码的格式</td>
+</tr>
+<tr>
+<td>Content-Language</td>
+<td>内容使用的语言</td>
+</tr>
+<tr>
+<td>Content-Length</td>
+<td>request body 长度</td>
+</tr>
+<tr>
+<td>Content-Location</td>
+<td>返回数据的备用地址</td>
+</tr>
+<tr>
+<td>Content-MD5</td>
+<td>Base64 加密格式的内容 MD5 校验值</td>
+</tr>
+<tr>
+<td>Content-Range</td>
+<td>内容的位置范围</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>内容的媒体类型</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>内容的过期时间</td>
+</tr>
+<tr>
+<td>Last_modified</td>
+<td>内容的最后修改时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="常见的状态码"><a href="#常见的状态码" class="headerlink" title="常见的状态码"></a>常见的状态码</h3><p>状态码的责任是当客户端向服务端发送请求时，描述返回的请求结果。借助状态码，用户可以知道服务单是正常处理了请求，还是出现了错误。</p>
+<h4 id="状态码的类别"><a href="#状态码的类别" class="headerlink" title="状态码的类别"></a>状态码的类别</h4><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">类别</th>
+<th style="text-align:left">原因短语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1XX</td>
+<td style="text-align:left">Information（信息性状态码）</td>
+<td style="text-align:left">接受的请求正在处理</td>
+</tr>
+<tr>
+<td style="text-align:left">2XX</td>
+<td style="text-align:left">Success（成功状态码）</td>
+<td style="text-align:left">请求正常处理完毕</td>
+</tr>
+<tr>
+<td style="text-align:left">3XX</td>
+<td style="text-align:left">Redirection（重定向状态码）</td>
+<td style="text-align:left">需要进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td style="text-align:left">4XX</td>
+<td style="text-align:left">Client Error（客户端错误状态码）</td>
+<td style="text-align:left">服务器无法处理请求</td>
+</tr>
+<tr>
+<td style="text-align:left">5XX</td>
+<td style="text-align:left">Server Error（服务器错误状态码）</td>
+<td style="text-align:left">服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2XX-成功"><a href="#2XX-成功" class="headerlink" title="2XX 成功"></a>2XX 成功</h4><ul>
+<li>200 OK,表示从客户端发来的请求在服务端被正确处理</li>
+<li>204，No content，表示请求成功，但响应报文不含实体的主体部分</li>
+<li>205，Reset Content，表示请求成功，但响应报文不含实体的主体部分，与204响应不同的是要求请求方重置内容</li>
+<li>206 Partial Content，表示对客户端进行了范围请求，而服务器成功执行了这部分的 GET 请求，响应报文中由 Content-Range 指定范围的实体内容</li>
+</ul>
+<h4 id="3XX-重定向"><a href="#3XX-重定向" class="headerlink" title="3XX 重定向"></a>3XX 重定向</h4><ul>
+<li>301 moved permanently,永久性重定向，表示资源已被分配到了新的 URL</li>
+<li>302 found,临时重定向，表示资源临时被分配了新的 URL</li>
+<li>303 see other，表示资源存在着另一个 URL应使用 GET 方法获取资源</li>
+<li>304 not modified，表示服务器允许访问资源，但因发生请求未满足条件的情况</li>
+<li>307 temporary redirect，临时重定向，和302含义类似，但是期望客户端保持请求方法不变向新的地址发出请求。</li>
+</ul>
+<h4 id="4XX-客户端错误"><a href="#4XX-客户端错误" class="headerlink" title="4XX 客户端错误"></a>4XX 客户端错误</h4><ul>
+<li>400 bad request，请求报文存在语法错误</li>
+<li>401 unauthorized，表示发送的请求需要有通过 HTTP 认证的认证消息</li>
+<li>403 fobidden，表示对请求资源的访问被服务器拒绝</li>
+<li>404 no found,表示在服务器上没有找到请求的资源</li>
+</ul>
+<h4 id="5XX-服务器错误"><a href="#5XX-服务器错误" class="headerlink" title="5XX 服务器错误"></a>5XX 服务器错误</h4><ul>
+<li>500 internal server error,表示服务器端在执行请求时发生了错误</li>
+<li>501 Not Implemented,表示服务器不支持当期请求所需要的某个功能</li>
+<li>503 service unavaliable,表示服务器暂时处于超负载或者停机服务，无法处理请求</li>
+</ul>
+<h3 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h3><p>HTTPS 通过 HTTP 来传输信息，但是信息通过 TLS 协议进行了 加密</p>
+<p>TLS 协议位于传输层之上，应用层之下。首先进行 TLS 协议传输需要两个 RTT,可以通过 Session Resumption 减少到一个 RTT</p>
+<p>在 TLS 中使用了两种加密技术，分别为：对称加密和非对称加密。</p>
+<h4 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h4><p>对称加密就是两边都拥有相同的密钥，两边都知道药怎么将密文加密解密</p>
+<p>这种加密方式缺点在于因为传输数据走的都是网络，如果密钥被截获那就没有加密的意义了</p>
+<h4 id="非对称机密"><a href="#非对称机密" class="headerlink" title="非对称机密"></a>非对称机密</h4><p>有公钥私钥之分，公钥所有人都可以知道，如果将数据用公钥加密，但是将数据解密必须使用私钥解密，私钥只有分发公钥的一方才知道。</p>
+<p>这种加密方式就可以完美解决对称加密存在的问题，假设两端都需要使用对称加密，那么在这之前，可以先使用非对称加密交换密钥。</p>
+<p>简单流程化如下：服务端将公钥发布出去，那么客户端也知道公钥，就下来客户端创建了一个密钥，然后通过公钥加密后发送给服务端，服务端接收到私钥解密出正确的密钥，这时候两端就都知道密钥是什么了。</p>
+<p>TLS 握手过程如下图：</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-TLS握手协议.png" alt="TLS 握手协议"></p>
+<ol>
+<li>客户端发送一个随机值以及需要的协议和加密方式</li>
+<li>服务端收到客户端的随机值，自己也产生了一个随机值，并根据客户端的需求的协议和加密方式来使用对应的方式，并且发送自己的证书（如果需要验证客户端证书需要说明）</li>
+<li>客户端收到服务端的证书验证是否有效，验证通过会生成一个随机值，通过服务端证书的公钥加密这个随机值并发送给服务端，如果服务端需要验证客户端证书的话会附带证书</li>
+<li>服务端收到加密过的随机值并使用私钥解密获得三个随机值，这时候两端都有三个随机值，可以通过这三个随机值按照之前的约定的加密方式生成密钥，接下来的通信既可以使用该密钥加密解密了。</li>
+</ol>
+<p>通过上面步骤，可以知道 TLS 握手阶段，两端使用非对称加密的方式进行通信，但是因为非对称加密损耗的性能比对称加密大，所以在正式传输数据的时候，两端使用对称加密的方式进行通信。</p>
+<p>关于 http 安全的具体可以<a href="http://laibh.top/2018-08-29-read-%E5%9B%BE%E8%A7%A3HTTP-Part7.html">点击这里</a></p>
+<h3 id="HTTP-2-以及-HTTP-3"><a href="#HTTP-2-以及-HTTP-3" class="headerlink" title="HTTP/2 以及 HTTP/3"></a>HTTP/2 以及 HTTP/3</h3><p>HTTP/2 很好的解决了当下最常用的 HTTP/1 所存在的一些性能问题，只需要升级到该协议就可以减少很多之前需要做的性能优化工作，当然兼容问题以及如何优雅降级应该是国内还不普遍使用的原因之一。</p>
+<p>虽然 HTTP/2 已经解决了很多问题，但是并不代表它已经是完美的了，HTTP/3 就是为了解决 HTTP/2 所存在的一些问题而被推出来的。</p>
+<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><p>HTTP/2 相比对 HTTP/1 可以说是大幅度提高了网页的性能。</p>
+<p>在 HTTP/1 为了性能考虑，我们会引入雪碧图、将小图内联、使用多个域名等等的方式。这一切都是因为浏览器限制了同一个域名下的请求数量（Chrome 下一般是限制六个连接），当页面中需要请求很多资源的时候，队头阻塞（Head of line blocking）会导致在达到最大请求数量时，剩余的资源需要等待其他资源请求完成后才能发起请求。</p>
+<p>在 HTTP/2 中引入了多路复用的技术，这个技术可以只通过一个 TCP 连接就可以传输所有的请求数据。多路复用很好的解决了浏览器限制同一个域名下的请求数量的问题，同时也接更容易实现全速传输，毕竟新开一个 TCP 连接都需要慢慢提升传输速度。</p>
+<p>大家可以通过 <a href="https://link.juejin.im/?target=https%3A%2F%2Fhttp2.akamai.com%2Fdemo">该链接</a> 感受下 HTTP/2 比 HTTP/1 到底快了多少。</p>
+<h3 id="二进制传输"><a href="#二进制传输" class="headerlink" title="二进制传输"></a>二进制传输</h3><p>HTTP/2 中所有加强性能的核心在于此，在之前的 HTTP 版本，我们是通过文本的方式传输数据，在 HTTP/2 中引入了新的编码机制，所有的传输数据都会被分割，并采用二进制格式编码。</p>
+<p><img src="./images/前端面试题目汇总摘录-JS 基础篇3-二进制传输.png" alt="二进制传输"></p>
+<h3 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h3><p>在 HTTP/2 中有两个非常重要的概念，分别是 帧（frame）和 流 （stream）</p>
+<p>帧代表着最小的数据单位，每个帧都会标识出该帧属于哪个流，流也就是多个帧组成的数据流</p>
+<p>多路复用，就是在一个 TCP 连接中可以存在多条流。换句话说，就是可以发送多个请求，对端可以通过帧中的标识知道属于哪个请求。通过这个技术，可以避免 HTTP 旧版本中的对头阻塞的问题，极大提高了传输的性能。</p>
+<h3 id="Header-压缩"><a href="#Header-压缩" class="headerlink" title="Header 压缩"></a>Header 压缩</h3><p>在 HTTP/1 中使用文本的形式传输 header，在 header 携带 cookie 的情况下，可能每次都需要重复传输几百到几千字节。</p>
+<p>在 HTTP/2 中使用 HPACK 压缩格式对传输的 header 进行编码，减少了 header 的大小。并在两端维护了索引表，用于记录出现过的 header。后面在传输过程中可以传输以及记录过的 header 的键名，对端收到的数据后就可以通过键名找到对应的值</p>
+<h3 id="服务端-Push"><a href="#服务端-Push" class="headerlink" title="服务端 Push"></a>服务端 Push</h3><p>在 HTTP/2 中，服务端可以在客户端某个请求后，主动推送其他资源</p>
+<p>某些资源客户端是一定会请求的，这时候可以采用服务端 push 的技术，提前给客户端推送必要的资源，这样就可以相对减少一点延迟时间。当然在浏览器兼容的情况下也可以使用 prefetch</p>
+<h3 id="HTTP-3"><a href="#HTTP-3" class="headerlink" title="HTTP/3"></a>HTTP/3</h3><p>底层的 TCP 协议导致 HTTP/2 版本存在一个问题，因为使用了多路复用，一般来说同一个域名下面只需要一个 TCP 连接。当这个连接中出现了丢包的情况，就会导致 HTTP/2 的表现不如 HTTP/1</p>
+<p>在丢包的情况下，整个 TCP 都要开始等待重传，就导致了后面的所有的数据都会被阻塞。但是对于 HTTP/1 来说可以开启多个 TCP 连接，出现这种情况只会影响一个连接，剩余的 TCP 连接可以正常传输数据</p>
+<p>这个协议是由操作系统实现的，如果要去修改 TCP 协议看起来不怎么现实。</p>
+<p>基于这个原因，Google 就更起炉灶搞了一个基于 UDP 协议的 QUIC 协议，并且使用在了 HTTP/3 上，</p>
+<p>HTTP/3 之前名为 HTTP-over-QUIC</p>
+<h4 id="QUIC"><a href="#QUIC" class="headerlink" title="QUIC"></a>QUIC</h4><p>UDP 协议虽然效率很高，但是并不是那么的可靠.QUIC 是基于 UDP ,在原生的基础上新增了很多功能，比如多路复用、0-RTT、使用 TLS1.3 加密、流量控制、有序交付、重传等功能。</p>
+<h4 id="多路复用-1"><a href="#多路复用-1" class="headerlink" title="多路复用"></a>多路复用</h4><p>虽然 HTTP/2 支持多路复用，但是 TCP 协议终究是没有这个功能的。QUIC 就原生实现了这个功能，并且传输的单个数据流可以保证有序交付但不会影响其他的数据流，这样的技术就解决了之前的 TCP 存在的问题。</p>
+<p>并且 QUIC 在移动端会比 TCP 好，因为 TCP 是基于 IP 和端口去识别连接的，这种方式在多变的移动端网络环境下是很脆弱的。但是因为 QUIC 是通过 ID 的方式去识别一个连接的，不会随着网络的变化而变化，可以迅速重连上。</p>
+<h4 id="0-RRT"><a href="#0-RRT" class="headerlink" title="0-RRT"></a>0-RRT</h4><p>通过使用类似 TCP 的快速打开的技术，缓存当前会话的上下文，在下次恢复会话的时候，只需要将之前的缓存传递给服务端验证通过就可以进行传输了。</p>
+<h4 id="纠错机制"><a href="#纠错机制" class="headerlink" title="纠错机制"></a>纠错机制</h4><p>假如说这次我要发送三个包，那么协议会算出这三个包的异或值并单独发出一个校验包，也就是总共发出了四个包。当出现其中的非校验丢包的 情况的时候，可以通过另外三个包计算出丢失的数据包的内容。</p>
+<p>当然这种技术只能使用在丢失一个包的情况下，如果出现丢失多个包就不能使用纠错机制了，只能使用重传的方式了。</p>
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>HTTP/2 通过多路复用、二进制流、header 压缩等技术，极大提高了性能，但是还是存在着问题</li>
+<li>QUIC 基于 UDP 实现，是 HTTP/3 中底层支撑协议，该协议基于 UDP，而且拿了 TCP 中的精华，实现了又快有可靠的协议</li>
+</ul>
+<p>关于 HTTP/3 更多<a href="http://www.sohu.com/a/299243519_115128">点击这里</a></p>
+<h2 id="输入-URL-到页面渲染的整个过程"><a href="#输入-URL-到页面渲染的整个过程" class="headerlink" title="输入 URL 到页面渲染的整个过程"></a>输入 URL 到页面渲染的整个过程</h2><p>首先是 DNS 查询，如果这一步做到了智能 DNS 解析的话，会提供速度最快的 IP 地址回来</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>DNS 的作用就是通过域名查询到具体的 IP 地址</p>
+<p>因为 IP 存在数据和英文的组合（IPv6），不利于记忆，所以就出现了域名，可以把它看成某个 IP 地址的别名，DNS 就是通过这个别名去查询真正的名字是什么</p>
+<p>在 TCP 握手之前以及先进行了 DNS 查询，这个查询是操作系统自己做的，在浏览器中访问 <a href="http://www.googel.com">www.googel.com</a> 的时候，会进行以下的操作：</p>
+<ol>
+<li>操作系统会首先在本地缓存中查询 IP</li>
+<li>没有的话就会去系统配置的 DNS 服务器中查询</li>
+<li>如果这时候还没有找到，就会直接去 DNS 根服务器查询，这一步查询会找出负责 <code>com</code>这个域名的服务器</li>
+<li>然后去该服务器查询  <code>google</code>这个二级域名</li>
+<li>接下来是三级域名的查询，这个是我们自己配置的，可以给 <code>www</code> 这个域名配置一个IP,然后还可以给别的三级域名配置一个 IP</li>
+</ol>
+<p>上面是DNS 迭代查询，还有一种格式递归查询，区别就是前者是由客户端去做请求，后者是由系统配置的 DNS 服务器做请求，得到结果将数据返回给客户端。</p>
+<p>DNS 是基于 UDP 做的查询</p>
+<p>接下来是 TCP 握手协议，应用层会下发数据给传输层，这里的 TCP 协议会指明两端的端口号，然后下发给网络层。网络层的 IP 协议会确定 IP 地址，并制定了数据传输中如何跳转路由器。然后包会再被封装到数据链路层的数据帧结构中，最后就是物理层面的传输了。</p>
+<p>在这一部分中，TCP 握手结束后，会进行 TLS 握手，然后开始正式的传输数据了。</p>
+<p>数据在进入服务端之前，可能还会警告负责负载均衡的服务器，它的作用是将请求合理的分发到多态服务器上面，这时假设服务端会响应一个 HTML 文件</p>
+<p>首先浏览器会判断状态码是什么，如果是200 就继续解析，如果是 400 或者 500 的话就会报错，如果是 300 就会重定向，这里会有一个 重定向计数器，避免多次的重定向，超过次数也会报错。</p>
+<p>浏览器开始解析文件，如果是 gzip 格式的会先解压一下，然后通过文件的编码格式知道该如何取解码文件。</p>
+<p>文件解码后就会正式开始渲染流程，先根据 HTML 创建 DOM 树，有 CSS 的话就是 CSSOM 树，如果遇到 script 标签的话，会判断是否存在 async 或者 defer,前者会并行进行下载并执行 JS,后者会先下载文件，然后等待 HTML 解析完成后顺序执行。</p>
+<p>如果以上都没有，就会阻塞住渲染流程直到 JS 执行完毕。遇到下载文件就会去下载文件，如果使用 HTTP/2 协议的话就会极大提高多图的下载效率</p>
+<p>CSSOM 树 和 DOM 树构建完成之后会生成 render 树，这一步就是确定页面布局、样式等诸多方面的东西。</p>
+<p>在生成 Render 树的过程中，浏览器就会开始调用 GPU 绘制，合成图层，将内容显示在 屏幕上了。</p>
+<p>关于这个流程，更多的可以<a href="https://github.com/skyline75489/what-happens-when-zh_CN">点击这里</a></p>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p>关于具体的设计模式我有过一些<a href="http://laibh.top/tags/javaScript%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">笔记</a></p>
+<p>下面还是根据作者的脚步来回顾这一点知识点</p>
+<h3 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h3><p>有一份很复杂的代码需要用户去调用，但是用户并不关心这些代码是怎么实现的，只需要提供一个接口去调用，用户只负责传递需要的参数。参数的使用都在内部逻辑去完成，不暴露出来给用户。只要给用户返回一个实例，这种构造过程就是工厂。</p>
+<p>简而言之就是隐藏了创建实例的复杂度，只需要提供一个接口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(name)&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    alertName()&#123;</span><br><span class="line">        alert(<span class="keyword">this</span>.name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> create(name)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Man(name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Factory.create(<span class="string">'haha'</span>).alertName()</span><br></pre></td></tr></table></figure>
+<p>Vue 源码中，也可以看到工厂模式的使用，比如创建异步组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">export function createComponent(</span><br><span class="line">  Ctor: Class&lt;Component&gt; | Function | Object | void,</span><br><span class="line">  data: ?VNodeData,</span><br><span class="line">  context: Component,</span><br><span class="line">  children: ?Array&lt;VNode&gt;,</span><br><span class="line">  tag?: string</span><br><span class="line">): VNode | Array&lt;VNode&gt; | void &#123;</span><br><span class="line"></span><br><span class="line">  // 逻辑处理...</span><br><span class="line"></span><br><span class="line">  const vnode = new VNode(</span><br><span class="line">    `vue-component-$&#123;Ctor.cid&#125;$&#123;name ? `-$&#123;name&#125;` : &apos;&apos;&#125;`,</span><br><span class="line">    data, undefined, undefined, undefined, context,</span><br><span class="line">    &#123; Ctor, propsData, listeners, tag, children &#125;,</span><br><span class="line">    asyncFactory</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  return vnode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，我们可以看到我们只需要调用 <code>createComponent</code> 传入参数就能创建一个组件实例，但是创建这个实例是很复杂的一个过程，工厂帮助我们隐藏了这个复杂的过程，只需要一句代码调用就能实现功能。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>单例模式很常用，比如全局缓存、全局状态管理等等只需要一个对象，就可以使用单例模式</p>
+<p>单例模式的核心就是保证全局只有一个对象可以访问。因为 JS 是门无类的语言，所以别的语言实现单例的方式不能套入 JS 中，我们需要用一个变量确保值创建一次就可以了，下面是如何实现单例模式的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line">Singleton.getInstance = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> instance;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!instance) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Singleton()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s1 = <span class="keyword">new</span> Singleton.getInstance();</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="keyword">new</span> Singleton.getInstance();</span><br><span class="line"><span class="built_in">console</span>.log(s1 === s2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>在 Vuex 源码中也可以看到单例模式的运用，虽然实现的方式不大一样，通过一个外部变量来控制只安装一次 Vuex</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Vue <span class="comment">// bind on install</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">install</span> (<span class="params">_Vue</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Vue &amp;&amp; Vue === Vue)&#123;</span><br><span class="line">       <span class="comment">// 如果发现 Vue 有值，就不重新创建实例了</span></span><br><span class="line">       <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Vue = _Vue;</span><br><span class="line">    applyMixin(Vue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>适配器用来解决两个接口不兼容的情况，不需要改变已有的接口，通过包装一层的方式实现两个接口的正常协作</p>
+<p>简单实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plug</span></span>&#123;</span><br><span class="line">    getName()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'港版插头'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Target</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.plug = <span class="keyword">new</span> Plug()</span><br><span class="line">    &#125;</span><br><span class="line">    getName()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.plug.getName() + <span class="string">' 适配转二脚插头'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> target = <span class="keyword">new</span> Target();</span><br><span class="line">target.getName(); <span class="comment">// 港版插头 适配转二脚插头</span></span><br></pre></td></tr></table></figure>
+<p>在 Vue 中经常使用到适配器模式，比如父组件传递给子组件一个时间戳属性，组件内部需要将时间戳转为正常的日期显示，一般会使用 computed 来做转换这件事情，这个过程就是用到了适配器模式</p>
+<h3 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h3><p>装饰模式不需要改变已有的接口，作用是给对象添加功能，就像我们经常需要给手机戴个保护套防摔一样，不改变手机自身，给手机添加了保护套提供防摔的功能。</p>
+<p>以下是如何实现装饰模式的例子，使用了 ES7 中的装饰器语法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readonly</span>(<span class="params">target,key,descriptor</span>)</span>&#123;</span><br><span class="line">    descriptor.writable = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> descriptor</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    @readonly</span><br><span class="line">    name = <span class="string">'haha'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> t = <span class="keyword">new</span> Test();</span><br><span class="line">t.haha = <span class="string">'11'</span>; <span class="comment">// 不可修改</span></span><br></pre></td></tr></table></figure>
+<p>在 React 中，装饰模式是随处可见的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps)(MyComponent)</span><br></pre></td></tr></table></figure>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理是为了控制对对象的访问，不让外部直接访问到对象，事件代理也是用到了代理模式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"ul"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>5<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> ul = <span class="built_in">document</span>.querySelector(<span class="string">'#ul'</span>);</span></span><br><span class="line"><span class="javascript">    ul.addEventListener(<span class="string">'click'</span>,(e)=&gt;&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target);</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>因为存在太多 li，不可能每个都去绑定事件，这时候可以通过给父节点绑定一个事件，让父节点作为代理去拿到真实点击的节点。</p>
+<h3 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h3><p>发布-订阅模式也叫做观察者模式，通过一对一或者一对多的依赖关系，当对象发生改变的时候，订阅方都会收到通知。现实生活中的例子是当我需要在购物网站购买一个产品的时候，但是发现该产品目前处于缺货状态，这时候我们可以点击有货通知的按钮，让网站在产品有货的时候通过短信通知我。</p>
+<p>在实际代码中，其实发布-定于模式也很常见，比如我们点击一个按钮触发了点击事件其实就是使用了该模式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"ul"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> ul = <span class="built_in">document</span>.querySelector(<span class="string">'#ul'</span>);</span></span><br><span class="line"><span class="javascript">    ul.addEventListener(<span class="string">'click'</span>,(e)=&gt;&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(e.target);</span></span><br><span class="line"><span class="undefined">    &#125;)    </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 Vue 中，如何实现响应式也是使用了该模式，对于需要实现想爱你过隐式的对象来说，在 get 的时候会进行依赖手机，当改变了对象的属性的时候，就会触发派发更新</p>
+<h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><p>外观模式提供了一个接口，隐藏了内部的逻辑，更加方便外部的调用</p>
+<p>我们需要实现一个兼容多种浏览器的添加事件方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addEvent</span>(<span class="params">elm, evType, fn, useCapture</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (elm.addEventListener) &#123;</span><br><span class="line">    elm.addEventListener(evType, fn, useCapture);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (elm.attachEvent) &#123;</span><br><span class="line">    <span class="keyword">return</span> elm.attachEvent(<span class="string">'on'</span> + evType, fn)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    elm[<span class="string">"on"</span> + evType] = fn</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于不同的浏览器，添加事件的方式可能会存在兼容问题，如果每次都要这样写一遍是不可能，我们将逻辑判断统一在一个接口里面，外部需要添加事件只需要调用 addEvent 就可以了</p>
+<h2 id="常见数据结构"><a href="#常见数据结构" class="headerlink" title="常见数据结构"></a>常见数据结构</h2><p>关于数据结构我之前的笔记也有过记录，具体的可以<a href="http://laibh.top/tags/javaScript%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">点击这里</a></p>
+<p>下面还是跟着作者来重温一遍常见的数据结构</p>
+<h3 id="大O表示法"><a href="#大O表示法" class="headerlink" title="大O表示法"></a>大O表示法</h3><p>如何衡量算法的效率？通常是用资源，例如CPU（时间）占用、内存占用、硬盘占用和网络占用。当讨论大O表示法时，一般考虑的是CPU（时间）占用。</p>
+<p>分析算法时，时常遇到以下几类函数</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">符号</th>
+<th style="text-align:left">名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left">常数的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left">对数的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O((log(n)c))</em></td>
+<td style="text-align:left">对数多项式的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left">线性的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O(n2)</em></td>
+<td style="text-align:left">二次的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O(nc)</em></td>
+<td style="text-align:left">多项式的</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>O(cn)</em></td>
+<td style="text-align:left">指数的</td>
+</tr>
+</tbody>
+</table>
+<h3 id="常用数据结构的时间复杂度"><a href="#常用数据结构的时间复杂度" class="headerlink" title="常用数据结构的时间复杂度"></a>常用数据结构的时间复杂度</h3><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">数据结构</th>
+<th style="text-align:left">一般情况</th>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:left">最差情况</th>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">插入</td>
+<td style="text-align:left">删除</td>
+<td style="text-align:left">搜索</td>
+<td style="text-align:left">插入</td>
+<td style="text-align:left">删除</td>
+<td style="text-align:left">搜索</td>
+</tr>
+<tr>
+<td style="text-align:left">数组-栈-队列</td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">链表</td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">双向链表</td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">散列表</td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(1)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">二分搜索树</td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">AVL树</td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+<td style="text-align:left"><em>O(log(n))</em></td>
+</tr>
+</tbody>
+</table>
+<h4 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">算法（用于数组）</th>
+<th style="text-align:left">最好情况</th>
+<th style="text-align:left">一般情况</th>
+<th style="text-align:left">最差情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">冒泡排序</td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">选择排序</td>
+<td style="text-align:left"><em>O(n2)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">插入排序</td>
+<td style="text-align:left"><em>O(n)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">归并排序</td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+</tr>
+<tr>
+<td style="text-align:left">快速排序</td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">堆排序</td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+<td style="text-align:left"><em>O(nlog(n))</em></td>
+</tr>
+<tr>
+<td style="text-align:left">桶排序</td>
+<td style="text-align:left"><em>O(n+k)</em></td>
+<td style="text-align:left"><em>O(n+k)</em></td>
+<td style="text-align:left"><em>O(n2)</em></td>
+</tr>
+<tr>
+<td style="text-align:left">基数排序</td>
+<td style="text-align:left"><em>O(nk)</em></td>
+<td style="text-align:left"><em>O(nk)</em></td>
+<td style="text-align:left"><em>O(nk)</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一个线性结构，在计算机中是一个相当常见的数据结构，栈的特点是只能在某一端添加或者删除数据，遵循先进后出的规则（FILO）的原则</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.stack = []</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 添加一个或者结构新元素到栈顶</span></span><br><span class="line">  push(item) &#123;</span><br><span class="line">    <span class="keyword">this</span>.stack.push(item)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 移除栈顶的元素</span></span><br><span class="line">  pop() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.stack.pop();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 返回栈顶的元素</span></span><br><span class="line">  peek() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.stack[<span class="keyword">this</span>.size() - <span class="number">1</span>]</span><br><span class="line">  &#125;</span><br><span class="line">  size() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.stack.length</span><br><span class="line">  &#125;</span><br><span class="line">  isEmpty() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size() === <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  clear() &#123;</span><br><span class="line">    <span class="keyword">this</span>.stack = [];</span><br><span class="line">  &#125;</span><br><span class="line">  getStack() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.stack;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>题意是匹配括号，可以通过栈的特性来完成这道题目</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isVaild = <span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> map = &#123;</span><br><span class="line">    <span class="string">"("</span>: <span class="number">-1</span>,</span><br><span class="line">    <span class="string">")"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"["</span>: <span class="number">-2</span>,</span><br><span class="line">    <span class="string">"]"</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="string">"&#123;"</span>: <span class="number">-3</span>,</span><br><span class="line">    <span class="string">"&#125;"</span>: <span class="number">3</span>,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> stack = <span class="keyword">new</span> Stack();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (map[s[i]] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">      stack.push(s[i])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> last = stack.pop()</span><br><span class="line">      <span class="keyword">if</span> (map[last] + map[s[i]] != <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (stack.size() === <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Vue  中关于模板解析的代码，就有应用到匹配尖括号的内容</p>
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列是一个线性结构，特点是在某一段添加数据，在另一端删除数据，遵循先进先出的原则（FIFO）</p>
+<h4 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h4><p>分成单链队列和循环队列</p>
+<h5 id="单链队列"><a href="#单链队列" class="headerlink" title="单链队列"></a>单链队列</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.queue = []</span><br><span class="line">  &#125;</span><br><span class="line">  enQueue(item) &#123;</span><br><span class="line">    <span class="keyword">this</span>.queue.push(item)</span><br><span class="line">  &#125;</span><br><span class="line">  deQueue() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue.shift();</span><br><span class="line">  &#125;</span><br><span class="line">  front() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue[<span class="number">0</span>]</span><br><span class="line">  &#125;</span><br><span class="line">  size() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue.length</span><br><span class="line">  &#125;</span><br><span class="line">  isEmpty() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size() === <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  clear() &#123;</span><br><span class="line">    <span class="keyword">this</span>.queue = [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为单链队列在出队操作的时候㤇 O(n)的时间复杂度，所以引入了循环队列，循环队列的出队操作平均是 O(1)的时间复杂度</p>
+<h5 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sqQueue</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(length) &#123;</span><br><span class="line">    <span class="keyword">this</span>.queue = <span class="keyword">new</span> <span class="built_in">Array</span>(length - <span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 队头</span></span><br><span class="line">    <span class="keyword">this</span>.first = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 队尾</span></span><br><span class="line">    <span class="keyword">this</span>.last = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 当前队列的大小</span></span><br><span class="line">    <span class="keyword">this</span>.size = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  enQueue(item) &#123;</span><br><span class="line">    <span class="comment">// 如果队尾 +1 是否为队头，如果是就代表需要扩容数组，%this.queue.length 是为了防止数组越界</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.first === (<span class="keyword">this</span>.last + <span class="number">1</span>) % <span class="keyword">this</span>.queue.length) &#123;</span><br><span class="line">      <span class="keyword">this</span>.resize(<span class="keyword">this</span>.size() * <span class="number">2</span> + <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.queue[<span class="keyword">this</span>.last] = item;</span><br><span class="line">    <span class="keyword">this</span>.size++;</span><br><span class="line">    <span class="keyword">this</span>.last = (<span class="keyword">this</span>.last + <span class="number">1</span>) % <span class="keyword">this</span>.queue.length</span><br><span class="line">  &#125;</span><br><span class="line">  deQueue() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'Queue is empty'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> r = <span class="keyword">this</span>.queue[<span class="keyword">this</span>.first];</span><br><span class="line">    <span class="keyword">this</span>.queue[<span class="keyword">this</span>.first] = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.first = (<span class="keyword">this</span>.first + <span class="number">1</span>) % <span class="keyword">this</span>.queue.length;</span><br><span class="line">    <span class="keyword">this</span>.size--;</span><br><span class="line">    <span class="comment">// 判断当前队列是否过小，为了保证不浪费空间，在队列空间等于总长度四分之一的时候且不为2时缩小总长度为当前的一半</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.size === <span class="keyword">this</span>.size() / <span class="number">4</span> &amp;&amp; <span class="keyword">this</span>.size() / <span class="number">2</span> !== <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.resize(<span class="keyword">this</span>.size() / <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">  &#125;</span><br><span class="line">  front() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.size()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'Queue is empty'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue[<span class="keyword">this</span>.first]</span><br><span class="line">  &#125;</span><br><span class="line">  size() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.queue.length - <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  isEmpty() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.first === <span class="keyword">this</span>.last;</span><br><span class="line">  &#125;</span><br><span class="line">  resize(length) &#123;</span><br><span class="line">    <span class="keyword">let</span> q = <span class="keyword">new</span> <span class="built_in">Array</span>(length);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">      q[i] = <span class="keyword">this</span>.queue[(i + <span class="keyword">this</span>.first) % <span class="keyword">this</span>.queue.length]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.queue = q;</span><br><span class="line">    <span class="keyword">this</span>.first = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">this</span>.last = <span class="keyword">this</span>.size</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>链表是一个线性结构，同时也是一个天然的递归结构。链表结构可以充分利用计算机内存空间，实现灵活的内存活动管理。但是链表失去了数组随机读取的优点，同时链表也增加了结点的指针域，空间开销比较大。</p>
+<h4 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h4><p>单向链表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinkList</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 链表长度</span></span><br><span class="line">    <span class="keyword">this</span>.size = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 虚拟头部</span></span><br><span class="line">    <span class="keyword">this</span>.dummyNode = <span class="keyword">new</span> Node(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  find(header, index, currentIndex) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index === currentIndex) <span class="keyword">return</span> header</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.find(header.next, index, currentIndex + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addNode(v, index) &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkIndex(index);</span><br><span class="line">    <span class="comment">// 当往链表末尾插入时，prev.next 为空，其他情况时，因为要插入节点，所以插入的节点的next 应该是 prev.next 然后设置 prev.next 为插入的节点</span></span><br><span class="line">    <span class="keyword">let</span> prev = <span class="keyword">this</span>.find(<span class="keyword">this</span>.dummyNode, index, <span class="number">0</span>);</span><br><span class="line">    prev.next = <span class="keyword">new</span> Node(v, prev.next);</span><br><span class="line">    <span class="keyword">this</span>.size++;</span><br><span class="line">    <span class="keyword">return</span> prev.next;</span><br><span class="line">  &#125;</span><br><span class="line">  insertNode(v, index) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.addNode(v, index);</span><br><span class="line">  &#125;</span><br><span class="line">  addToFirst(v) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.addNode(v, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addToLast(v) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.addNode(v, <span class="keyword">this</span>.size);</span><br><span class="line">  &#125;</span><br><span class="line">  removeNode(index, isLast) &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkIndex(index);</span><br><span class="line">    index = isLast ? index - <span class="number">1</span> : index;</span><br><span class="line">    <span class="keyword">let</span> prev = <span class="keyword">this</span>.find(<span class="keyword">this</span>.dummyNode, index, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">let</span> node = prev.next;</span><br><span class="line">    prev.next = node.next;</span><br><span class="line">    node.next = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.size--;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">  &#125;</span><br><span class="line">  removeFirstNode() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.removeNode(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  removeLastNode() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.removeNode(<span class="keyword">this</span>.size, <span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  checkIndex(index) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt; <span class="keyword">this</span>.size) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'Index error'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  getNode(index) &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkIndex(index);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.isEmpty()) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.find(<span class="keyword">this</span>.dummyNode, index, <span class="number">0</span>).next;</span><br><span class="line">  &#125;</span><br><span class="line">  isEmpty() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size === <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  size() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.size;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><p>树拥有很多种结构，二叉树是树中最常见的结构，同时也是一个天然的递归结构</p>
+<p>二叉树拥有一个根节点，每个节点至多拥有两个子节点，分别为：左节点和右节点。树的最底部节点称之为叶节点，当一棵树的数量为满，该树就可以称之为二叉树</p>
+<pre class="mermaid">graph TD
+A[2] --> B[7]
+A[2] --> C[5]
+C[5] --> F[9]
+F[9] --> J[4]
+B[7] --> D[2]
+B[7] --> E[6]
+E[6] --> G[5]
+E[6] --> H[11]</pre>
+
+
+
+<h4 id="二分搜索树"><a href="#二分搜索树" class="headerlink" title="二分搜索树"></a>二分搜索树</h4><p>二分搜索树也是二叉树，拥有二叉树的特性。但是区别于在二分搜索树每个节点的值都比它的左子树的值大，比右子树的值小。</p>
+<p>这种存储方式很适合数据搜索。如下图显示，当需要查找6的时候，因为需要查找的值比根节点的值大，所以只需要在根节点的右子树上寻找，大大提高了搜索效率</p>
+<pre class="mermaid">graph TD
+A[5] --> B[2]
+B[2] --> C[1]
+B[2] --> D[4]
+D[4] --> E[3]
+A[5] --> F[6]
+F[6] --> G[7]</pre>
+
+<h4 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h4><p>具体可以<a href="http://laibh.top/2018-11-05-JavaScipt%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95Part8.html">点击这里</a></p>
+<h2 id="CSS-常考面试题目资料"><a href="#CSS-常考面试题目资料" class="headerlink" title="CSS 常考面试题目资料"></a>CSS 常考面试题目资料</h2><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000013325778">50道CSS基础面试题（附答案）</a></li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000013860482">《50道CSS基础面试题（附答案）》中的答案真的就只是答案吗？</a></li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Ffunteas.com%2Ftopic%2F5ada8eac230d1e5e25e45b89">CSS 面试题总结</a></li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fyangshun%2Ffront-end-interview-handbook%2Fblob%2Fmaster%2FTranslations%2FChinese%2Fquestions%2Fcss-questions.md">front-end-interview-handbook</a></li>
+</ul>
+<h2 id="推荐的资料"><a href="#推荐的资料" class="headerlink" title="推荐的资料"></a>推荐的资料</h2><h3 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgetify%2FYou-Dont-Know-JS">You-Dont-Know-JS</a>，这套书深入的讲解很多 JS 的内容，英文版是开源免费阅读的，如果你英文不好的话，国内这套书已经有出版了，可以选择购买。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fgetify%2FFunctional-Light-JS">Functional-Light-JS</a>，这本书是讲解函数式编程的，函数式编程也是一种编程范式，轻量级的函数式可以很方便的解决很多问题，有兴趣的可以一读。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fleonardomso%2F33-js-concepts">33-js-concepts</a>，这份资料讲解了 33 个前端开发必须知道的 JS 概念，内容是英文的，如果你英文不好的话，可以寻找这份资料的中文版。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fdt-fe%2Fweekly">前端精读周刊</a>，这是一份前端好文集合，每周都会更新，目前已经更新了 84 篇文章。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FJohnsenZhou%2FFront-End-Performance-Checklist">前端性能清单</a>，这是一份前端性能清单，如果你需要优化一个项目的话，可以根据这份清单一个个来检查优化项。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2F30-seconds%2F30-seconds-of-code">30-seconds-of-code</a>，30 秒系列，很短的代码片段让你了解一个知识点。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FAllThingsSmitty%2Fmust-watch-javascript">must-watch-javascript</a>，这份资料包含了很多高质量的前端相关视频，值得一看。</li>
+</ul>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2FAllThingsSmitty%2Fcss-protips">css-protips</a>，通过这份资料你可以学习到很多 tips 来提高你的 CSS 技能。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2F30-seconds%2F30-seconds-of-css">30-seconds-of-css</a>，30 秒系列，很短的代码片段让你了解一个知识点</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fitem.jd.com%2F12262251.html">CSS 世界</a>，张鑫旭出版的书籍，没什么好说的了，看就是了。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fchokcoco%2FiCSS">一些有趣的 CSS 话题</a>，CSS 奇技淫巧，在这里，都有。</li>
+</ul>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><p>React 核心团队成员 Dan Abramov 的 <a href="https://link.juejin.im/?target=https%3A%2F%2Foverreacted.io%2F">blog</a>。</p>
+<h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fnswbmw%2Fnode-in-debugging">Node.js 调试指南</a>，这是一本专注于讲解 Node 调试的书籍，已经出版了，但是可以开源免费阅读。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fitem.jd.com%2F12380404.html">Node.js：来一打 C++ 扩展</a>，死月出版的书籍，没什么好说的，看就是了。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fi0natan%2Fnodebestpractices%2Fblob%2Fmaster%2FREADME.chinese.md">Node.js 最佳实践</a>，这是对 Node.js 最佳实践中排名最高的内容的总结和分享</li>
+</ul>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ftrimstray%2Fthe-book-of-secret-knowledge">the-book-of-secret-knowledge</a>，这是一份安全领域的资料，如果你对安全感兴趣的话，可以阅读一下内容。</li>
+</ul>
+<h3 id="周报"><a href="#周报" class="headerlink" title="周报"></a>周报</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fweekly.75team.com%2F">奇舞周刊</a>，每周都会整理一份不错的中文文章合集。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fweekly.techbridge.cc%2F">TechBridge Weekly</a>，这是一份台湾地区整理的一份多个技术领域的周报。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fjavascriptweekly.com%2F">JavaScript Weekly</a>，这是一份相当有名气的英文周报，整理的文章质量都很高，如果你只想订阅一份周报，那就是它了。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fponyfoo.com%2Fweekly">Pony Foo Weekly</a>，这也是一份不错的英文周报，文章质量也很高，并且和上一份周报重叠的内容不多。</li>
+</ul>
+<h3 id="Medium"><a href="#Medium" class="headerlink" title="Medium"></a>Medium</h3><p>Medium 上我并没有怎么固定阅读，更多的是订阅它的日报或者从别的周报上看到的 Medium 的文章，但是如果一定要推荐两个组织的话，我只推荐这两个，毕竟他们的文章质量都很高。</p>
+<ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fmedium.freecodecamp.org%2F">freecodecamp</a></li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fhackernoon.com%2F">hackernoon</a></li>
+</ul>
+<h3 id="Youtube"><a href="#Youtube" class="headerlink" title="Youtube"></a>Youtube</h3><p>Youtube 有很多高质量的视频，但是门槛大家都知道，这里我推荐一些值得订阅的频道。</p>
+<ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCzoVCacndDCfGDf41P-z0iA">JSConf</a>，很多会议的视频你都可以在这里找到。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCnUYZLuoy1rq1aVMwx4aTzw">Google Chrome Developers</a>，Google 金字招牌，没啥好说的。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUC9-y-6csu5WGm29I7JiwpnA">Computerphile</a>，内容偏向于计算机领域。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCtxCXg-UvSnTKPOzLH4wJaQ%2Fvideos">Coding Tech</a>，内容偏向于入门。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fchannel%2FUCO1cgjhGzsSYb1rsB4bFe4Q">Fun Fun Function</a>，如果你想学习函数式编程的一些内容，这是一个值得订阅的频道。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fwww.youtube.com%2Fuser%2FDevTipsForDesigners%2Fvideos">DevTips</a>，每周更新一个视频，能够学习到不少开发中的 Tips。</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fdavideuler%2Farchitecture.of.internet-product">互联网公司技术架构</a>，这份资料介绍了当下互联网公司的一个技术架构。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Ftrekhleb%2Fjavascript-algorithms">javascript-algorithms</a>，这份资料作者使用了 JS 来实现了大部分的数据结构和算法。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fjamiebuilds%2Fthe-super-tiny-compiler">小型编译器</a>，这份资料告诉了我们该如何去实现一个小型的编译器，很适合前端开发者阅读。</li>
+<li><a href="https://link.juejin.im/?target=https%3A%2F%2Fgithub.com%2Fmtdvio%2Fevery-programmer-should-know">every-programmer-should-know</a>，这份资料列举了很多每个开发者都应该知道的知识点。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/前端面试题目汇总摘录-JS 基础篇3.html" title="前端面试题目汇总摘录（JS 基础篇3）">http://laibh.top/前端面试题目汇总摘录-JS 基础篇3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端面试题/" <i class="fa fa-tag"></i> 前端面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-04-13-webpack4x从基础到实战.html" rel="next" title="webpack4.x从基础到实战">
+                <i class="fa fa-chevron-left"></i> webpack4.x从基础到实战
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-05-11-React-SSR浅析.html" rel="prev" title="React-SSR浅析">
+                React-SSR浅析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-基础3"><span class="nav-number">1.</span> <span class="nav-text">JS 基础3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控"><span class="nav-number">2.</span> <span class="nav-text">监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#页面埋点"><span class="nav-number">2.1.</span> <span class="nav-text">页面埋点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能监控"><span class="nav-number">2.2.</span> <span class="nav-text">性能监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常监控"><span class="nav-number">2.3.</span> <span class="nav-text">异常监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常考的面试题目：UDP-与-TCP-的区别是什么？"><span class="nav-number">3.</span> <span class="nav-text">常考的面试题目：UDP 与 TCP 的区别是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP"><span class="nav-number">4.</span> <span class="nav-text">UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#面向无连接"><span class="nav-number">4.1.</span> <span class="nav-text">面向无连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可靠性"><span class="nav-number">4.2.</span> <span class="nav-text">不可靠性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高效"><span class="nav-number">4.3.</span> <span class="nav-text">高效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输方式"><span class="nav-number">4.4.</span> <span class="nav-text">传输方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适用的场景"><span class="nav-number">4.5.</span> <span class="nav-text">适用的场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直播"><span class="nav-number">4.5.1.</span> <span class="nav-text">直播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#王者荣耀"><span class="nav-number">4.5.2.</span> <span class="nav-text">王者荣耀</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP"><span class="nav-number">5.</span> <span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#状态机"><span class="nav-number">5.1.</span> <span class="nav-text">状态机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立连接三次握手"><span class="nav-number">5.2.</span> <span class="nav-text">建立连接三次握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一次握手"><span class="nav-number">5.2.1.</span> <span class="nav-text">第一次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二次握手"><span class="nav-number">5.2.2.</span> <span class="nav-text">第二次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三次握手"><span class="nav-number">5.2.3.</span> <span class="nav-text">第三次握手</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#断开连接四次握手"><span class="nav-number">5.3.</span> <span class="nav-text">断开连接四次握手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一次握手-1"><span class="nav-number">5.3.1.</span> <span class="nav-text">第一次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二次握手-1"><span class="nav-number">5.3.2.</span> <span class="nav-text">第二次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三次握手-1"><span class="nav-number">5.3.3.</span> <span class="nav-text">第三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四次握手"><span class="nav-number">5.3.4.</span> <span class="nav-text">第四次握手</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARQ-协议"><span class="nav-number">6.</span> <span class="nav-text">ARQ 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#停止等待-ARQ"><span class="nav-number">6.1.</span> <span class="nav-text">停止等待 ARQ</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#正常传输协议"><span class="nav-number">6.1.1.</span> <span class="nav-text">正常传输协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#报文丢失或者出错"><span class="nav-number">6.1.2.</span> <span class="nav-text">报文丢失或者出错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ACK-超时或者丢失"><span class="nav-number">6.1.3.</span> <span class="nav-text">ACK 超时或者丢失</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续ARQ"><span class="nav-number">6.2.</span> <span class="nav-text">连续ARQ</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#累计确认"><span class="nav-number">6.2.1.</span> <span class="nav-text">累计确认</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#滑动窗口"><span class="nav-number">6.2.2.</span> <span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zero-窗口"><span class="nav-number">6.2.3.</span> <span class="nav-text">zero 窗口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拥塞处理"><span class="nav-number">6.3.</span> <span class="nav-text">拥塞处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#慢开始算法"><span class="nav-number">6.3.1.</span> <span class="nav-text">慢开始算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拥塞避免算法"><span class="nav-number">6.3.2.</span> <span class="nav-text">拥塞避免算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速重传"><span class="nav-number">6.3.3.</span> <span class="nav-text">快速重传</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-New-Ren-改进后的快恢复"><span class="nav-number">6.3.4.</span> <span class="nav-text">TCP New Ren 改进后的快恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">6.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-以及-TLS"><span class="nav-number">7.</span> <span class="nav-text">HTTP 以及 TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-请求的内容"><span class="nav-number">7.1.</span> <span class="nav-text">HTTP 请求的内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#副作用和幂等"><span class="nav-number">7.2.</span> <span class="nav-text">副作用和幂等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首部"><span class="nav-number">7.3.</span> <span class="nav-text">首部</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通用首部"><span class="nav-number">7.3.1.</span> <span class="nav-text">通用首部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求首部"><span class="nav-number">7.3.2.</span> <span class="nav-text">请求首部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应首部"><span class="nav-number">7.3.3.</span> <span class="nav-text">响应首部</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实体首部"><span class="nav-number">7.3.4.</span> <span class="nav-text">实体首部</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的状态码"><span class="nav-number">7.4.</span> <span class="nav-text">常见的状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#状态码的类别"><span class="nav-number">7.4.1.</span> <span class="nav-text">状态码的类别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2XX-成功"><span class="nav-number">7.4.2.</span> <span class="nav-text">2XX 成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3XX-重定向"><span class="nav-number">7.4.3.</span> <span class="nav-text">3XX 重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4XX-客户端错误"><span class="nav-number">7.4.4.</span> <span class="nav-text">4XX 客户端错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5XX-服务器错误"><span class="nav-number">7.4.5.</span> <span class="nav-text">5XX 服务器错误</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TLS"><span class="nav-number">7.5.</span> <span class="nav-text">TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对称加密"><span class="nav-number">7.5.1.</span> <span class="nav-text">对称加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非对称机密"><span class="nav-number">7.5.2.</span> <span class="nav-text">非对称机密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2-以及-HTTP-3"><span class="nav-number">7.6.</span> <span class="nav-text">HTTP/2 以及 HTTP/3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-number">7.7.</span> <span class="nav-text">HTTP/2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二进制传输"><span class="nav-number">7.8.</span> <span class="nav-text">二进制传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多路复用"><span class="nav-number">7.9.</span> <span class="nav-text">多路复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Header-压缩"><span class="nav-number">7.10.</span> <span class="nav-text">Header 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端-Push"><span class="nav-number">7.11.</span> <span class="nav-text">服务端 Push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-3"><span class="nav-number">7.12.</span> <span class="nav-text">HTTP/3</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#QUIC"><span class="nav-number">7.12.1.</span> <span class="nav-text">QUIC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多路复用-1"><span class="nav-number">7.12.2.</span> <span class="nav-text">多路复用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0-RRT"><span class="nav-number">7.12.3.</span> <span class="nav-text">0-RRT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#纠错机制"><span class="nav-number">7.12.4.</span> <span class="nav-text">纠错机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结-1"><span class="nav-number">7.12.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入-URL-到页面渲染的整个过程"><span class="nav-number">8.</span> <span class="nav-text">输入 URL 到页面渲染的整个过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">8.1.</span> <span class="nav-text">DNS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计模式"><span class="nav-number">9.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂模式"><span class="nav-number">9.1.</span> <span class="nav-text">工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例模式"><span class="nav-number">9.2.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适配器模式"><span class="nav-number">9.3.</span> <span class="nav-text">适配器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰模式"><span class="nav-number">9.4.</span> <span class="nav-text">装饰模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理模式"><span class="nav-number">9.5.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布-订阅模式"><span class="nav-number">9.6.</span> <span class="nav-text">发布-订阅模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外观模式"><span class="nav-number">9.7.</span> <span class="nav-text">外观模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见数据结构"><span class="nav-number">10.</span> <span class="nav-text">常见数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大O表示法"><span class="nav-number">10.1.</span> <span class="nav-text">大O表示法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用数据结构的时间复杂度"><span class="nav-number">10.2.</span> <span class="nav-text">常用数据结构的时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构"><span class="nav-number">10.2.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#排序算法"><span class="nav-number">10.2.2.</span> <span class="nav-text">排序算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈"><span class="nav-number">10.3.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现"><span class="nav-number">10.3.1.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">10.3.2.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列"><span class="nav-number">10.4.</span> <span class="nav-text">队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现-1"><span class="nav-number">10.4.1.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#单链队列"><span class="nav-number">10.4.1.1.</span> <span class="nav-text">单链队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#循环队列"><span class="nav-number">10.4.1.2.</span> <span class="nav-text">循环队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">10.5.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现-2"><span class="nav-number">10.5.1.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树"><span class="nav-number">10.6.</span> <span class="nav-text">树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树"><span class="nav-number">10.6.1.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二分搜索树"><span class="nav-number">10.6.2.</span> <span class="nav-text">二分搜索树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现-3"><span class="nav-number">10.6.3.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-常考面试题目资料"><span class="nav-number">11.</span> <span class="nav-text">CSS 常考面试题目资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐的资料"><span class="nav-number">12.</span> <span class="nav-text">推荐的资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS"><span class="nav-number">12.1.</span> <span class="nav-text">JS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-number">12.2.</span> <span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">12.3.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">12.4.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全"><span class="nav-number">12.5.</span> <span class="nav-text">安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#周报"><span class="nav-number">12.6.</span> <span class="nav-text">周报</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Medium"><span class="nav-number">12.7.</span> <span class="nav-text">Medium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Youtube"><span class="nav-number">12.8.</span> <span class="nav-text">Youtube</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">12.9.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

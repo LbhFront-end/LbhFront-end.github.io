@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="之前介绍了一些顺序数据结构，介绍的第一个非顺序数据结构是散列表。本章才会学习另一种非顺序数据结构——树，它对于存储需要快速寻找的数据非常有用。 本章内容  树的相关术语 创建树数据结构 树的遍历 添加和移除书的节点 AVL 树  第八章 树树数据结构树是一种分层数据的抽象模型。现实生活中最常见的树的典型例子就是家谱，或是公司的组织架构。如下图所示。  树的相关术语一个树结构包含一系列存在父子关系的">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第八章）—— 树">
+<meta property="og:url" content="http://laibh.top/2018-11-05-JavaScipt数据结构与算法Part8.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="之前介绍了一些顺序数据结构，介绍的第一个非顺序数据结构是散列表。本章才会学习另一种非顺序数据结构——树，它对于存储需要快速寻找的数据非常有用。 本章内容  树的相关术语 创建树数据结构 树的遍历 添加和移除书的节点 AVL 树  第八章 树树数据结构树是一种分层数据的抽象模型。现实生活中最常见的树的典型例子就是家谱，或是公司的组织架构。如下图所示。  树的相关术语一个树结构包含一系列存在父子关系的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-数据结构.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-节点.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-二叉搜索树组织方式.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-中序遍历.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-先序遍历.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-后序遍历.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-树-实例.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第八章）—— 树">
+<meta name="twitter:description" content="之前介绍了一些顺序数据结构，介绍的第一个非顺序数据结构是散列表。本章才会学习另一种非顺序数据结构——树，它对于存储需要快速寻找的数据非常有用。 本章内容  树的相关术语 创建树数据结构 树的遍历 添加和移除书的节点 AVL 树  第八章 树树数据结构树是一种分层数据的抽象模型。现实生活中最常见的树的典型例子就是家谱，或是公司的组织架构。如下图所示。  树的相关术语一个树结构包含一系列存在父子关系的">
+<meta name="twitter:image" content="http://laibh.top/images/js数据结构与算法-树-数据结构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-11-05-JavaScipt数据结构与算法Part8.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第八章）—— 树 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-11-05-JavaScipt数据结构与算法Part8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第八章）—— 树</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T15:13:41+08:00">
+                2018-11-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-11-05-JavaScipt数据结构与算法Part8.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第八章）—— 树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,896
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前介绍了一些顺序数据结构，介绍的第一个非顺序数据结构是散列表。本章才会学习另一种非顺序数据结构——树，它对于存储需要快速寻找的数据非常有用。</p>
+<p>本章内容</p>
+<ul>
+<li>树的相关术语</li>
+<li>创建树数据结构</li>
+<li>树的遍历</li>
+<li>添加和移除书的节点</li>
+<li>AVL 树</li>
+</ul>
+<h2 id="第八章-树"><a href="#第八章-树" class="headerlink" title="第八章 树"></a>第八章 树</h2><h3 id="树数据结构"><a href="#树数据结构" class="headerlink" title="树数据结构"></a>树数据结构</h3><p>树是一种分层数据的抽象模型。现实生活中最常见的树的典型例子就是家谱，或是公司的组织架构。如下图所示。</p>
+<p><img src="/images/js数据结构与算法-树-数据结构.png" alt="树的数据结构"></p>
+<h3 id="树的相关术语"><a href="#树的相关术语" class="headerlink" title="树的相关术语"></a>树的相关术语</h3><p>一个树结构包含一系列存在父子关系的节点。每个节点都有一个父节点（除了顶部的第一个节点）已经零个或者多个子节点：</p>
+<p><img src="/images/js数据结构与算法-树-节点.png" alt="树的数据结构"></p>
+<p>位于树顶部的节点叫做根节点（11）。它没有父节点。树中的每个元素都叫做节点，节点分成内部节点和外部节点。至少有一个子节点的节点称为内部节点（7/5/9/12/13/20是内部节点）。没有子元素的节点被称为外部节点或者是叶节点（3/6/8/10/12/14/18/25 是叶节点）、</p>
+<p>一个节点可以有祖先和后代，一个节点（除了根节点）的祖先包括父节点、祖父节点、增祖父节点等。一个节点的后代包括子节点、孙子节点、增孙子节点等。例如，节点5的祖先有节点7和节点11，后代有节点3和节点6.</p>
+<p>有关树的另外一个术语是子树。子树由节点和它的后代构成。例如，节点13/12和14 构成了上图中的树的一颗子树。</p>
+<p>节点的一个属性是深度，节点的深度取决于它的祖先节点的数量。比如，节点3有三个祖先节点（5/7/11），它的深度为3</p>
+<p>树的高度取决于所有节点的深度的最大值。一颗树也可以被分解成层级。根节点在第0层，它的子节点在第1层，以此类推。上图中的树的高度为3</p>
+<h3 id="二叉树和二叉搜索树"><a href="#二叉树和二叉搜索树" class="headerlink" title="二叉树和二叉搜索树"></a>二叉树和二叉搜索树</h3><p>二叉树的节点最多只能有两个子节点：一个是左侧子节点，另外一个右侧子节点。这些定义有助于我们写出更高效的从树中插入、查找和删除节点的算法。二叉树在计算机科学中的应用非常广泛。</p>
+<p>二叉搜索树（BST）是二叉树的一种，但是它只允许你在左侧节点存储（比父节点）小的值，在右侧节点存储（比父节点）大（或者等于）的值。</p>
+<p>二叉搜索树将是我们在本章要研究的数据结构。</p>
+<h3 id="创建BinarySearchTree-类"><a href="#创建BinarySearchTree-类" class="headerlink" title="创建BinarySearchTree 类"></a>创建BinarySearchTree 类</h3><p>首先，声明它的结构：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BinarySearchTree</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.left = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.right = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> root = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面展现了二叉搜索树结构的组织方式：</p>
+<p><img src="/images/js数据结构与算法-树-二叉搜索树组织方式.png" alt="二叉搜索树组织方式"></p>
+<p>和链表一样，将通过指针来表示节点之间的关系（术语称其为边）。在双向链表中，每个节点包含两个指针，一个指向下一个节点，一个指向上一个节点。对于树，使用同样的方式（也是使用两个指针）。但是，一个指向左侧子节点，另一个指向右侧子节点。因此，将声明一个 Node 类来表示的书的每个节点。不同于前面的章节，我们会将节点本身称为键而不是节点或者是项。键是树相关的术语种对节点的称呼。</p>
+<p>我们将会遵循第五章 LinkedList 类相同的模式，这表示也将声明一个变量以控制此数据结构的第一个节点。在树中，它不再是头节点，而是根元素。</p>
+<p>下面是将要在树类中实现的方法</p>
+<ul>
+<li>insert（key）：向树中插入一个新的键</li>
+<li>search（key）：在树中查找一个键，如果节点存在，则返回 true,否则返回 false</li>
+<li>inOrderTraverse：通过中序遍历方式遍历所有节点</li>
+<li>preOrderTraverse：通过先序遍历方式遍历所有节点</li>
+<li>postOrderTraverse：通过后序遍历方式遍历所有节点</li>
+<li>min：返回树中最小的值/键</li>
+<li>max：返回树中最大的值/键</li>
+<li>remove（key）：从树中移除某个键</li>
+</ul>
+<h3 id="向树中插入一个键"><a href="#向树中插入一个键" class="headerlink" title="向树中插入一个键"></a>向树中插入一个键</h3><p>本章要实现的方法会比之前的要复杂很多，要用到递归。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> newNode = <span class="keyword">new</span> Node(key);</span><br><span class="line">    <span class="keyword">if</span>(root === <span class="literal">null</span>)&#123;</span><br><span class="line">        root = newNode;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        insertNode(root,newNode)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要向树中插入一个新的节点，要经历三个步骤</p>
+<ol>
+<li>是创建用来表示新节点的Node 类实例，只需要向构造函数传递我们想用来插入树的节点值，它的左指针和右指针会由构造函数与自动设置为 null</li>
+<li>验证这个插入操作是否为一种特殊情况。这个特殊情况就是我们要插入的节点是树的第一个节点。如果是，就将节点指向新节点。</li>
+<li>如果不是，就要将节点加在非根节点的其他位置。这种情况下，需要一个私有的辅助函数</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> insertNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,newNode</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(newNode.key &lt; node.key)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span>)&#123;</span><br><span class="line">            node.left = newNode;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            insertNode(node.left,newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node.right = newNode;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            insertNode(node.right,newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>insertNode 函数会帮助我们找到新节点应该插入的正确位置，下面是这个函数实现的步骤。</p>
+<ol>
+<li>如果树非空，需要找到插入新节点的位置，因此在调用 insertNode 方法时要通过参数传入根书的根节点和要插入的节点。</li>
+<li>如果新节点的键小于当前节点的键（当前节点就是根节点），那么需要检查当前节点的左侧节点，需要通过递归调用 insertNode 方法继续需要树的下一层，在这里，下次将要比较的节点就会是当前节点的左侧节点。</li>
+<li>如果节点的键大于当前节点的键，同时当前节点没有右侧子节点，就在那里插入洗的节点。如果有右侧子节点，同样需要递归调用 insertNode 方法，但是要用来和新节点比较的节点将会是右侧子节点。</li>
+</ol>
+<h3 id="树的遍历"><a href="#树的遍历" class="headerlink" title="树的遍历"></a>树的遍历</h3><p>遍历一颗树是指访问树的每个节点并对它们进行某种操作的过程。访问树的所有节点有三种方法：中序、先序和后序。</p>
+<h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><p>中序遍历是一种以上行顺序访问BST 所有节点的遍历方式，也就是以最小和最大的顺序访问所有节点。中序遍历的一种应用就是对数进行排序操作。实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.inOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    inOrderTraverseNode(root,callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>inOrderTraverse 方法接受一个回调函数作为参数。回调函数用来定义我们对遍历到的每个节点进行的操作（这也叫做访问者模式）。由于我们在BST 中最常见实现的算法是递归，这里使用一个私有的辅助函数，来接受一个节点和对应的回调函数作为参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        inOrderTraverseNode(node.left, callback);</span><br><span class="line">        callback(node.key)</span><br><span class="line">        inOrderTraverseNode(node.left, callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要通过中序遍历的方法遍历一棵树，首先要检查以参数形式传入的节点是否为 null （这就是停止递归继续执行的判断条件）</p>
+<p>然后递归调用相同的函数来访问左侧子节点，或者对这个节点进行一些操作（callback）,然后再访问右侧子节点。</p>
+<p>测试。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tree = <span class="keyword">new</span> BinarySearchTree();</span><br><span class="line">tree.insert(<span class="number">11</span>);</span><br><span class="line">tree.insert(<span class="number">7</span>);</span><br><span class="line">tree.insert(<span class="number">15</span>);</span><br><span class="line">tree.insert(<span class="number">5</span>);</span><br><span class="line">tree.insert(<span class="number">3</span>);</span><br><span class="line">tree.insert(<span class="number">9</span>);</span><br><span class="line">tree.insert(<span class="number">8</span>);</span><br><span class="line">tree.insert(<span class="number">10</span>);</span><br><span class="line">tree.insert(<span class="number">13</span>);</span><br><span class="line">tree.insert(<span class="number">12</span>);</span><br><span class="line">tree.insert(<span class="number">14</span>);</span><br><span class="line">tree.insert(<span class="number">20</span>);</span><br><span class="line">tree.insert(<span class="number">18</span>);</span><br><span class="line">tree.insert(<span class="number">25</span>);</span><br><span class="line">tree.insert(<span class="number">6</span>);</span><br><span class="line">tree.inOrderTraverse(printNode);</span><br><span class="line"><span class="comment">// 3 5 6 7 8 9 10 11 12 13 14 15 18 20 25</span></span><br></pre></td></tr></table></figure>
+<p>下面的图描述了 inOrderTraverse 方法的访问路径</p>
+<p><img src="/images/js数据结构与算法-树-中序遍历.png" alt="中序遍历"></p>
+<h3 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h3><p>先序遍历是以优于后代节点的顺序访问每个节点的。先序遍历的一种应用就是打印一个结构化的文档。</p>
+<p>实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.preOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    preOrderTraverseNode(root,callback);			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>preOrderTraverseNode 方法的实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> preOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        callback(node.key)			</span><br><span class="line">        preOrderTraverseNode(node.left, callback);</span><br><span class="line">        preOrderTraverseNode(node.right, callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先序遍历和中序遍历的不同点是，先序遍历会先访问节点的本身，然后再访问它的左侧子节点，最后是右侧子节点，而中序遍历的执行顺序是：先访问左侧子节点、接着节点本身，最后是右侧子节点。</p>
+<p>下面是测试结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree.preOrderTraverse(printNode);</span><br><span class="line"><span class="comment">// 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25</span></span><br></pre></td></tr></table></figure>
+<p>下面的描述了 preOrderTraverse 方法的访问路径</p>
+<p><img src="/images/js数据结构与算法-树-先序遍历.png" alt="先序遍历"></p>
+<h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3><p>后序遍历是先访问节点的后代节点，再访问节点本身。后序遍历的一种应用是计算一个目录和它的子目录中所有文件所占空间的大小。</p>
+<p>实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.postOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    postOrderTraverseNode(root,callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>postOrderTraverseNode 方法的实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> postOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;		</span><br><span class="line">        postOrderTraverseNode(node.left, callback);</span><br><span class="line">        postOrderTraverseNode(node.right, callback);</span><br><span class="line">        callback(node.key)	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子中，后序遍历会先访问左侧子节点，然后是右侧子节点，最后是父节点。</p>
+<p>下面是测试结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tree.postOrderTraverse(printNode);</span><br><span class="line"><span class="comment">// 3 6 5 8 10 9 7 12 14 13 18 25 20 15 11</span></span><br></pre></td></tr></table></figure>
+<p>下图描述了 postOrderTraverse 方法的访问路径</p>
+<p><img src="/images/js数据结构与算法-树-后序遍历.png" alt="后序遍历"></p>
+<h3 id="搜索树中的值"><a href="#搜索树中的值" class="headerlink" title="搜索树中的值"></a>搜索树中的值</h3><p>在树中，有三种经常执行的搜索类型</p>
+<ul>
+<li>搜索最大值</li>
+<li>搜索最小值</li>
+<li>搜索特定的值</li>
+</ul>
+<h3 id="搜索最小值和最大值"><a href="#搜索最小值和最大值" class="headerlink" title="搜索最小值和最大值"></a>搜索最小值和最大值</h3><p>我们使用下面的树作为实例</p>
+<p><img src="/images/js数据结构与算法-树-实例.png" alt="实例"></p>
+<p>可以一眼发现树最后一层最左侧的节点的值为3，这是这棵树最小的键，如果你再看一眼最右端的树的节点，会发现是25，这是这棵树中最大的键。</p>
+<p>首先，我们来寻找树的最小键的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.min = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> minNode(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>min 方法将会暴露给用户，这个方法调用了 minNode方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> minNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node)&#123;</span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.left !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.left</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>minNode 方法允许我们从树中任意一个节点开始寻找最小的键。我们可以使用它来知道一颗树或者它的子树中最小的键。因为，我们调用 minNode 方法的时候传入树的根节点，因为我们想找到这棵树的最小键。</p>
+<p>在 minNode 内部，我们会遍历树的左边，直到找到树的最下层（最左端）</p>
+<p>相似的方式，可以实现 max 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.max = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> maxNode(root);			</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> maxNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node)&#123;</span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.right !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.right</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'这棵树的最大值：'</span>+tree.max()); <span class="comment">// 25</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'这棵树的最小值：'</span>+tree.min()); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<h3 id="搜索一个特定的值"><a href="#搜索一个特定的值" class="headerlink" title="搜索一个特定的值"></a>搜索一个特定的值</h3><p>实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.search = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> searchNode(root,key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> searchNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">        <span class="keyword">return</span> searchNode(node.left, key)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">        <span class="keyword">return</span> searchNode(node.right, key)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们要做的第一件事就是声明 search 方法。和 BST 中声明的其他方法的模式相同，我们将会使用一个辅助函数。</p>
+<p>searchNode 方法可以用来寻找一棵树或者它的任意子树中的一个特定的值。</p>
+<p>在开始算法前，先验证作为传入参数的node 是否为 null.是则证明要找的键没有找到，返回 false.</p>
+<p>如果传入的不是 null,需要继续验证，如果要找的键比当前的节点小，那么继续在左侧的子树上搜索，反之在右侧子节点开始继续搜索，否则就说明要找的键和当前节点的键相等，就返回 true来表示找到了这个键。</p>
+<p>测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(tree.search(<span class="number">3</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(tree.search(<span class="number">28</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="移除一个节点"><a href="#移除一个节点" class="headerlink" title="移除一个节点"></a>移除一个节点</h3><p>移除方法是最复杂的，实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    root = removeNode(root,key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法接受要移除并且它调用了 removeNode 方法，传入 root 和要移除的键作为参数。</p>
+<p>removeNode 复制在于我们处理不同的运行场景，还是通过递归来实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> removeNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">        node.left = removeNode(node.left,key)</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">        node.right = removeNode(node.right,key)</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 一个叶节点</span></span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 只有一个子节点的节点</span></span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span>)&#123; </span><br><span class="line">            node = node.right</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.right;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 一个有两个子节点的节点</span></span><br><span class="line">        <span class="keyword">var</span> aux = findMinNode(node.right);</span><br><span class="line">        node.key = aux.key;</span><br><span class="line">        node.right = removeNode(node.right,aux.key);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>移除一个叶节点</strong></p>
+<p>第一种情况是该节点是一个没有左侧或者右侧子节点的叶节点。在这种情况下，我们要做的就是给这个节点赋予 null  来移除它。但是学习了链表的实现后，我们知道仅仅赋予一个 null 值是不够的，还需要处理指针。在这里，这个节点没有任何的子节点，但是它有一个父节点，需要通过返回 null 来将对应的父节点指针赋值 null （return node）。</p>
+<p>现在节点的值已经是 null ，父节点指向它的指针也会接收这个值，这也是我们在函数中返回节点的值的原因。父节点总是会接受到函数的返回值、另外一个可行的方法就是将父节点和节点本身都作为参数传入方法内部。</p>
+<p><strong>移除有一个左侧或右侧子节点的节点</strong></p>
+<p>移除有一个左侧子节点或右侧子节点的节点。在这种情况下，需要跳过这个节点，直接将父节点指向它的指针指向子节点。</p>
+<p>如果这个节点没有左侧子节点，也就是说它有一个右侧子节点。因为我们把对它的引用改为对它右侧子节点的引用，并返回更新后的节点。如果这个节点没有右侧子节点，也是一样——把对它的引用改为对它左侧子节点的引用并返回更新后的值。</p>
+<p><strong>移除有两个子节点的节点</strong></p>
+<p>最复杂的情况就是要移除的节点有两个子节点——左侧子节点和右侧子节点。要移除有两个子节点的节点，需要执行四个步骤</p>
+<ol>
+<li>当找到了需要移除的节点后，需要找到它右边子树中最小的节点（它的继承者 var aux = finMinNode(node.right)）</li>
+<li>然后，用它右侧子树中最小节点的键去更新这个节点的值（node.key = zux.key）。通过这一步，我们改变了这个节点的键，也就是它被移除了。</li>
+<li>但是，这样在树中就有两个拥有相同键的节点了，需要继续把右侧子树中的最小节点移除，毕竟它已经被移至要移除的节点的位置了。</li>
+<li>最后，向它的父节点返回更新后节点的引用。</li>
+</ol>
+<p>findMinNode 方法的实现和 min 方法的实现方式是一样的。唯一不同之处在于，在 min 方法中只返回键，而在 findMinNode 中返回了节点。</p>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> insertNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,newNode</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(newNode.key &lt; node.key)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span>)&#123;</span><br><span class="line">            node.left = newNode;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            insertNode(node.left,newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node.right = newNode;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            insertNode(node.right,newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> inOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        inOrderTraverseNode(node.left, callback);</span><br><span class="line">        callback(node.key)</span><br><span class="line">        inOrderTraverseNode(node.right, callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> preOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;</span><br><span class="line">        callback(node.key)			</span><br><span class="line">        preOrderTraverseNode(node.left, callback);</span><br><span class="line">        preOrderTraverseNode(node.right, callback);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;	</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> postOrderTraverseNode = <span class="function"><span class="keyword">function</span>(<span class="params">node, callback</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node !== <span class="literal">null</span>)&#123;		</span><br><span class="line">        postOrderTraverseNode(node.left, callback);</span><br><span class="line">        postOrderTraverseNode(node.right, callback);</span><br><span class="line">        callback(node.key)	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> minNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node)&#123;</span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.left !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.left</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;	</span><br><span class="line"><span class="keyword">var</span> maxNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node)&#123;</span><br><span class="line">        <span class="keyword">while</span>(node &amp;&amp; node.right !== <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.right</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.key</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> searchNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">        <span class="keyword">return</span> searchNode(node.left, key)</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">        <span class="keyword">return</span> searchNode(node.right, key)</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> removeNode = <span class="function"><span class="keyword">function</span>(<span class="params">node,key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(key &lt; node.key)&#123;</span><br><span class="line">        node.left = removeNode(node.left,key)</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node.key)&#123;</span><br><span class="line">        node.right = removeNode(node.right,key)</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 一个叶节点</span></span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span> &amp;&amp; node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 只有一个子节点的节点</span></span><br><span class="line">        <span class="keyword">if</span>(node.left === <span class="literal">null</span>)&#123; </span><br><span class="line">            node = node.right</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(node.right === <span class="literal">null</span>)&#123;</span><br><span class="line">            node = node.right;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 一个有两个子节点的节点</span></span><br><span class="line">        <span class="keyword">var</span> aux = findMinNode(node.right);</span><br><span class="line">        node.key = aux.key;</span><br><span class="line">        node.right = removeNode(node.right,aux.key);</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> findMinNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(node &amp;&amp; node.left !== <span class="literal">null</span>)&#123;</span><br><span class="line">        node = node.left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> heightNode = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(node === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.max(heightNode(node.left),heightNode(node.right))+ <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> printNode = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BinarySearchTree</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.left = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.right = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> root = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newNode = <span class="keyword">new</span> Node(key);</span><br><span class="line">        <span class="keyword">if</span>(root === <span class="literal">null</span>)&#123;</span><br><span class="line">            root = newNode;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            insertNode(root,newNode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.search = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> searchNode(root,key)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.inOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">        inOrderTraverseNode(root,callback);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.preOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">        preOrderTraverseNode(root,callback);			</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.postOrderTraverse = <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">        postOrderTraverseNode(root,callback);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.min = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> minNode(root);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.max = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxNode(root);			</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">        root = removeNode(root,key);</span><br><span class="line">        <span class="built_in">console</span>.log(root);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.deep = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> heightNode(root);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自平衡树"><a href="#自平衡树" class="headerlink" title="自平衡树"></a>自平衡树</h3><p>BST 存在一个问题：取决于你添加的节点数，树的一条边可能会非常深，也就是说，树的一条分支会有很多层，而其他的分支却只有几层。</p>
+<p>为了解决这个问题，有一种树叫做 Sdelson-Velskii-Land 树（AVL 树）。一种自平衡的二叉搜索树，意思是任何一个节点左右两侧子树的高度之差最多为1，也就是说这种树会在添加和移除节点时尽量试着成为一颗完全的树。</p>
+<p>这里不做具体深入实现，尽管AVL树是自平衡的，其插入和移除节点的性能并不总是最好的。更好的选择是红黑树。红黑树可以高效有序的遍历其节点。有兴趣的请自行百度</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这章介绍了广泛使用的基本树数据结构——二叉搜索树中添加、移除和搜索项的算法。同样介绍了访问树中每个节点的三种遍历方式——中序、先序、后序遍历</p>
+<p>下一章，将学习图的基本概念，也是一种非线性的数据结构。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-11-05-JavaScipt数据结构与算法Part8.html" title="为什么我要放弃javaScript数据结构与算法（第八章）—— 树">http://laibh.top/2018-11-05-JavaScipt数据结构与算法Part8.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-11-06-JavaScipt数据结构与算法Part9.html" rel="next" title="为什么我要放弃javaScript数据结构与算法（第九章）—— 图">
+                <i class="fa fa-chevron-left"></i> 为什么我要放弃javaScript数据结构与算法（第九章）—— 图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-07-JavaScipt数据结构与算法Part10.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第十章）—— 排序和搜索算法">
+                为什么我要放弃javaScript数据结构与算法（第十章）—— 排序和搜索算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第八章-树"><span class="nav-number">1.</span> <span class="nav-text">第八章 树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#树数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">树数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树的相关术语"><span class="nav-number">1.2.</span> <span class="nav-text">树的相关术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树和二叉搜索树"><span class="nav-number">1.3.</span> <span class="nav-text">二叉树和二叉搜索树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建BinarySearchTree-类"><span class="nav-number">1.4.</span> <span class="nav-text">创建BinarySearchTree 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向树中插入一个键"><span class="nav-number">1.5.</span> <span class="nav-text">向树中插入一个键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树的遍历"><span class="nav-number">1.6.</span> <span class="nav-text">树的遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中序遍历"><span class="nav-number">1.7.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先序遍历"><span class="nav-number">1.8.</span> <span class="nav-text">先序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后序遍历"><span class="nav-number">1.9.</span> <span class="nav-text">后序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索树中的值"><span class="nav-number">1.10.</span> <span class="nav-text">搜索树中的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索最小值和最大值"><span class="nav-number">1.11.</span> <span class="nav-text">搜索最小值和最大值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索一个特定的值"><span class="nav-number">1.12.</span> <span class="nav-text">搜索一个特定的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除一个节点"><span class="nav-number">1.13.</span> <span class="nav-text">移除一个节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">1.14.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自平衡树"><span class="nav-number">1.15.</span> <span class="nav-text">自平衡树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.16.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

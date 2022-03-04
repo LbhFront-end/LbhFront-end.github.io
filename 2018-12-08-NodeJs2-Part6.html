@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 深入了解Connect 和 Express本章内容  了解 Connect 和 Express 是用来做什么的 中间件的使用和创建 Express 程序的创建和配置 用 Express 中的关键即使处理错误、渲染视图和表单 用 Express 的 架构技术实现路由、REST API 和用户认证  Connect">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— 深入了解Connect 和 Express">
+<meta property="og:url" content="http://laibh.top/2018-12-08-NodeJs2-Part6.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 深入了解Connect 和 Express本章内容  了解 Connect 和 Express 是用来做什么的 中间件的使用和创建 Express 程序的创建和配置 用 Express 中的关键即使处理错误、渲染视图和表单 用 Express 的 架构技术实现路由、REST API 和用户认证  Connect">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-两个%20HTTP%20请求穿过%20Connect%20服务器的生命周期.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-引发了错误的%20HTTP%20请求在%20Connect%20服务器中的生命周期.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-视图缓存设置.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-Express%20视图查找过程.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-给%20render%20函数的值优先级最高.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-首页.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-node-user-test.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-取出哈希表.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-register.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-测试用户数据获取.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— 深入了解Connect 和 Express">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 深入了解Connect 和 Express本章内容  了解 Connect 和 Express 是用来做什么的 中间件的使用和创建 Express 程序的创建和配置 用 Express 中的关键即使处理错误、渲染视图和表单 用 Express 的 架构技术实现路由、REST API 和用户认证  Connect">
+<meta name="twitter:image" content="http://laibh.top/images/2018-12-08-NodeJs2-Part6-两个%20HTTP%20请求穿过%20Connect%20服务器的生命周期.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-08-NodeJs2-Part6.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— 深入了解Connect 和 Express | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-08-NodeJs2-Part6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— 深入了解Connect 和 Express</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T11:30:00+08:00">
+                2018-12-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-08-NodeJs2-Part6.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— 深入了解Connect 和 Express">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  13,636
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="深入了解Connect-和-Express"><a href="#深入了解Connect-和-Express" class="headerlink" title="深入了解Connect 和 Express"></a>深入了解Connect 和 Express</h2><p>本章内容</p>
+<ul>
+<li>了解 Connect 和 Express 是用来做什么的</li>
+<li>中间件的使用和创建</li>
+<li>Express 程序的创建和配置</li>
+<li>用 Express 中的关键即使处理错误、渲染视图和表单</li>
+<li>用 Express 的 架构技术实现路由、REST API 和用户认证</li>
+</ul>
+<h3 id="Connect"><a href="#Connect" class="headerlink" title="Connect"></a>Connect</h3><h4 id="创建-Connect-程序"><a href="#创建-Connect-程序" class="headerlink" title="创建 Connect 程序"></a><strong>创建 Connect 程序</strong></h4><p>Connect 以前是 Express 的基础，但实际上只用 Connect 也能做出完整的 Web 程序。安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i connect</span><br></pre></td></tr></table></figure>
+<p>最简单的 Connect 程序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'connect'</span>)();</span><br><span class="line">app.use(<span class="function">(<span class="params">req,res,next</span>) =&gt;</span>&#123;</span><br><span class="line">    res.end(<span class="string">'Hello, world!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
+<p>打开 <a href="http://localhost:3000">http://localhost:3000</a> 可以看到网页。</p>
+<h4 id="了解-Connect-中间件的工作机制"><a href="#了解-Connect-中间件的工作机制" class="headerlink" title="了解 Connect 中间件的工作机制"></a><strong>了解 Connect 中间件的工作机制</strong></h4><p>Connect 中间件是 JavaScript 函数，这个函数一般会有三个参数：请求对象、响应对象以及一个名为 next 的回调函数。一个中间件完成自己的工作，要执行后续的中间件，可以调用这个回调函数。</p>
+<p>中间件运行之前，Connect 会用分派器接管请求对象，然后交给程序中的第一个中间件。下图是 典型的Connect 程序的示意图，由分派器和一组中间件组成，这些中间件包括日志记录、消息体解析器、静态文件服务器和定制中间件。</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-两个 HTTP 请求穿过 Connect 服务器的生命周期.png" alt="两个 HTTP 请求穿过 Connect 服务器的生命周期"></p>
+<p>由此可见，借助中间件 API ，可以把一些小的构件块组合在一起，实现复杂的处理逻辑。</p>
+<h4 id="组合中间件"><a href="#组合中间件" class="headerlink" title="组合中间件"></a><strong>组合中间件</strong></h4><p>Connect 中的 use 方法就是用来组合中间件的。我们来定义两个中间件函数，然后把它们都添加到程序中，其中一个是之前的那个例子里的 hello 函数，另外一个是 logger.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connect = <span class="built_in">require</span>(<span class="string">'connect'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logger</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'%s %s'</span>,req.method,req.url);</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain'</span>);</span><br><span class="line">    res.end(<span class="string">'Hello world'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">connect()</span><br><span class="line">.use(logger)</span><br><span class="line">.use(hello)</span><br><span class="line">.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>这两个中间件的名称签名不一样：一个有 next ,一个没有，因为后面这个中间件完成了  HTTP 响应，再也不需要把控制权交给分派器了。</p>
+<p>use() 函数返回的是 Connect 程序的实例，支持方法链，不过并不一定要把 .use() 链起来，像下面这样也可以：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> app = connect();</span><br><span class="line">app.use(logger);</span><br><span class="line">app.use(hello);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="中间件的顺序"><a href="#中间件的顺序" class="headerlink" title="中间件的顺序"></a><strong>中间件的顺序</strong></h4><p>中间件的顺序会对程序的行为产生显著影响，漏掉 next() 能停止执行，也可以通过组合中间件实现用户认证之类的功能。</p>
+<p>尝试调换顺序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connect = <span class="built_in">require</span>(<span class="string">'connect'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logger</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'%s %s'</span>,req.method,req.url);</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain'</span>);</span><br><span class="line">    res.end(<span class="string">'Hello world'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">connect()</span><br><span class="line">.use(hello)</span><br><span class="line">.use(logger)</span><br><span class="line">.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>上面例子先调用 hello,程序如期返回响应结果，但 logger 永远也不会执行，因为 hello 没有调用 next().所以控制权没有交回给分派器，它也不能调用下一个中间件。也就是说，如果某个中间件不调用 next(),那链在它后面的中间件就不会被调用了。</p>
+<p><strong>创建可配置的中间件</strong></p>
+<p>为了可配置，中间件一般会遵循一个简单的惯例：用一个函数返回另一个函数（闭包），这种可配置中间件的基本结构如下所示:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setup</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 设置逻辑</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 中间件逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 用法</span></span><br><span class="line">app.use(setup(&#123;<span class="attr">some</span>:<span class="string">'options'</span>&#125;));</span><br></pre></td></tr></table></figure>
+<p>注意 app.use 中的 setup 函数，之前放的是对中间件函数的引用.</p>
+<p>创建一个可以传参(字符串参数)自己配置的 logger 中间件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// logger.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setup</span>(<span class="params">format</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> regexp = <span class="regexp">/:(\w+)/g</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">createLogger</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> str = format.replace(regexp, (match, property) =&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> req[property];</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="built_in">console</span>.log(str);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = setup;</span><br></pre></td></tr></table></figure>
+<p>现在这个 logger 成了可配置的中间件，所以，可以在同一程序中给.use()传入不同配置的 logger，并且为了保持一致性，所有 Connect 核心中间件都是可配置的。</p>
+<p>调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> setup = <span class="built_in">require</span>(<span class="string">'./logger.js'</span>);</span><br><span class="line"><span class="keyword">const</span> connect = <span class="built_in">require</span>(<span class="string">'connect'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logger</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'%s %s'</span>, req.method, req.url);</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>);</span><br><span class="line">    res.end(<span class="string">'Hello world'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">connect()</span><br><span class="line">    .use(setup(<span class="string">':method :url'</span>))</span><br><span class="line">    .use(hello)</span><br><span class="line">    .listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="使用错误处理中间件"><a href="#使用错误处理中间件" class="headerlink" title="使用错误处理中间件"></a><strong>使用错误处理中间件</strong></h4><p>Connect 中间有一种用来处理错误的中间件变体，跟常规的中间件相比，除了请求、响应对象外，错误处理中间件的参数还多了一个错误对象。</p>
+<p>Connect 刻意将处理做到很简单，让开发人员指明如何处理错误。比如，可以只让系统和程序级错误通过中间件，或者只让用户错误通过，或者让两者结合的组合通过。</p>
+<p>介绍错误处理中间件的工作机制以及一些使用的模式：</p>
+<p><strong>用Connect 的默认错误处理器</strong></p>
+<p>因为函数 foo() 没有定义。所以下面的这个中间件会抛出错误 ReferenceError:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connect = <span class="built_in">require</span>(<span class="string">'connect'</span>);</span><br><span class="line">connect().</span><br><span class="line">use(<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    foo();</span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'text/plain'</span>);</span><br><span class="line">    res.end(<span class="string">'hello world'</span>);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>Connect 默认的处理时返回状态码 500，响应主体的文本是 Internal Server Error 和错误的详细信息。但在真正的程序中，一般还会对这些错误做些特殊的处理，比如将它们发送给一个日志守护进程。</p>
+<p><strong>自行处理程序错误</strong></p>
+<p>Connect 也支持用错误处理中间件自行处理错误，比如说，为了在开发时看到简单快捷的错误报告，你可能想用 JSON 格式发送错误信息；而在生产环境中，为了不把敏感的内部信息暴露出来，可以发送一个简单的服务器错误响应。</p>
+<p>错误处理中间件函数必须有四个参数：err,req,res和next。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// errors.js</span></span><br><span class="line"><span class="keyword">const</span> env = process.env.NODE_ENV || <span class="string">'development'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errorHandler</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">    res.statusCode = <span class="number">500</span>;</span><br><span class="line">    <span class="keyword">switch</span> (env) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'development'</span>:</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'Error:'</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(err);</span><br><span class="line">            res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>);</span><br><span class="line">            res.end(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            res.end(<span class="string">'Server Error'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = errorHandler;</span><br></pre></td></tr></table></figure>
+<p>用 NODE_ENV 设定程序的模式 Connect 一般会根据环境变量 NODE_ENV(process.env.NODE_ENV) 来切换不同服务器环境的行为。</p>
+<p>当 Connect 遇到错误时，它会切换，只去调用错误处理中间件，如下图：</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-引发了错误的 HTTP 请求在 Connect 服务器中的生命周期.png" alt="引发了错误的 HTTP 请求在 Connect 服务器中的生命周期"></p>
+<p>假设有一个允许用户登录到管理区域的博客程序。如果负责用户路由的中间件引发了一个错<br>误，则中间件 blog 和 admin 都会被跳过，因为它们不是错误处理中间件（只有三个参数）。然后 Connect 看到接受错误参数的 errorHandler，就会调用它。中间件看起来像下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connect() </span><br><span class="line"> .use(router(<span class="built_in">require</span>(<span class="string">'./routes/user'</span>))) </span><br><span class="line"> .use(router(<span class="built_in">require</span>(<span class="string">'./routes/blog'</span>))) <span class="comment">// 跳过</span></span><br><span class="line"> .use(router(<span class="built_in">require</span>(<span class="string">'./routes/admin'</span>))) <span class="comment">// 跳过</span></span><br><span class="line"> .use(errorHandler);</span><br></pre></td></tr></table></figure>
+<p>基于中间件的执行顺序短路某些功能是组织 Express 程序的基本概念。</p>
+<h3 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h3><h4 id="生成程序的框架"><a href="#生成程序的框架" class="headerlink" title="生成程序的框架"></a><strong>生成程序的框架</strong></h4><p>Express 对程序结构不作要求，路由可以放在多个文件中，公共资源文件也可以放到任何目<br>录下。最简单的 Express 程序可能像下面这样，但它仍然是一个功能完备的 HTTP 服务器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line">app.get(<span class="string">'/'</span>,(req,res) =&gt;&#123;</span><br><span class="line">    res.end(<span class="string">'Hello'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>安装 Express 的可执行程序</strong></p>
+<p>首先要用 npm 全局安装 express-generator：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g express-generator</span><br></pre></td></tr></table></figure>
+<p>装好之后，可以用 –help 选项看看可用的选项</p>
+<p><strong>生成程序</strong></p>
+<p>用-e（或–ejs）指定要使用的模板引擎是 EJS，执行 express -e  shoutbox，一个功能完备的程序会出现在 shoutbox 目录中。其中会有描述项目和依赖项的 package.json文件、程序主文件、public 目录，以及一个放路由处理器的目录。</p>
+<p><strong>探索程序</strong></p>
+<p>在编辑器中打开 package.json 文件，看看程序的依赖项。安装依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>生成的 Express 程序框架:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">'http-errors'</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">'morgan'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRouter = <span class="built_in">require</span>(<span class="string">'./routes/index'</span>);</span><br><span class="line"><span class="keyword">var</span> usersRouter = <span class="built_in">require</span>(<span class="string">'./routes/users'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// view engine setup</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出有颜色区分的日志，以便于开发调试</span></span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line"><span class="comment">// 解析请求主体</span></span><br><span class="line">app.use(express.json());</span><br><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(cookieParser());</span><br><span class="line"><span class="comment">// 提供./public 下的静态文件</span></span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line"><span class="comment">// 指定程序路由</span></span><br><span class="line">app.use(<span class="string">'/'</span>, indexRouter);</span><br><span class="line">app.use(<span class="string">'/users'</span>, usersRouter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// catch 404 and forward to error handler</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  next(createError(<span class="number">404</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error handler</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// set locals, only providing error in development</span></span><br><span class="line">  res.locals.message = err.message;</span><br><span class="line">  res.locals.error = req.app.get(<span class="string">'env'</span>) === <span class="string">'development'</span> ? err : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render the error page</span></span><br><span class="line">  res.status(err.status || <span class="number">500</span>);</span><br><span class="line">  res.render(<span class="string">'error'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = app;</span><br></pre></td></tr></table></figure>
+<p><strong>在线留言板程序的规划</strong></p>
+<p>下面是这个在线留言板程序的需求。<br>(1) 用户应该可以注册、登录、退出。<br>(2) 用户应该可以发消息（条目）。<br>(3) 站点的访问者可以分页浏览条目。<br>(4) 应该有个支持认证的简单的 REST API。</p>
+<p>针对这些需求，我们要存储数据和处理用户认证，还需要对用户的输入进行校验。必要的路<br>由应该有以下两种。</p>
+<ul>
+<li>API 路由<ul>
+<li>GET /api/entries: 获取条目列表</li>
+<li>GET /api/page: 获取单页条目</li>
+<li>POST /api/entry:创建新的留言条目</li>
+</ul>
+</li>
+<li>Web UI 路由<ul>
+<li>GET /post：显示创建新条目的表单</li>
+<li>POST /post：提交新条目</li>
+<li>GET /register：显示注册表单</li>
+<li>POST /register：创建新的用户账号</li>
+<li>GET /login：显示登录表单</li>
+<li>POST /login：登录</li>
+<li>GET /logout：退出</li>
+</ul>
+</li>
+</ul>
+<h4 id="Express-和程序的配置"><a href="#Express-和程序的配置" class="headerlink" title="Express 和程序的配置"></a><strong>Express 和程序的配置</strong></h4><p>Express 还支持自定义的配置项键/值对。</p>
+<p><strong>设置环境变量</strong></p>
+<p>在 Windows 中用这个：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set NODE_ENV=production </span><br><span class="line">node app</span><br></pre></td></tr></table></figure>
+<p>这些环境变量会出现在程序里的 process.env 对象中。</p>
+<p>Express 有一个极简的环境驱动配置系统，这个系统由几个方法组成，全部由环境变量NODE_ENV 驱动：</p>
+<ul>
+<li>app.set()</li>
+<li>app.get()</li>
+<li>app.enable()</li>
+<li>app.disable()</li>
+<li>app.enabled()</li>
+<li>app.disabled()</li>
+</ul>
+<p>基于环境的配置，环境变量 NODE_ENV 源于 Express，用它告知Node 程序在哪个环境中，其默认的是开发环境。</p>
+<p>app.configure() 方法有一个可选的字符串参数，用来指定运行环境。还有一个参数是函数，如果有这个字符串，则在运行环境与字符串相同时才会调用那个函数。如果没有，则在所有环境中都会调用那个函数，这些环境的名称是随意的。为了实现可定制的行为，Express 在其内部使用了配置系统，我们也可以在自己的程序中使用这个系统。</p>
+<p>Express 还为布尔类型的配置项提供了 app.set() 和 app.get() 的变体。比如说，app.enable (setting)等同于 app.set(setting, true)，而 app.enabled(setting)可以用来检查该值是否被启用了。app.disable(setting)和 app.disabled(setting)是对它们的补充。</p>
+<p>Express 为开发 API 提供了一个配置项，即 json spaces。如果把它加到 app.js 中，程序输<br>出 JSON 的格式会变得更易读：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'json spaces'</span>,<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="渲染视图"><a href="#渲染视图" class="headerlink" title="渲染视图"></a><strong>渲染视图</strong></h4><p>不管是渲染整个 HTML 页面、一个 HTML 片段，还是一个 RSS 预订源，对几乎所有程序来<br>说，视图渲染都非常重要。其概念很简单：把数据传给视图，然后视图对数据进行转换，对 Web程序来说，通常是转换成 HTML。</p>
+<p>Express 中有两种渲染视图的办法：程序层面用 app.render()，在请求或响应层面用res.render() ， Express 内部用的是前一种。本章只用 res.render() 。如果你看一下./routes/index.js，会看到一个调用 res.render(‘index’)的函数，渲染是./views/index.ejs模板：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'index'</span>, &#123; <span class="attr">title</span>: <span class="string">'Express'</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>配置视图系统</strong></p>
+<p>查找目录：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br></pre></td></tr></table></figure>
+<p>这个配置项指明了 Express 查找视图的目录，<code>__dirname</code> 是个全局变量，代表当前运行的文件所在的目录。在开发时，这个目录通常就是当前工作目录（CWD），但在生产环境中，这个文件可能运行在其他目录中。<code>__dirname</code> 有助于保持路径在各种环境中的一致性.</p>
+<p>使用默认的模板引擎：</p>
+<p>之前在命令行中用 -e 指定模板引擎 EJS ，所以 view engine 被设定为 ejs .Express 要靠扩展名确定哪个模板引擎渲染文件，有了这个配置项，我们可以用 index 指定要渲染的文件，而不需要 index.ejs.</p>
+<p>使用带扩展名的模板文件，就可以在同一个 Express 程序中使用多个模板引擎。同时这样又能提供一个清晰的 API。</p>
+<p>比如说，你发现用另一种模板引擎写 RSS 预订源更容易，或者正要换一个模板引擎用。你<br>可能将 Pug 作为默认引擎，用 EJS 渲染 /feed 路由的响应结果，就像下面的代码一样指明 .ejs 扩展名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.set(<span class="string">'view engine'</span>,<span class="string">'pug'</span>);</span><br><span class="line">app.get(<span class="string">'/'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.render(<span class="string">'index'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/feed'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.render(<span class="string">'rss.ejs'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>视图缓存</strong></p>
+<p>在生产环境中，view cache 是默认开启的。以防止后续的 render() 从硬盘中读取模块文件。因为模块文件的内容会被放到内存中，所以性能会得到显著提升。但启用这个配置项后，只有重启服务器才能让模板文件的编辑生效，所以在开发时会禁用它。如果在分级（staging）环境中运行，很可能要启用和这个配置项。</p>
+<p>view cache 被禁用时，每次请求都会从硬盘上读取模板。这样无须重启程序来让模板的修改生效。启用 view cache 后，每个模板只需要读取一次硬盘。</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-视图缓存设置.png" alt="视图缓存设置"></p>
+<p>我们看看 Express如何定位视图来渲染它们。</p>
+<p><strong>视图查找</strong></p>
+<p>查找视图的过程跟 require() 查找的过程差不多，在程序中调用了  res.render() 或 app.render()后，Express 会先检查有没有这样的绝对路径，接着查找目录的相对路径。最后会尝试找目录中的 index 文件。</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-Express 视图查找过程.png" alt="Express 视图查找过程"></p>
+<p>因为 ejs 被设为默认引擎，所以无须在 render 中指明模板文件的扩展名.ejs。</p>
+<p>随着开发进展，程序中的视图会越来越多，并且有时一个资源会有几个视图。view lookup<br>可以帮我们组织这些视图，比如说把视图文件放在跟资源相连的子目录中。</p>
+<p>用添加子目录的办法可以去掉模板文件名称中的冗余部分，比如 edit-entry.ejs和 show-entry.ejs。Express 会添加跟 view engine 匹配的扩展名，根据 res.render(‘entries/edit’)定位到 ./views/entries/edit.ejs。</p>
+<p>Express会检查 views的子目录中是否有名为 index的文件。当文件的名称为复数时，比如 entries，通常表示这是一个资源列表。也就是说 res.render(‘entries’)一般会渲染文件views/entries/ index.ejs。</p>
+<p><strong>将数据传递给视图的办法</strong></p>
+<p>在 Express 中，要给被渲染的视图传递数据有几种办法，其中最常用的是将要传递的数据作为 res.render()的参数。此外，还可以在路由处理器之前的中间件中设定一些变量，比如用app.locals 传递程序层面的数据，用 res.locals 传递请求层面的数据。</p>
+<p>将变量直接作为 res.render()的参数优先级最高，要高于在 res.locals 和 app.locals中设定的变量值:</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-给 render 函数的值优先级最高.png" alt="给 render 函数的值优先级最高"></p>
+<p>默认情况下，Express 只会向视图中传递一个程序级变量——settings，这个对象中包含所<br>有用 app.set()设定的值。比如 app.set(‘title’, ‘My Application’)会把 settings. title 输出到模板中，请看下面的 EJS 代码片段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt; </span><br><span class="line"> &lt;head&gt; </span><br><span class="line"> &lt;title&gt;&lt;%= settings.title %&gt;&lt;/title&gt; </span><br><span class="line"> &lt;/head&gt; </span><br><span class="line"> &lt;body&gt; </span><br><span class="line"> &lt;h1&gt;&lt;%= settings.title %&gt;&lt;/h1&gt; </span><br><span class="line"> &lt;p&gt;Welcome to &lt;%= settings.title %&gt;.&lt;/p&gt; </span><br><span class="line"> &lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>实际上，Express 是像下面这样输出这个对象的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.locals.settings = app.settings</span><br></pre></td></tr></table></figure>
+<h4 id="Express-路由入门"><a href="#Express-路由入门" class="headerlink" title="Express 路由入门"></a><strong>Express 路由入门</strong></h4><p>Express 路由的主要任务是将特定模式上的 URL 匹配到响应逻辑上。但也可以将 URL 模式匹配到中间件上，以便于中间件实现某些路由上的可重用功能。</p>
+<p>特定路由中间件的用法。</p>
+<p><strong>检验用户内容提交</strong></p>
+<p>给程序加上消息提交功能，实现这个功能需要下面几项工作：</p>
+<ul>
+<li>创建消息模型</li>
+<li>添加与模型消息相关的路由</li>
+<li>创建消息表单</li>
+<li>添加业务逻辑，用提交上来的表单数据创建消息</li>
+</ul>
+<h5 id="创建消息模型"><a href="#创建消息模型" class="headerlink" title="创建消息模型"></a><strong>创建消息模型</strong></h5><p>创建模型之前，要先安装 Node redis 模块：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S redis</span><br></pre></td></tr></table></figure>
+<p>借助 Redis 和 ES6 可以轻松创建出来轻便的模型。</p>
+<p>下面的这个ES6 类会把数据存在 Redis 列表中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// models/entry.js</span></span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>);</span><br><span class="line"><span class="comment">// 创建 Redis 客户端实例</span></span><br><span class="line"><span class="keyword">const</span> db = redis.createClient();</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(obj) &#123;</span><br><span class="line">        <span class="comment">// 循环遍历传入对象的值</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">            <span class="comment">// 合并值</span></span><br><span class="line">            <span class="keyword">this</span>[key] = obj[key];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    save(cb) &#123;</span><br><span class="line">        <span class="comment">// 将保持的消息转换成 JSON 字符串</span></span><br><span class="line">        <span class="keyword">const</span> entryJSON = <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">// 将 JSON 字符串保存到 Redis 列表中</span></span><br><span class="line">        db.lpush(</span><br><span class="line">            <span class="string">'entries'</span>,</span><br><span class="line">            entryJSON,</span><br><span class="line">            (err) =&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">                cb();</span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Entry;</span><br></pre></td></tr></table></figure>
+<p>基本模型有了，现在要添加获取消息用的 getRange 函数，代码如下所示，你可以用这个函数获取消息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> getRange(<span class="keyword">from</span>, to, cb) &#123;</span><br><span class="line">    <span class="comment">// 用来获取消息记录的 Redis lrange 函数</span></span><br><span class="line">    db.lrange(<span class="string">'entries'</span>, <span class="keyword">from</span>, to, (err, items) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="keyword">let</span> entries = [];</span><br><span class="line">        <span class="comment">// 解码之前保存为 JSON 的消息记录</span></span><br><span class="line">        items.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">            entries.push(<span class="built_in">JSON</span>.parse(item));</span><br><span class="line">        &#125;);</span><br><span class="line">        cb(<span class="literal">null</span>.entries);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建好模型，现在就可以添加路由来创建消息和获取消息了。</p>
+<h5 id="创建消息表单"><a href="#创建消息表单" class="headerlink" title="创建消息表单"></a><strong>创建消息表单</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">app.get(<span class="string">'/post'</span>, entries.form); </span><br><span class="line">app.post(<span class="string">'/post'</span>, entries.submit);</span><br></pre></td></tr></table></figure>
+<p>接着把下面的代码添加到 routes/entries.js 中。这个路由逻辑会渲染一个包含表单的模板：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.form = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">'post'</span>, &#123; <span class="attr">title</span>: <span class="string">'Post'</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后用下面的 EJS 代码创建表单模板 views/post.ejs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;</span><br><span class="line">        &lt;%= title %&gt;</span><br><span class="line">    &lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;/stylesheet/style.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;%= include menu %&gt;</span><br><span class="line">    &lt;h1&gt;</span><br><span class="line">        &lt;%= title%&gt;</span><br><span class="line">    &lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Fill in the form below to add a new post&lt;/p&gt;</span><br><span class="line">    &lt;form action=&quot;/post&quot; method=&quot;post&quot;&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; name=&quot;entry[title]&quot; placeholder=&quot;Title&quot;&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">            &lt;textarea name=&quot;entry[body]&quot; placeholder=&quot;Body&quot; cols=&quot;30&quot; rows=&quot;10&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">            &lt;input type=&quot;submit&quot; value=&quot;Post&quot;&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>这个表单用了形如 entry[title]之类的输入控件名称，需要用扩展的消息体解析器来解析。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br></pre></td></tr></table></figure>
+<p>显示表单的页面做好了，接下来我们要用表单提交上来的数据创建消息。</p>
+<h5 id="实现消息的创建"><a href="#实现消息的创建" class="headerlink" title="实现消息的创建"></a><strong>实现消息的创建</strong></h5><p>把下面的代码添加到文件 routes/entries.js 中，实现用表单提交上来的数据创建消息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Entry = <span class="built_in">require</span>(<span class="string">'../models/entry'</span>);</span><br><span class="line">exports.submit = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = req.body.entry;</span><br><span class="line">    <span class="keyword">const</span> user = res.locals.user;</span><br><span class="line">    <span class="keyword">const</span> username = user ? user.name : <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">const</span> entry = <span class="keyword">new</span> Entry(&#123;</span><br><span class="line">        username: username,</span><br><span class="line">        title: data.title,</span><br><span class="line">        body: data.body</span><br><span class="line">    &#125;);</span><br><span class="line">    entry.save(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="添加显示消息首页"><a href="#添加显示消息首页" class="headerlink" title="添加显示消息首页"></a><strong>添加显示消息首页</strong></h5><p>先创建 routes/entries，然后把下面的代码放到里面，引入消息模型，输出渲染消息列表的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">exports.list = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    Entry.getRange(<span class="number">0</span>, <span class="number">-1</span>, (err, entries) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 渲染 HTTP 响应</span></span><br><span class="line">        res.render(<span class="string">'entries'</span>, &#123;</span><br><span class="line">            title: <span class="string">'Entries'</span>,</span><br><span class="line">            entries: entries</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个路由的业务逻辑定义好之后，还需要添加 EJS 模板来显示这些消息。在 views 目录下创<br>建 entries.ejs 文件，并加入下面的 EJS 代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Page Title&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; href=&quot;/stylesheets/style.css&quot; /&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;% include menu %&gt;</span><br><span class="line"></span><br><span class="line">    &lt;%entries.for((entry) =&gt;&#123;    %&gt;</span><br><span class="line">        &lt;div class=&quot;entry&quot;&gt;</span><br><span class="line">            &lt;h3&gt;&lt;%= entry.title%&gt;&lt;/h3&gt;</span><br><span class="line">            &lt;p&gt;&lt;%= entry.body&gt;&lt;/p&gt;</span><br><span class="line">            &lt;p&gt;Post by &lt;%= entry.username%&gt;&lt;/p&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;%&#125;)%&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>在运行程序之前，先创建菜单模板文件menu.ejs ，后面再添加具体代码。视图和路由准备好后，需要告诉程序到哪里去找这些路由。</p>
+<h5 id="添加与消息相关的路由"><a href="#添加与消息相关的路由" class="headerlink" title="添加与消息相关的路由"></a><strong>添加与消息相关的路由</strong></h5><p>在把与消息相关的路由添加到程序中之前，需要调整一下 app.js。先把下面这个 require<br>语句放在 app.js 文件的顶端：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, entries.list);</span><br></pre></td></tr></table></figure>
+<p>现在运行这个程序，首页会显示消息列表。</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-首页.png" alt="首页"></p>
+<p>既然消息创建和显示列表都做好了，那么接下来该看看如何用特定路由中间件校验表单数据了.</p>
+<h5 id="使用特定路由中间件"><a href="#使用特定路由中间件" class="headerlink" title="使用特定路由中间件"></a><strong>使用特定路由中间件</strong></h5><p>假定你想将表单中的消息文本域设为必填项。能想到的第一种方式可能是像下面的代码那<br>样把它直接加在路由回调函数中。然而这种方式并不理想，因为校验逻辑是绑死在这个表单上的。而在大多数情况下，校验逻辑都能被提炼到可重用的组件中，让开发更容易、更快、更具声明性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">exports.submit = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = req.body.entry;</span><br><span class="line">    <span class="comment">// 校验</span></span><br><span class="line">    <span class="keyword">if</span> (!data.title) &#123;</span><br><span class="line">        res.error(<span class="string">'Title is required.'</span>);</span><br><span class="line">        res.redirect(<span class="string">'back'</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!data.title.length &lt; <span class="number">4</span>) &#123;</span><br><span class="line">        res.error(<span class="string">'Title must be longer than 4 characters.'</span>);</span><br><span class="line">        res.redirect(<span class="string">'back'</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> user = res.locals.user;</span><br><span class="line">    <span class="keyword">const</span> username = user ? user.name : <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">const</span> entry = <span class="keyword">new</span> Entry(&#123;</span><br><span class="line">        username: username,</span><br><span class="line">        title: data.title,</span><br><span class="line">        body: data.body</span><br><span class="line">    &#125;);</span><br><span class="line">    entry.save(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Express 路由可以有自己的中间件，其放在路由回调函数之前，只有跟这个路由匹配时才会调用。本章所用的路由回调并没有做特殊处理，这些中间件和其他中间件一样，甚至你即将创建的中间件也一样。</p>
+<p>接下来我们要用特定路由中间件来做校验，先看一种虽然简单但不太灵活的实现方式。</p>
+<p><strong>用特定路由中间件实现表单校验</strong></p>
+<p>第一种方式是写几个简单但特定的中间件来执行校验，带有此类中间件的 POST/post 路由看起来像下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/post'</span>,</span><br><span class="line">         requireEntryTitle,</span><br><span class="line">         requireEntryTitleLengthAbove(<span class="number">4</span>),</span><br><span class="line">         entries.submit);</span><br></pre></td></tr></table></figure>
+<p>一般的路由定义只有两个参数：路径和路由处理函数，而这个路由定义中又额外地增加了两个参数，这两个参数就是校验中间件。</p>
+<p>下面的代码中，我们把原来的校验逻辑剥离出来做成了两个中间件，但它们的模块化程度还不高，只能用在输入域 entry[title]上。</p>
+<p>更有潜力但是不完美的校验组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">requireEntryTitle</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> title = req.body.entry.title;</span><br><span class="line">    <span class="keyword">if</span>(title)&#123;</span><br><span class="line">       next();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.error(<span class="string">'Title is required'</span>);</span><br><span class="line">        res.redirect(<span class="string">'back'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">requireEntryTitleLengthAbove</span>(<span class="params">len</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">req,res,next</span>) =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> title = req.body.entry.title;</span><br><span class="line">        <span class="keyword">if</span>(title.length &gt; len)&#123;</span><br><span class="line">           next();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            res.error(<span class="string">`Title must be longer than <span class="subst">$&#123;len&#125;</span>`</span>);</span><br><span class="line">            res.redirect(<span class="string">'back'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际工作中更常用的方案是进一步抽象，剥离成更灵活的校验器，以目标输入域的名称为参<br>数进行校验。下面来看一下这种实现方式。</p>
+<p><strong>构建灵活的校验中间件</strong></p>
+<p>如果能重用校验逻辑，可以像下面这样传入输入域名称，那我们的工作量会进一步降低</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/post'</span>,</span><br><span class="line">        validate.required(<span class="string">'entry[title]'</span>),</span><br><span class="line">        validate.lengthAbove(<span class="string">'entry[title]'</span>,<span class="number">4</span>),</span><br><span class="line">        entries.submit);</span><br></pre></td></tr></table></figure>
+<p>打开 app.js，把路由部分的 app.post(‘/post’, entries.submit);换成上面这段代码。这里有必要提一下，Express 社区已经创建了很多类似的公用库，但掌握校验中间件的工作机制以及如何编写中间件仍然很有必要.</p>
+<p>创建 ./middleware/validate.js 文件。validate.js会输出 validate.required()和 validate.lengthAbove()两个中间件。这里的实现细节并不重要，关键是通过这个例子学习如何提炼出程序中的通用代码，用少量的工作成果发挥作用</p>
+<p>为了让程序能访问到这个中间件，需要把下面这行代码放到 app.js 中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> validate = <span class="built_in">require</span>(<span class="string">'./middleware/validate'</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="用户认证"><a href="#用户认证" class="headerlink" title="用户认证"></a><strong>用户认证</strong></h4><p> 本节会从头给程序创建一个认证系统，实现以下功能：</p>
+<ul>
+<li>存储和认证已注册用户</li>
+<li>注册功能</li>
+<li>登录功能</li>
+<li>加载用户信息的中间件</li>
+</ul>
+<p>我们还是用 Redis 作为用户账号的存储，接下来创建 User 模型，看看如何让 Redis 用起来更加容易</p>
+<h5 id="1-保存和加载用户记录"><a href="#1-保存和加载用户记录" class="headerlink" title="1.保存和加载用户记录"></a><strong>1.保存和加载用户记录</strong></h5><p>实现用户加载、保存和认证，任务清单是：</p>
+<ul>
+<li>用 package.json 定义程序的依赖项</li>
+<li>创建用户模型</li>
+<li>用 Redis 加载和保存用户信息</li>
+<li>用 bcrypt 增强用户密码的安全性</li>
+<li>实现用户认证</li>
+</ul>
+<p>Bcrypt 是一个加盐的哈希函数，可作为第三方模块专门对密码做哈希处理。Bcrypt 特别适合处理密码，因为计算机越来越快，而 bcrypt 能让破解变慢，从而有效对抗暴力攻击。</p>
+<p>先安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S redis bcrypt</span><br></pre></td></tr></table></figure>
+<h5 id="2-创建用户模型"><a href="#2-创建用户模型" class="headerlink" title="2.创建用户模型"></a><strong>2.创建用户模型</strong></h5><p>在 models 文件夹下面创建 user.js </p>
+<p>下面的代码引入了依赖项 redis 和 bcrypt，然后用 redis.createClient() 打开 Redis 连接。函数 User 可以合并传入的参数对象。比如说，new User({name:’Tobi’})会创建一个对象，并将对象的属性 name 设为 Tobi.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>);</span><br><span class="line"><span class="keyword">const</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt'</span>);</span><br><span class="line"><span class="comment">// 创建到 Redis 的长连接</span></span><br><span class="line"><span class="keyword">const</span> db = redis.createClient();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(obj) &#123;</span><br><span class="line">        <span class="comment">// 循环遍历传入的对象</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">            <span class="comment">// 设定当前类的所有属性</span></span><br><span class="line">            <span class="keyword">this</span>[key] = obj[key];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = User;</span><br></pre></td></tr></table></figure>
+<p>现在这个用户模型只是个架子，还需要创建和更新记录的方法。</p>
+<h5 id="3-把用户保存到-Redis-中"><a href="#3-把用户保存到-Redis-中" class="headerlink" title="3.把用户保存到 Redis 中"></a><strong>3.把用户保存到 Redis 中</strong></h5><p>接下来要实现的功能是保存用户，把数据存到 Redis 中，save 方法会先检查用户是否有ID，如果没有就调用 update 方法，用名称索引用户 ID ，并把对象的属性组装出 Redis 哈希表中的记录，如果没有 ID ，则认为这是一个新用户，增加 user.ids 的值，给用户一个唯一的 ID ，然后对密码进行哈希处理，用之前提到的那个 update 方法将数据存到 Redis 中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">save(cb) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.id) &#123;</span><br><span class="line">        <span class="comment">// 如果设置了 ID，则用户已经存在了</span></span><br><span class="line">        <span class="keyword">this</span>.update(cb);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 创建唯一的 ID</span></span><br><span class="line">        db.incr(<span class="string">'user:ids'</span>, (err, id) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">            <span class="keyword">this</span>.id = id;</span><br><span class="line">            <span class="comment">//  哈希密码</span></span><br><span class="line">            <span class="keyword">this</span>.hashPassword(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">                <span class="comment">// 保存用户属性</span></span><br><span class="line">                <span class="keyword">this</span>.update(cb);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">update(cb) &#123;</span><br><span class="line">    <span class="keyword">const</span> id = <span class="keyword">this</span>.id;</span><br><span class="line">    <span class="comment">// 用名称索引用户 id</span></span><br><span class="line">    db.set(<span class="string">`user:id:<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>, id, (err) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="comment">// 用 Redis 存储当前属性</span></span><br><span class="line">        db.hmset(<span class="string">`user:<span class="subst">$&#123;id&#125;</span>`</span>, <span class="keyword">this</span>, (err) =&gt; &#123;</span><br><span class="line">            cb(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-增强用户密码的安全性"><a href="#4-增强用户密码的安全性" class="headerlink" title="4.增强用户密码的安全性"></a><strong>4.增强用户密码的安全性</strong></h5><p>刚创建用户时，需要将 .pass 属性设为用户的密码。然后用户保存逻辑将 .pass 属性换做经过哈希处理的密码。</p>
+<p>这个哈希会加盐，每个用户的加的盐不一样，加盐可以有效对抗彩虹表攻击。可以用bcrypt 的 genSalt()为哈希生成 12 个字符的盐</p>
+<p>盐生成好之后，调用 bcrypt.hash()对.pass 属性和盐做哈希处理。在.update()把数据存到 Redis 之前，.pass 属性的值会换成最终的哈希值，保证不会保存密码的明文，只保存它的哈希结果。<br>下面代码中定义的函数会创建加盐的哈希，并把结果存到用户的属性.pass 中。把它加到models/user.js 中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">hashPassword(cb) &#123;</span><br><span class="line">    <span class="comment">// 生成有 12 个字符盐</span></span><br><span class="line">    bcrypt.genSalt(<span class="number">12</span>, (err, salt) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="keyword">this</span>.salt = salt;</span><br><span class="line">        <span class="comment">// 生成哈希</span></span><br><span class="line">        bcrypt.hash(<span class="keyword">this</span>.pass, salt, (err, hash) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">            <span class="comment">// 设定哈希以便于保存</span></span><br><span class="line">            <span class="keyword">this</span>.pass = hash;</span><br><span class="line">            cb();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-测试用户保存逻辑"><a href="#5-测试用户保存逻辑" class="headerlink" title="5.测试用户保存逻辑"></a><strong>5.测试用户保存逻辑</strong></h5><p>接着运行 Redis-server 启动 Redis 服务器，新建一个 user-test.js，加入代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'./models/user'</span>);</span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">new</span> User(&#123; <span class="attr">name</span>: <span class="string">'Example'</span>, <span class="attr">pass</span>: <span class="string">'test'</span> &#125;);</span><br><span class="line"></span><br><span class="line">user.save(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 保存用户</span></span><br><span class="line">  <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'user id %d'</span>, user.id);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>可以看到类似下面的输出：</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-node-user-test.png" alt="node user-test.js"></p>
+<p>接着使用 Redis 中的工具 redis-cli ，可以用 HGETALL 命令取出哈希表中的所有键和值，如下：</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-取出哈希表.png" alt="哈希表"></p>
+<h5 id="6-获取用户数据"><a href="#6-获取用户数据" class="headerlink" title="6.获取用户数据"></a><strong>6.获取用户数据</strong></h5><p>在 Web 程序中，用户登录通常是在表单中输入用户名和密码，然后将这些数据提交到后台进行认证 。在得到登录表单提交的数据后，需要一个通过用户名获取信息的方法。</p>
+<p>下面的代码中的 User.getByName 就是这样的方法，这个函数先用 User.getId() 查找用户 ID,然后把 ID 传给 User.get(),由它负责取得 Redis 哈希表中的用户数据。把下面的方法加到 models/user.js 中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> getByName(name, cb) &#123;</span><br><span class="line">    <span class="comment">// 根据名称查找用户 ID</span></span><br><span class="line">    User.getId(name, (err, id) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="comment">// 用 ID 抓取用户</span></span><br><span class="line">        User.get(id, cb);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">static</span> getId(name, cb) &#123;</span><br><span class="line">    <span class="comment">// 取得由名称索引的 ID</span></span><br><span class="line">    db.get(<span class="string">`user:id:<span class="subst">$&#123;name&#125;</span>`</span>, cb);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">static</span> get(id, cb) &#123;</span><br><span class="line">    <span class="comment">// 获取普通对象哈希</span></span><br><span class="line">    db.hgetall(<span class="string">`user:<span class="subst">$&#123;id&#125;</span>`</span>, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="comment">// 将普通对象转换为新的 User 对象</span></span><br><span class="line">        cb(<span class="literal">null</span>, <span class="keyword">new</span> User(user))</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="7-用户登录认证"><a href="#7-用户登录认证" class="headerlink" title="7.用户登录认证"></a><strong>7.用户登录认证</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> authenticate(name,pass,cb)&#123;</span><br><span class="line">    <span class="comment">// 通过用户名查找用户</span></span><br><span class="line">    User.getByName(name,(err,user) =&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> cb(err);</span><br><span class="line">        <span class="comment">// 用户不存在</span></span><br><span class="line">        <span class="keyword">if</span>(!user.id) <span class="keyword">return</span> cb();</span><br><span class="line">        bcrypt.hash(pass,user.salt,(err,hash) =&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span>(err) <span class="keyword">return</span> cb(err);</span><br><span class="line">            <span class="comment">// 匹配发现向</span></span><br><span class="line">            <span class="keyword">if</span>(hash == user.pass) <span class="keyword">return</span> cb(<span class="literal">null</span>,user);</span><br><span class="line">            <span class="comment">// 密码无效</span></span><br><span class="line">            cb();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>认证功能一开始先用用户查找用户记录，如果没有找到，马上调用回调函数，反之把保存在用户对象中的盐和提交上来的密码做哈希处理，产生的结果应该跟 user.pass 哈希值相同。如果两个哈希值不匹配，说明用户输入的凭证是无效的。当查找不存在的键时，Redis 会返回一个空的哈希值，所以这里的检查方法是 !user.id 而不是 ！user。</p>
+<h4 id="注册新用户"><a href="#注册新用户" class="headerlink" title="注册新用户"></a>注册新用户</h4><p>为了让用户创建新账号后登陆，需要提供注册和登录功能。</p>
+<p>完成下面的任务实现注册：</p>
+<ul>
+<li>将注册和登录路由映射到URL路径上</li>
+<li>添加显示注册表单的注册路由处理器</li>
+<li>实现用户数据存储功能，存储从表单提交上来的用户数据</li>
+</ul>
+<h5 id="1-添加注册路由"><a href="#1-添加注册路由" class="headerlink" title="1.添加注册路由"></a><strong>1.添加注册路由</strong></h5><p>要显示注册表单，首先要创建一个路由渲染这个表单，然后把它返回给用户的浏览器显示出来。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> register = <span class="built_in">require</span>(<span class="string">'./routes/register.js'</span>);</span><br><span class="line">app.get(<span class="string">'/register'</span>,register.form);</span><br><span class="line">app.post(<span class="string">'/register'</span>,register.submit);</span><br><span class="line"><span class="comment">// routes/register.js</span></span><br><span class="line">exports.form = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">'register'</span>, &#123; <span class="attr">title</span>: <span class="string">'Register'</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>app.js 新增的代码用 Node 模块系统从 routes 目录中引入定义注册路由行为的模块，并将 HTTP 方法及 URL 路径关联到路由函数上。由此构成了一个前端控制器。既有Get 路由们也有Post 路由。接着定义路由逻辑，输出渲染注册模板的路由。上面的路由用到了一个 EJS 模板，我们接下来创建用于定义注册表单的 HTML 模板。</p>
+<h5 id="2-创建注册表单"><a href="#2-创建注册表单" class="headerlink" title="2.创建注册表单"></a><strong>2.创建注册表单</strong></h5><p>为了定义注册表单的 HTML ，需要在 views 目录下创建 register.ejs 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;% include menu %&gt;s</span><br><span class="line">  &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;</span><br><span class="line">  &lt;p&gt;Fill in the form below to sign up&lt;/p&gt;</span><br><span class="line">  &lt;% include messages %&gt;</span><br><span class="line">  &lt;form action=&apos;/register&apos; method=&quot;post&quot;&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">          &lt;input type=&quot;text&quot; name=&apos;user[name]&apos; placeholder=&quot;Username&quot;&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">          &lt;input type=&quot;password&quot; name=&quot;user[pass]&quot; placeholder=&quot;password&quot;&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">          &lt;input type=&quot;submit&quot; value=&quot;Sign Up&quot;&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">  &lt;/form&gt;  </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>注意上面的 include messages，它嵌入了另一个模板 messages.ejs。我们接下来就定义这<br>个用来跟用户沟通的模板。</p>
+<p><strong>3.反馈消息传达给用户</strong></p>
+<p>在用户注册过程中，以及在大多数应用场景中，将反馈消息传达给用户都是必须要做的工作。</p>
+<p>这个程序中的 messages.ejs 是用来显示错误的，它会嵌入到很多模板中。这段代码会检查是否有变量 locals.messages ，如果有，模板会遍历这个变量以显示消息对象。每个消息对象都有 type 属性（可以用消息做非错误通知） 和 string 属性（消息文本）。我们可以把要显示的错误添加到 res.locals.messages 数组中形成队列。消息显示后，调用 removeMessages 清空消息队列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(locals.messages) &#123;%&gt;</span><br><span class="line">&lt;% messages.forEach((message) =&gt;)&#123; %&gt;</span><br><span class="line">&lt;p class=&apos;&lt;%= message.type %&gt;&apos;&gt;</span><br><span class="line">    &lt;%= message.string %&gt;</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;% &#125;) %&gt;</span><br><span class="line">&lt;% removeMessages() %&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>向 res.locals.messages 中添加消息是一种简单的用户沟通方式，但在重定向后 res.locals 会丢失，所以如果要跨越请求传递消息，那么需要到会话。</p>
+<h5 id="4-在会话中存储临时的消息"><a href="#4-在会话中存储临时的消息" class="headerlink" title="4.在会话中存储临时的消息"></a><strong>4.在会话中存储临时的消息</strong></h5><p>Post/Redirect/Get(PRG)是一种常用的 Web 程序设计模式，这种模式是指，用户请求表单，表单数据作为 HTTP  Post 请求被提交，然后用户被重定向到另一个 Web 页面上。用户被重定向到哪里取决于表单数据是否有效。如果表单无效，程序会让用户回到表单页面，如果表单有效，程序会让用户到新的 Web 页面。PRG 模式主要是为了防止表单的重复提交。</p>
+<p>在 Express 中，用户被重定向后，res.locals 中的内容会被重置，如果把发给用户的消息存在 res.locals 中，让它在一个会话变量中维护用户消息队列。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//./middleware/messages.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">message</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">msg, type</span>) =&gt;</span> &#123;</span><br><span class="line">        type = type || <span class="string">'info'</span>;</span><br><span class="line">        <span class="keyword">let</span> sess = req.session;</span><br><span class="line">        sess.messages = sess.messages || [];</span><br><span class="line">        sess.messages.push(&#123; <span class="attr">type</span>: type, <span class="attr">string</span>: msg &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>req.message 函数可以把消息添加到来自任何 Express 请求的会话变量中。express.response 对象是 Express 给响应对象用的原型。所有中间件和路由都能访问到添加到这个对象的属性。在前面的代码中， express.response 被赋值给了一个名为 res 的变量，这样添加属性更加容易。</p>
+<p>这个功能需要会话支持，需要一个跟 Express 兼容的中间件模块：express-session.安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S express-session</span><br></pre></td></tr></table></figure>
+<p>添加到 app.js 中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  secret: <span class="string">'secret'</span>,</span><br><span class="line">  resave: <span class="literal">false</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">true</span></span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>为了让添加消息更加容易，用 res.error 可以轻松地将类型为 error 的消息添加到消息队列中。它用到了前面定义的 res.message 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.error = <span class="function"><span class="params">meg</span> =&gt;</span> <span class="keyword">this</span>.message(msg,<span class="string">'error'</span>);</span><br></pre></td></tr></table></figure>
+<p>最后一步是把这些消息输出到模板中显示。如果不做这一步，就只能把req.session.messages传给每个 res.render()调用，这很不明智。</p>
+<p>为了解决这个问题，我们要创建一个中间件，在每个请求上用 res.session.messages 上<br>的内容组装出 res.locals.messages，这样可以更高效地把消息输出到所有要渲染的模板上。到目前为 止，./middleware/messages.js 只是扩展了响应的原型，还没输出任何东西。把下面的代码加到这个文件中，输出我们需要的中间件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    res.message = message(req)</span><br><span class="line">    res.error = <span class="function">(<span class="params">msg</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> res.message(msg, <span class="string">'error'</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    res.locals.messages = req.session.messages || [];</span><br><span class="line">    res.locals.removeMessages = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        req.session.messages = [];</span><br><span class="line">    &#125;</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它首先定义了一个模板变量 messages 用来存放会话中的消息，在上一个请求中可能存在，也可能不存在。接下来，还需要一个把消息从会话中移除的方法，否则它们会因为没人清理而越积越多。</p>
+<p>现在只要在 app.js 中 require() 这个文件就可以集成这个新功能了。这个中间件应该放在中间件 session下面，所以可以调用 app.use（messages），而不需调用 app.use(messages());为将来考虑，不管是否接受选项，第三方中间件最好用 app.use(messages())：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> messages = <span class="built_in">require</span>(<span class="string">'./middleware/messages'</span>);</span><br><span class="line">app.use(messages);</span><br></pre></td></tr></table></figure>
+<p>这样任何视图中都可以访问到 messages 和 removeMessages()了，所以，不管出现在哪<br>个模板中，messages.ejs 应该都可以圆满完成任务。</p>
+<p><strong>5.实现用户注册</strong></p>
+<p>我们需要一个路由函数来处理提交到 /register 上的 HTTP POST 请求。可以将这个函数命名为 submit。</p>
+<p>当表单数据提交上来时，中间件 bodyParser()会用这些数据组装 req.body。注册表单使用了<br>对象表示法 user[name]，经过解析后会变成 req.body.user.name。同样，req.body.user.pass表示密码输入域。</p>
+<p>注册一完成，就会把 user.id 赋值给会话变量，稍后还要通过检查它是否存在来判断用户是否通过了认证。如果校验失败，消息会作为 messages 变量通过 res.locals.messages 输出到模板中，并且用户会被重定向回注册表单</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'../models/user'</span>);</span><br><span class="line">exports.form = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">'register'</span>, &#123; <span class="attr">title</span>: <span class="string">'Register'</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line">exports.submit = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = req.body.user;</span><br><span class="line">    <span class="comment">// 检查用户名是否唯一</span></span><br><span class="line">    User.getByName(data.name, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 用户名被占用</span></span><br><span class="line">        <span class="keyword">if</span> (user.id) &#123;</span><br><span class="line">            res.error(<span class="string">'Username already taken!'</span>);</span><br><span class="line">            res.redirect(<span class="string">'back'</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 用 POST 数据创建用户</span></span><br><span class="line">            user = <span class="keyword">new</span> User(&#123;</span><br><span class="line">                name: data.name,</span><br><span class="line">                pass: data.pass</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="comment">// 保存新用户</span></span><br><span class="line">            user.save(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">                <span class="comment">// 为认证保存 uid</span></span><br><span class="line">                <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line">                req.session.uid = user.id;</span><br><span class="line">                res.redirect(<span class="string">'/'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问 /register 注册一个用户。</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-register.png" alt="register"></p>
+<h4 id="已注册用户登录"><a href="#已注册用户登录" class="headerlink" title="已注册用户登录"></a>已注册用户登录</h4><p>实现登录功能比注册简单，因为之前定义的通用认证方法 User.authenticate() 里已经有登录所需的大部分代码。本节添加</p>
+<ul>
+<li>显示登录表单的路由逻辑</li>
+<li>认证从表单提交的用户数据的逻辑</li>
+</ul>
+<p>修改app.js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> login = <span class="built_in">require</span>(<span class="string">'./routes/login'</span>);</span><br><span class="line">app.get(<span class="string">'/login'</span>, login.form);</span><br><span class="line">app.post(<span class="string">'/login'</span>, login.submit);</span><br><span class="line">app.get(<span class="string">'/logout'</span>, login.logout);</span><br></pre></td></tr></table></figure>
+<h5 id="1-显示登录表单"><a href="#1-显示登录表单" class="headerlink" title="1.显示登录表单"></a><strong>1.显示登录表单</strong></h5><p>实现登录表单的第一步是为与登录和退出相关的路由创建一个文件： routers/login.js.显示登录表单的路由逻辑几乎跟之前那个显示注册表单的逻辑一模一样，唯一的区别是模板名称和页面标题不同：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.form = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">'login'</span>, &#123; <span class="attr">title</span>: <span class="string">'Login'</span> &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义登录表单的 login.ejs 也和 注册的相似，只有说明文本和提交目标不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&apos;stylesheet&apos; href=&apos;/stylesheets/style.css&apos; /&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;% include menu %&gt;</span><br><span class="line">    &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Fill in the form below to sign in!&lt;/p&gt;</span><br><span class="line">    &lt;% include messages %&gt;</span><br><span class="line">    &lt;form action=&apos;/login&apos; method=&apos;post&apos;&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">        &lt;input type=&apos;text&apos; name=&apos;user[name]&apos; placeholder=&apos;Username&apos; /&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">        &lt;input type=&apos;password&apos; name=&apos;user[pass]&apos; placeholder=&apos;Password&apos; /&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">      &lt;p&gt;</span><br><span class="line">        &lt;input type=&apos;submit&apos; value=&apos;Login&apos; /&gt;</span><br><span class="line">      &lt;/p&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="2-登录认证"><a href="#2-登录认证" class="headerlink" title="2.登录认证"></a><strong>2.登录认证</strong></h5><p>处理登录请求需要添加路由逻辑，对用户提交的用户名和密码进行检查，如果正确，将用户 ID 设为对话变量，并把用户重定向到首页上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//routers/login.js</span></span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'../modlels/user'</span>);</span><br><span class="line">exports.submit = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 检查凭证</span></span><br><span class="line">    <span class="keyword">const</span> data = req.body.user;</span><br><span class="line">    User.authenticate(data.name, data.pass, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 处理凭证有效的用户</span></span><br><span class="line">        <span class="keyword">if</span> (user) &#123;</span><br><span class="line">            <span class="comment">// 为认证存储 uid</span></span><br><span class="line">            req.session.uid = user.id;</span><br><span class="line">            res.redirect(<span class="string">'/'</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.error(<span class="string">'Sorry! invalid credentials'</span>);</span><br><span class="line">            res.redirect(<span class="string">'back'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果用户时使用 User.authenticate() 认证，req.session.uid 就会想在 POST/register 路由中一样赋值：这个值会保存在会话中，可以用它获取 User 或其他用户相关的数据。如果找不到匹配的记录，会设定一个错误，并重新显示登录表单。</p>
+<p>用户可能还希望有个退出功能，所以应该在程序中提供一个退出链接。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">exports.logout = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    req.session.destroy(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">        res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册和登录页面都创建好了，接下来需要添加一个菜单，让用户可以进入这两个页面。</p>
+<h5 id="3-为已认证的和匿名的用户创建菜单"><a href="#3-为已认证的和匿名的用户创建菜单" class="headerlink" title="3.为已认证的和匿名的用户创建菜单"></a><strong>3.为已认证的和匿名的用户创建菜单</strong></h5><p>在所有程序页面的 EJS 模板中，标签 <code>&lt;body&gt;</code>之后都有这样的一段代码，<code>&lt;% include menu %&gt;</code>，这是要嵌入模板 <code>./views/menu.ejs</code>，接下来马上创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(locals.user) &#123; %&gt;</span><br><span class="line">    &lt;div id=&quot;menu&quot;&gt;</span><br><span class="line">        &lt;span class=&quot;name&quot;&gt;&lt;%= user.name %&gt;&lt;/span&gt;</span><br><span class="line">        &lt;a href=&quot;/post&quot;&gt;post&lt;/a&gt;</span><br><span class="line">        &lt;a href=&quot;/logout&quot;&gt;logout&lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;% &#125; else &#123; %&gt;</span><br><span class="line">    &lt;div id=&quot;menu&quot;&gt;</span><br><span class="line">        &lt;a href=&quot;/post&quot;&gt;post&lt;/a&gt;</span><br><span class="line">        &lt;a href=&quot;/logout&quot;&gt;logout&lt;/a&gt;  </span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>在这个程序中，你可以假定如果有 user 变量输出到了模板中，那么这个用户就已经通过认<br>证了，否则不会输出这个变量。也就是说当这个变量出现时，可以显示用户名、消息提交和退出链接。当访问者是匿名用户时，显示网站登录和注册链接。</p>
+<p>我们要写一些代码为每个请求加载已登录用户的数据，并让模板可以得到这些数据.</p>
+<h4 id="用户加载中间件"><a href="#用户加载中间件" class="headerlink" title="用户加载中间件"></a><strong>用户加载中间件</strong></h4><p>在做 Web 程序时，一般都需要从数据库中加载用户消息，通常会表示为 JavaScript 对象，为了使其与用户交互简单，要保证这项数据的可持续访问。下面要用中间件为每个请求加载用户数据。</p>
+<p>中间件脚本会放在 ./middleware/user.js 中，它会从上层目录models 中引入 User 模型。</p>
+<p>显示输出中间件函数，然后检查会话查看用户ID 。当用户 ID 出现时，表明用户已经通过认证，所有从 Redis 中取出用户数据是安全的。</p>
+<p>Node 是单线程的，没有线程本地存储。对于 HTTP 服务器而言，请求和响应变量是唯一的上下文。构建在 Node 之上的高层框架可能会提供额外的对象存放已认证用户之类的数据，但 Express 坚持使用 Node 原始对象。因此，上下文数据一般保存在请求对象上，下面的代码中，用户被存储 req.user，后续中间件和路由可以用这个属性访问它。</p>
+<p>res.locals 是 Express 提供的请求层对象，可以将数据输出给模板。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'../models/user'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">req,res,next</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 从会话中取出已登录用户的 id</span></span><br><span class="line">    <span class="keyword">const</span> uid = req.session.uid;</span><br><span class="line">    <span class="keyword">if</span>(!uid) <span class="keyword">return</span> next();</span><br><span class="line">    <span class="comment">// 从 Redis 中取出已登录的用户的数据</span></span><br><span class="line">    User.get(uid,(err,user)=&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 将用户数据输出到响应对象中</span></span><br><span class="line">        req.user = res.locals.user = user;</span><br><span class="line">        next();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改变app.js 代码，启用这个中间件。。在这个程序中，user 出现在路由器上面，所以只有路由和在 user 下面的中间件能访问 req.user。如果你正在使用加载数据的中间件，就像这个中间件一样， 可能要把 express.static 放到它上面。否则每次返回静态文件时，都会浪费时间到数据库中取用户数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="built_in">require</span>(<span class="string">'./middleware/user'</span>);</span><br><span class="line">app.use(user);</span><br></pre></td></tr></table></figure>
+<p>增加菜单的样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#menu</span> &#123; </span><br><span class="line"> <span class="attribute">position</span>: absolute; </span><br><span class="line"> <span class="attribute">top</span>: <span class="number">15px</span>; </span><br><span class="line"> <span class="attribute">right</span>: <span class="number">20px</span>; </span><br><span class="line"> <span class="attribute">font-size</span>: <span class="number">12px</span>; </span><br><span class="line"> <span class="attribute">color</span>: <span class="number">#888</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="selector-id">#menu</span> <span class="selector-class">.name</span><span class="selector-pseudo">:after</span> &#123; </span><br><span class="line"> <span class="attribute">content</span>: <span class="string">' -'</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="selector-id">#menu</span> <span class="selector-tag">a</span> &#123; </span><br><span class="line"> <span class="attribute">text-decoration</span>: none; </span><br><span class="line"> <span class="attribute">margin-left</span>: <span class="number">5px</span>; </span><br><span class="line"> <span class="attribute">color</span>: black; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="创建-REST-API"><a href="#创建-REST-API" class="headerlink" title="创建 REST API "></a><strong>创建 REST API </strong></h4><p>本节创建一个 RESTful API,让第三方程序可以跟我们的在线留言板程序互动，进行公开数据的访问和添加。按照 REST 的思想，程序数据是可以用谓语和名词（即 HTTP 方法和 URL）访问和修改的。通过 REST 请求得到的数据一般是机器可读的格式，比如 JSON 和 XML</p>
+<p>实现 API 需要完成下面的任务:</p>
+<ul>
+<li>设计一个让用户显示、列表、移除和提交消息的 API</li>
+<li>添加基本认证</li>
+<li>实现路由</li>
+<li>提供 JSON 和 XML 响应</li>
+</ul>
+<p>能对 API 请求进行认证和签名的技术很有很多种，本章介绍以 basic-anth 包为例的集成认证功能。</p>
+<h5 id="1-设计-API"><a href="#1-设计-API" class="headerlink" title="1.设计 API"></a><strong>1.设计 API</strong></h5><p>我们一般会在 REST ful API前加路径 /api 。</p>
+<p>与其将回调函数放在 app.VERB() 里调用，不如把它做成单独的 Node 模块。保持路由列表的清爽简洁。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/api/user/:id'</span>,api.user);</span><br><span class="line">app.get(<span class="string">'/api/entries/:page?'</span>,api.entries);</span><br><span class="line">app.post(<span class="string">'/api/entry'</span>,api.add);</span><br></pre></td></tr></table></figure>
+<h5 id="2-添加基本的认证"><a href="#2-添加基本的认证" class="headerlink" title="2.添加基本的认证"></a><strong>2.添加基本的认证</strong></h5><p>使用中间 api.auth 这一过程，会放在 routes/api.js 模块中，app.use() 方法可以接受路径参数，这在 Express 中被称为挂载点。不管是什么 HTTP 谓语，只要请求的路径以挂载点开头，就会触发这个中间件。</p>
+<p>下面这段代码中的 app.use(‘/api’,api.auth); 应该放在加载数据的中间件前面，这样可以稍后再修改用户加载中间件，为已认证的 API 用户加载数据：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> api = <span class="built_in">require</span>(<span class="string">'./routes/api'</span>);</span><br><span class="line">app.use(<span class="string">'/api'</span>,api.auth);</span><br><span class="line">app.use(user);</span><br></pre></td></tr></table></figure>
+<p>要执行基本认证，安装 basic-auth 模块：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S basic-auth</span><br></pre></td></tr></table></figure>
+<p>接着，创建 ./routes/api.js ，引入 Express 和用户模型，可以用 basic-auth 从请求中获取基本认证凭证，然后交给 User.authenticate 进行认证：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> auth = <span class="built_in">require</span>(<span class="string">'basic-auth'</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> User = <span class="built_in">require</span>(<span class="string">'../models/user'</span>);</span><br><span class="line">exports.auth = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; name, pass &#125; = auth(req);</span><br><span class="line">    User.authenticate(name, pass, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (user) req.remoteUser = user;</span><br><span class="line">        next(err);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>认证已经准备好了，接下来可以实现 API 的路由。</p>
+<h5 id="3-实现路由"><a href="#3-实现路由" class="headerlink" title="3.实现路由"></a><strong>3.实现路由</strong></h5><p>第一个要实现的路由就是 GET /api/user/:id 。先根据 ID 取得用户数据，如果用户不存在，则返回 404 Not Found 的响应状态码，如果用户存在，则吧用户数据传给 res.json() 做串行化处理，并以 JSON 格式返回数据，将下面的代码加入 到 routes/api.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.user = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    User.get(req.params.id, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="keyword">if</span> (!user.id) <span class="keyword">return</span> res.send(<span class="number">404</span>);</span><br><span class="line">        res.json(user);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将这个路由，加到 app.js 中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.get(&apos;/api/user:id&apos;,api.user);</span><br></pre></td></tr></table></figure>
+<h5 id="4-测试用户数据获取"><a href="#4-测试用户数据获取" class="headerlink" title="4.测试用户数据获取"></a><strong>4.测试用户数据获取</strong></h5><p>启动程序，然后用命令行工具 cURL 进行测试，URL中提供了凭证 tobi:ferret，cURL 用它生成了 Authorization 请求头域：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://tobi:ferret@127.0.0.1:3000/api/user/4 -v</span><br></pre></td></tr></table></figure>
+<p>下面会测试结果：</p>
+<p><img src="/images/2018-12-08-NodeJs2-Part6-测试用户数据获取.png" alt="测试用户数据获取"></p>
+<p>4 是ID ，可以用 redis-cli 的 GET user:ids 来获取 id 名。</p>
+<h5 id="5-去掉敏感的用户数据"><a href="#5-去掉敏感的用户数据" class="headerlink" title="5.去掉敏感的用户数据"></a><strong>5.去掉敏感的用户数据</strong></h5><p>上面的图片中，用户的密码和盐都在，可以在 User 中将它们去掉：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">toJSON()&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        id: <span class="keyword">this</span>.id,</span><br><span class="line">        name: <span class="keyword">this</span>.name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有了 .toJSON ,JSON.stringify 就会用返回的 JSON 数据，现在再发送之前那个 cURL 请求，就只有 ID 和 name 属性了。</p>
+<h5 id="6-添加消息"><a href="#6-添加消息" class="headerlink" title="6.添加消息"></a><strong>6.添加消息</strong></h5><p>因为通过 API 添加消息的实现和通过 HTML 表单添加的实现时几乎一模一样，所以可以重用之前 实现的 entries.submit() 路由逻辑.</p>
+<p>不同的是 entries.submit()中，消息要有用户名和其他细节消息，所以需要修改用户加载中间件，用 basic-auth 中间件加载的用户数据封装在 res.locals.user 。之前在进行基本认证时，我们将用户数据设为了 请求对象的属性 req.remoteUser.现在只要在用户加载中间件中检查这个属性就可以了。按照下面修改 middleware/user.js 中的 module.exports 定义，用户加载中间件就能跟 API 进行协作了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (req.remoteUser) &#123;</span><br><span class="line">        res.locals.user = req.remoteUser;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> uid = req.session.uid;</span><br><span class="line">    <span class="keyword">if</span> (!uid) <span class="keyword">return</span> next();</span><br><span class="line">    User.get(uid, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        req.user = res.locals.user = user;</span><br><span class="line">        next();</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>存在一个问题，现在添加消息的响应还是重定向到首页，我们要针对 API 请求调整一下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routes/entries.js</span></span><br><span class="line">entry.save(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">    <span class="keyword">if</span> (req.remoteUser) &#123;</span><br><span class="line">        res.json(&#123; <span class="attr">message</span>: <span class="string">'Entry added.'</span> &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>启用消息添加 API</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/api/entry'</span>,entries.submit);</span><br></pre></td></tr></table></figure>
+<p>用下面的 cURL 命令测试消息添加 API。它发送的标题和内容主体数据所用的名称跟 HTML<br>表单输入域的名称相同：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d "entry[title]='Ho ho ho'&amp;entry[body]='Santa loves you'" http://tobi:ferret@127.0.0.1:3000/api/entry</span><br></pre></td></tr></table></figure>
+<h5 id="7-支持消息列表"><a href="#7-支持消息列表" class="headerlink" title="7.支持消息列表"></a><strong>7.支持消息列表</strong></h5><p>接下来要实现的API 路由是 GET/api/entries/:page?。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">exports.entries = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> page = req.page;</span><br><span class="line">    Entry.getRange(page.from, page.to, (err, entries) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        res.json(entries);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="8-实现分页中间件"><a href="#8-实现分页中间件" class="headerlink" title="8.实现分页中间件"></a><strong>8.实现分页中间件</strong></h5><p>在分页时，要查询字符串串？page=N 来确定当前页面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .middleware/page.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">cb, perpage</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 每页记录条数的默认值为 10</span></span><br><span class="line">    perpage = perpage || <span class="number">10</span>;</span><br><span class="line">    <span class="comment">// 返回中间件函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 将参数 page 解析为十进制的整型值</span></span><br><span class="line">        <span class="keyword">let</span> page = <span class="built_in">Math</span>.max(<span class="built_in">parseInt</span>(req.params.page || <span class="string">'1'</span>, <span class="number">10</span>), <span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 调用传入的函数</span></span><br><span class="line">        cb(<span class="function">(<span class="params">err, total</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">            <span class="comment">// 保存 page 来以后的引用</span></span><br><span class="line">            req.page = res.locals.page = &#123;</span><br><span class="line">                number: page,</span><br><span class="line">                perpage: perpage,</span><br><span class="line">                <span class="keyword">from</span>: page * perpage,</span><br><span class="line">                to: page * perpage + perpage - <span class="number">1</span>,</span><br><span class="line">                total: total,</span><br><span class="line">                count: <span class="built_in">Math</span>.ceil(total / perpage)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 将控制权交给中间件</span></span><br><span class="line">            next();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  这个中间件抓取赋值给 ？page = N 的值，比如 ?page = 1,然后取得结果集的总数，并预先计算出一些值拼成 page 对象，把它输出到需要渲染的视图中。把这些值放在模板外计算可以减少模板中的逻辑，让模板更加简洁。</p>
+<h5 id="9-测试消息路由"><a href="#9-测试消息路由" class="headerlink" title="9.测试消息路由"></a><strong>9.测试消息路由</strong></h5><p>下面的 cURL 命令从API获取消息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://tobi:ferret@127.0.0.1:3000/api/entries</span><br></pre></td></tr></table></figure>
+<p>输出的结果是一个 JSON 数组。</p>
+<h4 id="启用内容协商"><a href="#启用内容协商" class="headerlink" title="启用内容协商"></a><strong>启用内容协商</strong></h4><p>内容协商让客户端可以指定它乐于接受并且喜欢的数据格式。本节介绍如何让API 提供JSON 和 XML 格式的数据，以便于 API 的使用可以决定他们要使用哪种数据格式。</p>
+<p>HTTP 通过 accept 请求头域提供了内容协商机制，比如说，某个客户端更喜欢 HTML ，但是也可以接受普通的文本，则可以这样设定请求头：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Accept</span>: text/plain; q = 0.5,text/html</span><br></pre></td></tr></table></figure>
+<p>q(qvalue)表明即便 text/html 放在第二位，它的优先级也比 text/plain 高 50%。Express 会解析这个消息并提供一个规范化的 req.accepted 数组：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[&#123;</span><br><span class="line">    value:'text/html',quality:1</span><br><span class="line">&#125;,&#123;</span><br><span class="line">    value:'text/plain',quality:0.5</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>Express 还提供了 res.format() 方法，它的参数是一个 MIME 类型的数组和一些回调函数。 Express 会决定客户端愿意接受什么格式的数据，以及你愿意提供什么格式的数据，然后调用相应的会调函数。</p>
+<h5 id="1-实现内容协商"><a href="#1-实现内容协商" class="headerlink" title="1.实现内容协商"></a><strong>1.实现内容协商</strong></h5><p>在 router/api.js 中，支持内容协商的 GET/api/entries 路由如下面的例子。JSON 想之前那样被支持——用res.send()发送串行化为 JSON 的消息数据。XML 回调循环遍历消息，并将其写入 socket 中。注意，没必要显示设定 Content-type ,res.format() 会自动设定关联的类型。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">exports.entries = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> page = req.page;</span><br><span class="line">    <span class="comment">// 获取消息数据</span></span><br><span class="line">    Entry.getRange(page.from, page.to, (err, entries) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 基于 Accept 头的值返回不同的响应</span></span><br><span class="line">        res.format(&#123;</span><br><span class="line">            <span class="string">'application/json'</span>: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                res.send(entries);</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// XML 响应</span></span><br><span class="line">            <span class="string">'application/xml'</span>: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                res.write(<span class="string">'&lt;entries&gt;\n'</span>);</span><br><span class="line">                entries.forEach(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">                    res.write(<span class="string">`</span></span><br><span class="line"><span class="string">                        &lt;entry&gt;</span></span><br><span class="line"><span class="string">                            &lt;title&gt;<span class="subst">$&#123;entry.title&#125;</span>&lt;/title&gt;</span></span><br><span class="line"><span class="string">                            &lt;body&gt;<span class="subst">$&#123;entry.body&#125;</span>&lt;/body&gt;</span></span><br><span class="line"><span class="string">                            &lt;username&gt;<span class="subst">$&#123;entry.username&#125;</span>&lt;/username&gt;</span></span><br><span class="line"><span class="string">                        &lt;/entry&gt;</span></span><br><span class="line"><span class="string">                    `</span>);</span><br><span class="line">                &#125;);</span><br><span class="line">                res.end(<span class="string">'&lt;/entries&gt;'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        res.json(entries);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果设定了默认响应格式回调，当用户请求的格式不在你特意提供的格式中时，就会执行这个默认回调函数。</p>
+<p>res.format() 方法还可以将扩展映射到相关联的 MIME 类型上面。比如 用 json 和 xml 代替 application/json 和 application/xml ，就想下面这样。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">exports.entries = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> page = req.page;</span><br><span class="line">    <span class="comment">// 获取消息数据</span></span><br><span class="line">    Entry.getRange(page.from, page.to, (err, entries) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 基于 Accept 头的值返回不同的响应</span></span><br><span class="line">        res.format(&#123;</span><br><span class="line">            json: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                res.send(entries);</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">// XML 响应</span></span><br><span class="line">            xml: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                res.write(<span class="string">'&lt;entries&gt;\n'</span>);</span><br><span class="line">                entries.forEach(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">                    res.write(<span class="string">`</span></span><br><span class="line"><span class="string">                        &lt;entry&gt;</span></span><br><span class="line"><span class="string">                            &lt;title&gt;<span class="subst">$&#123;entry.title&#125;</span>&lt;/title&gt;</span></span><br><span class="line"><span class="string">                            &lt;body&gt;<span class="subst">$&#123;entry.body&#125;</span>&lt;/body&gt;</span></span><br><span class="line"><span class="string">                            &lt;username&gt;<span class="subst">$&#123;entry.username&#125;</span>&lt;/username&gt;</span></span><br><span class="line"><span class="string">                        &lt;/entry&gt;</span></span><br><span class="line"><span class="string">                    `</span>);</span><br><span class="line">                &#125;);</span><br><span class="line">                res.end(<span class="string">'&lt;/entries&gt;'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        res.json(entries);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>2.XML 响应</strong></p>
+<p>在路由中写一大堆代码只是为了返回 XML 响应，不是最简洁的方法，我们可以用视图系统来实现这一功能。</p>
+<p>用下面的 EJS 创建一个 xml 模板。会循环遍历消息生成的 `<entry>标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;entries&gt;</span><br><span class="line">    &lt;% entries.forEach(entry =&gt;&#123; %&gt;</span><br><span class="line">        &lt;entry&gt;</span><br><span class="line">            &lt;title&gt;&lt;%= entry.title %&gt;&lt;/title&gt;</span><br><span class="line">            &lt;body&gt;&lt;%= entry.body %&gt;&lt;/body&gt;</span><br><span class="line">            &lt;username&gt;&lt;%= entry.username %&gt;&lt;/username&gt;</span><br><span class="line">        &lt;/entry&gt;</span><br><span class="line">    &lt;% &#125;) %&gt;</span><br><span class="line">&lt;entries&gt;</span><br></pre></td></tr></table></figure>
+<p>然后，原来的 XML 回调以消息数组为参数的 res.render () </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xml: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    res.render(<span class="string">'entries/xml'</span>, &#123; <span class="attr">entries</span>: entries &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -H 'Accept: application/xml'  http://tobi:ferret@127.0.0.1:3000/api/entries</span><br></pre></td></tr></table></figure>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><ul>
+<li>Connect 是一个 HTTP 框架，可以在处理请之前和之后堆叠中间件</li>
+<li>Connect 中间件是一个函数，它的参数包括 Node 的请求和响应对象、一个调用下一个中间件的函数，以及一个可选的错误对象</li>
+<li>Express Web 程序也是可用中间件搭建的。</li>
+<li>在用 Expresss 实现 REST ful API 时，可以用 HTTP 谓语定义路由</li>
+<li>Express 路由的响应可以是 JSON / HTML 以及其他格式定义的数据</li>
+<li>Express 有个简单的模板引擎 API ，支持很多引擎。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-08-NodeJs2-Part6.html" title="Nodejs实战 —— 深入了解Connect 和 Express">http://laibh.top/2018-12-08-NodeJs2-Part6.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-07-NodeJs2-Part5.html" rel="next" title="Nodejs实战 —— 服务器端框架">
+                <i class="fa fa-chevron-left"></i> Nodejs实战 —— 服务器端框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-17-NodeJs2-Part7.html" rel="prev" title="Nodejs实战 —— Web 程序的模板">
+                Nodejs实战 —— Web 程序的模板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深入了解Connect-和-Express"><span class="nav-number">1.</span> <span class="nav-text">深入了解Connect 和 Express</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Connect"><span class="nav-number">1.1.</span> <span class="nav-text">Connect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-Connect-程序"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建 Connect 程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#了解-Connect-中间件的工作机制"><span class="nav-number">1.1.2.</span> <span class="nav-text">了解 Connect 中间件的工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合中间件"><span class="nav-number">1.1.3.</span> <span class="nav-text">组合中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间件的顺序"><span class="nav-number">1.1.4.</span> <span class="nav-text">中间件的顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用错误处理中间件"><span class="nav-number">1.1.5.</span> <span class="nav-text">使用错误处理中间件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Express"><span class="nav-number">1.2.</span> <span class="nav-text">Express</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成程序的框架"><span class="nav-number">1.2.1.</span> <span class="nav-text">生成程序的框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express-和程序的配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">Express 和程序的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染视图"><span class="nav-number">1.2.3.</span> <span class="nav-text">渲染视图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express-路由入门"><span class="nav-number">1.2.4.</span> <span class="nav-text">Express 路由入门</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建消息模型"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">创建消息模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建消息表单"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">创建消息表单</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实现消息的创建"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">实现消息的创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加显示消息首页"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">添加显示消息首页</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加与消息相关的路由"><span class="nav-number">1.2.4.5.</span> <span class="nav-text">添加与消息相关的路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用特定路由中间件"><span class="nav-number">1.2.4.6.</span> <span class="nav-text">使用特定路由中间件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户认证"><span class="nav-number">1.2.5.</span> <span class="nav-text">用户认证</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-保存和加载用户记录"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">1.保存和加载用户记录</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-创建用户模型"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">2.创建用户模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-把用户保存到-Redis-中"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">3.把用户保存到 Redis 中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-增强用户密码的安全性"><span class="nav-number">1.2.5.4.</span> <span class="nav-text">4.增强用户密码的安全性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-测试用户保存逻辑"><span class="nav-number">1.2.5.5.</span> <span class="nav-text">5.测试用户保存逻辑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-获取用户数据"><span class="nav-number">1.2.5.6.</span> <span class="nav-text">6.获取用户数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-用户登录认证"><span class="nav-number">1.2.5.7.</span> <span class="nav-text">7.用户登录认证</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册新用户"><span class="nav-number">1.2.6.</span> <span class="nav-text">注册新用户</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-添加注册路由"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">1.添加注册路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-创建注册表单"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">2.创建注册表单</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-在会话中存储临时的消息"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">4.在会话中存储临时的消息</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#已注册用户登录"><span class="nav-number">1.2.7.</span> <span class="nav-text">已注册用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-显示登录表单"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">1.显示登录表单</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-登录认证"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">2.登录认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-为已认证的和匿名的用户创建菜单"><span class="nav-number">1.2.7.3.</span> <span class="nav-text">3.为已认证的和匿名的用户创建菜单</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户加载中间件"><span class="nav-number">1.2.8.</span> <span class="nav-text">用户加载中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-REST-API"><span class="nav-number">1.2.9.</span> <span class="nav-text">创建 REST API </span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-设计-API"><span class="nav-number">1.2.9.1.</span> <span class="nav-text">1.设计 API</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-添加基本的认证"><span class="nav-number">1.2.9.2.</span> <span class="nav-text">2.添加基本的认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-实现路由"><span class="nav-number">1.2.9.3.</span> <span class="nav-text">3.实现路由</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-测试用户数据获取"><span class="nav-number">1.2.9.4.</span> <span class="nav-text">4.测试用户数据获取</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-去掉敏感的用户数据"><span class="nav-number">1.2.9.5.</span> <span class="nav-text">5.去掉敏感的用户数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-添加消息"><span class="nav-number">1.2.9.6.</span> <span class="nav-text">6.添加消息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-支持消息列表"><span class="nav-number">1.2.9.7.</span> <span class="nav-text">7.支持消息列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-实现分页中间件"><span class="nav-number">1.2.9.8.</span> <span class="nav-text">8.实现分页中间件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-测试消息路由"><span class="nav-number">1.2.9.9.</span> <span class="nav-text">9.测试消息路由</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启用内容协商"><span class="nav-number">1.2.10.</span> <span class="nav-text">启用内容协商</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-实现内容协商"><span class="nav-number">1.2.10.1.</span> <span class="nav-text">1.实现内容协商</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结："><span class="nav-number">1.2.11.</span> <span class="nav-text">总结：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

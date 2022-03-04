@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node Web 程序是什么了解 Node Web 程序的结构典型的Node Web 程序是由下面几部分组成的：  package.json ： 一个包含依赖项列表和运行这个程序的命令的文件； public：静态资源文件 node_modules:项目的依赖项 程序代码： app.js 或 index.js ：">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— Node Web 程序是什么">
+<meta property="og:url" content="http://laibh.top/2018-12-05-NodeJs2-Part3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node Web 程序是什么了解 Node Web 程序的结构典型的Node Web 程序是由下面几部分组成的：  package.json ： 一个包含依赖项列表和运行这个程序的命令的文件； public：静态资源文件 node_modules:项目的依赖项 程序代码： app.js 或 index.js ：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-12-05-NodeJs2-Part3-开始一个web程序.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— Node Web 程序是什么">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node Web 程序是什么了解 Node Web 程序的结构典型的Node Web 程序是由下面几部分组成的：  package.json ： 一个包含依赖项列表和运行这个程序的命令的文件； public：静态资源文件 node_modules:项目的依赖项 程序代码： app.js 或 index.js ：">
+<meta name="twitter:image" content="http://laibh.top/images/2018-12-05-NodeJs2-Part3-开始一个web程序.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-05-NodeJs2-Part3.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— Node Web 程序是什么 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-05-NodeJs2-Part3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— Node Web 程序是什么</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-05T09:30:00+08:00">
+                2018-12-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-05-NodeJs2-Part3.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— Node Web 程序是什么">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,277
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="Node-Web-程序是什么"><a href="#Node-Web-程序是什么" class="headerlink" title="Node Web 程序是什么"></a>Node Web 程序是什么</h2><h3 id="了解-Node-Web-程序的结构"><a href="#了解-Node-Web-程序的结构" class="headerlink" title="了解 Node Web 程序的结构"></a>了解 Node Web 程序的结构</h3><p>典型的Node Web 程序是由下面几部分组成的：</p>
+<ul>
+<li>package.json ： 一个包含依赖项列表和运行这个程序的命令的文件；</li>
+<li>public：静态资源文件</li>
+<li>node_modules:项目的依赖项</li>
+<li>程序代码：<ul>
+<li>app.js 或 index.js ：设置程序的代码</li>
+<li>models:数据库模型</li>
+<li>views:渲染页面的模板</li>
+<li>controllers或 routes :HTTP 请求处理器</li>
+<li>middleware: 中间件组件</li>
+</ul>
+</li>
+</ul>
+<h4 id="开始一个新的-Web-程序"><a href="#开始一个新的-Web-程序" class="headerlink" title="开始一个新的 Web 程序"></a><strong>开始一个新的 Web 程序</strong></h4><p>创建一个新目录，然后运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir later</span><br><span class="line">cd later</span><br><span class="line">npm init -fy</span><br></pre></td></tr></table></figure>
+<p>安装 express</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i express -S</span><br></pre></td></tr></table></figure>
+<p>可以在  package.json，看到express 已经被安装上去了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">&quot;express&quot;: &quot;^4.16.4&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要卸载可以使用下面的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm rm express -S</span><br></pre></td></tr></table></figure>
+<p>创建一个简单的服务器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">//  express() 创建一个程序实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> port = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line"><span class="comment">// 添加路由处理器</span></span><br><span class="line">app.get(<span class="string">'/'</span>,(req,res) =&gt;&#123;</span><br><span class="line">    res.send(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 程序实例绑定到一个 TCP端口</span></span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Express web app available at localhost: <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>新增 package.json 文件的 npm 脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">"start": "node index.js",</span><br><span class="line">"test": "echo \"Error: no test specified\" &amp;&amp; exit 1"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>运行程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p>可以看到：</p>
+<p><img src="/images/2018-12-05-NodeJs2-Part3-开始一个web程序.png" alt="开始一个web程序"></p>
+<h4 id="跟其他平台比较"><a href="#跟其他平台比较" class="headerlink" title="跟其他平台比较"></a><strong>跟其他平台比较</strong></h4><p>如果在 PHP 实现上面的程序，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> <span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>; <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只有一行，并且一看就明白，那么这个更加复杂的 Node示例有什么优点呢？二者是编程范<br>式上的区别：用 PHP，程序是页面；Node：程序是服务器，这个Node 示例可以完全控制请求和响应，不用配置服务器就可以做所有事情，如果要用 HTTP 压缩或 URL 转发，可以将这些功能作为程序的逻辑来实现。不需要把 HTTP 程序和逻辑分开，它们是程序的一部分。</p>
+<h3 id="搭建一个-RESTful-Web-服务"><a href="#搭建一个-RESTful-Web-服务" class="headerlink" title="搭建一个 RESTful Web 服务"></a>搭建一个 RESTful Web 服务</h3><p>RESTful 服务可以方便创建和保存文件，将杂乱的 Web 页面变得整洁。</p>
+<p>设计 RESTful 服务要想好操作，映射到 Express 路由上面。此例子，需要保存文章、获取文章、获取包含所有文章的列表和删除不再需要的文章这几个功能。分别对应下面的路由：</p>
+<ul>
+<li>POST /articles：创建新文章</li>
+<li>GET /articles/:id ：获取指定文章</li>
+<li>GET /articles：获取所有文章</li>
+<li>DELETE /articles/:id ：删除指定文章</li>
+</ul>
+<p>简单的 Express 程序实现了这些路由，现在使用 JavaScript 来存储文章</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">//  express() 创建一个程序实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数组定义 文章articles</span></span><br><span class="line"><span class="keyword">const</span> articles = [&#123; <span class="attr">title</span>: <span class="string">'Example'</span> &#125;];</span><br><span class="line"><span class="keyword">const</span> port = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line"><span class="comment">// 添加路由处理器</span></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">    res.send(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 获取所有文章</span></span><br><span class="line">app.get(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    res.send(articles);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 创建一篇文章</span></span><br><span class="line">app.post(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    res.send(<span class="string">'OK'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 获取指定文章</span></span><br><span class="line">app.get(<span class="string">'/articles/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> id = req.params.id;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Fetching:'</span>, id);</span><br><span class="line">    res.send(articles[id]);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 删除指定文章</span></span><br><span class="line">app.delete(<span class="string">'/articles/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> id = req.params.id;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Deleting:'</span>, id);</span><br><span class="line">    <span class="keyword">delete</span> articles[id];</span><br><span class="line">    res.send(&#123; <span class="attr">message</span>: <span class="string">'Deleted'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 程序实例绑定到一个 TCP端口</span></span><br><span class="line">app.listen(port, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Express web app available at localhost: <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Express 能自动将数组转换成 JSON 响应。</p>
+<p>创建文章，处理 POST 请求需要消息体解析。安装解析器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S body-parser</span><br></pre></td></tr></table></figure>
+<p>添加消息解析器:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 消息解析器</span></span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line">app.use(bodyParser);</span><br><span class="line"><span class="comment">// 支持编码为 JSON 的消息请求体</span></span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"><span class="comment">// 支持编码为表单的请求消息体</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line"><span class="comment">// 创建一篇文章</span></span><br><span class="line">app.post(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> article = &#123; <span class="attr">title</span>: req.body.title &#125;;</span><br><span class="line">    articles.push(article);</span><br><span class="line">    res.send(article);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="添加数据库"><a href="#添加数据库" class="headerlink" title="添加数据库"></a>添加数据库</h3><p>就往 Node程序中添加数据库而言，并没有一定之规，但一般会涉及下面几个步骤。</p>
+<p>(1) 决定想要用的数据库系统。<br>(2) 在 npm上看看那些实现了数据库驱动或对象-关系映射（ORM）的热门模块。<br>(3) 用 npm –save 将模块添加到项目中。<br>(4) 创建模型，封装数据库访问 API。<br>(5) 把这些模型添加到 Express路由中。</p>
+<p>创建数据库之前，添加路由处理代码，程序汇中的 HTTP 路由处理会向模型发起一个简单的调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    Article.all(<span class="function">(<span class="params">err, articles</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> err;</span><br><span class="line">        res.send(articles);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这个 HTTP 路由是用来获取所有文章的，所以对应的模型方法应该类似于 Article.all 。这要取决于数据库 API，一般来说应该是 Article.find({}, cb) 和 Article.fetchAll().then(cb) ，其中的 cb 是回调（callback）的缩写.</p>
+<p>上例子中选择了 SQLite数据库，还有热门的 sqlite3 模块。SQLite 是进程内数据库，<br>所以很方便：你不需要在系统上安装一个后台运行的数据库。你添加的所有数据都会写到一个文件里，也就是说程序停掉后再起来时数据还在，所以非常适合入门学习时用。</p>
+<h4 id="制作自己的模型-API"><a href="#制作自己的模型-API" class="headerlink" title="制作自己的模型 API"></a><strong>制作自己的模型 API</strong></h4><p>文章应该能被创建、获取、删除，所以模型 Articles 应该提供一下的方法：</p>
+<ul>
+<li>Article.all(cb)：返回文章</li>
+<li>Article.find(id,cd)：给定ID,找到对应的文章</li>
+<li>Article.create({title,content},cb)：创建一篇有标题和内容的文章</li>
+<li>Article.delete(id,cb)：根据ID删除文章</li>
+</ul>
+<p>这些都可以用sqlite3模块实现。有了这个模块，我们可以用 db.all 获取多行数据，用db.get获取一行数据。不过先要有数据库连接。</p>
+<p>安装 sqlite3：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S sqlite3</span><br></pre></td></tr></table></figure>
+<p>接着在 ds.js 中实现代码完成上述功能。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sqlite3 = <span class="built_in">require</span>(<span class="string">'sqlite3'</span>);</span><br><span class="line"><span class="keyword">const</span> dbName = <span class="string">'later.sqlite'</span>;</span><br><span class="line"><span class="comment">// 新建并连接到数据库文件</span></span><br><span class="line"><span class="keyword">const</span> db = <span class="keyword">new</span> sqlite3.Database(dbName);</span><br><span class="line"></span><br><span class="line">db.serialize(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 如果还没有，创建一个 articles 表</span></span><br><span class="line">    <span class="keyword">const</span> sql = <span class="string">`</span></span><br><span class="line"><span class="string">        CREATE TABLE IF NOT EXISTS articles (id integer primary key, title, content TEXT)</span></span><br><span class="line"><span class="string">    `</span>;</span><br><span class="line">    db.run(sql);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义模型类 Article</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Article</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获取所有文章</span></span><br><span class="line">    <span class="keyword">static</span> all(cb) &#123;</span><br><span class="line">        db.all(<span class="string">'SELECT * FROM articles'</span>, cb);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 选择一篇指定的文章</span></span><br><span class="line">    <span class="keyword">static</span> find(id, cb) &#123;</span><br><span class="line">        db.find(<span class="string">'SELECT * FROM articles WHERE id = ?'</span>, id, cb);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> create(data, cb) &#123;</span><br><span class="line">        <span class="comment">// 问号表示参数</span></span><br><span class="line">        <span class="keyword">const</span> sql = <span class="string">`INSERT INTO articles(title, content) VALUES (?, ?)`</span>;</span><br><span class="line">        db.run(sql, data, tile, data.contont, cb);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">delete</span>(id, cb) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!id) <span class="keyword">return</span> cb(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'please provide an id'</span>));</span><br><span class="line">        db.run(<span class="string">'DELETE FROM articles WHERE id = ?'</span>, id, cb);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = db;</span><br><span class="line"><span class="built_in">module</span>.exports.Article = Article;</span><br></pre></td></tr></table></figure>
+<p>上面例子中创建了一个 名为 Article 的对象，它可以用标准的 SQL 和 sqlite3 创建、获取和删除数据。首先用 sqlite3.Database 打开一个数据库文件，然后创建表的 articles 。这里用到了 SQL 语法 IF NOT EXISTS ,以防一不小心重新运行了代码删除了前面的表重新创建一个。</p>
+<p>数据库和表准备好了之后，就可以进行查询。用 sqlite3 的 all 方法可以获取的所有文章。用带问号的查询语法提供具体值的方法可以获取指定文章，sqlite3 会把 ID 插入到查询语句中，最后用 run 方法插入和删除数据。</p>
+<p>基本的数据库功能已经实现了，接着我们把它添加到 HTTP 路由中。下面这段代码添加了所有方法，除了 POST 。（因为需要用到 readability模块，但你还没有装好，所以要单独处理。）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="comment">//  express() 创建一个程序实例</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="comment">// 消息解析器</span></span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"><span class="comment">// 加载数据库模块 Article 类</span></span><br><span class="line"><span class="keyword">const</span> Article = <span class="built_in">require</span>(<span class="string">'./db'</span>).Article;</span><br><span class="line">app.use(bodyParser);</span><br><span class="line"><span class="comment">// 支持编码为 JSON 的消息请求体</span></span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"><span class="comment">// 支持编码为表单的请求消息体</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line"><span class="comment">// 数组定义 文章articles</span></span><br><span class="line"><span class="keyword">const</span> articles = [&#123; <span class="attr">title</span>: <span class="string">'Example'</span> &#125;];</span><br><span class="line"><span class="keyword">const</span> port = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line"><span class="comment">// 添加路由处理器</span></span><br><span class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</span><br><span class="line">    res.send(<span class="string">'Hello World'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 获取所有文章</span></span><br><span class="line">app.get(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    Article.all(<span class="function">(<span class="params">err, articles</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> err;</span><br><span class="line">        res.send(articles);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 获取指定文章</span></span><br><span class="line">app.get(<span class="string">'/articles/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> id = req.params.id;</span><br><span class="line">    Article.find(id, (err, article) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        res.send(article);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 删除指定文章</span></span><br><span class="line">app.delete(<span class="string">'/articles/:id'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> id = req.params.id;</span><br><span class="line">    Article.delete(id, (err) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> next(err);</span><br><span class="line">        res.send(&#123; <span class="attr">message</span>: <span class="string">'Deleted'</span> &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 程序实例绑定到一个 TCP端口</span></span><br><span class="line">app.listen(port, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Express web app available at localhost: <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = app;</span><br></pre></td></tr></table></figure>
+<p>db.js 文件放在同个目录，Node 会加载那个模块，然后用它获取所有文章，查找特定文章和删除一篇文章。</p>
+<p>最后一件事情是实现创建文章的功能。还要用 readability 算法处理它们。</p>
+<h4 id="让文章可读并存起来"><a href="#让文章可读并存起来" class="headerlink" title="让文章可读并存起来"></a><strong>让文章可读并存起来</strong></h4><p>RSETful API 已经搭建好了，数据也可以持续化到数据库中，接下来该写代码把网页转换成简化版的 “阅读视图”。不过我们不用自己实现， npm 中有这样的模块。</p>
+<p>在 npm上搜索 readability 会找到很多模块。我们试一下 node-readability:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i node-readability -S</span><br></pre></td></tr></table></figure>
+<p>这个模块提供了一个异步函数，可以下载指定 URL 页面并将 HTML 转换成简版。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> read = <span class="built_in">require</span>(<span class="string">'node-readability'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="string">'http://www.manning.com/cantelon2/'</span>;</span><br><span class="line">read(url,(err,result)=&gt;&#123;</span><br><span class="line">    <span class="comment">// 结果有.title 和 content</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>还可以和数据库类结合起来，用 Article.create 方法保存文章：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">read(url,(err,result)=&gt;&#123;</span><br><span class="line">    Article.create(&#123;<span class="attr">title</span>:result:title,<span class="attr">content</span>: result.content&#125;,(err,article) =&gt;&#123;</span><br><span class="line">        <span class="comment">// 将文章保存到数据中</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>打开 index.js 添加新的 app.post 路由处理器，用上面的方法方法实现下载和保存文章的功能。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> read = <span class="built_in">require</span>(<span class="string">'node-readability'</span>);</span><br><span class="line"><span class="comment">// 创建一篇文章</span></span><br><span class="line">app.post(<span class="string">'/articles'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 从 POST 消息体重得到 URL </span></span><br><span class="line">    <span class="keyword">const</span> url = req.body.url;</span><br><span class="line">    read(url, (err, result) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 用 readabiliry 模块获取这个 URL 指向的页面</span></span><br><span class="line">        <span class="keyword">if</span> (err || !result) res.status(<span class="number">500</span>).send(<span class="string">'Error downloading article'</span>);</span><br><span class="line">        Article.create(&#123; <span class="attr">title</span>: result.title, <span class="attr">content</span>: result.content &#125;, (err, article) =&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (err) <span class="keyword">return</span> err;</span><br><span class="line">            <span class="comment">// 文章保存成功后发送提示</span></span><br><span class="line">            res.send(<span class="string">'OK'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，先从 POST 消息体中得到 URL ，然后用 node-readability 模块获取这个URL 指向的页面，用模型类 Article 保存文章，如果有错误，将处理权交给 express 的中间件栈；否则，将 JSON 格式的文章发送给客户端。</p>
+<h3 id="添加用户界面"><a href="#添加用户界面" class="headerlink" title="添加用户界面"></a>添加用户界面</h3><p>给 Express 项目添加界面需要做的几件事情，首先是使用模块引擎。</p>
+<h4 id="支持多种格式"><a href="#支持多种格式" class="headerlink" title="支持多种格式"></a><strong>支持多种格式</strong></h4><p>基本做法是用 Express 的 res.format 方法，它可以根据请求发送响应格式的响应。它的用法如下，提供一个包含格式已经对应的响应函数的列表：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.format(&#123;</span><br><span class="line">    html:<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        res.render(<span class="string">'articles.ejs'</span>,&#123; <span class="attr">articles</span>: articles&#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    json:<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        res.send(articles);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码中， res.render 会渲染 view 文件夹下的  articles.ejs。但这需要安装模板引擎并创建相应的模板。</p>
+<h4 id="渲染引擎"><a href="#渲染引擎" class="headerlink" title="渲染引擎"></a><strong>渲染引擎</strong></h4><p>模板引擎有很多，EJS属于简单易学的那种。安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i ejs -S</span><br></pre></td></tr></table></figure>
+<p>res.render 可以渲染 EJS 格式 的 HTML 文件。在 view 文件夹中创建 articles.ejs </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;% include head %&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;% articles.forEach(article =&gt;&#123; %&gt;</span><br><span class="line">    &lt;li&gt;</span><br><span class="line">        &lt;a href=&quot;/articles/&lt;%= article.id %&gt;&quot;&gt;</span><br><span class="line">            &lt;%= article.title %&gt;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;% &#125;) %&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;% include foot%&gt;</span><br></pre></td></tr></table></figure>
+<p>页眉和页脚模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> &lt;!-- 页眉 --&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line"> &lt;!-- 页脚 --&gt;        </span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="用npm管理客户端依赖项"><a href="#用npm管理客户端依赖项" class="headerlink" title="用npm管理客户端依赖项"></a><strong>用npm管理客户端依赖项</strong></h4><p>模块搞定之后，就是样式了。安装 bootstrap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install bootstrap --save</span><br></pre></td></tr></table></figure>
+<p>然后在 node_modules/boostrap 里面会看到源码，在 dist/css 里面有css文件，要让服务器响应静态文件请求才可以使用这些文件。</p>
+<p>Express 自带了 一个名为 express.static 中间件，可以给浏览器发送客户端 JavaScript、图片和CSS 文件。只要将它指向包含这些文件的目录，浏览器就可以访问到这些文件了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载 css文件</span></span><br><span class="line">app.use(<span class="string">'/css/bootstrap.css'</span>,express.static(<span class="string">'node_modules/bootstrap/dist/css/bootstrap.css'</span>));</span><br></pre></td></tr></table></figure>
+<p>接着在头模块中引入</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/css/bootstrap.css"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这只是 Bootstrap的 CSS。它还有很多文件，包括图标、字体以及 jQuery插件。你可以往项目里添加更多文件，或者用工具把它们打包成一个文件，让浏览器更容易加载。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>用 npm init 和 Express 可以快速搭建出一个 Node Web 应用程序</li>
+<li>npm install 是安装依赖项的命令</li>
+<li>可以用 Express 制作带有 RESTful API 的 Web 程序</li>
+<li>选择适合的数据库系统和数据库模板根据个人需求</li>
+<li>对于小项目来说，SQLite 很好用</li>
+<li>在 Express 中用EJS渲染模板很容易</li>
+<li>Express 支持很多模块引擎，包括Pug和Mustache</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-05-NodeJs2-Part3.html" title="Nodejs实战 —— Node Web 程序是什么">http://laibh.top/2018-12-05-NodeJs2-Part3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-01-NodeJs2-Part2.html" rel="next" title="Nodejs实战 —— Node编程基础">
+                <i class="fa fa-chevron-left"></i> Nodejs实战 —— Node编程基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-06-NodeJs2-Part4.html" rel="prev" title="Nodejs实战 —— 前端构建系统">
+                Nodejs实战 —— 前端构建系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-Web-程序是什么"><span class="nav-number">1.</span> <span class="nav-text">Node Web 程序是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解-Node-Web-程序的结构"><span class="nav-number">1.1.</span> <span class="nav-text">了解 Node Web 程序的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始一个新的-Web-程序"><span class="nav-number">1.1.1.</span> <span class="nav-text">开始一个新的 Web 程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跟其他平台比较"><span class="nav-number">1.1.2.</span> <span class="nav-text">跟其他平台比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建一个-RESTful-Web-服务"><span class="nav-number">1.2.</span> <span class="nav-text">搭建一个 RESTful Web 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加数据库"><span class="nav-number">1.3.</span> <span class="nav-text">添加数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#制作自己的模型-API"><span class="nav-number">1.3.1.</span> <span class="nav-text">制作自己的模型 API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#让文章可读并存起来"><span class="nav-number">1.3.2.</span> <span class="nav-text">让文章可读并存起来</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户界面"><span class="nav-number">1.4.</span> <span class="nav-text">添加用户界面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#支持多种格式"><span class="nav-number">1.4.1.</span> <span class="nav-text">支持多种格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染引擎"><span class="nav-number">1.4.2.</span> <span class="nav-text">渲染引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用npm管理客户端依赖项"><span class="nav-number">1.4.3.</span> <span class="nav-text">用npm管理客户端依赖项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

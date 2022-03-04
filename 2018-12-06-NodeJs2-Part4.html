@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 前端构建系统本章将介绍如何使用 npm 脚本、Gulp 和 Webpack 搭建易于维护的代码。因为可以使用 Babel 转译，所以无须担心浏览器对ES2015的支持。 了解基于 Node 的前端开发npm 可以用于前端模块，例如 React,也可以用于后台代码，比如 Express。lodash作为通用库，既">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— 前端构建系统">
+<meta property="og:url" content="http://laibh.top/2018-12-06-NodeJs2-Part4.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 前端构建系统本章将介绍如何使用 npm 脚本、Gulp 和 Webpack 搭建易于维护的代码。因为可以使用 Babel 转译，所以无须担心浏览器对ES2015的支持。 了解基于 Node 的前端开发npm 可以用于前端模块，例如 React,也可以用于后台代码，比如 Express。lodash作为通用库，既">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— 前端构建系统">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 前端构建系统本章将介绍如何使用 npm 脚本、Gulp 和 Webpack 搭建易于维护的代码。因为可以使用 Babel 转译，所以无须担心浏览器对ES2015的支持。 了解基于 Node 的前端开发npm 可以用于前端模块，例如 React,也可以用于后台代码，比如 Express。lodash作为通用库，既">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-06-NodeJs2-Part4.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— 前端构建系统 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-06-NodeJs2-Part4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— 前端构建系统</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T11:30:00+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-06-NodeJs2-Part4.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— 前端构建系统">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,635
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="前端构建系统"><a href="#前端构建系统" class="headerlink" title="前端构建系统"></a>前端构建系统</h2><p>本章将介绍如何使用 npm 脚本、Gulp 和 Webpack 搭建易于维护的代码。因为可以使用 Babel 转译，所以无须担心浏览器对ES2015的支持。</p>
+<h3 id="了解基于-Node-的前端开发"><a href="#了解基于-Node-的前端开发" class="headerlink" title="了解基于 Node 的前端开发"></a>了解基于 Node 的前端开发</h3><p>npm 可以用于前端模块，例如 React,也可以用于后台代码，比如 Express。lodash作为通用库，既可以用在 Node 中，也可以用在浏览器中。</p>
+<p>也有专门针对客户端的模块系统，比如 Bower,也可以接着使用这些工具，但作为 Node 开发人员，应该优先考虑 npm。</p>
+<p>另外比如像 Babel这种能将 ES2015转换成支持更广泛的 ES5 代码的转译器。还有像 UglifyJS这样的缩码器，以及像 ESLint这样的用来检验代码正确性的剪毛器也都越来越被前端开发人员所青睐。</p>
+<p>为了可以更方便地构建环境，会使用 npm 脚本、Gulp或 Webpack。</p>
+<h3 id="用-npm-运行脚本"><a href="#用-npm-运行脚本" class="headerlink" title="用 npm 运行脚本"></a>用 npm 运行脚本</h3><p>Node 有 npm ,而 npm 能运行脚本。因此，用户要能够调用 npm start 和 npm test 之类的命令，在项目的 package.json 文件中，有个 scripts 属性，可以在那里指定自己的 npm start 命令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "scripts":&#123;</span><br><span class="line">        "start": "node server.js"</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>node server.js 是默认的 start 命令，记得要创建 server.js 文件。我们一般会定义 test 属性，因为可以把测试框架作为依赖项，然后用 npm test 来运行测试脚本。例如，选择 Mocha 来测试，并且安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S -D</span><br></pre></td></tr></table></figure>
+<p>如果在 package.json 中添加下面的语句，就不用全局安装了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    "scripts":&#123;</span><br><span class="line">        "test":"./node_modules/.bin/mocha_test/*.js"</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例中的参数是传递给了 Mocha,也可以运行 npm 脚本时用两个连字符传入参数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm test -- test/*.js</span><br></pre></td></tr></table></figure>
+<p>下表是常用的 npm 命令：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>package.json 属性</th>
+<th>应用案例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>scripts.start</td>
+<td>启动Web  应用服务器或 Electron 程序</td>
+</tr>
+<tr>
+<td>stop</td>
+<td>scripts.stop</td>
+<td>停掉 Web 应用服务器</td>
+</tr>
+<tr>
+<td>restart</td>
+<td></td>
+<td>运行 stop，然后运行 restart</td>
+</tr>
+<tr>
+<td>install,postinstall</td>
+<td>scripts.install,scripts.postinstall</td>
+<td>在安装了包之后运行本地构建命令，注意，postinstall 只能通过 npm run postinstall 运行</td>
+</tr>
+</tbody>
+</table>
+<h4 id="创建定制的-npm"><a href="#创建定制的-npm" class="headerlink" title="创建定制的 npm"></a><strong>创建定制的 npm</strong></h4><p>npm run 命令等于 npm run-script，用 npm run script-name 可以运行任何脚本。用 Babel 构建客户端脚本的命令：</p>
+<p>新建项目，然后安装必要的依赖项：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i --S -D babel-cli babel-preset-es2015</span><br><span class="line">echo '&#123; "presets": ["es2015"] &#125;' &gt; .babelrc</span><br></pre></td></tr></table></figure>
+<p>现在有了一个具有基本 Babel ES2015工具和插件的 Node项目。接下来打package.json，在 scripts 下面添加 babel 属性。它应该安装到了 node_modules/.bin 文件夹下的脚本：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"babel": "./node_modules/.bin/babel browser.js -d build/"</span><br></pre></td></tr></table></figure>
+<p>下面是 ES2015 语法写的代码，存为 browser.js 文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'&lt;h1&gt;Example&lt;/h1&gt;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> example = <span class="keyword">new</span> Example();</span><br><span class="line"><span class="built_in">console</span>.log(example.render());</span><br></pre></td></tr></table></figure>
+<p>运行 npm run babel ,会出现一个 build 文件夹，里面有转义的 brower.js ，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> _createClass = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="function"><span class="keyword">function</span> <span class="title">defineProperties</span>(<span class="params">target, props</span>) </span>&#123; <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123; <span class="keyword">var</span> descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || <span class="literal">false</span>; descriptor.configurable = <span class="literal">true</span>; <span class="keyword">if</span> (<span class="string">"value"</span> <span class="keyword">in</span> descriptor) descriptor.writable = <span class="literal">true</span>; <span class="built_in">Object</span>.defineProperty(target, descriptor.key, descriptor); &#125; &#125; <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">Constructor, protoProps, staticProps</span>) </span>&#123; <span class="keyword">if</span> (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="keyword">if</span> (staticProps) defineProperties(Constructor, staticProps); <span class="keyword">return</span> Constructor; &#125;; &#125;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_classCallCheck</span>(<span class="params">instance, Constructor</span>) </span>&#123; <span class="keyword">if</span> (!(instance <span class="keyword">instanceof</span> Constructor)) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"Cannot call a class as a function"</span>); &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Example = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        _classCallCheck(<span class="keyword">this</span>, Example);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _createClass(Example, [&#123;</span><br><span class="line">        key: <span class="string">'render'</span>,</span><br><span class="line">        value: <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'&lt;h1&gt;Example&lt;/h1&gt;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Example;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> example = <span class="keyword">new</span> Example();</span><br><span class="line"><span class="built_in">console</span>.log(example.render());</span><br></pre></td></tr></table></figure>
+<p>如果构建项目时，只需要做这件事，那么可以将这个任务的名称改为 build，但一般会加上 UglifyJS:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S-D uglify-es</span><br></pre></td></tr></table></figure>
+<p>同样的在 package.json 中 添加脚本来调用 node_modules/.bin/uglifyJS</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"uglify": "./node_modules/.bin/uglifyjs build/browser.js -o build/browser.min.js"</span><br></pre></td></tr></table></figure>
+<p>然后，可以运行 npm run uglify.也可以组合命令，合并到 build 命令中</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"build": "npm run babel &amp;&amp; npm run uglify"</span><br></pre></td></tr></table></figure>
+<p>现在，运行 npm run build 就会执行那两个脚本。Babel 支持配置文件，可以在 .babelrc 文件中实现更复杂的行为。</p>
+<h4 id="配置前端构建工具"><a href="#配置前端构建工具" class="headerlink" title="配置前端构建工具"></a><strong>配置前端构建工具</strong></h4><p>使用 npm 脚本时，通常有三种配置前端构建工具的方法。</p>
+<ul>
+<li>指定命令行参数，比如 ./node_modules/.bin/ uglify –source-map 。</li>
+<li>针对项目创建 配置文件，将参数放在这个文件中，Babel和 ESLint</li>
+<li>将配置参数添加到 package.json 中。</li>
+</ul>
+<p>如果构建的过程复杂，要做到文件的复制、合并和转移。可以创建一个 shell 脚本，然后用 npm 脚本调用它。很多构建系统都提供了 JavaScript API 以实现自动化构建。</p>
+<h3 id="用Gulp-实现自动化"><a href="#用Gulp-实现自动化" class="headerlink" title="用Gulp 实现自动化"></a>用Gulp 实现自动化</h3><p>Gulp 是基于流的构建系统。可以通过对流的引导来创建构建过程，除了转译和缩码还可以做很多事情。Gulp 之所以能实现高度重用，主要归功于两项技术：使用插件和自定义构建任务。</p>
+<h4 id="把-Gulp-添加到项目中"><a href="#把-Gulp-添加到项目中" class="headerlink" title="把 Gulp 添加到项目中"></a><strong>把 Gulp 添加到项目中</strong></h4><p>添加Gulp需要用 npm 安装 gulp-cli 和 gulp 两个包，很多人会把 gulp-cli 安装在全局环境中，这样只需要输入 gulp 就可以运行 Gulp 了。新建文件夹，全局安装gulp-cli，创建一个带有Gulp 的 Node 项目：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i -S-D gulp</span><br></pre></td></tr></table></figure>
+<p>创建  gulpfile.js.</p>
+<p>打开这个文件，用 Gulp 构建一个小型的 React 项目，这里会用到 gulp-babel/gulp-sourcemaps/gulp-concat：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i -S-D gulp-sourcemaps gulp-babel babel-preset-es2015</span><br><span class="line">npm i -S-D gulp-concat react react-dom babel-preset-react</span><br></pre></td></tr></table></figure>
+<p>往项目中添加 Gulp 插件时，把 npm 命令中的 参数 –save  换成 –save-dev ，如果为了试验新的插件并想把它们卸掉，可以使用 npm uninstall –save-dev ，把它们从 ./node_modules 里删掉，同时更新 package.json 文件。</p>
+<h4 id="Gulp-任务的创建以及运行"><a href="#Gulp-任务的创建以及运行" class="headerlink" title="Gulp 任务的创建以及运行"></a><strong>Gulp 任务的创建以及运行</strong></h4><p>创建 Gulp 任务需要在 gulpfile.js 中编写 Node 代码，调用 Gulp 的 API .Gulp 的 API 可以做很多事，比如查找文件，把对文件进行某种转换的插件拼到一起等。</p>
+<p>下面的例子，打开 gulpfile.js 构建一个任务，用 gulp.src 查找 JSX 文件，用Babel 处理 ES2015 和 React ,然后把文件拼在一起。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"><span class="keyword">const</span> sourcemaps = <span class="built_in">require</span>(<span class="string">'gulp-sourcemaps'</span>);</span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">'gulp-babel'</span>);</span><br><span class="line"><span class="keyword">const</span> concat = <span class="built_in">require</span>(<span class="string">'gulp-concat'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>,()=&gt;&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'app/*.jsx'</span>)</span><br><span class="line">    <span class="comment">// 开始监测源文件，为调用构建源码映射</span></span><br><span class="line">        .pipe(sourcemaps.init())</span><br><span class="line">        <span class="comment">// 使用 ES2015 和 React(JSX) 配置 gulp-babel</span></span><br><span class="line">        .pipe(babel(&#123;</span><br><span class="line">            presets:[<span class="string">'es2015'</span>,<span class="string">'react'</span>]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(concat(<span class="string">'all.js'</span>))</span><br><span class="line">        <span class="comment">// 单独写入源码映射文件</span></span><br><span class="line">        .pipe(sourcemaps.write(<span class="string">'.'</span>))</span><br><span class="line">        <span class="comment">// 将所有文件放到dist/目录下</span></span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在终端运行 gulp 就可以运行这个任务。创建一个 app/index.jsx 文件进行试验：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line">ReactDOM.render(</span><br><span class="line">    &lt;h1&gt;Hello,World!&lt;<span class="regexp">/h1&gt;,</span></span><br><span class="line"><span class="regexp">    document.getElementById('example')</span></span><br><span class="line"><span class="regexp">);</span></span><br></pre></td></tr></table></figure>
+<p>在 Gulp中，用 JavaScript表示构建阶段很容易。并且我们可以用 gulp.task() 往这个文件里添加自己的任务。这些任务通常都遵循相同的模式。</p>
+<p>(1) 源文件——收集输入文件。<br>(2) 转译——让它们依次通过一个个对它们进行转换的插件。<br>(3) 合并——把这些文件合到一起，创建一个整体构建文件。<br>(4) 输出——设定文件的目标地址或移动输出文件。</p>
+<p>在前面那个例子中， sourcemaps 是个特例，因为它需要两次 pipe ：第一次是配置，最后一次是输出文件。这是因为源码映射需要把最初的代码行数映射到应该转译构建后的代码行数上。</p>
+<p><strong>监测变化</strong></p>
+<p>精简构建过程最简单的办法就是用 Gulp 插件监测文件系统的变化，但也有备选方案。有些库跟热重载配合很好，并且通用的DOM 和基于 CSS 的项目也会很适合 LiveReload 项目。</p>
+<p>作为实例，可以将 gulp-watch 添加到项目中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S-D gulp-watch</span><br></pre></td></tr></table></figure>
+<p>添加检测任务，让它调用前面的那个例子中的默认任务：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> watch = <span class="built_in">require</span>(<span class="string">'gulp-watch'</span>);</span><br><span class="line">gulp.task(<span class="string">'watch'</span>,()=&gt;&#123;</span><br><span class="line">    watch(<span class="string">'app/**.js'</span>,() =&gt; gulp.setMaxListeners(<span class="string">'default'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码定义了一个名为 watch 的任务，然后用 watch() 监测 React JSX 文件的变化。只<br>要有文件发生了变化，默认的构建任务就会运行。只需稍稍修改，这个处方就可以用来构建SASS文件、优化图片，以及做需要在前端项目上做的很多事情。</p>
+<h4 id="在大项目中把任务分散到不同文件中"><a href="#在大项目中把任务分散到不同文件中" class="headerlink" title="在大项目中把任务分散到不同文件中"></a><strong>在大项目中把任务分散到不同文件中</strong></h4><p>项目规模变大后，一般会需要更多的 Gulp 任务。最终会出现一个大到难以理解的长文件，<br>如果把代码分解成不同的模块，就可以解决这个问题。<br>你已经看到了，Gulp是用 Node的模块系统来加载插件的。没有特殊的插件加载系统，就是<br>标准模块。我们也可以用 Node 的模块系统分割超长的 gulpfile 文件，以便于维护。可以按如下步骤来使用分散的文件。</p>
+<p>(1) 创建一个名为 gulp的文件夹以及一个名为 tasks的子目录。<br>(2) 在各个文件中用 gulp.task() 语法定义任务，最好是每个任务放一个文件。<br>(3) 创建一个名为 gulp/index.js的文件，在其中加载所有的 Gulp任务文件。<br>(4) 在 gulpfile.js中引入这个 gulp/index.js文件。</p>
+<p>Gulp 是一个通用的项目自动化工具。它适合管理项目里的跨平台清理脚本，比如运行复杂<br>的客户端测试或者为数据库提供固定的测试环境。尽管它也可以构建客户端资产，但不如专门做这些事情的工具，也就是说相较之下，Gulp 需要更多的代码和配置来定义那些任务。Webpack就是这样的工具，专注于打包 JavaScript和 CSS模块。</p>
+<h3 id="用-Webpack-构建-Web-程序"><a href="#用-Webpack-构建-Web-程序" class="headerlink" title="用 Webpack 构建 Web 程序"></a>用 Webpack 构建 Web 程序</h3><p>Webpack是专门用来构建 Web程序的。用 Gulp时，写 JavaScript 代码是为了驱动构建系统，所以会涉及写 gulpfile 和构建任务。而用 Webpack时，写的是配置文件，用插件和加载器添加新功能。有时候不需要额外的配置：在命令行里输入webpack ，将源文件的路径作为参数，它就能构建项目。</p>
+<p>Webpack的优势之一是更容易快速搭建出一个支持增量式构建的构建系统。如果配置成文件发生变化时自动构建，Webpack不会因为一个文件发生变化而重新构建整个项目。所以它的构建更快，也更好理解。</p>
+<h4 id="使用打包器和插件"><a href="#使用打包器和插件" class="headerlink" title="使用打包器和插件"></a><strong>使用打包器和插件</strong></h4><p>Webpack插件是用来改变构建过程的行为的。这些行为包括自动将静态资源上传到Amazon S3或去掉输出中重复的文件等。</p>
+<p>加载器是用来转换资源文件的。比如将 SASS 转换为 CSS，或者将 ES2015 转换为 ES5。加载器是函数，负责将输入的源文本转换为特定的文本输出。它们既可以是异步的，也可以是同步的。插件是可以挂接到 Webpack更底层 API的类的实例。</p>
+<p>如果需要转换 React 代码、CoffeeScript、SASS 或其他转译语言，就用加载器。如果需要调整 JavaScript，或用某种方式处理文件，就用插件。</p>
+<h4 id="配置和运行-Webpack"><a href="#配置和运行-Webpack" class="headerlink" title="配置和运行 Webpack"></a><strong>配置和运行 Webpack</strong></h4><p>新建文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm install --save react react-dom</span><br><span class="line">npm install --save-dev webpack babel-loader babel-core</span><br><span class="line">npm install --save-dev babel-preset-es2015 babel-preset-react</span><br></pre></td></tr></table></figure>
+<p>最后一条命令安装了 Babel 的 ES2015 插件和用于 Babel 的 React 转换器,创建webpack.config.js.我们要在这个文件里告诉 Webpack 去哪里找输入文件，把输出写到哪里，以及用哪些加载器。我们要对 React使用 babel-loader，还要对它做些额外的配置。代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./app/index.jsx'</span>,</span><br><span class="line">    output: &#123; <span class="attr">path</span>: __dirname, <span class="attr">filename</span>: <span class="string">'dist/bundle.js'</span> &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/.jsx?$/</span>,</span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                query: &#123;</span><br><span class="line">                    presets: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个配置文件包含了成功构建一个以 ES2015 写的 React 程序所需的一切。里面的配置都很<br>直白：定义一个 entry ，同时加载程序的主文件。然后指定输出应该写到哪里。如果这个文件不存在，Webpack会创建它。接着定义一个加载器，并用 test 把它关联到一个文件聚集搜索上。最后，设定加载器的选项。在这个例子中，这些选项加载了 ES2015和 React Babel插件。</p>
+<h4 id="用-Webpack-开发服务器"><a href="#用-Webpack-开发服务器" class="headerlink" title="用 Webpack 开发服务器"></a><strong>用 Webpack 开发服务器</strong></h4><p>Express 服务器会在文件发生变化后运行 Webpack，然后将变化后的资源文件提供给浏览器。为了不跟主服务器冲突，你应该把它跑在另外一个端口上，也就是说在开发过程中， script 标签要指向这个开发服务器提供的 URL 上。这个服务器会构建资源文件，但输出会放在内存里，而不是 Webpack 的输出文件夹里。webpack-dev-server 也可以用来做模块热加载，这与 LiveReload服务器的用法类似。</p>
+<p>按下面的步骤把 webpack-dev-server添加到项目中。</p>
+<p>(1) 用 npm i –save-dev webpack-dev-server@ 1.14.1 安装 webpack-dev-server。<br>(2) 在 webpack.config.js的 output 属性中添加一个 publicPath 选项。<br>(3) 在构建目录下添加 index.html文件，在这个文件中加载打包后的 JavaScript和 CSS文件，<br>注意 URL中的端口是下一步中指定的那个端口。<br>(4) 带着你想要用的选项运行服务器。比如 webpack-dev-server –hot –inline–content<br>-base dist/ –port 3001 。<br>(5) 访问 <a href="http://localhost:3001/">http://localhost:3001/</a> 加载这个程序。</p>
+<p>Webpack 具体的可以自行百度</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>npm脚本是实现简单任务自动化和脚本调用的最佳选择。</li>
+<li>Gulp可以用 JavaScript编写更加复杂的任务，并且它是跨平台的。</li>
+<li>如果 gulpfiles变得太长了，可以把代码分解到多个文件中。</li>
+<li>Webpack可以用来生成客户端打包文件。</li>
+<li>如果只需要构建客户端打包文件，用 Webpack可能比用 Gulp更省事儿。</li>
+<li>Webpack支持热重载，也就是说刷新浏览器就能看出代码的变化。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-06-NodeJs2-Part4.html" title="Nodejs实战 —— 前端构建系统">http://laibh.top/2018-12-06-NodeJs2-Part4.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-05-NodeJs2-Part3.html" rel="next" title="Nodejs实战 —— Node Web 程序是什么">
+                <i class="fa fa-chevron-left"></i> Nodejs实战 —— Node Web 程序是什么
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-07-NodeJs2-Part5.html" rel="prev" title="Nodejs实战 —— 服务器端框架">
+                Nodejs实战 —— 服务器端框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端构建系统"><span class="nav-number">1.</span> <span class="nav-text">前端构建系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解基于-Node-的前端开发"><span class="nav-number">1.1.</span> <span class="nav-text">了解基于 Node 的前端开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-npm-运行脚本"><span class="nav-number">1.2.</span> <span class="nav-text">用 npm 运行脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建定制的-npm"><span class="nav-number">1.2.1.</span> <span class="nav-text">创建定制的 npm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置前端构建工具"><span class="nav-number">1.2.2.</span> <span class="nav-text">配置前端构建工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用Gulp-实现自动化"><span class="nav-number">1.3.</span> <span class="nav-text">用Gulp 实现自动化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#把-Gulp-添加到项目中"><span class="nav-number">1.3.1.</span> <span class="nav-text">把 Gulp 添加到项目中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gulp-任务的创建以及运行"><span class="nav-number">1.3.2.</span> <span class="nav-text">Gulp 任务的创建以及运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在大项目中把任务分散到不同文件中"><span class="nav-number">1.3.3.</span> <span class="nav-text">在大项目中把任务分散到不同文件中</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-Webpack-构建-Web-程序"><span class="nav-number">1.4.</span> <span class="nav-text">用 Webpack 构建 Web 程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用打包器和插件"><span class="nav-number">1.4.1.</span> <span class="nav-text">使用打包器和插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置和运行-Webpack"><span class="nav-number">1.4.2.</span> <span class="nav-text">配置和运行 Webpack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用-Webpack-开发服务器"><span class="nav-number">1.4.3.</span> <span class="nav-text">用 Webpack 开发服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

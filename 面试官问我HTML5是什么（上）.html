@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTML5," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="学习链接：HTML 5与CSS 3权威指南 W3cScholl HTML5 与 HTML4 的区别常见代码区别： 新增的一些属性： 12345678910111213141516171819&amp;lt;!--html4--&amp;gt;&amp;lt;form&amp;gt;    &amp;lt;p&amp;gt;        &amp;lt;label&amp;gt;            &amp;lt;input name=&quot;search&quot; id=&quot;s">
+<meta name="keywords" content="HTML5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试官问我HTML5是什么（上）">
+<meta property="og:url" content="http://laibh.top/面试官问我HTML5是什么（上）.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="学习链接：HTML 5与CSS 3权威指南 W3cScholl HTML5 与 HTML4 的区别常见代码区别： 新增的一些属性： 12345678910111213141516171819&amp;lt;!--html4--&amp;gt;&amp;lt;form&amp;gt;    &amp;lt;p&amp;gt;        &amp;lt;label&amp;gt;            &amp;lt;input name=&quot;search&quot; id=&quot;s">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试官问我HTML5是什么（上）">
+<meta name="twitter:description" content="学习链接：HTML 5与CSS 3权威指南 W3cScholl HTML5 与 HTML4 的区别常见代码区别： 新增的一些属性： 12345678910111213141516171819&amp;lt;!--html4--&amp;gt;&amp;lt;form&amp;gt;    &amp;lt;p&amp;gt;        &amp;lt;label&amp;gt;            &amp;lt;input name=&quot;search&quot; id=&quot;s">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/面试官问我HTML5是什么（上）.html"/>
+
+
+
+
+
+  <title>面试官问我HTML5是什么（上） | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/面试官问我HTML5是什么（上）.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">面试官问我HTML5是什么（上）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T09:30:54+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/面试官问我HTML5是什么（上）.html" class="leancloud_visitors" data-flag-title="面试官问我HTML5是什么（上）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  11,093
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习链接：<br><a href="https://read.douban.com/ebook/15160963/">HTML 5与CSS 3权威指南</a></p>
+<p><a href="https://www.w3cschool.cn/html/">W3cScholl</a></p>
+<h2 id="HTML5-与-HTML4-的区别"><a href="#HTML5-与-HTML4-的区别" class="headerlink" title="HTML5 与 HTML4 的区别"></a>HTML5 与 HTML4 的区别</h2><p>常见代码区别：</p>
+<p>新增的一些属性：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"search"</span> <span class="attr">id</span>=<span class="string">"search"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'search'</span>).focus();</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"search"</span> <span class="attr">autofocus</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>结构上：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"header"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"nav"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"article"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"section"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"side-bar"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"footer"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">nav</span>&gt;</span><span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section</span>&gt;</span><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aside</span>&gt;</span><span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="HTML-5-要解决的三个问题"><a href="#HTML-5-要解决的三个问题" class="headerlink" title="HTML 5 要解决的三个问题"></a>HTML 5 要解决的三个问题</h3><ul>
+<li>Web 浏览器之间的兼容性很低</li>
+<li>文档结构不明确</li>
+<li>Web应用程序的功能受到了限制</li>
+</ul>
+<h3 id="语法的改变"><a href="#语法的改变" class="headerlink" title="语法的改变"></a>语法的改变</h3><p>HTML 语法是在 SGML(Standard Generalized Markup Language)语言的基础上建立起来的。对于 HTML 的执行在各个浏览器之间没有统一的一个标准。</p>
+<p>HTML5 就是围绕这个Web标准，重新定义了一套在现有的 HTML 的基础上修改而来的语法，使它运行在各浏览器时它们都能符合这个通用标准。</p>
+<h4 id="HTML5-的标记方法"><a href="#HTML5-的标记方法" class="headerlink" title="HTML5 的标记方法"></a>HTML5 的标记方法</h4><p>1.内容类型（ContentType）</p>
+<p>扩展符仍为 ‘.html’或者 ‘.htm’。内容类型仍然为 ‘text/html’</p>
+<p>2.DOCTYPE 声明</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C/DTD 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/Xhtml1-transitional.dtd"&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br></pre></td></tr></table></figure>
+<p>3.指定字符编码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equive</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=UTF-8"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="确保与之前的HTML-版本兼容"><a href="#确保与之前的HTML-版本兼容" class="headerlink" title="确保与之前的HTML 版本兼容"></a>确保与之前的HTML 版本兼容</h4><p>1.可以省略标记的元素</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">不允许写结束标记的元素有：area/base/br/col/command/embed/hr/img/input/keygen/link/meta/param/source/track/wbr</span><br><span class="line">可以省略结束标记的元素：</span><br><span class="line">li/dt/dd/p/rt/rp/optgroup/option/colgroup/thead/tbody/tfoot/tr/td/th</span><br><span class="line">可以省略全部标记的元素(隐式存在，在文档结构仍然存在)：</span><br><span class="line">html/head/body/colgroup/tbody</span><br></pre></td></tr></table></figure>
+<p>2.具有 boolean 值的属性</p>
+<p>例如 disable/readonly/checked 等，只写属性不写属性值或者属性值为空字符表示属性值为 true。</p>
+<p>3.省略引号</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">'text'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">text</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="新增的元素和废除的元素"><a href="#新增的元素和废除的元素" class="headerlink" title="新增的元素和废除的元素"></a>新增的元素和废除的元素</h3><h3 id="新增-html5-html4"><a href="#新增-html5-html4" class="headerlink" title="新增-html5(html4)"></a>新增-<code>html5(html4)</code></h3><h4 id="结构元素"><a href="#结构元素" class="headerlink" title="结构元素"></a>结构元素</h4><p><code>section(div)</code></p>
+<p>表示页面中的一个内容区块，用于章节、页眉、页脚或者页面中的其他部分。与 h1-h6元素结合使用，表示文档结构</p>
+<p><code>article(div)</code></p>
+<p>表示页面中的一块与上下文不相关的独立内容，例如博客中的一篇文章或者报纸中的一篇文章</p>
+<p><code>aside(div)</code></p>
+<p>aside 元素表示 article 元素的内容之外的，与 article 元素内容相关的辅助信息</p>
+<p><code>header(div)</code></p>
+<p>表示页面一个内容区块或者整个页面的标题</p>
+<p><code>hgroup(div)</code></p>
+<p>用于整个页面或者页面中的一个内容块的标题进行组合</p>
+<p><code>footer(div)</code></p>
+<p>整个页面或者页面中的一个内容区块的脚注。一般来说，会包括作者的姓名、创作日期以及作者的联系信息。</p>
+<p><code>nav(ul)</code></p>
+<p>页面中导航链接部分</p>
+<p><code>figure(dl)</code></p>
+<p>一段独立的流内容，一般表示文档主体流内容中的一个独立单元，使用 <code>figcaption</code> 元素 为 <code>figure</code> 元素组添标题</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>hahahahaha<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dl</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>hahahahaha<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="多媒体元素"><a href="#多媒体元素" class="headerlink" title="多媒体元素"></a>多媒体元素</h4><p><code>video(object)</code></p>
+<p>定义视频，比如电影片段或者其他视频流</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">'movie.ogg'</span> <span class="attr">controls</span>=<span class="string">'controls'</span>&gt;</span>video元素<span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">'video/ogg'</span> <span class="attr">data</span>=<span class="string">'movie.ogv'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parma</span> <span class="attr">name</span>=<span class="string">'src'</span> <span class="attr">value</span>=<span class="string">"movie.ogv"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>audio(object)</code></p>
+<p>定义音频，比如音乐或者其他音频流</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">src</span>=<span class="string">'music.wav'</span>&gt;</span>audio元素<span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">'application/ogg'</span> <span class="attr">data</span>=<span class="string">'someaudio.wav'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parma</span> <span class="attr">name</span>=<span class="string">'src'</span> <span class="attr">value</span>=<span class="string">"someaudio.wav"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>embed(object)</code></p>
+<p>用来插入各种多媒体，格式可以是 Midi/Wav/AIFF/AU/MP3</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">embed</span> <span class="attr">src</span>=<span class="string">'music.swf'</span>&gt;</span>embed元素<span class="tag">&lt;/<span class="name">embed</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">'application/x-shockwave-flash'</span> <span class="attr">data</span>=<span class="string">'music.swf'</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>source</code></p>
+<p>为媒介元素定义媒介资源</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"horse.ogg"</span> <span class="attr">type</span>=<span class="string">"audio/ogg"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"horse.mp3"</span> <span class="attr">type</span>=<span class="string">"audio/mpeg"</span>&gt;</span></span><br><span class="line"> Your browser does not support the audio element.</span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">'application/ogg'</span> <span class="attr">data</span>=<span class="string">'someaudio.wav'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parma</span> <span class="attr">name</span>=<span class="string">'src'</span> <span class="attr">value</span>=<span class="string">"someaudio.wav"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="语义元素"><a href="#语义元素" class="headerlink" title="语义元素"></a>语义元素</h4><p><code>mark(span)</code>元素</p>
+<p>用来在视觉上向用户呈现那些需要突出显示或者高亮显示的文字。mark 元素的一个比较经典的应用就是在搜索结果中向用户高亮显示搜索关键词</p>
+<p><code>progress(无)</code></p>
+<p>表示进程运行中的进程，可以用 progress 来显示 javascript 中耗费时间的函数的进程</p>
+<p><code>meter(无)</code></p>
+<p>表示度量衡。仅用于已知最大值和最小值的度量。必须定义度量的范围，既可以在元素的文本中，也可以在 min/max 属性中定义。</p>
+<p><code>time(span)</code></p>
+<p>表示日期或者时间，也可以同时表示两者</p>
+<p><code>ruby(无)</code></p>
+<p>表示 ruby 注释（中文注音或者字符）</p>
+<p>在东亚使用，显示的是东亚字符的发音。</p>
+<p>与 <code>&lt;ruby&gt;</code> 以及 <code>&lt;rt&gt;</code> 标签一同使用：</p>
+<p>ruby 元素由一个或多个字符（需要一个解释/发音）和一个提供该信息的 rt 元素组成，还包括可选的 rp 元素，定义当浏览器不支持 “ruby” 元素时显示的内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;ruby&gt;</span><br><span class="line"> 漢 <span class="tag">&lt;<span class="name">rt</span>&gt;</span> ㄏㄢˋ <span class="tag">&lt;/<span class="name">rt</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>rt(无)</code></p>
+<p>表示元素字符的解释或者发音</p>
+<p><code>rp（无）</code></p>
+<p>在 ruby 注释中使用，以定义不支持 ruby 元素的浏览器所显示的内容</p>
+<p><code>wbr</code></p>
+<p>表示软换行，wbr 与 br 区别在于后者表示此处必须换行，前者是浏览器窗口或者父级元素的宽度足够宽的时候不进行换行，而当宽度不够时，主动在此处进行换行。wbr 元素好像对字符型的语言作用挺大，但是对中文没有多大用处。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>学习 AJAX ,您必须熟悉 <span class="tag">&lt;<span class="name">wbr</span>&gt;</span>Http<span class="tag">&lt;<span class="name">wbr</span>&gt;</span>Request 对象。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>canvas</code></p>
+<p>canvas 表示图形，比如图表和其他图像。元素本身没有行为，仅提供一块画布，但它把一个绘图 API 展示给 客户端的 javascript 以使得脚本能够把想绘制的东西绘制到这块画布上面。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html5--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">'myCanvas'</span> <span class="attr">width</span>=<span class="string">'200'</span> <span class="attr">height</span>=<span class="string">'200'</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--html4--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">object</span> <span class="attr">type</span>=<span class="string">'image/svg+xml'</span> <span class="attr">data</span>=<span class="string">'inc/hdr.svg'</span> <span class="attr">width</span>=<span class="string">'200'</span> <span class="attr">height</span>=<span class="string">'200'</span>&gt;</span><span class="tag">&lt;/<span class="name">object</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>details</code></p>
+<p>details 元素表示用户要求得到并且可以得到的细节信息，可以与 <code>summary</code>元素配合使用。<code>summary</code>提供标题或者图例。标题是可见的，用户点击标题时，会显示出细节信息。<code>summary</code>元素应该是 <code>details</code>元素的第一个子元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">summary</span>&gt;</span>H5<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line">    hahahahha</span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>datalist</code></p>
+<p>表示可选数据的列表，与 input 元素配合使用，可以制作出 输入值的下拉列表。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">list</span>=<span class="string">"cars"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">"cars"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"BMW"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Ford"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Volvo"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>datagrid</code></p>
+<p>表示可选数据的列表，以树形列表的形式来显示</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">datagrid</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">li</span>&gt;</span> (datagrid row 0) <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">li</span>&gt;</span> (datagrid row 1)</span><br><span class="line">		<span class="tag">&lt;<span class="name">ol</span> <span class="attr">style</span>=<span class="string">"list-style-type:lower-alpha;"</span>&gt;</span></span><br><span class="line">		 <span class="tag">&lt;<span class="name">li</span>&gt;</span> (datagrid row 1,0) <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">li</span>&gt;</span> (datagrid row 1,1) <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">li</span>&gt;</span> (datagrid row 2) <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">datagrid</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>output(span)</code></p>
+<p>表示不同类型的输出，比如脚本输出</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">form</span> <span class="attr">oninput</span>=<span class="string">"x.value=parseInt(a.value)+parseInt(b.value)"</span>&gt;</span></span><br><span class="line">	0</span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">id</span>=<span class="string">'a'</span> <span class="attr">value</span>=<span class="string">"50"</span>&gt;</span>100+</span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">id</span>=<span class="string">"b"</span> <span class="attr">value</span>=<span class="string">"50"</span>&gt;</span>=</span><br><span class="line">	<span class="tag">&lt;<span class="name">output</span> <span class="attr">name</span>=<span class="string">"x"</span> <span class="attr">for</span>=<span class="string">"a b"</span>&gt;</span><span class="tag">&lt;/<span class="name">output</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>menu</code></p>
+<p>表示菜单列表，当希望列出表单控件的时候使用该标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">type</span>=<span class="string">"toolbar"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">menu</span> <span class="attr">label</span>=<span class="string">"File"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"file_new()"</span>&gt;</span>新建<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"file_open()"</span>&gt;</span>打开<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"file_save()"</span>&gt;</span>保存<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">menu</span> <span class="attr">label</span>=<span class="string">"Edit"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"edit_cut()"</span>&gt;</span>剪切<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"edit_copy()"</span>&gt;</span>复制<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"edit_paste()"</span>&gt;</span>粘贴<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是目前主流所有浏览器都不支持这个标签</p>
+<h4 id="input元素类型"><a href="#input元素类型" class="headerlink" title="input元素类型"></a>input元素类型</h4><p><code>email</code></p>
+<p>表示必须输入 E-mail </p>
+<p><code>url</code></p>
+<p>输入 URL 地址</p>
+<p><code>number</code></p>
+<p>输入数值</p>
+<p><code>range</code></p>
+<p>输入一定范围内数字值</p>
+<p><code>Date Pickers</code></p>
+<p>拥有多个选择日期和时间的新型输入文本框</p>
+<p>data-日、月、年</p>
+<p>month-月、年</p>
+<p>week-周、年</p>
+<p>time-小时、分钟</p>
+<p>datetime-日、月、年（UTC）</p>
+<p>datetime-local-日、月、年（本地时间）</p>
+<h3 id="废除（替代元素）"><a href="#废除（替代元素）" class="headerlink" title="废除（替代元素）"></a>废除（替代元素）</h3><p>1.能用css替代的元素</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">basefont/big/center/font/s/strike(del)/tt/u</span><br></pre></td></tr></table></figure>
+<p>2.不再使用 frame 框架</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frameset/frame/noframes，现只支持 iframe框架。</span><br></pre></td></tr></table></figure>
+<p>3.只有部分浏览器支持的元素</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">applet(embed/obejct)/bgsound(audio)/blink/marquee</span><br></pre></td></tr></table></figure>
+<p>4.其他被废除的元素</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rb(ruby)/acronym(abbr)/dir(ul)/isindex(form+input)/listing(pre)/xmp(code)/nextid(GUIDS)/plaintext('text/plain' MIME 类型)</span><br></pre></td></tr></table></figure>
+<h3 id="新增的属性和废除的属性"><a href="#新增的属性和废除的属性" class="headerlink" title="新增的属性和废除的属性"></a>新增的属性和废除的属性</h3><h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><h4 id="表单相关的属性"><a href="#表单相关的属性" class="headerlink" title="表单相关的属性"></a>表单相关的属性</h4><ul>
+<li><code>input[type=text]</code>、<code>select</code>与 <code>button</code> 指定 <code>autofucus</code>属性，以指定的方式让元素在画面打开的时候自动获得焦点</li>
+<li><code>input[type=text]</code>与 <code>textarea</code>指定 <code>placeholder</code>属性，会对用户的输入进行提示，提示用户输入的内容</li>
+<li><code>input</code>、<code>output</code>、<code>select</code>、<code>textarea</code>、<code>button</code>与 <code>fieldset</code>指定 <code>form</code>属性，声明它们属性哪个表单，然后将其放置任何位置，而不是在表单之内</li>
+<li><code>input[type=text]</code>与 <code>textarea</code>指定 <code>required</code>。表示用户提交的时候进行检查，检查该元素内一定要有输入内容</li>
+<li><code>input</code>其他新增的属性：<code>autocomplete</code>、<code>min</code>、<code>max</code>、<code>multiple</code>、<code>pattern</code>、<code>step</code>。同时还有一个 新的 <code>list</code>元素可以与 <code>datalist</code>配合使用。<code>datalist</code>与 <code>autocomplete</code>属性配合使用。<code>multiple</code>属性允许在上传文件的时候一次上传多个文件。</li>
+<li><code>input</code>、<code>button</code>增加了新的属性 <code>formaction</code>、<code>formenctype</code>、<code>formmethod</code>、<code>formnovalidate</code>与 <code>formtarget</code>，它们可以重载 <code>form</code>元素的 <code>action</code>、<code>enctype</code>、<code>method</code>、<code>novalidate</code>与 <code>target</code>属性。为  <code>fileset</code>增加了 <code>disabled</code>，可以把它的子元素设为 <code>disabled(无效)</code>状态</li>
+<li><code>input</code>、<code>button</code>、<code>form</code>增加了 <code>novalidate</code>属性，该属性可以取消提交时进行的有关检查，表单可以被无条件提交。</li>
+</ul>
+<h4 id="链接相关属性"><a href="#链接相关属性" class="headerlink" title="链接相关属性"></a>链接相关属性</h4><ul>
+<li><code>a</code>与 <code>area</code>增加 <code>media</code>属性，该属性规定目标 URL是什么类型的媒介/设备进行优化，只能在 <code>href</code>属性存在时使用</li>
+<li>为 <code>area</code>元素增加了 <code>hreflang</code>属性与 <code>rel</code>属性，以保持与 <code>a</code>元素、<code>link</code>元素的一致。</li>
+<li><code>link</code>元素增加了新的属性 <code>sizes</code>。该属性可以与 <code>icon</code>属性元素结合使用(通过 <code>rel</code>属性)，该属性指定关联图标（<code>icon</code>元素）的大小。</li>
+<li>为 <code>base</code>元素增加了<code>target</code>属性，主要目的是保持与 <code>a</code>元素的一致性。</li>
+</ul>
+<h4 id="其他属性"><a href="#其他属性" class="headerlink" title="其他属性"></a>其他属性</h4><p>除了上面介绍的与表单和链接相关的属性外，HTML5 还增加了下面的属性：</p>
+<ul>
+<li><code>ol</code>元素增加 <code>reversed</code>,它指定了列表倒序显示</li>
+<li><code>meta</code>增加 <code>charset</code>属性。因为这个属性被广泛支持了，而且为文档的字符编码的执行提供了一种良好的方式</li>
+<li>为 <code>style</code>属性增加<code>scoped</code>属性，用来规定样式的作用范围，例如只对页面某个树起作用。</li>
+<li><code>script</code>增加 <code>async</code>属性，定义脚本是否异步执行</li>
+<li><code>html</code>增加 <code>mainfest</code>，开发离线Web 应用程序时它与 API 结合使用，定义一个 URL,在这个 URL 上描述文档的缓存信息。</li>
+<li><code>iframe</code>元素增加了三个属性 <code>sandbox</code>、<code>seamless</code>与 <code>srcdoc</code>，用来提高页面安全性，防止不信任的 Web 页面执行某些操作。</li>
+</ul>
+<h3 id="废除"><a href="#废除" class="headerlink" title="废除"></a>废除</h3><table>
+<thead>
+<tr>
+<th><strong>在HTML 4中使用的属性</strong></th>
+<th><strong>使用该属性的元素</strong></th>
+<th><strong>在HTML 5中的替代方案</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>rev</strong></td>
+<td>link、a</td>
+<td>rel</td>
+</tr>
+<tr>
+<td><strong>charset</strong></td>
+<td>link、a</td>
+<td>在被链接的资源的中使用HTTP Content-type头元素</td>
+</tr>
+<tr>
+<td><strong>shape</strong>、coords</td>
+<td>a</td>
+<td>使用area元素代替a元素</td>
+</tr>
+<tr>
+<td><strong>longdesc</strong></td>
+<td>img、iframe</td>
+<td>使用a元素链接到校长描述</td>
+</tr>
+<tr>
+<td><strong>target</strong></td>
+<td>link</td>
+<td>多余属性，被省略</td>
+</tr>
+<tr>
+<td><strong>nohref</strong></td>
+<td>area</td>
+<td>多余属性，被省略</td>
+</tr>
+<tr>
+<td><strong>profile</strong></td>
+<td>head</td>
+<td>多余属性，被省略</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>html</td>
+<td>多余属性，被省略</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>img</td>
+<td>id</td>
+</tr>
+<tr>
+<td><strong>scheme</strong></td>
+<td>meta</td>
+<td>只为某个表单域使用scheme</td>
+</tr>
+<tr>
+<td><strong>archive**</strong>、chlassid、codebose、codetype、declare、standby**</td>
+<td>object</td>
+<td>使用data与typc属性类调用插件。需要使用这些属性来设置参数时，使用param属性</td>
+</tr>
+<tr>
+<td><strong>valuetype</strong>、type</td>
+<td>param</td>
+<td>使用name与value属性，不声明之的MIME类型</td>
+</tr>
+<tr>
+<td><strong>axis</strong>、abbr</td>
+<td>td、th</td>
+<td>使用以明确简洁的文字开头、后跟详述文字的形式。可以对更详细内容使用title属性，来使单元格的内容变得简短</td>
+</tr>
+<tr>
+<td><strong>scope</strong></td>
+<td>td</td>
+<td>在被链接的资源的中使用HTTP Content-type头元素</td>
+</tr>
+<tr>
+<td><strong>align</strong></td>
+<td>caption、input、legend、div、h1、h2、h3、h4、h5、h6、p</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>alink</strong>、link、text、vlink、background、bgcolor</td>
+<td>body</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、bgcolor、border、cellpadding、cellspacing、frame、rules、width</td>
+<td>table</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、char、charoff、height、nowrap、valign</td>
+<td>tbody、thead、tfoot</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、bgcolor、char、charoff、height、nowrap、valign、width</td>
+<td>td、th</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、bgcolor、char、charoff、valign</td>
+<td>tr</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、char、charoff、valign、width</td>
+<td>col、colgroup</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、border、hspace、vspace</td>
+<td>object</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>clear</strong></td>
+<td>br</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>compace</strong>、type</td>
+<td>ol、ul、li</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>compace</strong></td>
+<td>dl</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>compace</strong></td>
+<td>menu</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>width</strong></td>
+<td>pre</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、hspace、vspace</td>
+<td>img</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、noshade、size、width</td>
+<td>hr</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>align</strong>、frameborder、scrolling、marginheight、marginwidth</td>
+<td>iframe</td>
+<td>使用CSS样式表替代</td>
+</tr>
+<tr>
+<td><strong>autosubmit</strong></td>
+<td>menu</td>
+</tr>
+</tbody>
+</table>
+<h3 id="全局属性"><a href="#全局属性" class="headerlink" title="全局属性"></a>全局属性</h3><h4 id="contentEditable"><a href="#contentEditable" class="headerlink" title="contentEditable"></a>contentEditable</h4><p>允许用户编辑元素中的内容，该元素必须是可以获得用户鼠标焦点的元素，在点击鼠标后要向用户提供一个插入符号，提示用户该元素中的内容允许被编辑。<code>contentEditable</code>属性是一个布尔值属性，可以被指定 <code>true</code>或者 <code>false</code></p>
+<p>除此之外，还有一个隐藏的 <code>inherit</code>状态，属性为  <code>true</code>，元素被指定为允许编辑，属性为 <code>false</code>时，元素被指定为不允许编辑。未指定 <code>true</code>或者 <code>false</code>时，则由 <code>inherit</code>状态来决定，如果元素的父元素是可以编辑的，则该元素就是可编辑的。</p>
+<p>元素还具有一个叫做 <code>isContentEditable</code>属性，当元素可编辑时，该属性为 true，当元素不可编辑时，该属性 为 false。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">contentEditable</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>元素列表1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>元素列表2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">li</span>&gt;</span>元素列表3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="designMode"><a href="#designMode" class="headerlink" title="designMode"></a>designMode</h4><p><code>designMode</code> 属性用来指定整个页面是否可编辑，当页面可编辑时，页面中任何支持上文所述的 <code>contentEditable</code> 属性的元素都变成了可编辑状态。<code>designMode</code>只能在 javascript 脚本里被编辑修改。该属性有两个值——“on” 和 “off”。属性被指定为 <code>on</code>时，页面可编辑，被指定为 <code>off</code>时，页面不可编辑。使用 javascript 来指定 designMode 属性的方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.designMode = <span class="string">'on'</span></span><br></pre></td></tr></table></figure>
+<p>针对 <code>designMode</code> 属性，各个浏览器的支持情况也不一样：</p>
+<ul>
+<li>IE8：安全考虑，不允许使用 <code>designMode</code>属性让页面进行编辑状态</li>
+<li>IE9：允许使用 <code>designMode</code>属性让页面进入编辑状态</li>
+<li>Chrome3 和 Safari：使用内嵌 <code>frame</code>方式，该内嵌 <code>frame</code>是可编辑的</li>
+<li>Firefox 和 Opera：允许使用 <code>designMode</code>属性让页面进入编辑状态</li>
+</ul>
+<h4 id="hidden"><a href="#hidden" class="headerlink" title="hidden"></a>hidden</h4><p>在 HTML5 中，所有的元素都允许有一个 <code>hidden</code>属性，该属性类似于 <code>input</code> 中的 <code>hidden</code>元素，功能是通知浏览器不渲染该元素，使该元素处于不可见状态。但是元素中的内容还是浏览器创建的，也就是说页面装载后允许使用 javascript 脚本将该属性取消，取消后该元素变为可见状态，同时元素中的内容页即时显示出来。<code>hidden</code>属性是一个布尔值的属性，为设为 <code>true</code>后，元素处于不可见状态，当设为 <code>false</code>后，元素属于可见状态。</p>
+<h4 id="spellcheck"><a href="#spellcheck" class="headerlink" title="spellcheck"></a>spellcheck</h4><p><code>spellcheck</code> 是针对 <code>input</code>与 <code>textarea</code>这两个文本输入框提供的一个新属性，它的功能为对用户输入的文本内容进行拼写和语法检查。是一个布尔值属性，具有 true 和 false 两种值。必须明确书写属性值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">contentEditable</span> <span class="attr">spellcheck</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">spellcheck</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">contenteditable</span>=<span class="string">"true"</span> <span class="attr">spellcheck</span>=<span class="string">"true"</span>&gt;</span>这是可编辑的段落。请试着编辑文本。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是如果元素的 <code>readonly</code>或者  <code>disabled</code>设为 <code>true</code>，则不执行拼写检查。</p>
+<h4 id="tabindex"><a href="#tabindex" class="headerlink" title="tabindex"></a>tabindex</h4><p>当不断敲击 Tab 键让窗口或者页面中的控件获得焦点，对窗口或者页面的所有控件进行遍历的时候，每一个控件的 <code>tabindex</code>表示该控件是第几个页面访问到的。</p>
+<p>过去的这个属性在编辑网页的时候非常有用，但如今控件的遍历顺序是由元素在页面上所处的位置决定的，所以不再需要了。</p>
+<p>但是 <code>tabindex</code>还有另外一个作用，在默认属性下，只有链接元素与表单可以通过按键获得焦点。如果对其他元素使用 <code>tabindex</code>属性后，也能让该元素获得焦点，那么当脚本中执行 <code>focus()</code>语句的时候，就可以让该元素获得焦点了。但这样做会有一个副作用：钙元素也可以通过按 Tab 键获得焦点，而这时有可能也不是开发者想要的结果。</p>
+<p>把元素的 <code>tabindex</code>设为为负数（通常为-1）后就可以解决这个问题。<code>tabindex</code>的值为负数后，仍然可以通过编程的方式让元素获得焦点，但按下 Tab 键时该元素就不能获得焦点了。这在复杂的页面中或复杂的 Web 应用程序中是非常有用的。在 HTML4 中，-1 是一个无用的属性值，但到了 HTML5 中，通过巧妙运用让该属性得到了极大的应用。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://laibh.top"</span> <span class="attr">tabindex</span>=<span class="string">"2"</span>&gt;</span>赖同学<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.google.com/"</span> <span class="attr">tabindex</span>=<span class="string">"1"</span>&gt;</span>Google<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.microsoft.com/"</span> <span class="attr">tabindex</span>=<span class="string">"3"</span>&gt;</span>Microsoft<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="data"><a href="#data" class="headerlink" title="data-*"></a>data-*</h4><p>使用 data-* 属性来嵌入自定义数据</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"target"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"e1"</span> <span class="attr">data-animal-type</span>=<span class="string">"鸟类"</span>&gt;</span>喜鹊<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"e2"</span> <span class="attr">data-animal-type</span>=<span class="string">"鱼类"</span>&gt;</span>金枪鱼<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">"e3"</span> <span class="attr">data-animal-type</span>=<span class="string">"蜘蛛"</span>&gt;</span>蝇虎<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">showDetails</span>(<span class="params">animal</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> animalType = animal.getAttribute(<span class="string">"data-animal-type"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(animal.innerHTML + <span class="string">'是一种'</span> + animalType);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ul = <span class="built_in">document</span>.getElementById(<span class="string">'target'</span>);</span></span><br><span class="line"><span class="javascript">    ul.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> ev = e || <span class="built_in">window</span>.event;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> target = ev.target || ev.srcElement;</span></span><br><span class="line"><span class="undefined">        showDetails(target);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="draggable"><a href="#draggable" class="headerlink" title="draggable"></a>draggable</h4><p>规定元素是否可以拖动，链接和图像默认是可以拖动的。</p>
+<p>语法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">element</span> <span class="attr">draggable</span>=<span class="string">"true|false|auto"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">	<span class="selector-id">#dropbox</span>&#123;</span></span><br><span class="line"><span class="undefined">		width: 400px;</span></span><br><span class="line"><span class="undefined">		height: 400px;</span></span><br><span class="line"><span class="css">		<span class="selector-tag">border</span><span class="selector-pseudo">:1px</span> <span class="selector-tag">solid</span> <span class="selector-id">#aaaaaa</span>;</span></span><br><span class="line"><span class="undefined">	&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"dropbox"</span> <span class="attr">ondrop</span>=<span class="string">"drop(event)"</span> <span class="attr">ondragover</span>=<span class="string">"allowDrop(event)"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"drag"</span> <span class="attr">draggable</span>=<span class="string">"true"</span> <span class="attr">ondragstart</span>=<span class="string">"drag(event)"</span>&gt;</span>这是一段可移动的段落，请把该段落拖入上面的矩形<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">allowDrop</span>(<span class="params">ev</span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">        ev.preventDefault();</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">drag</span>(<span class="params">ev</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        ev.dataTransfer.setData(<span class="string">'Text'</span>,ev.target.id)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">drop</span>(<span class="params">ev</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> data = ev.dataTransfer.getData(<span class="string">'Text'</span>);</span></span><br><span class="line"><span class="javascript">        ev.target.appendChild(<span class="built_in">document</span>.getElementById(data));</span></span><br><span class="line"><span class="undefined">        ev.preventDefault()</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="新结构元素使用样式"><a href="#新结构元素使用样式" class="headerlink" title="新结构元素使用样式"></a>新结构元素使用样式</h3><p>兼容旧版本浏览器的 hack</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    article,aside,dialog,figure,footer,header,legend,nav,section&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">display</span><span class="selector-pseudo">:block</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    nav&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">float</span><span class="selector-pseudo">:left</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">width</span><span class="selector-pseudo">:20</span>%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    article&#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">float</span><span class="selector-pseudo">:right</span>;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">width</span><span class="selector-pseudo">:79</span>%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--IE8之前的浏览器不支持使用 CSS方法来使用这些尚未支持的结构元素，需要使用脚本定义--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.createElement(<span class="string">'header'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.createElement(<span class="string">'nav'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.createElement(<span class="string">'article'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.createElement(<span class="string">'footer'</span>);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--或者引入一个 js来hack--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>HTML5 HACK<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--[if lt IE9]&gt;</span></span><br><span class="line"><span class="comment">	&lt;script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="comment">    &lt;![end if]--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="表单与文件"><a href="#表单与文件" class="headerlink" title="表单与文件"></a>表单与文件</h2><p><strong>新的 form 属性</strong>：</p>
+<ul>
+<li>autocomplete</li>
+<li>novalidate</li>
+</ul>
+<p><strong>新的 input 属性</strong>：</p>
+<ul>
+<li>autocomplete</li>
+<li>autofocus</li>
+<li>form</li>
+<li>form overrides (formaction, formenctype, formmethod, formnovalidate, formtarget)</li>
+<li>height 和 width</li>
+<li>list</li>
+<li>min, max 和 step</li>
+<li>multiple</li>
+<li>pattern (regexp)</li>
+<li>placeholder</li>
+<li>required</li>
+</ul>
+<p><strong>浏览器支持</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Input type</th>
+<th style="text-align:left">IE</th>
+<th style="text-align:left">Firefox</th>
+<th style="text-align:left">Opera</th>
+<th style="text-align:left">Chrome</th>
+<th style="text-align:left">Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">autocomplete</td>
+<td style="text-align:left">8.0</td>
+<td style="text-align:left">3.5</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">4.0</td>
+</tr>
+<tr>
+<td style="text-align:left">autofocus</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">10.0</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">4.0</td>
+</tr>
+<tr>
+<td style="text-align:left">form</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">form overrides</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">10.5</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">height and width</td>
+<td style="text-align:left">8.0</td>
+<td style="text-align:left">3.5</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">4.0</td>
+</tr>
+<tr>
+<td style="text-align:left">list</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">min, max and step</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">multiple</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">3.5</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">4.0</td>
+</tr>
+<tr>
+<td style="text-align:left">novalidate</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">pattern</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">No</td>
+</tr>
+<tr>
+<td style="text-align:left">placeholder</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">3.0</td>
+</tr>
+<tr>
+<td style="text-align:left">required</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">9.5</td>
+<td style="text-align:left">3.0</td>
+<td style="text-align:left">No</td>
+</tr>
+</tbody>
+</table>
+<h3 id="新增属性"><a href="#新增属性" class="headerlink" title="新增属性"></a>新增属性</h3><p><code>form</code></p>
+<p>在 HTML4 中表单内的从属元素必须写在表单内容，但是 HTML5 中，可以把它书写在页面的任何地方，然后给该元素指定一个 <code>form</code>属性。属性值为该表单的 id，这样就可以声明该元素从属于指定表单了。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"testform"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">form</span>=<span class="string">"testform"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>目前只有 Opera 支持这个属性</p>
+<p><code>formaction</code></p>
+<p>HTML4中，一个表单内的所有元素都只能通过表单的 <code>action</code>属性统一提交到另一个页面，而在 HTML5 可以给所有的提交按钮，<code>&lt;input type=&quot;submit&quot;&gt;</code>、<code>&lt;input type=&quot;image&quot;&gt;</code>、<code>&lt;button type=&quot;submit&quot;&gt;</code>都增加 <code>formaction</code>属性，使得点击不同的按钮，可以将表单提交到不同的页面</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"testform"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"s1"</span> <span class="attr">value</span>=<span class="string">"v1"</span> <span class="attr">formaction</span>=<span class="string">"s1.jsp"</span>&gt;</span>提交到 s1</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"s2"</span> <span class="attr">value</span>=<span class="string">"v2"</span> <span class="attr">formaction</span>=<span class="string">"s2.jsp"</span>&gt;</span>提交到 s2</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"s3"</span> <span class="attr">value</span>=<span class="string">"v3"</span> <span class="attr">formaction</span>=<span class="string">"s3.jsp"</span>&gt;</span>提交到 s3</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>目前没有浏览器支持这一属性</p>
+<p><code>formmethod</code></p>
+<p>在 HTML4 中只有一个表单内有 <code>action</code>属性来对表单内所有元素统一指定提交页面，所以每个表单内只有一个 <code>method</code>属性来指统一指定提交方法。在 HTML5 中，可以使用 <code>formaction</code>属性来对每个表单元素分别指定不同的提交页面，也可以用 <code>formmethod</code>对每个表单元素分别指定不同的提交方式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"testform"</span> <span class="attr">action</span>=<span class="string">"serve.jsp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"s1"</span> <span class="attr">value</span>=<span class="string">"v1"</span> <span class="attr">formaction</span>=<span class="string">"s1.jsp"</span> <span class="attr">formmethod</span>=<span class="string">"get"</span>&gt;</span>提交到 s1</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">name</span>=<span class="string">"s2"</span> <span class="attr">value</span>=<span class="string">"v2"</span> <span class="attr">formaction</span>=<span class="string">"s2.jsp"</span> <span class="attr">formmethod</span>=<span class="string">"post"</span>&gt;</span>提交到 s2</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>目前没有浏览器支持这一属性</p>
+<p><code>placeholder</code></p>
+<p>是指文本框为输入状态时，文本框里面显示的输入提示。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"input me"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>autofocus</code></p>
+<p>给文本框、选择框或者按钮控件加上该属性，当画面打开的时候，该控件自动获得光标焦点。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">autofocus</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>一个页面只能有一个控件具有该属性。不要滥用，建议只有当一个页面是以使用某个控件为主要目的的时候才使用。例如搜索页面中的搜索文本框。</p>
+<p><code>list</code></p>
+<p>为单行文本框添加一个 <code>list</code>属性，它的值为某个 <code>datalist</code>元素的 id。类似于 <code>select</code>，不同的是它除了可以选择之外，还可以自己输入。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">list</span>=<span class="string">"cars"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">datalist</span> <span class="attr">id</span>=<span class="string">"cars"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"BMW"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Ford"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"Volvo"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">datalist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>autocomplete</code></p>
+<p>辅助输入所用的自动完成功能，是一个节省输入时间，同时也非常方便的功能。可以指定 <code>on</code>、<code>off</code>、<code>&quot;&quot;</code>三个值。不指定时用浏览器的默认值。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"greeting"</span> <span class="attr">autocomplete</span>=<span class="string">"on"</span> <span class="attr">list</span>=<span class="string">"greetings"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="表单元素种类"><a href="#表单元素种类" class="headerlink" title="表单元素种类"></a>表单元素种类</h3><p><code>url</code>、<code>email</code>、<code>date</code>、<code>time</code>、<code>datetime</code>、<code>datetime-local</code>、<code>month</code>、<code>week</code>、<code>number</code>、<code>range</code>、<code>search</code>、<code>tel</code>、<code>color</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"http://laibh.top"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">value</span>=<span class="string">"544289495@qq.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"date"</span> <span class="attr">value</span>=<span class="string">"2019-05-22"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"time"</span> <span class="attr">value</span>=<span class="string">"11:27"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"datetime"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"datetime-local"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"month"</span> <span class="attr">value</span>=<span class="string">"2019-05"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"week"</span> <span class="attr">value</span>=<span class="string">"2019-W21"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"number"</span> <span class="attr">value</span>=<span class="string">"25"</span> <span class="attr">min</span>=<span class="string">"10"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">step</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">value</span>=<span class="string">"25"</span> <span class="attr">min</span>=<span class="string">"10"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">step</span>=<span class="string">"2"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"search"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"tel"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"color"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>output</code></p>
+<p>定义了不同类型的输出，比如计算结果或者脚本的输出。output 元素必须从属某个表单，必须将它书写在表单内部，或者对它添加 form 属性。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"testform1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">name</span>=<span class="string">"range1"</span> <span class="attr">step</span>=<span class="string">"5"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">output</span> <span class="attr">onforminput</span>=<span class="string">"value=range1.value"</span>&gt;</span>50<span class="tag">&lt;/<span class="name">output</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--或者浏览器兼容更好的下面这种方式--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"testform1"</span> <span class="attr">oninput</span>=<span class="string">"x.value=range1.value"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">name</span>=<span class="string">"range1"</span> <span class="attr">step</span>=<span class="string">"5"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">output</span> <span class="attr">name</span>=<span class="string">"x"</span> <span class="attr">for</span>=<span class="string">"range1"</span>&gt;</span>50<span class="tag">&lt;/<span class="name">output</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">值</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="http://www.w3school.com.cn/tags/att_output_for.asp">for</a></td>
+<td style="text-align:left"><em>element_id</em></td>
+<td style="text-align:left">定义输出域相关的一个或多个元素。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://www.w3school.com.cn/tags/att_output_form.asp">form</a></td>
+<td style="text-align:left"><em>form_id</em></td>
+<td style="text-align:left">定义输入字段所属的一个或多个表单。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="http://www.w3school.com.cn/tags/att_output_name.asp">name</a></td>
+<td style="text-align:left"><em>name</em></td>
+<td style="text-align:left">定义对象的唯一名称。（表单提交时使用）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="表单验证"><a href="#表单验证" class="headerlink" title="表单验证"></a>表单验证</h3><p><strong>自动验证</strong></p>
+<p><code>require</code></p>
+<p>可以应用在大部分输入元素（除了隐藏元素，图片按钮上）。在提交时，如果元素中内容为空白，则不允许提交，同时在浏览器中显示信息提示文字。</p>
+<p><code>pattern</code></p>
+<p>要求输入内容格式的，对 <code>input</code>使用 <code>pattern</code>属性，设为某个正则表达式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">pattern</span>=<span class="string">"[0-9][A-Z]&#123;3&#125;"</span> <span class="attr">name</span>=<span class="string">"part"</span> <span class="attr">placeholder</span>=<span class="string">"输入内容；一个数字与三个大写字母"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>min</code> 与 <code>max</code></p>
+<p>数值类型与日期类型元素专用属性。限制了 <code>input</code>元素输入的数值与日期范围。</p>
+<p><code>step</code></p>
+<p>控制 <code>input</code>元素中的值增加或者减少的步幅。</p>
+<p><strong>显式验证</strong></p>
+<p>HTML5 中，<code>form</code> 与 <code>input</code>(除了 <code>select</code> 与 <code>textarea</code>)都具有一个 <code>checkValidity</code>。使用这个方法，可以显示对表单内所有元素内容或者单个元素内容进行有效性验证。返回 boolen值</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"textform4"</span> <span class="attr">onsubmit</span>=<span class="string">"return check()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"http://laibh.top"</span> <span class="attr">id</span>=<span class="string">"url"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">check</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> url = <span class="built_in">document</span>.getElementById(<span class="string">'url'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (!url.value) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'地址不能为空'</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (!url.checkValidity()) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(<span class="string">'请输入正确的url地址'</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(url.value)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但其实一般提交按钮的时候，会自动检验格式</p>
+<h3 id="取消校验"><a href="#取消校验" class="headerlink" title="取消校验"></a>取消校验</h3><p>有两种方法取消校验，第一种用 <code>form</code>的 <code>novalidate</code>属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"textform4"</span> <span class="attr">onsubmit</span>=<span class="string">"return check()"</span> <span class="attr">novalidate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"http://laibh.top"</span> <span class="attr">id</span>=<span class="string">"url"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>但是上述的方法里面的 <code>checkValidity()</code>仍会生效</p>
+<p>第二种是利用 <code>input</code>  或者 <code>submit</code>元素的 <code>formnovalidate</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"textform4"</span> <span class="attr">onsubmit</span>=<span class="string">"return check()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"http://laibh.top"</span> <span class="attr">id</span>=<span class="string">"url"</span> <span class="attr">formnovalidate</span>=<span class="string">"formnovalidate"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--或者--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"textform4"</span> <span class="attr">onsubmit</span>=<span class="string">"return check()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"http://laibh.top"</span> <span class="attr">id</span>=<span class="string">"url"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">formnovalidate</span>=<span class="string">"formnovalidate"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>前者是单单让一个 <code>input</code>取消验证，后者是取消验证整个 <code>form</code>表单</p>
+<h3 id="自定义错误信息"><a href="#自定义错误信息" class="headerlink" title="自定义错误信息"></a>自定义错误信息</h3><p>HTML5 中可以利用 javascript 调用各个 input 元素的 <code>setCustomValidity</code>方法来自定义错误信息。需要注意的是一旦设置了 <code>setCustomValidity</code>，检验通过的条件变成了 <code>setCustomValidity(&#39;&#39;) &amp;&amp; !valueMissing &amp;&amp; !patternMismatch</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"code"</span> <span class="attr">required</span> <span class="attr">pattern</span>=<span class="string">"^\d&#123;4&#125;$"</span> <span class="attr">placeholder</span>=<span class="string">"请输入代码"</span> <span class="attr">oninput</span>=<span class="string">"check(this)"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">check</span>(<span class="params">i</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> &#123; valueMissing,patternMismatch &#125; = i.validity;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(valueMissing,patternMismatch)			</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(valueMissing)&#123;</span></span><br><span class="line"><span class="javascript">            i.setCustomValidity(<span class="string">'该字段不能为空，请按要求填入代码'</span>)</span></span><br><span class="line"><span class="javascript">        &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span>(patternMismatch)&#123;</span></span><br><span class="line"><span class="javascript">                i.setCustomValidity(<span class="string">'请输入4位数字的代码'</span>)</span></span><br><span class="line"><span class="javascript">            &#125;<span class="keyword">else</span>&#123;</span></span><br><span class="line"><span class="javascript">                i.setCustomValidity(<span class="string">''</span>)</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;    </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="增强的页面元素"><a href="#增强的页面元素" class="headerlink" title="增强的页面元素"></a>增强的页面元素</h3><p><code>figure</code>和 <code>figcaption</code></p>
+<p><code>figure</code>是一种元素的组合，带有可选标题。figure 元素用来表示网页上一块独立内容，将其从网页上移除后不会对网页上的其他内容产生任何影响。<code>figure</code>元素所表示的内容可以是图片、统计图或者代码示例。</p>
+<p><code>figcaption</code>表示 <code>figure</code>元素的标题，从属于 <code>figure</code>。一个 <code>figure</code>最多只允许防止一个 <code>figcaption</code>元素，但是运行放置多个其他元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>黄浦江上的的卢浦大桥<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>拍摄者：W3School 项目组，拍摄时间：2010 年 10 月<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://www.w3school.com.cn/i/shanghai_lupu_bridge.jpg"</span> <span class="attr">width</span>=<span class="string">"350"</span> <span class="attr">height</span>=<span class="string">"234"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>figure</code>所表示的内容通常是图片、统计图或者代码示例，也可以是音频插件、视频插件或者统计表格。</p>
+<p><code>details</code></p>
+<p>提供了一种替代 javascript 的将画面上的局部区域进行展开或者收缩的方法，目前只有 Chrome 和 Safari 6 支持 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">summary</span>&gt;</span>Copyright 2011.<span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>All pages and graphics on this web site are the property of W3School.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>mark</code></p>
+<p>表示页面需要高亮或者突出显示的。只好是对网页全文检索某个关键词时显示的检索结果。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Do not forget to buy <span class="tag">&lt;<span class="name">mark</span>&gt;</span>milk<span class="tag">&lt;/<span class="name">mark</span>&gt;</span> today.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为了某种特殊目的把原文作者没有特别重点标示的内容给标示出来。</p>
+<p>与 <code>em</code> 、<code>strong</code>元素的区别在于前者是作者自己标出来的重点要注意的，而<code>mark</code>跟作者本身没有太多关系，是在后来引用的时候添加上去的。</p>
+<p><code>progress</code></p>
+<p>表示一个任务的完成进度。</p>
+<p>该元素有两个参数来表示当前任务完成情况。<code>value</code>表示完成了多少工作量，<code>max</code>表示总共多少工作量。</p>
+<p>在属性设定的时候，这两个属性只能设定为有效的浮点数，<code>value</code>的值必须大于0，小于等于 <code>max</code>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>progress 使用示例<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>完成百分比：<span class="tag">&lt;<span class="name">progress</span> <span class="attr">id</span>=<span class="string">"progress"</span> <span class="attr">max</span>=<span class="string">"100"</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>0<span class="tag">&lt;/<span class="name">span</span>&gt;</span>%<span class="tag">&lt;/<span class="name">progress</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">'add()'</span> <span class="attr">value</span>=<span class="string">"请点击"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> progressBar = <span class="built_in">document</span>.getElementById(<span class="string">'progress'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        progressBar.getElementsByTagName(<span class="string">'span'</span>)[<span class="number">0</span>].textContent = <span class="string">'0'</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= <span class="number">100</span>; i++) &#123;</span></span><br><span class="line"><span class="javascript">            setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">                progressBar.value = i;</span></span><br><span class="line"><span class="javascript">                progressBar.getElementsByTagName(<span class="string">'span'</span>)[<span class="number">0</span>].textContent = i</span></span><br><span class="line"><span class="undefined">            &#125;, 1000 * i)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>meter</code></p>
+<p>表示规定范围内的数量值。例如磁盘使用量，对于某个候选者的投票人数占总投票人数的比例等。</p>
+<p>meter 元素有六个属性：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">值</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">high</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义度量的值位于哪个点，被界定为高的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">low</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义度量的值位于哪个点，被界定为低的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">max</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义最大值。默认值是 1。</td>
+</tr>
+<tr>
+<td style="text-align:left">min</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义最小值。默认值是 0。</td>
+</tr>
+<tr>
+<td style="text-align:left">optimum</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义什么样的度量值是最佳的值。如果该值高于 “high” 属性，则意味着值越高越好。如果该值低于 “low” 属性的值，则意味着值越低越好。</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td style="text-align:left"><em>number</em></td>
+<td style="text-align:left">定义度量的值。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meter</span> <span class="attr">value</span>=<span class="string">"5"</span> <span class="attr">min</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"10"</span> <span class="attr">high</span>=<span class="string">"8"</span> <span class="attr">low</span>=<span class="string">"2"</span> <span class="attr">optimum</span>=<span class="string">"5"</span>&gt;</span>3/10<span class="tag">&lt;/<span class="name">meter</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meter</span> <span class="attr">value</span>=<span class="string">"0.6"</span>&gt;</span>60%<span class="tag">&lt;/<span class="name">meter</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>注释：<span class="tag">&lt;/<span class="name">b</span>&gt;</span>Internet Explorer 不支持 meter 标签。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>menu</code>与 <code>command</code></p>
+<p>用于菜单工具条与弹出菜单。两个元素的浏览器支持不是很好，不做介绍。</p>
+<p><code>ol</code></p>
+<p>增加了 <code>start</code>与 <code>reversed</code>属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">reversed</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>咖啡<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>牛奶<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>茶<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">start</span>=<span class="string">"50"</span> <span class="attr">reversed</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>咖啡<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>牛奶<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>茶<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>dl</code></p>
+<p>重新定义后的 <code>dl</code>列表包含多个带名字的列表项。每一项包含一条或者多条带名字的 <code>dt</code>元素，用来表示术语，<code>dt</code>元素后面紧跟一个或者多个 <code>dd</code>元素，用来表示定义。在一个元素内，不允许带有相同的 <code>dt</code>元素，不允许有重复的术语。<code>dl</code>可以用来定义文章或者网页上的术语解释</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dl</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dt</span>&gt;</span>Coffee<span class="tag">&lt;/<span class="name">dt</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dd</span>&gt;</span>Black hot drink<span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dt</span>&gt;</span>Milk<span class="tag">&lt;/<span class="name">dt</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dd</span>&gt;</span>White cold drink<span class="tag">&lt;/<span class="name">dd</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dl</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>cite</code></p>
+<p>标签定义作品（比如书籍、歌曲、电影、电视节目、绘画、雕塑等等）的标题。不能是人名</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/i/ct_fcsz.jpg"</span> <span class="attr">alt</span>=<span class="string">"富春山居图"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">cite</span>&gt;</span>《富春山居图》<span class="tag">&lt;/<span class="name">cite</span>&gt;</span>由黄公望始画于至正七年(1347)，于至正十年完成。</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>small</code></p>
+<p>由原来的通用展示性元素变成更具体的、专门用来标识所谓的”小字印刷体”的元素。通常用于免责声明、注意事项、法律法规、与版权相关等的法律性声明文字中，同时不允许被应用在页面主内容中，只允许被当做辅助信息用 <code>inline</code>方式内嵌在页面上使用。同时 <code>small</code>元素也不意味着元素中内容字体会变小，如果需要将字体变小，需要配合  CSS 样式来用。</p>
+<h3 id="文件-API"><a href="#文件-API" class="headerlink" title="文件 API"></a>文件 API</h3><p>HTML5 中提供了一个关于文件操作的文件 API.</p>
+<h4 id="FileList-对象与-file-对象"><a href="#FileList-对象与-file-对象" class="headerlink" title="FileList 对象与 file 对象"></a>FileList 对象与 file 对象</h4><p><code>FileList</code> 对象表示用户选择的文件列表。在 HTML4 中，<code>file</code> 控件只允许放置一个文件，到了 HTML5 中。通过添加 <code>multiple</code>属性，<code>file</code>控件允许一次放置多个文件。控件内的每一个用户选择的文件都是一个 <code>file</code>对象，而 <code>FileList</code>对象则为这些 <code>file</code>对象的列表，代表用户选择的所有文件。 <code>file</code>对象有两个属性，<code>name</code>属性表示文件名，不包括路径，<code>lastModifiedDate</code>属性表示文件的最后修改日期。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"file"</span> <span class="attr">multiple</span> <span class="attr">size</span>=<span class="string">"80"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"showFileName()"</span> <span class="attr">value</span>=<span class="string">"文件上传"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">showFileName</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> file;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> files = <span class="built_in">document</span>.getElementById(<span class="string">'file'</span>).files;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> len = files.length;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="undefined">            file = files[i]</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(file.name);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Blob对象"><a href="#Blob对象" class="headerlink" title="Blob对象"></a>Blob对象</h4><p>Blob 表示二进制原始数据，它提供一个 <code>slice</code>方法，可以通过该方法访问到字节内部数据块。事实上，上面的 <code>file</code>对象也继承了这个 Blob 对象。</p>
+<p>Blob 对象有两个属性，<code>size</code>属性表示一个 Blob 对象的字节长度，<code>type</code> 属性表示 Blob 的 MIME 类型，如果是未知类型的话，返回一个空字符串。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">showFileName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> file;</span><br><span class="line">    <span class="keyword">const</span> files = <span class="built_in">document</span>.getElementById(<span class="string">'file'</span>).files;</span><br><span class="line">    <span class="keyword">const</span> len = files.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        file = files[i]</span><br><span class="line">       <span class="built_in">console</span>.log(file.name + <span class="string">'==='</span> + file.size + <span class="string">'==='</span> + file.type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过对 <code>file.size</code>或者 <code>file.type</code>判断可以进行文件大小与文件类型的限制。另外 HTML5 已经对 <code>file</code>控件添加了 <code>accept</code>属性，企图让 <code>file</code>控件只能接受某种类型的文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"file"</span> <span class="attr">multiple</span> <span class="attr">size</span>=<span class="string">"80"</span> <span class="attr">accept</span>=<span class="string">"image/gif"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样打开文件的时候就会显示 gif结尾的文件，当然如果你强行传其他类型的也是没有报错的。所以如果要做限制上传文件类型的话要结合 <code>file.type</code>来实现。</p>
+<h4 id="FileReader接口"><a href="#FileReader接口" class="headerlink" title="FileReader接口"></a>FileReader接口</h4><p>主要用来把文件读入内存，并且读取文件中的数据。FileReader 接口有了一个异步 API,使用该 API可以在浏览器主线程中异步访问文件系统，读取文件中的数据。</p>
+<p>检查是否可以使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="keyword">typeof</span> FileReader)&#123;</span><br><span class="line">    <span class="comment">// 浏览器为实现 FileReader 接口</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>接口方法</strong></p>
+<p>这个接口拥有4个方法，其中三个用来读取文件，另一个用来读取过程中断</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>readAsBinaryString</td>
+<td>file</td>
+<td>将文件读取为二进制码</td>
+</tr>
+<tr>
+<td>readAsText</td>
+<td>file,[encoding]</td>
+<td>将文件读取为文本</td>
+</tr>
+<tr>
+<td>readAsDataURL</td>
+<td>file</td>
+<td>将文件读取为 DataURL</td>
+</tr>
+<tr>
+<td>abort</td>
+<td>（none）</td>
+<td>中断读取操作</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>readAsBinaryString,这个方法将文件读取为二进制字符串，通常我们把它传送到后端，后端可以通过这段字符串存储文件。</li>
+<li>readAsText,有两个参数，第二个参数是文本的编码方式，默认值为 <code>UTF-8</code>。将文件以文本方式读取，读取的结果是这个文本文件中的内容。</li>
+<li>readAsDateURL,该方法将文件读取为一串 Data URL字符串，该方法事实上是将小文件以一种特殊格式的URL 地址形式直接读入页面。这里的小文件通常是图像与 html 格式的文件。</li>
+</ul>
+<p><strong>接口的事件</strong></p>
+<p>除了上面打方法，FileReader 接口还包含了一套完整的事件模型，用于捕获读取文件时的状态。</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onabort</td>
+<td>数据读取中断时触发</td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>数据读取出错时触发</td>
+</tr>
+<tr>
+<td>onloadstart</td>
+<td>数据取数开始时触发</td>
+</tr>
+<tr>
+<td>onprogress</td>
+<td>数据读取中</td>
+</tr>
+<tr>
+<td>onload</td>
+<td>数据读取成功完成时触发</td>
+</tr>
+<tr>
+<td>onloadend</td>
+<td>数据读取完成时触发，无论成功或者失败</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"file"</span>&gt;</span>请选择一个文件<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"file"</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"readAsDataURL()"</span> <span class="attr">value</span>=<span class="string">"读取图像"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"readAsBinaryString()"</span> <span class="attr">value</span>=<span class="string">"读取二进制数据"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"readAsText()"</span> <span class="attr">value</span>=<span class="string">"读取文本数据"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">name</span>=<span class="string">"result"</span> <span class="attr">id</span>=<span class="string">"result"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> result = <span class="built_in">document</span>.getElementById(<span class="string">'result'</span>);</span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> file = <span class="built_in">document</span>.getElementById(<span class="string">'file'</span>);</span></span><br><span class="line"><span class="javascript"><span class="keyword">if</span> (!<span class="keyword">typeof</span> FileReader) &#123;</span></span><br><span class="line"><span class="javascript">  alert(<span class="string">'浏览器不支持 FileReader 接口'</span>)</span></span><br><span class="line"><span class="javascript">  file.setAttribute(<span class="string">'disabled'</span>, <span class="string">'disabled'</span>);</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">readAsDataURL</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 检查文件是否为图像</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> &#123; files &#125; = file;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> len = files.length;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (!<span class="regexp">/image\/\w+/</span>.test(files[i].type)) &#123;</span></span><br><span class="line"><span class="javascript">      alert(<span class="string">'请确保文件都为图像类型'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 将文件以 Data URL 形式读入页面</span></span></span><br><span class="line"><span class="undefined">    reader.readAsDataURL(files[i])</span></span><br><span class="line"><span class="javascript">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>)</span></span><br><span class="line"><span class="javascript">      img.src = <span class="keyword">this</span>.result</span></span><br><span class="line"><span class="undefined">      result.appendChild(img)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 将文件以二进制的形式读入页面</span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">readAsBinaryString</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 检查文件是否为图像</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> &#123; files &#125; = file;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> len = files.length;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (!<span class="regexp">/image\/\w+/</span>.test(files[i].type)) &#123;</span></span><br><span class="line"><span class="javascript">      alert(<span class="string">'请确保文件都为图像类型'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 将文件以 二进制形式读入页面</span></span></span><br><span class="line"><span class="undefined">    reader.readAsBinaryString(files[i])</span></span><br><span class="line"><span class="javascript">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> p = <span class="built_in">document</span>.createElement(<span class="string">'p'</span>)</span></span><br><span class="line"><span class="javascript">      p.innerHTML += <span class="keyword">this</span>.result</span></span><br><span class="line"><span class="undefined">      result.appendChild(p)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="comment">// 将文件以文本形式读入页面</span></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">readAsText</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">  <span class="comment">// 检查文件是否为图像</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> &#123; files &#125; = file;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">const</span> len = files.length;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (!<span class="regexp">/image\/\w+/</span>.test(files[i].type)) &#123;</span></span><br><span class="line"><span class="javascript">      alert(<span class="string">'请确保文件都为图像类型'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> <span class="literal">false</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 将文件以 二进制形式读入页面</span></span></span><br><span class="line"><span class="undefined">    reader.readAsText(files[i])</span></span><br><span class="line"><span class="javascript">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> p = <span class="built_in">document</span>.createElement(<span class="string">'p'</span>)</span></span><br><span class="line"><span class="javascript">      p.innerHTML += <span class="keyword">this</span>.result</span></span><br><span class="line"><span class="undefined">      result.appendChild(p)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>关于读取状态的先后顺序：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readAsDataURL</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查文件是否为图像</span></span><br><span class="line">  <span class="keyword">const</span> &#123; files &#125; = file;</span><br><span class="line">  <span class="keyword">const</span> len = files.length;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="regexp">/image\/\w+/</span>.test(files[i].type)) &#123;</span><br><span class="line">      alert(<span class="string">'请确保文件都为图像类型'</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="comment">// 将文件以 Data URL 形式读入页面</span></span><br><span class="line">    reader.readAsDataURL(files[i])</span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>)</span><br><span class="line">      img.src = <span class="keyword">this</span>.result</span><br><span class="line">      result.appendChild(img)</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'load'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    reader.onprogress = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'progress'</span>);&#125;</span><br><span class="line">    reader.onabort = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'abort'</span>);&#125;</span><br><span class="line">    reader.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'error'</span>);&#125;</span><br><span class="line">    reader.onloadstart = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'loadstart'</span>);&#125;</span><br><span class="line">    reader.onloadend = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">console</span>.log(<span class="string">'loadend'</span>);&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// loadstart</span></span><br><span class="line"><span class="comment">// progress</span></span><br><span class="line"><span class="comment">// load</span></span><br><span class="line"><span class="comment">// loadend</span></span><br></pre></td></tr></table></figure>
+<p>在 <code>onprogress</code>里面可以用 <code>progress</code>来显示文件读取的百分比。</p>
+<h4 id="拖放-API"><a href="#拖放-API" class="headerlink" title="拖放 API"></a>拖放 API</h4><p>虽然在 HTML5 之前已经可以使用 <code>mousedown</code>、<code>mousemove</code>、<code>mouseup</code>来实现拖放操作，但是这只是在浏览器内容的拖放。在 HTML5 中，支持在浏览器与其他应用程序之间的数据互相拖动，同时也大大简化了拖放方面的代码。</p>
+<h5 id="实现拖放的步骤"><a href="#实现拖放的步骤" class="headerlink" title="实现拖放的步骤"></a>实现拖放的步骤</h5><ol>
+<li>将想要拖放的对象元素的 <code>draggable</code>属性设为 <code>true</code>，这样才能将该元素进行拖放。另外，img元素与 a 元素默认运行拖放。</li>
+<li>编写与拖放有关的代码。</li>
+</ol>
+<h5 id="拖放的相关事件"><a href="#拖放的相关事件" class="headerlink" title="拖放的相关事件"></a>拖放的相关事件</h5><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>产生事件的元素</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>drastart</td>
+<td>被拖放的元素</td>
+<td>开始施放操作</td>
+</tr>
+<tr>
+<td>drag</td>
+<td>被拖放的元素</td>
+<td>拖放过程中</td>
+</tr>
+<tr>
+<td>dragenter</td>
+<td>拖放过程中鼠标经过的元素</td>
+<td>被拖放的元素开始进入本元素的范围</td>
+</tr>
+<tr>
+<td>dragover</td>
+<td>拖放过程中鼠标经过的元素</td>
+<td>被拖放的元素正在本元素范围内移动</td>
+</tr>
+<tr>
+<td>dragleave</td>
+<td>拖放过程中鼠标经过的元素</td>
+<td>被拖放的元素离开本元素的范围</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拖放的目标元素</td>
+<td>有其他元素被拖放到了本元素中</td>
+</tr>
+<tr>
+<td>dragend</td>
+<td>拖放的对象元素</td>
+<td>拖放操作结束</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"init()"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span>&gt;</span>简单拖放示例<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"dragme"</span> <span class="attr">draggable</span>=<span class="string">"true"</span> <span class="attr">style</span>=<span class="string">"width:200px;border:1px solid gray"</span>&gt;</span></span><br><span class="line">    请拖放</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"text"</span> <span class="attr">style</span>=<span class="string">"width:200px;height:200px;border:1px solid gray"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> source = <span class="built_in">document</span>.getElementById(<span class="string">'dragme'</span>);</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> dest = <span class="built_in">document</span>.getElementById(<span class="string">'text'</span>);</span></span><br><span class="line"><span class="javascript">      source.addEventListener(<span class="string">'dragstart'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> dt = ev.dataTransfer;</span></span><br><span class="line"><span class="javascript">        dt.effectAllowed = <span class="string">'all'</span>;</span></span><br><span class="line"><span class="javascript">        dt.setData(<span class="string">'text/plain'</span>, <span class="string">'你好'</span>)</span></span><br><span class="line"><span class="javascript">      &#125;, <span class="literal">false</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">      dest.addEventListener(<span class="string">'dragend'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 不执行默认处理（拒绝被拖放）</span></span></span><br><span class="line"><span class="undefined">        ev.preventDefault();</span></span><br><span class="line"><span class="undefined">      &#125;);</span></span><br><span class="line"><span class="javascript">      dest.addEventListener(<span class="string">'drop'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> dt = ev.dataTransfer;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> text = dt.getData(<span class="string">'text/plain'</span>);</span></span><br><span class="line"><span class="undefined">        dest.textContent += text;</span></span><br><span class="line"><span class="undefined">        ev.preventDefault();</span></span><br><span class="line"><span class="javascript">        <span class="comment">// 禁止事件传播</span></span></span><br><span class="line"><span class="undefined">        ev.stopPropagation();</span></span><br><span class="line"><span class="javascript">      &#125;, <span class="literal">false</span>)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 页面设置属性，不执行默认处理(拒绝被拖放)</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.ondragover = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123; e.preventDefault() &#125;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.ondrop = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123; e.preventDefault() &#125;</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始拖动（<code>dragstart</code>事件发生）时，将要拖动的数据存入 <code>DataTransfer</code>对象（<code>setData()方法</code>）。<code>DataTransfer</code>对象专门用来存放拖放时要携带的数据，它可以被设置为拖动事件对象的 <code>dataTransfer</code>属性。<code>setData</code>方法中的第一个参数为携带数据的数据种类的字符串，第二个参数为要修改的数据。第一个参数中表示数据种类的字符串里只能填入类似 <code>text/plain</code>或者<code>text/html</code>的表示 MIME 类型的文字，不能填入其他文字。</li>
+<li>如果把<code>dt.setData(&quot;text/plain&quot;,&quot;你好&quot;)</code>改成 <code>dt.setData(&quot;text/plain&quot;,this.id)</code>。因为把被拖动元素的 id 当成了参数，所以携带的数据就是被拖动元素中的数据了，因为浏览器在使用 <code>getData()</code>方法读取数据时会自动读取该元素中的数据。</li>
+<li>针对拖放的目标元素，必须在 <code>dragend</code>或者 <code>dragover</code>事件内调用事件对象的 <code>preventDefault()</code>方法。因为默认情况下，被拖放的目标元素不允许接受元素的，为了把元素拖放到其中，必须把默认处理给关闭掉。</li>
+<li>目标元素接受到被拖放的元素后，执行 <code>getData</code>方法从 <code>DataTransfer</code>获得数据。<code>getData</code>方法的参数为 <code>setData</code>方法中指定的数据种类</li>
+<li>要实现拖放过程，还必须在目标元素的 <code>drop</code>事件中关闭默认处理（拒绝被拖放），否则目标元素不能接受被拖放的元素</li>
+<li>实现拖放过程，还必须设定整个页面为不执行默认处理（拒绝被拖放），否则拖放处理也不能被实现。因为页面是先于其他元素接受拖放的，如果页面上拒绝拖放，那么页面上其他元素就都不能接受拖放</li>
+<li>要使元素可以被拖放，首先必须把该元素的 <code>draggable</code>属性设为 <code>true</code>，另外，为了让这个示例在所有支持拖放 API 的浏览器中都能正常运行，需要指定 <code>-webkit-user-drag:element</code>这种 Webkit 特有的 CSS 属性</li>
+</ul>
+<p>现在支持拖放处理的 MIME 类型主要有一下几种：</p>
+<ul>
+<li>text/plain:文本文字</li>
+<li>text/html：HTML文字</li>
+<li>text/xml：xml 文字</li>
+<li>text/uri-list：URL 列表，每个 URL 为一行</li>
+</ul>
+<h5 id="DataTransfer-对象的属性与方法"><a href="#DataTransfer-对象的属性与方法" class="headerlink" title="DataTransfer 对象的属性与方法"></a>DataTransfer 对象的属性与方法</h5><table>
+<thead>
+<tr>
+<th>属性/方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dropEffect属性</td>
+<td>表示拖放操作的视觉效果，运行对其进行值的设定。该效果必须用 <code>effectAllowed</code>属性置顶的允许的效果范围内。允许指定的值为 none、copy、move、link</td>
+</tr>
+<tr>
+<td>effectAllowed属性</td>
+<td>用来指定当元素被拖放时所运行的视觉效果，可以指定的值为none、copy、copyLink、copyMove、link、linkMove、move、all、unintialize</td>
+</tr>
+<tr>
+<td>types属性</td>
+<td>存入数据的种类，字符串的伪数组</td>
+</tr>
+<tr>
+<td>void clearData(DOMString format)方法</td>
+<td>清除 DataTransfer 对象中存放的数据，如果省略参数 format,则清除全部数据</td>
+</tr>
+<tr>
+<td>void setData(DOMString format、DOMString data)</td>
+<td>向 DataTransfer 对象内存入数据</td>
+</tr>
+<tr>
+<td>DOMString getData(DOMString format)</td>
+<td>从 DataTransfer 对象中读数据</td>
+</tr>
+<tr>
+<td>void setDragImage(Element image,long x,long y)</td>
+<td>用 img 元素来设置拖放图标（部分浏览器可以用 canvas 等其他元素来设置）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="设定拖放时的视觉效果"><a href="#设定拖放时的视觉效果" class="headerlink" title="设定拖放时的视觉效果"></a>设定拖放时的视觉效果</h5><p><code>dropEffect</code>与 <code>effectAllowed</code>属性结合起来可以设定拖放时的视觉效果。<code>effectAllowed</code>属性表示当一个元素被拖动时所运行的视觉效果，一般在 <code>ondragstart</code>事件中设定，运行使用的值为 none、copy、copyLink、copyMove、link、move、all、unintialize。</p>
+<p><code>dropEffect</code>属性表示实际拖放时的视觉效果，一般在 <code>ondragover</code>事件中指定，运行设定的值为 none、copy、link、move。<code>dropEffect</code>属性所表示的实际视觉效果必须在 <code>effectAllowed</code>属性所表示的允许的视觉效果范围内。规则如下：</p>
+<ol>
+<li>如果 <code>effectAllowed</code>属性被设为 <code>none</code>，则不允许拖放元素。</li>
+<li>如果 <code>dropEffect</code>属性设定为 <code>none</code>，则不允许被拖放到目标元素中</li>
+<li><code>effectAllowed</code>属性设定为 <code>all</code>或者不设定，则 <code>dropEffect</code>属性允许被设定为任何值，并按照指定的视觉效果进行显示</li>
+<li>如果 <code>effectAllowed</code>属性设定为具体效果（不为 none或者 all），<code>dropEffect</code>属性也设定了具体视觉效果，则两个具体效果值必须完全相等，否则不允许被拖放元素拖放到目标元素中。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">source.addEventListener(<span class="string">'dragstart'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> dt = ev.dataTransfer;</span><br><span class="line">    dt.effectAllowed = <span class="string">'copy'</span>;</span><br><span class="line">    dt.setData(<span class="string">"text/plain"</span>,<span class="string">"你好"</span>)</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">dest.addEventListener(<span class="string">'dragover'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">ev</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> dt = ev.dataTransfer;</span><br><span class="line">    dt.dropEffect = <span class="string">'copy'</span>;</span><br><span class="line">    ev.preventDefault();</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="自定义拖放图标"><a href="#自定义拖放图标" class="headerlink" title="自定义拖放图标"></a>自定义拖放图标</h5><p>除了上面所说的使用 <code>effectAllowed</code>属性与<code>dropEffect</code>属性外，HTML5 还允许自定义拖放图标——指的是在用鼠标拖动元素的过程中，位于鼠标指针下部的小图标。</p>
+<p><code>setDragImage</code>方法有三个惨呼，第一个参数 image 设定为拖放图标的图标元素，第二个参数 x 为拖放图标离鼠标指针x轴方向的位移量，第三个参数 y 为拖放图标距离鼠标指针的 y 轴方向的位移量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dragIcon.src = <span class="string">'http://laibh.top/images/favicon-32x32-next.png?v=5.1.4'</span>;</span><br><span class="line">source.addEventListener(<span class="string">'dragstart'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ev</span>) </span>&#123;</span><br><span class="line"><span class="keyword">const</span> dt = ev.dataTransfer;</span><br><span class="line"><span class="built_in">console</span>.log(ev)</span><br><span class="line"><span class="built_in">console</span>.log(dt)</span><br><span class="line">dt.effectAllowed = <span class="string">'all'</span>;</span><br><span class="line">dt.setDragImage(dragIcon, <span class="number">-10</span>, <span class="number">-10</span>)</span><br><span class="line">dt.setData(<span class="string">'text/plain'</span>, <span class="string">'你好'</span>)</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/面试官问我HTML5是什么（上）.html" title="面试官问我HTML5是什么（上）">http://laibh.top/面试官问我HTML5是什么（上）.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML5/" <i class="fa fa-tag"></i> HTML5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/前端面试题目汇总摘录-React 基础篇.html" rel="next" title="前端面试题目汇总摘录（React 基础篇）">
+                <i class="fa fa-chevron-left"></i> 前端面试题目汇总摘录（React 基础篇）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/面试官问我HTML5是什么（中）.html" rel="prev" title="面试官问我HTML5是什么（中）">
+                面试官问我HTML5是什么（中） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5-与-HTML4-的区别"><span class="nav-number">1.</span> <span class="nav-text">HTML5 与 HTML4 的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-5-要解决的三个问题"><span class="nav-number">1.1.</span> <span class="nav-text">HTML 5 要解决的三个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法的改变"><span class="nav-number">1.2.</span> <span class="nav-text">语法的改变</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTML5-的标记方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTML5 的标记方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#确保与之前的HTML-版本兼容"><span class="nav-number">1.2.2.</span> <span class="nav-text">确保与之前的HTML 版本兼容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的元素和废除的元素"><span class="nav-number">1.3.</span> <span class="nav-text">新增的元素和废除的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-html5-html4"><span class="nav-number">1.4.</span> <span class="nav-text">新增-html5(html4)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结构元素"><span class="nav-number">1.4.1.</span> <span class="nav-text">结构元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多媒体元素"><span class="nav-number">1.4.2.</span> <span class="nav-text">多媒体元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语义元素"><span class="nav-number">1.4.3.</span> <span class="nav-text">语义元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#input元素类型"><span class="nav-number">1.4.4.</span> <span class="nav-text">input元素类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#废除（替代元素）"><span class="nav-number">1.5.</span> <span class="nav-text">废除（替代元素）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的属性和废除的属性"><span class="nav-number">1.6.</span> <span class="nav-text">新增的属性和废除的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增"><span class="nav-number">1.7.</span> <span class="nav-text">新增</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表单相关的属性"><span class="nav-number">1.7.1.</span> <span class="nav-text">表单相关的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链接相关属性"><span class="nav-number">1.7.2.</span> <span class="nav-text">链接相关属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他属性"><span class="nav-number">1.7.3.</span> <span class="nav-text">其他属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#废除"><span class="nav-number">1.8.</span> <span class="nav-text">废除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局属性"><span class="nav-number">1.9.</span> <span class="nav-text">全局属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#contentEditable"><span class="nav-number">1.9.1.</span> <span class="nav-text">contentEditable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#designMode"><span class="nav-number">1.9.2.</span> <span class="nav-text">designMode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hidden"><span class="nav-number">1.9.3.</span> <span class="nav-text">hidden</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spellcheck"><span class="nav-number">1.9.4.</span> <span class="nav-text">spellcheck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tabindex"><span class="nav-number">1.9.5.</span> <span class="nav-text">tabindex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data"><span class="nav-number">1.9.6.</span> <span class="nav-text">data-*</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#draggable"><span class="nav-number">1.9.7.</span> <span class="nav-text">draggable</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新结构元素使用样式"><span class="nav-number">1.10.</span> <span class="nav-text">新结构元素使用样式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表单与文件"><span class="nav-number">2.</span> <span class="nav-text">表单与文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新增属性"><span class="nav-number">2.1.</span> <span class="nav-text">新增属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单元素种类"><span class="nav-number">2.2.</span> <span class="nav-text">表单元素种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单验证"><span class="nav-number">2.3.</span> <span class="nav-text">表单验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消校验"><span class="nav-number">2.4.</span> <span class="nav-text">取消校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义错误信息"><span class="nav-number">2.5.</span> <span class="nav-text">自定义错误信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强的页面元素"><span class="nav-number">2.6.</span> <span class="nav-text">增强的页面元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件-API"><span class="nav-number">2.7.</span> <span class="nav-text">文件 API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FileList-对象与-file-对象"><span class="nav-number">2.7.1.</span> <span class="nav-text">FileList 对象与 file 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Blob对象"><span class="nav-number">2.7.2.</span> <span class="nav-text">Blob对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FileReader接口"><span class="nav-number">2.7.3.</span> <span class="nav-text">FileReader接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拖放-API"><span class="nav-number">2.7.4.</span> <span class="nav-text">拖放 API</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实现拖放的步骤"><span class="nav-number">2.7.4.1.</span> <span class="nav-text">实现拖放的步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拖放的相关事件"><span class="nav-number">2.7.4.2.</span> <span class="nav-text">拖放的相关事件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DataTransfer-对象的属性与方法"><span class="nav-number">2.7.4.3.</span> <span class="nav-text">DataTransfer 对象的属性与方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设定拖放时的视觉效果"><span class="nav-number">2.7.4.4.</span> <span class="nav-text">设定拖放时的视觉效果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义拖放图标"><span class="nav-number">2.7.4.5.</span> <span class="nav-text">自定义拖放图标</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

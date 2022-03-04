@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RESTful," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="通过阅读阮一峰老师的两篇文章，进行笔记的抄录，来加深自己对于 RESTful的理解 深入理解RESTfulRESTful 架构是目前最流行的一种互联网软件架构，它结构清晰、符合标准、易于理解、扩展方便，所以得到越来越多网站的采用。那么，到底什么叫做 RESTful 架构呢？ RESTful 架构起源REST这个词，是Roy Thomas Fielding在他2000年的博士论文中提出的。 名称Fi">
+<meta name="keywords" content="RESTful">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解RESTful">
+<meta property="og:url" content="http://laibh.top/2018-10-26-RESTful.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="通过阅读阮一峰老师的两篇文章，进行笔记的抄录，来加深自己对于 RESTful的理解 深入理解RESTfulRESTful 架构是目前最流行的一种互联网软件架构，它结构清晰、符合标准、易于理解、扩展方便，所以得到越来越多网站的采用。那么，到底什么叫做 RESTful 架构呢？ RESTful 架构起源REST这个词，是Roy Thomas Fielding在他2000年的博士论文中提出的。 名称Fi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解RESTful">
+<meta name="twitter:description" content="通过阅读阮一峰老师的两篇文章，进行笔记的抄录，来加深自己对于 RESTful的理解 深入理解RESTfulRESTful 架构是目前最流行的一种互联网软件架构，它结构清晰、符合标准、易于理解、扩展方便，所以得到越来越多网站的采用。那么，到底什么叫做 RESTful 架构呢？ RESTful 架构起源REST这个词，是Roy Thomas Fielding在他2000年的博士论文中提出的。 名称Fi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-10-26-RESTful.html"/>
+
+
+
+
+
+  <title>深入理解RESTful | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-10-26-RESTful.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入理解RESTful</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T16:30:54+08:00">
+                2018-10-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RESTful/" itemprop="url" rel="index">
+                    <span itemprop="name">RESTful</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-10-26-RESTful.html" class="leancloud_visitors" data-flag-title="深入理解RESTful">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,092
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通过阅读阮一峰老师的两篇文章，进行笔记的抄录，来加深自己对于 RESTful的理解</p>
+<h2 id="深入理解RESTful"><a href="#深入理解RESTful" class="headerlink" title="深入理解RESTful"></a>深入理解RESTful</h2><p>RESTful 架构是目前最流行的一种互联网软件架构，它结构清晰、符合标准、易于理解、扩展方便，所以得到越来越多网站的采用。那么，到底什么叫做 RESTful 架构呢？</p>
+<h3 id="RESTful-架构"><a href="#RESTful-架构" class="headerlink" title="RESTful 架构"></a>RESTful 架构</h3><h4 id="起源"><a href="#起源" class="headerlink" title="起源"></a><strong>起源</strong></h4><p>REST这个词，是<a href="http://en.wikipedia.org/wiki/Roy_Fielding">Roy Thomas Fielding</a>在他2000年的<a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">博士论文</a>中提出的。</p>
+<h4 id="名称"><a href="#名称" class="headerlink" title="名称"></a><strong>名称</strong></h4><p>Fielding将他对互联网软件的架构原则，定名为REST，即Representational State Transfer的缩写。我对这个词组的翻译是”表现层状态转化”。</p>
+<h4 id="资源（Resources）"><a href="#资源（Resources）" class="headerlink" title="资源（Resources）"></a><strong>资源（Resources）</strong></h4><p>REST的名称”表现层状态转化”中，省略了主语。”表现层”其实指的是”资源”（Resources）的”表现层”。</p>
+<p>所谓的“资源”，就是网络上的一个实体，或者说是网络上的一个具体信息，它可以是一段文本、一张图片，一首歌，一种服务，总之就是一个具体的存在。可以用一个 URI （统一资源定位符）指向它，每种资源对应一个特定的 URI ，要获取这个资源，访问它的 URI 就可以，因而 URI 就成了每一个资源的地址或者收拾独一无二的识别符。</p>
+<h4 id="表现层（Representation）"><a href="#表现层（Representation）" class="headerlink" title="表现层（Representation）"></a><strong>表现层（Representation）</strong></h4><p>“资源”是一种消息实体，可以有多种外在表现形式，把“资源”具体呈现出来的形式，叫做它的“表现层”</p>
+<p>例如：文本可以用 txt 格式表现，也可以用 HTML 格式、XML 格式、JSON 格式表现，甚至可以采用二进制格式，图片可以用 JPG 格式表现，也可以用 PNG 格式表现。</p>
+<p>URI 只代表资源的实体，不代表它的形式，严格地说，有些网站最后的“.html”后缀名是不必要的，因为这个后缀名表示格式，属于“表现层”的范畴，而 URI 应该只代表“资源”的位置。它的具体表现形式，应该在 HTTP 请求的头部信息中用 Accept 和 Content-Type 字段来指定，这两个字段才是对“表现层”的描述。</p>
+<h4 id="状态转化（state-Transfer）"><a href="#状态转化（state-Transfer）" class="headerlink" title="状态转化（state Transfer）"></a><strong>状态转化（state Transfer）</strong></h4><p>访问一个网站，就代表了客户端和服务器的一个互动的过程，在这个过程中，就会涉及到数据和状态的变化。</p>
+<p>互联网通信协议 HTTP 协议，是一个无状态协议。这意味着，所有的状态都保存在服务器端，因此，如果客户端想要操作服务器，必须通过某种手段，让服务器端发生“状态转化（State Transfer）” 。而这种转化是建立在表现层之上的，所以就是“表现层状态转化”</p>
+<p>客户端用到的手段，只能是 HTTP 协议，具体来说，就是 HTTP 协议里面，四个表示操作的动词： GET/POST/PUT/DELETE。它们分别对应四种基本操作：获取/新建（更新）/更新/删除 资源</p>
+<h4 id="综述"><a href="#综述" class="headerlink" title="综述"></a><strong>综述</strong></h4><p>RESTful 就是</p>
+<ol>
+<li>每一个 URI 代表一个资源</li>
+<li>客户端与服务器之间，传递这种资源的某种表现层</li>
+<li>客户端通过四个 HTTP 动词，对服务端资源进行操作，实现”表现层状态转化“</li>
+</ol>
+<h4 id="误区"><a href="#误区" class="headerlink" title="误区"></a><strong>误区</strong></h4><p>RESTful 架构有一些典型的设计误区</p>
+<p><strong>最常见的设计误区，就是 URI 中包含动词</strong>。因为“资源”是一种实体，所以应该是名称，URI 不应该有动词，动词应该放在 HTTP 协议中。</p>
+<p>例子：</p>
+<blockquote>
+<p>URI: /posts/show/1 </p>
+</blockquote>
+<p>其中 show 是动词，这个 URI 设计就错误了，正确的应该是</p>
+<blockquote>
+<p>URI: /posts/1</p>
+</blockquote>
+<p>然后用 GET 表示 show</p>
+<p>如果某些动作是HTTP动词表示不了的，你就应该把动作做成一种资源。比如网上汇款，从账户1向账户2汇款500元，错误的URI是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST /accounts/1/transfer/500/to/2</span><br></pre></td></tr></table></figure>
+<p>正确的写法是把动词transfer改成名词transaction，资源不能是动词，但是可以是一种服务：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/transaction</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 127.0.0.1</span><br><span class="line">from=1&amp;to=2&amp;amount=500.00</span><br></pre></td></tr></table></figure>
+<p><strong>另一个设计误区，就是在URI中加入版本号</strong>：</p>
+<blockquote>
+<p>　　<a href="http://www.example.com/app/1.0/foo">http://www.example.com/app/1.0/foo</a></p>
+<p>　　<a href="http://www.example.com/app/1.1/foo">http://www.example.com/app/1.1/foo</a></p>
+<p>　　<a href="http://www.example.com/app/2.0/foo">http://www.example.com/app/2.0/foo</a></p>
+</blockquote>
+<p>因为不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个URI。版本号可以在HTTP请求头信息的Accept字段中进行区分（参见<a href="http://www.informit.com/articles/article.aspx?p=1566460">Versioning REST Services</a>）：</p>
+<blockquote>
+<p>　　Accept: vnd.example-com.foo+json; version=1.0</p>
+<p>　　Accept: vnd.example-com.foo+json; version=1.1</p>
+<p>　　Accept: vnd.example-com.foo+json; version=2.0</p>
+</blockquote>
+<h3 id="RESTful-API-最佳实践"><a href="#RESTful-API-最佳实践" class="headerlink" title="RESTful API 最佳实践"></a>RESTful API 最佳实践</h3><h4 id="URI-设计"><a href="#URI-设计" class="headerlink" title="URI 设计"></a><strong>URI 设计</strong></h4><p><strong>动词 + 宾语</strong></p>
+<p>RESTful 的 核心思想就是，客户端发出的数据操作指令都是 “动词+宾语”的结构，比如</p>
+<p><code>GET/articles</code>这个命令，<code>GET</code>是动词，<code>/articles</code>是宾语</p>
+<p>动词通常就是五种 HTTP 方法，对应 CRUD（Create增加|Retrieve读取查询|Update更新|Delete删除） 操作</p>
+<blockquote>
+<ul>
+<li>GET ：读取（Read）</li>
+<li>POST：新建（Create）</li>
+<li>PUT：更新（Update）</li>
+<li>PATCH：更新（Update），通常是部分更新</li>
+<li>DELETE：删除（Delete）</li>
+</ul>
+</blockquote>
+<p>根据 HTTP 规范，动词一律大写。</p>
+<p><strong>动词的覆盖</strong></p>
+<p>有些客户端只能使用 <code>GET</code>和 <code>POST</code>这两种方法，服务器必须接受 <code>POST</code>模拟其他三个方法（<code>PUT</code>、<code>PATCH</code>、<code>DELETE</code>）</p>
+<p>这时客户端发出的 HTTP 请求，要加上 <code>X-HTTP-Method-Override</code>属性，告诉服务器应该使用哪一个动词，覆盖 <code>POST</code>方法</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/api/Person/4</span> HTTP/1.1</span><br><span class="line"><span class="attribute">X-HTTP-Method-Override</span>: PUT</span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>X-HTTP-Method-Override</code>指定本次请求的方法是<code>PUT</code>，而不是<code>POST</code>。</p>
+<p><strong>宾语必须是名词</strong></p>
+<p>宾语就是 API 的URI ，是 HTTP 动词作用的对象，它应该是名词，不能是动词，比如 <code>/articles</code>这个 URL 就是正确的，而下面的 URL 不是名词，所以都是错误的</p>
+<blockquote>
+<ul>
+<li>/getAllCars</li>
+<li>/createNewCar</li>
+<li>/deleteAllRedCars</li>
+</ul>
+</blockquote>
+<p><strong>复数 URL</strong></p>
+<p>既然 URL 是名词，那么应该使用复数，还是单数？</p>
+<p>这没有统一的规定，但是常见的操作是读取一个集合，比如<code>GET /articles</code>（读取所有文章），这里明显应该是复数。</p>
+<p>为了统一起见，建议都使用复数 URL，比如<code>GET /articles/2</code>要好于<code>GET /article/2</code>。</p>
+<p><strong>避免多级 URL</strong></p>
+<p>常见的情况是，资源需要多级分类，因此很容易写出多级的 URL，比如获取某个作者的某一类文章。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /authors/12/categories/2</span><br></pre></td></tr></table></figure>
+<p>这种 URL 不利于扩展，语义也不明确，往往要想一会，才能明白含义。</p>
+<p>更好的做法是，除了第一级，其他级别都用查询字符串表达。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /authors/12?categories=2</span><br></pre></td></tr></table></figure>
+<p>下面是另一个例子，查询已发布的文章。你可能会设计成下面的 URL。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /articles/published</span><br></pre></td></tr></table></figure>
+<p>查询字符串的写法明显更好。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /articles?published=true</span><br></pre></td></tr></table></figure>
+<h4 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a><strong>状态码</strong></h4><p><strong>状态码必须精确</strong></p>
+<p>客户端的每一次请求，服务器都必须给出回应。回应包括 HTTP 状态码和数据两部分。</p>
+<p>HTTP 状态码就是一个三位数，分成五个类别。</p>
+<ul>
+<li><code>1xx</code>：相关信息</li>
+<li><code>2xx</code>：操作成功</li>
+<li><code>3xx</code>：重定向</li>
+<li><code>4xx</code>：客户端错误</li>
+<li><code>5xx</code>：服务器错误</li>
+</ul>
+<p><strong>2xx 状态码</strong></p>
+<p><code>200</code>状态码表示操作成功，但是不同的方法可以返回更精确的状态码。</p>
+<ul>
+<li>GET: 200 OK</li>
+<li>POST: 201 Created</li>
+<li>PUT: 200 OK</li>
+<li>PATCH: 200 OK</li>
+<li>DELETE: 204 No Content</li>
+</ul>
+<p>上面代码中，<code>POST</code>返回<code>201</code>状态码，表示生成了新的资源；<code>DELETE</code>返回<code>204</code>状态码，表示资源已经不存在。</p>
+<p>此外，<code>202 Accepted</code>状态码表示服务器已经收到请求，但还未进行处理，会在未来再处理，通常用于异步操作。下面是一个例子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">202</span> Accepted</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "task": &#123;</span><br><span class="line">    "href": "/api/company/job-management/jobs/2130040",</span><br><span class="line">    "id": "2130040"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3xx 状态码</strong></p>
+<p>API 用不到<code>301</code>状态码（永久重定向）和<code>302</code>状态码（暂时重定向，<code>307</code>也是这个含义），因为它们可以由应用级别返回，浏览器会直接跳转，API 级别可以不考虑这两种情况。</p>
+<p>API 用到的<code>3xx</code>状态码，主要是<code>303 See Other</code>，表示参考另一个 URL。它与<code>302</code>和<code>307</code>的含义一样，也是”暂时重定向”，区别在于<code>302</code>和<code>307</code>用于<code>GET</code>请求，而<code>303</code>用于<code>POST</code>、<code>PUT</code>和<code>DELETE</code>请求。收到<code>303</code>以后，浏览器不会自动跳转，而会让用户自己决定下一步怎么办。下面是一个例子。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">303</span> See Other</span><br><span class="line"><span class="attribute">Location</span>: /api/orders/12345</span><br></pre></td></tr></table></figure>
+<p><strong>4xx 状态码</strong></p>
+<p><code>4xx</code>状态码表示客户端错误，主要有下面几种。</p>
+<p><code>400 Bad Request</code>：服务器不理解客户端的请求，未做任何处理。</p>
+<p><code>401 Unauthorized</code>：用户未提供身份验证凭据，或者没有通过身份验证。</p>
+<p><code>403 Forbidden</code>：用户通过了身份验证，但是不具有访问资源所需的权限。</p>
+<p><code>404 Not Found</code>：所请求的资源不存在，或不可用。</p>
+<p><code>405 Method Not Allowed</code>：用户已经通过身份验证，但是所用的 HTTP 方法不在他的权限之内。</p>
+<p><code>410 Gone</code>：所请求的资源已从这个地址转移，不再可用。</p>
+<p><code>415 Unsupported Media Type</code>：客户端要求的返回格式不支持。比如，API 只能返回 JSON 格式，但是客户端要求返回 XML 格式。</p>
+<p><code>422 Unprocessable Entity</code> ：客户端上传的附件无法处理，导致请求失败。</p>
+<p><code>429 Too Many Requests</code>：客户端的请求次数超过限额。</p>
+<p><strong>5xx 状态码</strong></p>
+<p><code>5xx</code>状态码表示服务端错误。一般来说，API 不会向用户透露服务器的详细信息，所以只要两个状态码就够了。</p>
+<p><code>500 Internal Server Error</code>：客户端请求有效，服务器处理时发生了意外。</p>
+<p><code>503 Service Unavailable</code>：服务器无法处理请求，一般用于网站维护状态。</p>
+<h4 id="服务器回应"><a href="#服务器回应" class="headerlink" title="服务器回应"></a><strong>服务器回应</strong></h4><p><strong>不要返回纯本文</strong></p>
+<p>API 返回的数据格式，不应该是纯文本，而应该是一个 JSON 对象，因为这样才能返回标准的结构化数据。所以，服务器回应的 HTTP 头的<code>Content-Type</code>属性要设为<code>application/json</code>。</p>
+<p>客户端请求时，也要明确告诉服务器，可以接受 JSON 格式，即请求的 HTTP 头的<code>ACCEPT</code>属性也要设成<code>application/json</code>。下面是一个例子。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/orders/2</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Accept</span>: application/json</span><br></pre></td></tr></table></figure>
+<p><strong>发生错误时，不要返回 200 状态码</strong></p>
+<p>有一种不恰当的做法是，即使发生错误，也返回<code>200</code>状态码，把错误信息放在数据体里面，就像下面这样。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-Type</span>: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "status": "failure",</span><br><span class="line">  "data": &#123;</span><br><span class="line">    "error": "Expected at least two items in list."</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，解析数据体以后，才能得知操作失败。</p>
+<p>这张做法实际上取消了状态码，这是完全不可取的。正确的做法是，状态码反映发生的错误，具体的错误信息放在数据体里面返回。下面是一个例子。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">400</span> Bad Request</span><br><span class="line"><span class="attribute">Content-Type</span>: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "error": "Invalid payoad.",</span><br><span class="line">  "detail": &#123;</span><br><span class="line">     "surname": "This field is required."</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>提供链接</strong></p>
+<p>API 的使用者未必知道，URL 是怎么设计的。一个解决方法就是，在回应中，给出相关链接，便于下一步操作。这样的话，用户只要记住一个 URL，就可以发现其他的 URL。这种方法叫做 HATEOAS。</p>
+<p>举例来说，GitHub 的 API 都在 <a href="https://api.github.com/">api.github.com</a> 这个域名。访问它，就可以得到其他 URL。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  "feeds_url": "https://api.github.com/feeds",</span><br><span class="line">  "followers_url": "https://api.github.com/user/followers",</span><br><span class="line">  "following_url": "https://api.github.com/user/following&#123;/target&#125;",</span><br><span class="line">  "gists_url": "https://api.github.com/gists&#123;/gist_id&#125;",</span><br><span class="line">  "hub_url": "https://api.github.com/hub",</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的回应中，挑一个 URL 访问，又可以得到别的 URL。对于用户来说，不需要记住 URL 设计，只要从 api.github.com 一步步查找就可以了。</p>
+<p>HATEOAS 的格式没有统一规定，上面例子中，GitHub 将它们与其他属性放在一起。更好的做法应该是，将相关链接与其他属性分开。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-Type</span>: application/json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "status": "In progress",</span><br><span class="line">   "links": &#123;[</span><br><span class="line">    &#123; "rel":"cancel", "method": "delete", "href":"/api/status/12345" &#125; ,</span><br><span class="line">    &#123; "rel":"edit", "method": "put", "href":"/api/status/12345" &#125;</span><br><span class="line">  ]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想了解更多详情的，可以点击</p>
+<ul>
+<li><a href="https://godruoyi.com/posts/resetful-api-design-specifications">RESETful API 设计规范</a></li>
+<li><a href="http://www.cnblogs.com/artech/p/restful-web-api-01.html">我所理解的RESTful Web API [Web标准篇]</a></li>
+<li><a href="https://www.cnblogs.com/artech/p/3506553.html">我所理解的RESTful Web API [设计篇]</a></li>
+</ul>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2011/09/restful.html">理解RESTful架构-阮一峰</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html">RESTful API 最佳实践</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-10-26-RESTful.html" title="深入理解RESTful">http://laibh.top/2018-10-26-RESTful.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RESTful/" <i class="fa fa-tag"></i> RESTful</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/前端面试题目汇总摘录-HTML 和 CSS篇.html" rel="next" title="前端面试题目汇总摘录（HTML 和 CSS篇）">
+                <i class="fa fa-chevron-left"></i> 前端面试题目汇总摘录（HTML 和 CSS篇）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-10-30-JavaScipt数据结构与算法Part5.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">
+                为什么我要放弃javaScript数据结构与算法（第五章）—— 链表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深入理解RESTful"><span class="nav-number">1.</span> <span class="nav-text">深入理解RESTful</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTful-架构"><span class="nav-number">1.1.</span> <span class="nav-text">RESTful 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#起源"><span class="nav-number">1.1.1.</span> <span class="nav-text">起源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#名称"><span class="nav-number">1.1.2.</span> <span class="nav-text">名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源（Resources）"><span class="nav-number">1.1.3.</span> <span class="nav-text">资源（Resources）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表现层（Representation）"><span class="nav-number">1.1.4.</span> <span class="nav-text">表现层（Representation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态转化（state-Transfer）"><span class="nav-number">1.1.5.</span> <span class="nav-text">状态转化（state Transfer）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#综述"><span class="nav-number">1.1.6.</span> <span class="nav-text">综述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#误区"><span class="nav-number">1.1.7.</span> <span class="nav-text">误区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTful-API-最佳实践"><span class="nav-number">1.2.</span> <span class="nav-text">RESTful API 最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#URI-设计"><span class="nav-number">1.2.1.</span> <span class="nav-text">URI 设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态码"><span class="nav-number">1.2.2.</span> <span class="nav-text">状态码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器回应"><span class="nav-number">1.2.3.</span> <span class="nav-text">服务器回应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">1.3.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

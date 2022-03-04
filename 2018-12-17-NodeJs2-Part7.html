@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 这章会涉及三个热门的模板引擎，以及如何用模板把显示层标记从逻辑代码中分离出来，保持 Web 程序代码的整洁性。 Web 程序的模板用模板保持代码的整洁性在 Node 中 可以像其他 Web 技术一样，用 MVC 模式开发传统的 Web 程序。主要的思想是将逻辑、数据和展示层分离。在遵循 MVC 模式的 Web">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— Web 程序的模板">
+<meta property="og:url" content="http://laibh.top/2018-12-17-NodeJs2-Part7.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 这章会涉及三个热门的模板引擎，以及如何用模板把显示层标记从逻辑代码中分离出来，保持 Web 程序代码的整洁性。 Web 程序的模板用模板保持代码的整洁性在 Node 中 可以像其他 Web 技术一样，用 MVC 模式开发传统的 Web 程序。主要的思想是将逻辑、数据和展示层分离。在遵循 MVC 模式的 Web">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-12-17-NodeJs2-Part2-MVC%20程序的流程以及它跟模板层的交互.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— Web 程序的模板">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 这章会涉及三个热门的模板引擎，以及如何用模板把显示层标记从逻辑代码中分离出来，保持 Web 程序代码的整洁性。 Web 程序的模板用模板保持代码的整洁性在 Node 中 可以像其他 Web 技术一样，用 MVC 模式开发传统的 Web 程序。主要的思想是将逻辑、数据和展示层分离。在遵循 MVC 模式的 Web">
+<meta name="twitter:image" content="http://laibh.top/images/2018-12-17-NodeJs2-Part2-MVC%20程序的流程以及它跟模板层的交互.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-17-NodeJs2-Part7.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— Web 程序的模板 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-17-NodeJs2-Part7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— Web 程序的模板</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-17T11:30:00+08:00">
+                2018-12-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-17-NodeJs2-Part7.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— Web 程序的模板">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,947
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<p>这章会涉及三个热门的模板引擎，以及如何用模板把显示层标记从逻辑代码中分离出来，保持 Web 程序代码的整洁性。</p>
+<h2 id="Web-程序的模板"><a href="#Web-程序的模板" class="headerlink" title="Web 程序的模板"></a>Web 程序的模板</h2><h3 id="用模板保持代码的整洁性"><a href="#用模板保持代码的整洁性" class="headerlink" title="用模板保持代码的整洁性"></a>用模板保持代码的整洁性</h3><p>在 Node 中 可以像其他 Web 技术一样，用 MVC 模式开发传统的 Web 程序。主要的思想是将逻辑、数据和展示层分离。在遵循 MVC 模式的 Web 程序中，一般是用户向服务器请求资源，然后控制器向模型请求数据，得到数据后传到视图，再由视图以特定格式将数据呈现给用户。MVC 中的视图部分一般会用到某种模板语言。在使用模板时，视图会将模型返回的数据传递给模板引擎，并制定用那个模板文件展示这些数据。</p>
+<p><img src="/images/2018-12-17-NodeJs2-Part2-MVC 程序的流程以及它跟模板层的交互.png" alt="MVC 程序的流程以及它跟模板层的交互"></p>
+<p>模板文件中通常包含数据的占位符、HTML、CSS，有时还会用一些客户端 JavaScript 来做第三方小部分显示，比如点赞按钮、或者触发界面行为，隐藏显示页面等等操作。因为模板文件的工作重点是展示而不是处理逻辑，所以前后端人员可以一起工作，有利于项目任务的分工。</p>
+<h4 id="模板实战"><a href="#模板实战" class="headerlink" title="模板实战"></a><strong>模板实战</strong></h4><p>博客文章是从文本中读取的，格式如下。<code>---</code>表明一篇文章结束，另一篇文章开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: It is someone birthday!</span><br><span class="line">data: January 09,2098</span><br><span class="line">I am getting old, but thankfully i am not in jail!</span><br><span class="line">---</span><br><span class="line">title: Movies are pretty good</span><br><span class="line">data: January 2,2078</span><br><span class="line">I have been watching a lot of movies lately.It is relaxing,except when they have clowns in them.</span><br></pre></td></tr></table></figure>
+<p>博客程序代码，读取博客文章</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="comment">// 读取和解析博客文章的数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getEntries</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> entries = [];</span><br><span class="line">    <span class="comment">// 从文件中读取博客文章的数据</span></span><br><span class="line">    <span class="keyword">let</span> entriesRaw = fs.readFileSync(<span class="string">'./entries.txt'</span>, <span class="string">'utf8'</span>);</span><br><span class="line">    entriesRaw = entriesRaw.split(<span class="string">'---'</span>);</span><br><span class="line">    entriesRaw(<span class="function"><span class="params">entryRaw</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> entry = &#123;&#125;;</span><br><span class="line">        <span class="keyword">const</span> lines = entryRaw.split(<span class="string">'\n'</span>);</span><br><span class="line">        lines.map(<span class="function"><span class="params">line</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (line.indexOf(<span class="string">'title: '</span>) === <span class="number">0</span>) &#123;</span><br><span class="line">                entry.title = line.replace(<span class="string">'title: '</span>, <span class="string">''</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (line.indexOf(<span class="string">'date: '</span>) === <span class="number">0</span>) &#123;</span><br><span class="line">                entry.date = line.replace(<span class="string">'date: '</span>, <span class="string">''</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                entry.body = entry.body || <span class="string">''</span>;</span><br><span class="line">                entry.body += line;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        entries.push(entry);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> entries;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> entries = getEntries();</span><br><span class="line"><span class="built_in">console</span>.log(entries);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> output = blogPage(entries);</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line">    res.end(output);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8000</span>);</span><br></pre></td></tr></table></figure>
+<p>页面用函数 blogPage 函数渲染的，用它把文章渲染到 HTML 页面中，以便发送浏览器，有两种不同的尝试方式,用模板和不用模板。</p>
+<h5 id="不用模板"><a href="#不用模板" class="headerlink" title="不用模板"></a><strong>不用模板</strong></h5><p>博客程序可以直接输出 HTML，但杂处理逻辑中引入 HTML 会让代码变得很乱</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">blogPage</span>(<span class="params">entries</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> output = <span class="string">`</span></span><br><span class="line"><span class="string">        &lt;html&gt;</span></span><br><span class="line"><span class="string">        &lt;head&gt;</span></span><br><span class="line"><span class="string">            &lt;style type="text/css"&gt;</span></span><br><span class="line"><span class="string">                .entry_title &#123; font-weight: bold; &#125;</span></span><br><span class="line"><span class="string">                .entry_date &#123; font-style: italic; &#125;</span></span><br><span class="line"><span class="string">                .entry_body &#123; margin-bottom: 1em; &#125;</span></span><br><span class="line"><span class="string">            &lt;/style&gt;</span></span><br><span class="line"><span class="string">        &lt;/head&gt;</span></span><br><span class="line"><span class="string">        &lt;body&gt;        </span></span><br><span class="line"><span class="string">        &lt;/html&gt;</span></span><br><span class="line"><span class="string">    `</span></span><br><span class="line">    entries.map(<span class="function"><span class="params">entry</span> =&gt;</span> &#123;</span><br><span class="line">        output += <span class="string">`</span></span><br><span class="line"><span class="string">            &lt;div class="entry_title"&gt;<span class="subst">$&#123;entry.title&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;div class="entry_date"&gt;<span class="subst">$&#123;entry.date&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;div class="entry_body"&gt;<span class="subst">$&#123;entry.body&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="string">        `</span></span><br><span class="line">    &#125;);</span><br><span class="line">    output += <span class="string">`&lt;/body&gt;&lt;/html&gt;`</span>;</span><br><span class="line">    <span class="keyword">return</span> output;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出来，逻辑中有很多 HTML 会显得很乱。</p>
+<h5 id="用模块渲染-HTML"><a href="#用模块渲染-HTML" class="headerlink" title="用模块渲染 HTML "></a><strong>用模块渲染 HTML </strong></h5><p>模板可以把 HTML 从处理逻辑中挪走，大幅度提高代码的整洁性。</p>
+<p>安装 Embedded JavaScript 模块演示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install ejs</span><br></pre></td></tr></table></figure>
+<p>加载模板</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"><span class="keyword">const</span> template = fs.readFileSync(<span class="string">'./template/blog_page.ejs'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">blogPage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> values = &#123; entries &#125;;</span><br><span class="line">    <span class="keyword">return</span> ejs.render(template, values);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>EJS 模板文件是由 HTML 标记和数据占位符构成的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .entry_title &#123;</span><br><span class="line">            font-weight: bold;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .entry_date &#123;</span><br><span class="line">            font-style: italic;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .entry_body &#123;</span><br><span class="line">            margin-bottom: 1em;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;% entries.map(entry =&gt;&#123; %&gt;</span><br><span class="line">            &lt;div class=&quot;entry_title&quot;&gt;&lt;%= entry.title %&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;entry_date&quot;&gt;&lt;%= entry.date %&gt;&lt;/div&gt;</span><br><span class="line">            &lt;div class=&quot;entry_body&quot;&gt;&lt;%= entry.body %&gt;&lt;/div&gt;</span><br><span class="line">        &lt;% &#125;) %&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>Node 社区创建了很多模板引擎，HTML 需要闭合标签，而 CSS 需要左右大括号，会有特殊的语言，例如 Pug 语言可以更简洁地表示 HTML 或者 CSS 。</p>
+<p>本节会介绍三种模板引擎，以及在 Node 中如何取使用它们：</p>
+<ul>
+<li>Embedded JavaScript （EJS）引擎</li>
+<li>极简的 Hogan 引擎</li>
+<li>Pug 模板引擎</li>
+</ul>
+<h3 id="Embedded-JavaScript-的模板"><a href="#Embedded-JavaScript-的模板" class="headerlink" title="Embedded JavaScript 的模板"></a>Embedded JavaScript 的模板</h3><p>Embedded JavaScript 处理模板的方式简单直接，可以把 EJS 标签当做数据准备的占位符嵌入到 HTML 中，还可以在模板中执行纯 JavaScript 代码，就像 PHP 那样完成条件分支和循环之类的工作。</p>
+<h4 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a><strong>创建模板</strong></h4><p>在模板的世界中，发送给模板引擎做渲染的数据有时被称为上下文，而下面是 EJS 用一个简单的模板渲染上下文的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"><span class="keyword">const</span> template = <span class="string">'&lt;%= message %&gt;'</span></span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">message</span>: <span class="string">'Hello template!'</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(ejs.render(template, context));</span><br></pre></td></tr></table></figure>
+<p>注意发送给 render 第二个参数中的 locals 的用法。第二个参数可以包含 EJS 选项以及上下文数据，而 locals 可以确保上下文数据不会被当做 EJS 选项。但大多数情况下你都可以把上下文本身当做第二个参数，例如下面render:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(ejs.render(template,context));</span><br></pre></td></tr></table></figure>
+<p>如果把上下文直接当做 render 的第二个参数，一定不要给上下文中的值用这些名称：cache/client/close/compileDebug/debug/filename/open/scope 。它们是为修改模板引擎设定的保留字。</p>
+<h5 id="字符转义"><a href="#字符转义" class="headerlink" title="字符转义"></a><strong>字符转义</strong></h5><p>在渲染时，EJS 会转义上下文值中的所有特殊字符，将它们替换为 HTML 实体码，这是为了防止跨站脚本(xss)攻击，恶意用户会将 JavaScript 作为数据提交给 Web 程序，希望其他用户访问包含这些数据 的页面时能在他们的浏览器中执行。下面的代码展示了 EJS 的转义处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"><span class="keyword">const</span> template = <span class="string">'&lt;%= message %&gt;'</span></span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">message</span>: <span class="string">"&lt;script&gt; alert('XSS attack);&lt;script/&gt;"</span>&#125;</span><br><span class="line"><span class="built_in">console</span>.log(ejs.render(template,context));</span><br></pre></td></tr></table></figure>
+<p>这段代码在显示时会输出下面这种代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;script&amp;gt;alert(<span class="string">'XSS attack'</span>);&amp;lt;<span class="regexp">/script&amp;gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果用在模板中的是可信数据，不想做转义处理，可以用 <code>&lt;%-</code>代替 <code>&lt;%=</code> ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"><span class="keyword">const</span> template = <span class="string">'&lt;%- message %&gt;'</span></span><br><span class="line"><span class="keyword">const</span> context = &#123; </span><br><span class="line"> message: <span class="string">"&lt;script&gt;alert('Trusted JavaScript!');&lt;/script&gt;"</span> </span><br><span class="line">&#125;; </span><br><span class="line"><span class="built_in">console</span>.log(ejs.render(template, context));</span><br></pre></td></tr></table></figure>
+<p>注意！指明 EJS 标签的字符是可修改的，比如像这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line">ejs.delimiter = <span class="string">'$'</span>;</span><br><span class="line"><span class="keyword">const</span> template = <span class="string">'&lt;$= message $&gt;'</span></span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">message</span>: <span class="string">'Hello template!'</span> </span><br><span class="line"><span class="built_in">console</span>.log(ejs.render(template,context));</span><br></pre></td></tr></table></figure>
+<h4 id="将-EJS-集成到你的程序中"><a href="#将-EJS-集成到你的程序中" class="headerlink" title="将 EJS 集成到你的程序中"></a><strong>将 EJS 集成到你的程序中</strong></h4><p>把模板和代码放到同一个文件里很别扭，并且会显得代码很乱。接下来使用 Node API 从单独的文件中读取模板。</p>
+<p>进入工作目录，创建 app.js 文件，把下面的代码放在里面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> filename = <span class="string">'./template/students.ejs'</span>;</span><br><span class="line"><span class="keyword">const</span> students = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Rick LaRue'</span>, <span class="attr">age</span>: <span class="number">23</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Sarah Cathands'</span>, <span class="attr">age</span>: <span class="number">25</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Bob Dobbs'</span>, <span class="attr">age</span>: <span class="number">37</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 HTTP 服务器</span></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (req.url === <span class="string">'/'</span>) &#123;</span><br><span class="line">        <span class="comment">// 从文件中读取模板</span></span><br><span class="line">        fs.readFile(filename, (err, data) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> template = data.toString();</span><br><span class="line">            <span class="keyword">const</span> context = &#123; <span class="attr">students</span>: students &#125;;</span><br><span class="line">            <span class="comment">// 渲染模板</span></span><br><span class="line">            <span class="keyword">const</span> output = ejs.render(template, context);</span><br><span class="line">            res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">            <span class="comment">// 发送响应</span></span><br><span class="line">            res.end(output);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.statusCode = <span class="number">404</span>;</span><br><span class="line">        res.end(<span class="string">'Not Found'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"> server.listen(<span class="number">8000</span>);</span><br></pre></td></tr></table></figure>
+<p>接下来创建存放模板文件的 students.ejs 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (students.length) &#123; %&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;% students.forEach(student =&gt;&#123; %&gt;</span><br><span class="line">            &lt;li&gt;&lt;%= student.name %&gt; (&lt;%= student.age %&gt;)&lt;/li&gt;</span><br><span class="line">        &lt;% &#125;) %&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="缓存-EJS-模板"><a href="#缓存-EJS-模板" class="headerlink" title="缓存 EJS 模板"></a><strong>缓存 EJS 模板</strong></h5><p>如果有必要，可以让 EJS 把模板函数缓存在内存中。也就是说在解析完模板文件后，EJS 可以把解析得到的函数存下来。这样以后需要渲染这个模板时不用再次解析，所以渲染速度会快。</p>
+<p>如果正在开发过程当中，想即时看到模板文件修改后的效果，则不要启用缓存。但在把程序<br>部署到生产环境中时，启用缓存是一种简单快捷的性能优化办法。可以通过环境变量 NODE_ENV判定是否启用缓存</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cache = process.env.NODE_ENV === <span class="string">'production'</span></span><br><span class="line"><span class="keyword">const</span> output = ejs.render(</span><br><span class="line">    template,</span><br><span class="line">    &#123; students, cache, filename &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>第二个参数的 filename 选项不仅限于文件，可以用要渲染的模板的唯一标识。接下来看看怎么在客户端使用 EJS。</p>
+<h4 id="在客户端程序中使用-EJS"><a href="#在客户端程序中使用-EJS" class="headerlink" title="在客户端程序中使用 EJS "></a><strong>在客户端程序中使用 EJS </strong></h4><p>要在客户端使用 EJS ，首先要先把 EJS 搜索引擎下载到工作目录下面</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://raw.githubusercontent.com/tj/ejs/master/lib/ejs.js</span><br></pre></td></tr></table></figure>
+<p>下载完就可以在客户端使用 EJS ，下面代码存为 index.html 并试着在浏览器打开运行</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./ejs.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>EJS example<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"output"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> template = <span class="string">"&lt;%= message %&gt;"</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> context = &#123; <span class="attr">message</span>: <span class="string">'Hello template!'</span> &#125;;</span></span><br><span class="line"><span class="javascript">    $(<span class="built_in">document</span>).ready(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">'#output'</span>).html(</span></span><br><span class="line"><span class="undefined">            ejs.render(template, context)</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Hogan 模板引擎，特意限制了模板代码中可用的功能。</p>
+<h3 id="使用-Mustache-模板语言与-Hogan"><a href="#使用-Mustache-模板语言与-Hogan" class="headerlink" title="使用 Mustache 模板语言与 Hogan"></a>使用 Mustache 模板语言与 Hogan</h3><p>Hogan.js 是 Twitter 为满足自己的需求而创建的引擎模板。Hogan 是 Mustache 模板语言标准的具体实现。</p>
+<p>跟 EJS 不用的是，Mustache 遵循极简主义，特意去掉了条件逻辑。在内容过滤上，Mustache 只为防止XSS 的攻击而保留了转义处理功能，主张模板代码应该尽可能地简单。</p>
+<p>本节将介绍：</p>
+<ul>
+<li>如何在程序中创建和实现 Mustache 模板</li>
+<li>Mustache 标准中的各种模板标签</li>
+<li>如何用子模板组织模板</li>
+<li>如何用定制的分隔符和其他选项对 Hogan 进行微调</li>
+</ul>
+<h4 id="创建模板-1"><a href="#创建模板-1" class="headerlink" title="创建模板"></a><strong>创建模板</strong></h4><p>要使用 Hogan ，同样先安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -save hogan.js</span><br></pre></td></tr></table></figure>
+<p>下面是用 Hogan 使用简单模板渲染上下文的例子。运行后输出 ’Hello template‘</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hogan = <span class="built_in">require</span>(<span class="string">'hogan.js'</span>);</span><br><span class="line"><span class="keyword">const</span> templateSource = <span class="string">'&#123;&#123;message&#125;&#125;'</span>;</span><br><span class="line"><span class="keyword">const</span> context = &#123; <span class="attr">message</span>: <span class="string">'Hello Template'</span> &#125;</span><br><span class="line"><span class="keyword">const</span> template = hogan.compile(templateSource);</span><br><span class="line"><span class="built_in">console</span>.log(template.render(context));</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<p>了解如何用 Hogan 处理 Mustache 模板后，下面看看它支持哪些标签</p>
+<h4 id="Mustache-标签"><a href="#Mustache-标签" class="headerlink" title="Mustache 标签"></a><strong>Mustache 标签</strong></h4><p>Mustache 标签在概念上跟 EJS 的标签类似，也有变量值的占位符，指明哪里需要循环。可以增强 Mustache 的功能，在模板里添加注释。</p>
+<h5 id="1-显示简单的值"><a href="#1-显示简单的值" class="headerlink" title="1.显示简单的值"></a><strong>1.显示简单的值</strong></h5><p>在 Mustache 模板中，要把想要显示的上下文的名称放在大括号中。大括号在 Mustache 社区里被称为胡须。比如说，要显示上下文项 name 的值，应该使用 Hogan 标签 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;name&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>跟大多数模板一样，Hogan 默认也会对内容进行转义以防止XSS 攻击，如果想要在 Hogan 中显示未转义的值，既可以把上下文的名称放在第三条胡须中，也可以在前面添加一个 <code>&amp;</code> 符号。</p>
+<p>例如 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&amp;name&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想在模板中加注释，可以这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;! This is a comment&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-区块：多个值的循环遍历"><a href="#2-区块：多个值的循环遍历" class="headerlink" title="2.区块：多个值的循环遍历"></a><strong>2.区块：多个值的循环遍历</strong></h5><p>尽管 Hogan 不允许在模板中使用逻辑，但是它确实引入了一种更加优雅的方法，用 Mustache 区块对上下文项中多个值做循环遍历：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const context = &#123;</span><br><span class="line">    students:[</span><br><span class="line">        &#123; name: 'J', age:'23'&#125;,</span><br><span class="line">        &#123; name: 'L', age:'53'&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要创建一个模板，让每个学生都显示在单独的 HTML 段落中，可以像下面这样轻松实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Name: J,Age: 23 years old <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Name: L,Age: 53 years old <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面这个模板能生成上面的 HTML :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;# students&#125;&#125;</span><br><span class="line">	&lt;p&gt;Name: &#123;&#123;name&#125;&#125;, Age: &#123;&#123;age&#125;&#125; years old &lt;/p&gt;</span><br><span class="line">&#123;&#123;/students&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-反向区块：值不存在时的默认-HTML"><a href="#3-反向区块：值不存在时的默认-HTML" class="headerlink" title="3.反向区块：值不存在时的默认 HTML"></a><strong>3.反向区块：值不存在时的默认 HTML</strong></h5><p>如果上下文数据中的 students 不是数组会怎么样？比如说，如果只是单个对象，那么模板互显示这个对象，但是如果是 undefined 或 false ,空数组，则什么都不显示。</p>
+<p>如果想输出消息指明该区块的值不存在，那么可以用 Mustache 的反向区块。把下面的快模板代码加到前面那个显示学生消息的模板中，上下文中没有数据时就会显示这条消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;^ students&#125;&#125;</span><br><span class="line">	&lt;p&gt;No students found&lt;/p&gt;</span><br><span class="line">&#123;&#123;/ students&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-区块-lambda-区块内的定制功能"><a href="#4-区块-lambda-区块内的定制功能" class="headerlink" title="4.区块 lambda: 区块内的定制功能"></a><strong>4.区块 lambda: 区块内的定制功能</strong></h5><p>如果 Mustache 现有功能无法满足，可以按照它的标准定制区块标签。让它调用函数处理模块内容，不用循环遍历数组。这被称为 区块 lambda 。</p>
+<p>下面的例子用到了 github-flavored markdown 模块:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install github-flavored-markdown --dev</span><br></pre></td></tr></table></figure>
+<p>在下面这段代码中，模板中的<strong>Name</strong>传给由区块 lambda 调用的 Markdown 解析器，生成<br>了<strong>Name</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hogan = <span class="built_in">require</span>(<span class="string">'hogan.js'</span>);</span><br><span class="line"><span class="comment">// 引入 Markdown 解析器</span></span><br><span class="line"><span class="keyword">const</span> md = <span class="built_in">require</span>(<span class="string">'github-flavored-markdown'</span>);</span><br><span class="line"><span class="comment">// Mustache 模板也包含 Markdown 格式的内容</span></span><br><span class="line"><span class="keyword">const</span> templateSource = <span class="string">`&#123;&#123;#markdown&#125;&#125;**Name**:&#123;&#123;name&#125;&#125;&#123;&#123;/markdown&#125;&#125;`</span>;</span><br><span class="line"><span class="comment">// 模板的上下文包含了一个解析 Markdown 的区块 lambda</span></span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    name: <span class="string">'Rick LaRue'</span>,</span><br><span class="line">    markdown: <span class="function"><span class="params">()</span> =&gt;</span> text =&gt; md.parse(text)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> template = hogan.compile(templateSource);</span><br><span class="line"><span class="built_in">console</span>.log(template.render(context));</span><br></pre></td></tr></table></figure>
+<p>使用区块 lambda 可以在模板中轻松实现缓存和转换机制等功能。</p>
+<h5 id="5-子模板：在其他模板中重用模板"><a href="#5-子模板：在其他模板中重用模板" class="headerlink" title="5.子模板：在其他模板中重用模板"></a>5<strong>.子模板：在其他模板中重用模板</strong></h5><p>为了避免多个模板中复制粘贴相同的代码，可以将这些通用的代码做成子模板（partial）。<br>子模板是放在其他模板内的构件，可以把复杂的模板分解成简单模板。</p>
+<p>比如下面这个例子，将显示学生数据的代码从主模板中分离出来做成了子模板。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hogan = <span class="built_in">require</span>(<span class="string">'hogan.js'</span>);</span><br><span class="line"><span class="comment">// 用于子模板的代码</span></span><br><span class="line"><span class="keyword">const</span> studentTemplate = <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;p&gt;</span></span><br><span class="line"><span class="string">        Name: &#123;&#123; name &#125;&#125;,</span></span><br><span class="line"><span class="string">        Age: &#123;&#123; age &#125;&#125; years old</span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="comment">// 主模板</span></span><br><span class="line"><span class="keyword">const</span> mainTemplate = <span class="string">`</span></span><br><span class="line"><span class="string">    &#123;&#123;# students&#125;&#125;</span></span><br><span class="line"><span class="string">        &#123;&#123;&gt;student&#125;&#125;</span></span><br><span class="line"><span class="string">    &#123;&#123;/ students&#125;&#125;</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    students: [&#123;</span><br><span class="line">        name: <span class="string">'Jane Narwhal'</span>,</span><br><span class="line">        age: <span class="number">21</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        name: <span class="string">'Rick LaRue'</span>,</span><br><span class="line">        age: <span class="number">26</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 编译主模板和子模板</span></span><br><span class="line"><span class="keyword">const</span> template = hogan.compile(mainTemplate);</span><br><span class="line"><span class="keyword">const</span> partial = hogan.compile(studentTemplate);</span><br><span class="line"><span class="comment">// 渲染主模板和子模板</span></span><br><span class="line"><span class="keyword">const</span> html = template.render(context, &#123; <span class="attr">student</span>: partial &#125;);</span><br><span class="line"><span class="built_in">console</span>.log(html);</span><br></pre></td></tr></table></figure>
+<h4 id="微调-Hogan"><a href="#微调-Hogan" class="headerlink" title="微调 Hogan "></a><strong>微调 Hogan </strong></h4><p>Hogan 用起来相当简单，掌握它的标签汇总表就够了。在使用时可能只有一两个地方需要调整一下.</p>
+<p>如果你不喜欢 Mustache 风格的大括号，可以给 compile 方法传入一个参数覆盖 Hogan 所用的分隔符。下面的例子把 EJS 风格的分隔符编译在 Hogan 中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hogan.compile(text, &#123; <span class="attr">delimiters</span>: <span class="string">'&lt;% %&gt;'</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>除了 Mustache，还有其他模板语言。比如想把 HTML 的噪声都去掉的 Pug。</p>
+<h3 id="用-Pug-做模板"><a href="#用-Pug-做模板" class="headerlink" title="用 Pug 做模板"></a>用 Pug 做模板</h3><p>Pug,以前叫做 Jade,它用另一种方式来表示 HTML，是 Express 的默认模板引擎。Pug 和其他主流模板系统的差别主要在于它对空格的使用。Pug 模板用缩进表示 HTML 标签的嵌入关系。HTML 标签也不必明确给出关闭标签，从而避免了因为过早关闭，或根本就不关闭标签所产生的问题。由于有严格的缩进规则，因此 Pug 模板看起来很简洁，更易于维护。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">head</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome<span class="tag">&lt;/<span class="name">title</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;/<span class="name">head</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">body</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;<span class="name">strong</span>&gt;</span>"Hello world!"<span class="tag">&lt;/<span class="name">strong</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"> <span class="tag">&lt;/<span class="name">body</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这段 HTML 对应的 Pug 模板如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">	head</span><br><span class="line">		title Welcome</span><br><span class="line">	body</span><br><span class="line">		div.content#main</span><br><span class="line">		 strong &quot;Hello world!&quot;</span><br></pre></td></tr></table></figure>
+<p>Pug 像 EJS 一样，可以嵌入 JavaScript ，可以用在服务端和客户端。但 Pug 还有其他特性，比如模板继承和 mixins。用 mixins 可以定义易于重用的小型模板，用来表示常用的视觉元素的 HTML ，比如条目列表和盒子。Mixins 很像上一节介绍的 Hogan 的自末班。有了模板继承，那些把一个 HTML 页面渲染到多个文件中 Pug 模板组织起来就更容易了。先安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pug -S</span><br></pre></td></tr></table></figure>
+<p>本节介绍：</p>
+<ul>
+<li>Pug 的基础知识，比如说类名、属性和块扩展</li>
+<li>如何用内置的关键字往 Pug 模板里添加逻辑</li>
+<li>如何用继承、块和mixins 组织模板</li>
+</ul>
+<h4 id="Pug-基础知识"><a href="#Pug-基础知识" class="headerlink" title="Pug 基础知识"></a><strong>Pug 基础知识</strong></h4><p>Pug 的标签和 HTML 一样，但是抛弃了前后的字符，并用缩进表示标签的嵌套关系。标签可以用 <code>.&lt;classname&gt;</code>关联一个或者是多个 CSS 类。比如应用了 content 和 sidebar 类的 div 元素表示为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">div.content.sidebar</span><br></pre></td></tr></table></figure>
+<p>在标签上添加 <code>#&lt;ID&gt;</code>可以赋予它 CSS 的 ID 。比如上面那个再加上一个 ID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">div.content.sidebar#featured_content</span><br></pre></td></tr></table></figure>
+<h5 id="1-指定标签的属性"><a href="#1-指定标签的属性" class="headerlink" title="1.指定标签的属性"></a><strong>1.指定标签的属性</strong></h5><p>将标签的属性放在括号中，每个属性之间用括号分开，下面的Pug 表示一个 会在新的浏览器打开的标签：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&apos;http://laibh.top&apos;,target=&apos;_blank&apos;)</span><br></pre></td></tr></table></figure>
+<p>因为带属性的标签可能会很长，所以 Pug 在处理这样的标签的时候会比较灵活。比如下面的这种表示跟那个效果是一样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a(href=&apos;http://laibh.top&apos;,</span><br><span class="line">target=&apos;_blank&apos;)</span><br></pre></td></tr></table></figure>
+<p>也可以指定不需要值的属性，下面的这段 Pug 实例是一个 HTML 表单，其中包含一个 select 元素，也有预定的 option ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">strong Select your favorite food:</span><br><span class="line">form</span><br><span class="line">	select</span><br><span class="line">		option(value=&apos;Cheese&apos;) Cheese</span><br><span class="line">		option(value=&apos;Tofu&apos;) Tofu</span><br><span class="line">Specifying tag content</span><br></pre></td></tr></table></figure>
+<p>在前面那段代码中还有标签内容的示例：strong 标签后面的 Select your favorite food:；第一个 option 后面的 Cheese；第二个 option 后面的 Tofu。</p>
+<p>这是 Pug 中指定标签内容的常用方法，但不是唯一的。尽管这种风格在指定的比较短的内容时很好用，但如果标签的内容很长，则会导致 Pug 模板中出现超长的代码行。不过。就想下面这个例子，可以用 | 指定标签的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">textarea </span><br><span class="line">	| This is a some default text</span><br><span class="line">	| that the user should be</span><br><span class="line">	| provided with.</span><br></pre></td></tr></table></figure>
+<p>如果 HTML 标签只接受文本（即不能嵌入 HTML 元素），比如 style 会让 script 。则可以去掉 | 字符，像下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">style.</span><br><span class="line">	h1&#123;</span><br><span class="line">        font-size: 6em;</span><br><span class="line">        color: #9d9;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>用这两种方法别分可以表示长短两种内容，可以让 Pug 模板保持有呀，Pug 还有一种表示嵌套关系的办法，叫做扩展。</p>
+<h5 id="2-用块扩展把他组织好"><a href="#2-用块扩展把他组织好" class="headerlink" title="2.用块扩展把他组织好"></a><strong>2.用块扩展把他组织好</strong></h5><p>Pug 一般用 缩进表示嵌套，但有时缩进形成的空格太多了。比如下面的这个用缩进定义链接列表的 Pug 模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ul </span><br><span class="line"> li </span><br><span class="line"> 	a(href=&apos;http://nodejs.org/&apos;) Node.js homepage </span><br><span class="line"> li </span><br><span class="line"> 	a(href=&apos;http://npmjs.org/&apos;) NPM homepage </span><br><span class="line"> li </span><br><span class="line"> 	a(href=&apos;http://nodebits.org/&apos;) Nodebits blog</span><br></pre></td></tr></table></figure>
+<p>如果用 Pug 块扩展，这个例子会更加紧凑。块扩展可以在标签后面用冒号表示嵌套。例如下面这段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ul </span><br><span class="line">	li: a a(href=&apos;http://nodejs.org/&apos;) Node.js homepage </span><br><span class="line">	li: a(href=&apos;http://npmjs.org/&apos;) NPM homepage </span><br><span class="line"> 	li: a(href=&apos;http://nodebits.org/&apos;) Nodebits blog</span><br></pre></td></tr></table></figure>
+<h5 id="3-将数据纳入到-Pug-模板中"><a href="#3-将数据纳入到-Pug-模板中" class="headerlink" title="3.将数据纳入到 Pug 模板中"></a><strong>3.将数据纳入到 Pug 模板中</strong></h5><p>数据传入到 Pug 引擎的方式跟 EJS 一样，模板先被编译成函数，然后带着上下文调用它，以便于渲染输出 HTML 。如下例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const pug = require(&apos;pug&apos;);</span><br><span class="line">const template = &apos;strong #&#123;message&#125;&apos;</span><br><span class="line">const context = &#123; message: &apos;Hello template&apos; &#125;;</span><br><span class="line">const fn = pug.compile(template);</span><br><span class="line">console.log(fn(context));</span><br></pre></td></tr></table></figure>
+<p>这个模板中的 #{message}是要被上下文值替换掉的占位符。</p>
+<p>上下文值也可以作为属性的值。这个例子会渲染出来</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://laibh.top"</span>&gt;</span> <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const pug = require(&apos;pug&apos;);</span><br><span class="line">const template = &apos;a(herf=url)&apos;</span><br><span class="line">const context = &#123; url: &apos;http://laibh.top&apos; &#125;;</span><br><span class="line">const fn = pug.compile(template);</span><br><span class="line">console.log(fn(context));</span><br></pre></td></tr></table></figure>
+<h4 id="Pug-模板中的逻辑"><a href="#Pug-模板中的逻辑" class="headerlink" title="Pug 模板中的逻辑"></a><strong>Pug 模板中的逻辑</strong></h4><p>把数据交给模板后，还需要定义处理数据的逻辑，可以直接在模板中嵌入 JavaScript 代码来定义数据处理逻辑。例如 if 、for 、var 声明等等。下面有个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">h3.contact-header My Contacts</span><br><span class="line">if contacts.length</span><br><span class="line">    each contact in contacts</span><br><span class="line">        - var fullName = contact.firstName + &apos; &apos; + contact.lastName</span><br><span class="line">        .contact-box</span><br><span class="line">            p fullName</span><br><span class="line">            if contact.isEditable</span><br><span class="line">                p: a(href=&apos;/edit/+contact.id) Edit Record</span><br><span class="line">            p </span><br><span class="line">                case contact.status</span><br><span class="line">                    when  &apos;Active&apos;</span><br><span class="line">                        strong User is active in the system</span><br><span class="line">                    when &apos;Inactive&apos;</span><br><span class="line">                        em User is inactive</span><br><span class="line">                    when &apos;Pending&apos;</span><br><span class="line">                        | User has a pending invitation</span><br><span class="line">            else</span><br><span class="line">                p You currently do not have any contacts</span><br></pre></td></tr></table></figure>
+<p>下面来看一下 Pug 模板中嵌入 javascript 代码如何处理输出</p>
+<h5 id="1-在Pug模板中使用-JavaScript"><a href="#1-在Pug模板中使用-JavaScript" class="headerlink" title="1.在Pug模板中使用 JavaScript "></a><strong>1.在Pug模板中使用 JavaScript </strong></h5><p>带有 <code>-</code>前缀的 JavaScript  代码的返回结果不会出现在渲染结果中。带有  <code>=</code>前缀的 JavaScript 代码的执行结果会出现。但为了防止 XSS 攻击做了转义处理。如果 JavaScript 代码生成的内容不应该转义。那么可以使用前缀 <code>！=</code>.</p>
+<p>在 Pug 中，有些常用的 条件判断和循环语句可以不带前缀：if/else/case/when/default/until/each和unless</p>
+<p>Pug 中还可以定义变量，下面两种赋值方式效果是一样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-count = 0</span><br><span class="line">count = 0</span><br></pre></td></tr></table></figure>
+<p>没有前缀的语句没有输出。</p>
+<h5 id="2-循环遍历对象和数组"><a href="#2-循环遍历对象和数组" class="headerlink" title="2.循环遍历对象和数组"></a><strong>2.循环遍历对象和数组</strong></h5><p>Pug 中的 JavaScript 可以访问上下文中的值。在下面的例子中，我们会读取一个 Pug 模板，并让它显示一个包含两个消息的上下文的数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pug = <span class="built_in">require</span>(<span class="string">'pug'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> template = fs.readFileSync(<span class="string">'./template.pug'</span>);</span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    messages: [</span><br><span class="line">        <span class="string">'You have logged in successfully.'</span>,</span><br><span class="line">        <span class="string">'Welcome back!'</span></span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> fn = pug.compile(template);</span><br><span class="line"><span class="built_in">console</span>.log(fn(context));</span><br></pre></td></tr></table></figure>
+<p>Pug 模板的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- messages.forEach( message =&gt;&#123;</span><br><span class="line">    p= message</span><br><span class="line">- &#125;)</span><br></pre></td></tr></table></figure>
+<p>运行代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<p>输出这样的结果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>You have logged in successfully.<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Welcome back!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Pug 中还有一种非 JavaScript 形式的循环：each 语句。用 each 语句很容易实现数组和对象属性的循环遍历.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">each message in messages</span><br><span class="line">    p= message</span><br></pre></td></tr></table></figure>
+<p>对象属性的循环遍历可以稍有不同，例如这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">each value, key in post</span><br><span class="line"> div </span><br><span class="line">  strong #&#123;key&#125;</span><br><span class="line">  p value</span><br></pre></td></tr></table></figure>
+<h5 id="3-条件化渲染的模板代码"><a href="#3-条件化渲染的模板代码" class="headerlink" title="3.条件化渲染的模板代码"></a><strong>3.条件化渲染的模板代码</strong></h5><p>有时候要根据数据的取值来决定显示那些模板，下面是一个条件判断的例子。几乎有一半的可能会输出 script 标签：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-n = Math.round(Math.random() * 1) + 1;</span><br><span class="line">-if (n === 1)&#123;</span><br><span class="line">    script</span><br><span class="line">        alert(&apos;You win&apos;);</span><br><span class="line">- &#125;</span><br></pre></td></tr></table></figure>
+<p>条件判断在 Pug 中还有中更简洁的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-n = Math.round(Math.random()* 1) + 1 ;</span><br><span class="line"> if n === 1</span><br><span class="line">  script</span><br><span class="line">   alert(&apos;You win!&apos;);</span><br></pre></td></tr></table></figure>
+<p>如果条件判断是取反的，比如 if (n!=1)，可以用 Pug 的 unless 关键字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-n Math.round(Math.random() *1) + 1;</span><br><span class="line"> unless n === 1</span><br><span class="line">  script</span><br><span class="line">   alert(&apos;You win!&apos;);</span><br></pre></td></tr></table></figure>
+<h5 id="4-在-Pug-中使用-case-语句"><a href="#4-在-Pug-中使用-case-语句" class="headerlink" title="4.在 Pug 中使用 case 语句"></a><strong>4.在 Pug 中使用 case 语句</strong></h5><p>Pug 中还有类似 switch 的 非 JavaScript 条件判断：case 语句。case 语句可以根据模板的场景指定输出。</p>
+<p>在下面的例子中，我们用 case 语句以三种不同的方式显示博客的搜索结果。如果没有结果，则显示一条提示消息。如果找到一篇文章，则显示它的详细内容。如果很多篇则用 each 语句循环遍历所有文章，显示它们的标题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case results.length</span><br><span class="line"> when 0</span><br><span class="line">  p No results found</span><br><span class="line"> when 1</span><br><span class="line">  p= results[0].content</span><br><span class="line"> default </span><br><span class="line">  each result in results</span><br><span class="line">    p= result.title</span><br></pre></td></tr></table></figure>
+<h4 id="组织-Pug-模板"><a href="#组织-Pug-模板" class="headerlink" title="组织 Pug 模板"></a><strong>组织 Pug 模板</strong></h4><p>模板定义好了之后，要知道该如何组织。跟程序逻辑一样，你肯定也不想让模板文件过大，一个模板应该对应一个构件：一个页面，一个边栏或者是一篇博客文章的内容；</p>
+<p>下面会介绍几种机制，让几个不同模板文件一起渲染内容：</p>
+<ul>
+<li>用模板继承组织多个模板文件</li>
+<li>用块前缀/追加实现布局</li>
+<li>模板包含</li>
+<li>借助 mixins 重用模板逻辑</li>
+</ul>
+<h5 id="1-用模板继承组织多个模板文件"><a href="#1-用模板继承组织多个模板文件" class="headerlink" title="1.用模板继承组织多个模板文件"></a><strong>1.用模板继承组织多个模板文件</strong></h5><p>模板继承是多个模板文件的结构化处理方法之一。从概念上讲，模板就像面向对象编程中的类。一个模板可以有扩展另一个，然后这个再扩展另一个，只要合理，使用多少层都可以。</p>
+<p>下面有个例子，用模板继承提供一个简单的 HTML 包装器，可以用来包装 页面内容。创建存放 Pug文件的 templates目录。在其中创建模板文件 layout.pug</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        block title</span><br><span class="line">    body </span><br><span class="line">        block content</span><br></pre></td></tr></table></figure>
+<p>layout.pug 中有 HTML 页面的基本定义和两个模板块。模板块可以由后裔模板提供内容的占位符。layout.pug 的后裔模板可以在 title 模板块的位置设置页面标题，在 content 模板块的位置设定页面的内容要显示什么。</p>
+<p>接下来创建 page.pug。这个模板会提供 title 和 content 块的具体内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        block title</span><br><span class="line">    body </span><br><span class="line">        block content</span><br></pre></td></tr></table></figure>
+<p>继承的实际用法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pug = <span class="built_in">require</span>(<span class="string">'pug'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> templateFile = <span class="string">'./templates/page.pug'</span></span><br><span class="line"><span class="keyword">const</span> iterTemplate = fs.readFileSync(templateFile);</span><br><span class="line"><span class="keyword">const</span> context = &#123;</span><br><span class="line">    messages: [</span><br><span class="line">        <span class="string">'You have logged in successfully.'</span>,</span><br><span class="line">        <span class="string">'Welcome back!'</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> iterFn = pug.compile(</span><br><span class="line">    iterTemplate,</span><br><span class="line">    &#123; <span class="attr">filename</span>: templateFile &#125;</span><br><span class="line">)</span><br><span class="line"><span class="built_in">console</span>.log(iterFn(context));</span><br></pre></td></tr></table></figure>
+<h5 id="2-用块前缀-块追加实现布局"><a href="#2-用块前缀-块追加实现布局" class="headerlink" title="2.用块前缀/块追加实现布局"></a><strong>2.用块前缀/块追加实现布局</strong></h5><p>在前面那个例子中，layout.pug 中的模板没有内容，因此在 page.pug 模板中设定内容简答直接。如果被继承的模板中没有内容，也可以用块前缀和块追加，在原有内容基础上构建新内容而不是替换它。</p>
+<p>下面的 layout.pug 模板中加了一个模板块 scripts ，其中有加载 jq 的 script 标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        - const baseUrl =  &quot;http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/&quot; </span><br><span class="line">        block title</span><br><span class="line">        block style</span><br><span class="line">        block scripts</span><br><span class="line">    body </span><br><span class="line">        block content</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">extends layout.pug</span><br><span class="line"></span><br><span class="line">block title</span><br><span class="line">  title Messages</span><br><span class="line"></span><br><span class="line">block style</span><br><span class="line">  link(rel=&quot;stylesheet&quot;, href=baseUrl+&quot;themes/flick/jquery-ui.css&quot;)</span><br><span class="line"></span><br><span class="line">block scripts</span><br><span class="line">  script(src=baseUrl+&quot;jquery-ui.js&quot;)</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  - count = 0</span><br><span class="line">  each message in messages</span><br><span class="line">    - count = count + 1</span><br><span class="line">    script.</span><br><span class="line">      $(() =&gt; &#123;</span><br><span class="line">        $(&quot;#message_#&#123;count&#125;&quot;).dialog(&#123;</span><br><span class="line">          height: 140,</span><br><span class="line">          modal: true</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    != &apos;&lt;div id=&quot;message_&apos; + count + &apos;&quot;&gt;&apos; + message + &apos;&lt;/div&gt;&apos;</span><br></pre></td></tr></table></figure>
+<p>但模板继承不是唯一一种集成多个模板的办法，还可以使用 include Pug 命令。</p>
+<h5 id="3-模板包含"><a href="#3-模板包含" class="headerlink" title="3.模板包含"></a><strong>3.模板包含</strong></h5><p>Pug 中的 include 命令式另一个组织模板的工具。这个命令会引入另一个模板中内容。</p>
+<p>如果在前面那个 layout.pug 中加入一个 include footer 就会引入这个模板</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">    head</span><br><span class="line">        - const baseUrl =  &quot;http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/&quot; </span><br><span class="line">        block title</span><br><span class="line">        block style</span><br><span class="line">        block scripts</span><br><span class="line">    body </span><br><span class="line">        block content</span><br><span class="line">        include footer</span><br></pre></td></tr></table></figure>
+<p>可以 用 include 往 layout.pug 中添加关于网站的消息或设计元素。也可以指定文件的扩展名，包含 非 Pug 文件（比如 include xxx.html）</p>
+<h5 id="4-借助-mixin-重用模板逻辑"><a href="#4-借助-mixin-重用模板逻辑" class="headerlink" title="4.借助 mixin 重用模板逻辑"></a><strong>4.借助 mixin 重用模板逻辑</strong></h5><p>尽管 Pug 的 include 命令能帮我们引入之前创建的 代码块，但要构建在程序和不同页面之间共享的可重用功能库时，它就帮不上忙了。Pug  为此专门提供了 mixin 命令，可以用来定制可重用的 Pug 代码块。</p>
+<p>mixin 模拟的是 JavaScript 函数。它跟函数一样，可以带参数，并且这些参数可以用来生成 Pug 代码。</p>
+<p>比如说要处理下面这种数据结构：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const students = [</span><br><span class="line">     &#123; name: 'Rick LaRue', age: 23 &#125;, </span><br><span class="line">     &#123; name: 'Sarah Cathands', age: 25 &#125;, </span><br><span class="line">     &#123; name: 'Bob Dobbs', age: 37 &#125; </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>如果要把对象中提取出来的属性输出到 HTML 列表中，那么可以像下面这样定义一个 mixin:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mixin list_object_property(objects, property)</span><br><span class="line">	ul</span><br><span class="line">    	each object <span class="keyword">in</span> objects</span><br><span class="line">			li = object[property]</span><br></pre></td></tr></table></figure>
+<p>然后就可以像下面这样借助 mixin显示这些数据了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mixin list_object_property(students,<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure>
+<p>借助模板继承、include 语句和 mixin，你可以轻松地重用展示标记，防止模板文件变得过于冗长</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>模板引擎可以把程序逻辑和展示组织好</li>
+<li>EJS、Hogan.js 和 Pug 都是 Node 中比较流行的模板引擎。</li>
+<li>EJS 支持简单的流程控制，以及转义或非转义插值。</li>
+<li>Hogan.js 是简单的模板引擎，不支持流程控制，但支持 Mustache 标准</li>
+<li>Pug 是比较复杂的模板语言，可以输出 HTML，但不用尖括号。</li>
+<li>Pug 用空格表示标签的嵌套关系</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-17-NodeJs2-Part7.html" title="Nodejs实战 —— Web 程序的模板">http://laibh.top/2018-12-17-NodeJs2-Part7.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-08-NodeJs2-Part6.html" rel="next" title="Nodejs实战 —— 深入了解Connect 和 Express">
+                <i class="fa fa-chevron-left"></i> Nodejs实战 —— 深入了解Connect 和 Express
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/前端面试题目汇总摘录-JS 编程篇.html" rel="prev" title="前端面试题目汇总摘录（JS 编程篇）">
+                前端面试题目汇总摘录（JS 编程篇） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-程序的模板"><span class="nav-number">1.</span> <span class="nav-text">Web 程序的模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用模板保持代码的整洁性"><span class="nav-number">1.1.</span> <span class="nav-text">用模板保持代码的整洁性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模板实战"><span class="nav-number">1.1.1.</span> <span class="nav-text">模板实战</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#不用模板"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">不用模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用模块渲染-HTML"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">用模块渲染 HTML </span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Embedded-JavaScript-的模板"><span class="nav-number">1.2.</span> <span class="nav-text">Embedded JavaScript 的模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建模板"><span class="nav-number">1.2.1.</span> <span class="nav-text">创建模板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符转义"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">字符转义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将-EJS-集成到你的程序中"><span class="nav-number">1.2.2.</span> <span class="nav-text">将 EJS 集成到你的程序中</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存-EJS-模板"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">缓存 EJS 模板</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在客户端程序中使用-EJS"><span class="nav-number">1.2.3.</span> <span class="nav-text">在客户端程序中使用 EJS </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Mustache-模板语言与-Hogan"><span class="nav-number">1.3.</span> <span class="nav-text">使用 Mustache 模板语言与 Hogan</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建模板-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">创建模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mustache-标签"><span class="nav-number">1.3.2.</span> <span class="nav-text">Mustache 标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-显示简单的值"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">1.显示简单的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-区块：多个值的循环遍历"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2.区块：多个值的循环遍历</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-反向区块：值不存在时的默认-HTML"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3.反向区块：值不存在时的默认 HTML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-区块-lambda-区块内的定制功能"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">4.区块 lambda: 区块内的定制功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-子模板：在其他模板中重用模板"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">5.子模板：在其他模板中重用模板</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#微调-Hogan"><span class="nav-number">1.3.3.</span> <span class="nav-text">微调 Hogan </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-Pug-做模板"><span class="nav-number">1.4.</span> <span class="nav-text">用 Pug 做模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pug-基础知识"><span class="nav-number">1.4.1.</span> <span class="nav-text">Pug 基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-指定标签的属性"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1.指定标签的属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-用块扩展把他组织好"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2.用块扩展把他组织好</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-将数据纳入到-Pug-模板中"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.将数据纳入到 Pug 模板中</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pug-模板中的逻辑"><span class="nav-number">1.4.2.</span> <span class="nav-text">Pug 模板中的逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-在Pug模板中使用-JavaScript"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1.在Pug模板中使用 JavaScript </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-循环遍历对象和数组"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2.循环遍历对象和数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-条件化渲染的模板代码"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3.条件化渲染的模板代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-在-Pug-中使用-case-语句"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">4.在 Pug 中使用 case 语句</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组织-Pug-模板"><span class="nav-number">1.4.3.</span> <span class="nav-text">组织 Pug 模板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-用模板继承组织多个模板文件"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">1.用模板继承组织多个模板文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-用块前缀-块追加实现布局"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">2.用块前缀/块追加实现布局</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-模板包含"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">3.模板包含</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-借助-mixin-重用模板逻辑"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">4.借助 mixin 重用模板逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

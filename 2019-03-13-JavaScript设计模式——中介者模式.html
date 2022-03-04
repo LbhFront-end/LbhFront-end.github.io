@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript设计模式," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——中介者模式中介者模式的作用就是接触对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都">
+<meta name="keywords" content="JavaScript设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript设计模式——中介者模式">
+<meta property="og:url" content="http://laibh.top/2019-03-13-JavaScript设计模式——中介者模式.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——中介者模式中介者模式的作用就是接触对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript设计模式——中介者模式">
+<meta name="twitter:description" content="学习曾探的 《JavaScript设计模式与开发实践》并做记录。 书籍的购买链接 设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。 通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。 JavaScript设计模式——中介者模式中介者模式的作用就是接触对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2019-03-13-JavaScript设计模式——中介者模式.html"/>
+
+
+
+
+
+  <title>JavaScript设计模式——中介者模式 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2019-03-13-JavaScript设计模式——中介者模式.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JavaScript设计模式——中介者模式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T11:30:00+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019-03-13-JavaScript设计模式——中介者模式.html" class="leancloud_visitors" data-flag-title="JavaScript设计模式——中介者模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,214
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习曾探的 《JavaScript设计模式与开发实践》并做记录。</p>
+<p><a href="http://www.ituring.com.cn/book/1632/">书籍的购买链接</a></p>
+<p>设计模式的定义是：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。</p>
+<p>通俗一点，设计模式是在某种场合下对某个问题的一种解决方案。是给面向对象软件开发中的一些好的设计取个名字。</p>
+<h1 id="JavaScript设计模式——中介者模式"><a href="#JavaScript设计模式——中介者模式" class="headerlink" title="JavaScript设计模式——中介者模式"></a>JavaScript设计模式——中介者模式</h1><p>中介者模式的作用就是接触对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都通过中介者对象来通信，而不是互相引用，所以当一个对象发生变化时，只需要通知中介者对象就可以了。中介者使各对象之间耦合松散，而且可以独立地改变它们之间的交互。中介者模式使得网状的多对多关系变成了简单的一对多的关系。</p>
+<h2 id="现实中的中介者"><a href="#现实中的中介者" class="headerlink" title="现实中的中介者"></a>现实中的中介者</h2><p><strong>1.机场指挥塔</strong></p>
+<p>中介者也被称为调停者，我们想象一下机场的指挥塔，如果没有指挥塔的存在，每一架飞机要和方圆 100 公里内的所有飞机通信，才能确定航线以及飞行状况，后果是不可想象的。现实中的情况是，每架飞机都只需要和指挥塔通信。指挥塔作为调停者，知道每一架飞机的飞行状况，所以它可以安排所有飞机的起降时间，及时做出航线调整。</p>
+<p><strong>2.博彩公司</strong></p>
+<p>打麻将的人经常遇到这样的问题，打了几局之后开始计算钱，A 自摸了两把，B 杠了三次，C 点炮一次给 D，谁应该给谁多少钱已经很难计算清楚，而这还是在只有 4 个人参与的情况下。<br>在世界杯期间购买足球彩票，如果没有博彩公司作为中介，上千万的人一起计算赔率和输赢绝对是不可能实现的事情。有了博彩公司作为中介，每个人只需和博彩公司发生关联，博彩公司会根据所有人的投注情况计算好赔率，彩民们赢了钱就从博彩公司拿，输了钱就交给博彩公司。</p>
+<h2 id="例子——泡泡堂游戏"><a href="#例子——泡泡堂游戏" class="headerlink" title="例子——泡泡堂游戏"></a>例子——泡泡堂游戏</h2><p>先定义一个玩家构造函数，它有三个简单的原型方法：Play.prototype.win、Play.prototype.lose 以及表示玩家死亡的 Play.prototype.die</p>
+<p>因为玩家的数量是2，所有当其中一个玩家死亡的时候游戏便结束，同时通知它的对手胜利。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Player</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.enemy = <span class="literal">null</span>; </span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.win = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">' won'</span>);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.lose = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">' lost'</span>);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.die = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.lose();</span><br><span class="line">    <span class="keyword">this</span>.enemy.win();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建两个玩家对象：</span></span><br><span class="line"><span class="keyword">const</span> player1 = <span class="keyword">new</span> Player(<span class="string">'皮蛋'</span>);</span><br><span class="line"><span class="keyword">const</span> player2 = <span class="keyword">new</span> Player(<span class="string">'小乖'</span>);</span><br><span class="line"><span class="comment">// 给玩家互相设置敌人：</span></span><br><span class="line">player1.enemy = player2;</span><br><span class="line">player2.enemy = player1;</span><br><span class="line"><span class="comment">// 当玩家 player1 被泡泡炸死的时候，只需要调用这一句代码便完成了一局游戏：</span></span><br><span class="line">player1.die();</span><br></pre></td></tr></table></figure>
+<h3 id="为游戏增加队伍"><a href="#为游戏增加队伍" class="headerlink" title="为游戏增加队伍"></a>为游戏增加队伍</h3><p>因为玩家数量变多，用下面的方式来设置队友和敌人无疑很低效</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">player1.partners= [player1,player2,player3,player4]; </span><br><span class="line">player1.enemies = [player5,player6,player7,player8]; </span><br><span class="line">Player5.partners= [player5,player6,player7,player8]; </span><br><span class="line">Player5.enemies = [player1,player2,player3,player4];</span><br></pre></td></tr></table></figure>
+<p>所以我们定义一个数组 players 来保存所有的玩家，在创建玩家之后，循环 players 来给每个玩家设置队友和敌人：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> players = [];</span><br><span class="line"><span class="comment">// 改写构造函数，使得每个玩家都增加一些属性，分别是队友列表，敌人列表，玩家当前状态，角色名字已经玩家所在队伍的颜色</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Player</span>(<span class="params">name,teamColor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.partners = [];</span><br><span class="line">    <span class="keyword">this</span>.enemies = [];</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'live'</span>;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.teamColor = teamColor;</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.win = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'winner: '</span>+<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.lose = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'loser: '</span>+<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.die = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> all_dead = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'dead'</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,partner;partner = <span class="keyword">this</span>.partners[i++];)&#123; <span class="comment">// 遍历队友列表</span></span><br><span class="line">        <span class="keyword">if</span>(partner.state !== <span class="string">'dead'</span>)&#123; <span class="comment">// 如果还有一个队友没有死亡，则游戏还没有失败</span></span><br><span class="line">            all_dead = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(all_dead === <span class="literal">true</span>)&#123; <span class="comment">// 如果队友全部死亡</span></span><br><span class="line">        <span class="keyword">this</span>.lose();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,partner;partner = <span class="keyword">this</span>.partners[i++];)&#123; <span class="comment">// 通知所有队友玩家游戏失败</span></span><br><span class="line">            partner.lose();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,enemy;enemy = <span class="keyword">this</span>.enemies[i++];)&#123; <span class="comment">// 通知所有敌人游戏胜利</span></span><br><span class="line">            enemy.win();</span><br><span class="line">        &#125;				</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定一个工厂来创建玩家：</span></span><br><span class="line"><span class="keyword">const</span> playerFactory = <span class="function"><span class="keyword">function</span>(<span class="params">name,teamColor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> newPlayer = <span class="keyword">new</span> Player(name,teamColor); <span class="comment">// 创建新玩家</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,player;player = players[i++];)&#123; <span class="comment">// 通知所有玩家，有新角色加入</span></span><br><span class="line">        <span class="keyword">if</span>(player.teamColor === newPlayer.teamColor)&#123; <span class="comment">// 如果是同一队的玩家</span></span><br><span class="line">            player.partners.push(newPlayer); <span class="comment">// 互相添加到队友列表</span></span><br><span class="line">            newPlayer.partners.push(player)</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            player.enemies.push(newPlayer);  <span class="comment">// 互相添加到敌人列表</span></span><br><span class="line">            newPlayer.enemies.push(player);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    players.push(newPlayer);</span><br><span class="line">    <span class="keyword">return</span> newPlayer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> player1 = playerFactory( <span class="string">'皮蛋'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player2 = playerFactory( <span class="string">'小乖'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player3 = playerFactory( <span class="string">'宝宝'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player4 = playerFactory( <span class="string">'小强'</span>, <span class="string">'red'</span> ), </span><br><span class="line"></span><br><span class="line">player5 = playerFactory( <span class="string">'黑妞'</span>, <span class="string">'blue'</span> ),</span><br><span class="line">player6 = playerFactory( <span class="string">'葱头'</span>, <span class="string">'blue'</span> ),</span><br><span class="line">player7 = playerFactory( <span class="string">'胖墩'</span>, <span class="string">'blue'</span> ), </span><br><span class="line">player8 = playerFactory( <span class="string">'海盗'</span>, <span class="string">'blue'</span> );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">player1.die();</span><br><span class="line">player2.die();</span><br><span class="line">player3.die();</span><br><span class="line">player4.die();</span><br><span class="line"><span class="comment">// loser: 小强</span></span><br><span class="line"><span class="comment">// loser: 皮蛋</span></span><br><span class="line"><span class="comment">// loser: 小乖</span></span><br><span class="line"><span class="comment">// loser: 宝宝</span></span><br><span class="line"><span class="comment">// winner: 黑妞</span></span><br><span class="line"><span class="comment">// winner: 葱头</span></span><br><span class="line"><span class="comment">// winner: 胖墩</span></span><br><span class="line"><span class="comment">// winner: 海盗</span></span><br></pre></td></tr></table></figure>
+<h3 id="玩家增多带来的困扰"><a href="#玩家增多带来的困扰" class="headerlink" title="玩家增多带来的困扰"></a>玩家增多带来的困扰</h3><p>现在我们已经可以随意地为游戏增加玩家或者队伍，但问题是，每个玩家和其他玩家都是紧紧耦合在一起的。在此段代码中，每个玩家对象都有两个属性，this.partners 和 this.enemies，用来保存其他玩家对象的引用。当每个对象的状态发生改变，比如角色移动、吃到道具或者死亡时，都必须要显式地遍历通知其他对象。</p>
+<p>在这个例子中只创建了 8 个玩家，或许还没有对你产生足够多的困扰，而如果在一个大型网络游戏中，画面里有成百上千个玩家，几十支队伍在互相厮杀。如果有一个玩家掉线，必须从所有其他玩家的队友列表和敌人列表中都移除这个玩家。游戏也许还有解除队伍和添加到别的队伍的功能，红色玩家可以突然变成蓝色玩家，这就不再仅仅是循环能够解决的问题了。面对这样的需求，我们上面的代码可以迅速进入投降模式</p>
+<h3 id="用中介者模式改造"><a href="#用中介者模式改造" class="headerlink" title="用中介者模式改造"></a>用中介者模式改造</h3><p>首先依然是定义 Player 构造函数和 player 对象的原型方法噶，在 player 对象的这些原型方法中，不再负责具体的执行逻辑，而是把操作转交给中介者对象，我们把中介者对象命名为 playerDirector:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Player</span>(<span class="params">name,teamColor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.teamColor = teamColor;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'live'</span>;</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.win = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'winner: '</span>+<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.lose = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'loser: '</span>+<span class="keyword">this</span>.name);</span><br><span class="line">&#125;		</span><br><span class="line">Player.prototype.die = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.state = <span class="string">'dead'</span>;</span><br><span class="line">    playerDirector.reciveMessage(<span class="string">'playerDead'</span>,<span class="keyword">this</span>); <span class="comment">// 给中介者发送消息，玩家死亡</span></span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.remove = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    playerDirector.reciveMessage(<span class="string">'removePlayer'</span>,<span class="keyword">this</span>); <span class="comment">// 给中介者发送消息，移除一个玩家</span></span><br><span class="line">&#125;</span><br><span class="line">Player.prototype.changeTeam = <span class="function"><span class="keyword">function</span>(<span class="params">color</span>)</span>&#123;</span><br><span class="line">    playerDirector.reciveMessage(<span class="string">'changeTeam'</span>,<span class="keyword">this</span>,color); <span class="comment">// 给中介者发送消息，玩家换队</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> playerFactory = <span class="function"><span class="keyword">function</span>(<span class="params">name,teamColor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> newPlayer = <span class="keyword">new</span> Player(name,teamColor);</span><br><span class="line">    playerDirector.reciveMessage(<span class="string">'addPlayer'</span>,newPlayer); <span class="comment">// 给中介者发送消息，新增玩家</span></span><br><span class="line">    <span class="keyword">return</span> newPlayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，需要实现这个中介者 PlayerDirector 对象，一般有两种方式。</p>
+<ul>
+<li>利用发布-订阅模式。将 playerDirector 实现为订阅者，各 player 作为发布者，一旦 player 的状态发生改变，便推送信息给 playerDirector ，playerDirector 处理消息后将反馈发送给其他 player</li>
+<li>在 playerDirector 中开发一些接受消息的接口，各 player 可以直接调用该接口来给 playerDirector 发送消息，player 只需传递一个参数给  playerDirector ，这个参数的目的是使得 playerDirector 可以识别发送者。同样，playerDirector 接受消息之后会将处理结果反馈给其他 player。</li>
+</ul>
+<p>这两种方式的实现本质上没有什么区别。在这里使用第二种方式，playerDirector 开发一个对外暴露的接口 recievMessage,负责接收 player 对象发送的消息，而 player 对象发送消息的时候，总是把自身的 this 作为参数发送给 playerDirector ，以便其识别消息来自于哪个玩家的对象，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> playerDirector = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> players = &#123;&#125;, <span class="comment">// 保存所有玩家</span></span><br><span class="line">    operations = &#123;&#125;; <span class="comment">// 中介者可以执行的操作</span></span><br><span class="line"></span><br><span class="line">    operations.addPlayer = <span class="function"><span class="keyword">function</span>(<span class="params">player</span>)</span>&#123; <span class="comment">// 增加玩家</span></span><br><span class="line">        <span class="keyword">const</span> teamColor = player.teamColor;</span><br><span class="line">        players[teamColor] = players[teamColor] || []; <span class="comment">// 如果该颜色的玩家还没有成立队伍，则新成立一个队伍</span></span><br><span class="line">        players[teamColor].push(player);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    operations.removePlayer = <span class="function"><span class="keyword">function</span>(<span class="params">player</span>)</span>&#123; <span class="comment">// 移除玩家</span></span><br><span class="line">        <span class="keyword">const</span> teamColor = player.teamColor,</span><br><span class="line">        teamPlayers = players[teamColor] || [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=teamPlayers.length - <span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(teamPlayers[i] === player)&#123;</span><br><span class="line">                teamPlayers.splice(i,<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;				</span><br><span class="line">    &#125;;</span><br><span class="line">    operations.changeTeam = <span class="function"><span class="keyword">function</span>(<span class="params">player,newTeamCOlor</span>)</span>&#123; <span class="comment">// 玩家换队</span></span><br><span class="line">        operations.removePlayer(player);</span><br><span class="line">        player.teamColor = newTeamCOlor;</span><br><span class="line">        operations.addPlayer(player);</span><br><span class="line">    &#125;;</span><br><span class="line">    operations.playerDead = <span class="function"><span class="keyword">function</span>(<span class="params">player</span>)</span>&#123; <span class="comment">// 玩家死亡</span></span><br><span class="line">        <span class="keyword">const</span> teamColor = player.teamColor,</span><br><span class="line">        teamPlayers = players[teamColor];</span><br><span class="line">        <span class="keyword">let</span> all_dead = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,player;player = teamPlayers[i++];)&#123;</span><br><span class="line">            <span class="keyword">if</span>(player.state !== <span class="string">'dead'</span>)&#123;</span><br><span class="line">                all_dead = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(all_dead)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,player;player = teamPlayers[i++];)&#123;</span><br><span class="line">                player.lose();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">let</span> color <span class="keyword">in</span> players)&#123;</span><br><span class="line">                <span class="keyword">if</span>(color !== teamColor)&#123;</span><br><span class="line">                    <span class="keyword">const</span> teamPlayers = players[color]; <span class="comment">//其他队伍的玩家</span></span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>,player;player = teamPlayers[i++];)&#123;</span><br><span class="line">                        player.win();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">const</span> reciveMessage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> message = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>);</span><br><span class="line">        operations[message].apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        reciveMessage</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">const</span> player1 = playerFactory( <span class="string">'皮蛋'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player2 = playerFactory( <span class="string">'小乖'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player3 = playerFactory( <span class="string">'宝宝'</span>, <span class="string">'red'</span> ), </span><br><span class="line">player4 = playerFactory( <span class="string">'小强'</span>, <span class="string">'red'</span> ), </span><br><span class="line"></span><br><span class="line">player5 = playerFactory( <span class="string">'黑妞'</span>, <span class="string">'blue'</span> ),</span><br><span class="line">player6 = playerFactory( <span class="string">'葱头'</span>, <span class="string">'blue'</span> ),</span><br><span class="line">player7 = playerFactory( <span class="string">'胖墩'</span>, <span class="string">'blue'</span> ), </span><br><span class="line">player8 = playerFactory( <span class="string">'海盗'</span>, <span class="string">'blue'</span> );</span><br><span class="line"></span><br><span class="line">player1.changeTeam( <span class="string">'blue'</span> ); </span><br><span class="line"><span class="comment">// 换队</span></span><br><span class="line"></span><br><span class="line">player1.die();</span><br><span class="line">player2.die();</span><br><span class="line">player3.die();</span><br><span class="line">player4.die();</span><br></pre></td></tr></table></figure>
+<h2 id="例子——购买商品"><a href="#例子——购买商品" class="headerlink" title="例子——购买商品"></a>例子——购买商品</h2><p>假设我们正在编写一个手机购买的页面，在购买流程中，可以选择手机的颜色以及输入购买数量，同时页面中有两个展示区域，分别向用户展示刚刚选择好的颜色和数量。还有一个按钮动态显示下一步的操作，我们需要查询该颜色手机对应的库存，如果库存数量少于这次的购买数量，按钮将被禁用并且显示库存不足，反之按钮可以点击并且显示放入购物车。</p>
+<p>这个需求是非常容易实现的，假设我们已经从后台获取了所有颜色手机的库存量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> goods = &#123; <span class="comment">// 手机库存</span></span><br><span class="line">    <span class="string">'red'</span>:<span class="number">3</span>,</span><br><span class="line">    <span class="string">'blue'</span>:<span class="number">6</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>页面布局需要：</p>
+<ul>
+<li>下拉选择框 colorSelect </li>
+<li>文本输入框 numberInput </li>
+<li>展示颜色信息 colorInfo </li>
+<li>展示购买数量信息 numberInfo </li>
+<li>决定下一步操作的按钮 nextBtn </li>
+</ul>
+<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h3><p>HTML代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">选择颜色：<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"colorSelect"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>请选择<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"red"</span>&gt;</span>红色<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"blue"</span>&gt;</span>蓝色<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">输入购买数量：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"numberInput"</span>&gt;</span></span><br><span class="line">您选择了颜色：<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"colorInfo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">您输入了数量：<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"numberInfo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"nextBtn"</span> <span class="attr">disabled</span>=<span class="string">"true"</span>&gt;</span>请选择手机颜色和购买数量<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>接下来监听 colorSelect 的 onchange 事件函数和 numberInput 的 oninput 事件函数，然后在这两个事件中做出相应处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> colorSelect = <span class="built_in">document</span>.getElementById(<span class="string">'colorSelect'</span>),</span><br><span class="line">numberInput = <span class="built_in">document</span>.getElementById(<span class="string">'numberInput'</span>),</span><br><span class="line">colorInfo = <span class="built_in">document</span>.getElementById(<span class="string">'colorInfo'</span>),</span><br><span class="line">numberInfo = <span class="built_in">document</span>.getElementById(<span class="string">'numberInfo'</span>),</span><br><span class="line">nextBtn = <span class="built_in">document</span>.getElementById(<span class="string">'nextBtn'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> goods =&#123;</span><br><span class="line">    <span class="string">'red'</span>:<span class="number">3</span>,</span><br><span class="line">    <span class="string">'blue'</span>:<span class="number">6</span></span><br><span class="line">&#125;</span><br><span class="line">colorSelect.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> color = <span class="keyword">this</span>.value,</span><br><span class="line">    number = numberInput.value,</span><br><span class="line">    stock = goods[color];</span><br><span class="line">    <span class="built_in">console</span>.log(color);</span><br><span class="line">    colorInfo.innerHTML = color;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">    nextBtn.innerHTML = <span class="string">'放入购物车'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">numberInput.oninput = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> color = colorSelect.value,</span><br><span class="line">    number = <span class="keyword">this</span>.value,</span><br><span class="line">    stock = goods[color];</span><br><span class="line">    numberInfo.innerHTML = number;</span><br><span class="line">    <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">    nextBtn.innerHTML = <span class="string">'放入购物车'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="可能遇到的困难"><a href="#可能遇到的困难" class="headerlink" title="可能遇到的困难"></a>可能遇到的困难</h3><p>虽然目前顺利完成了代码编写，但随之而来的需求改变有可能给我们带来麻烦。假设现在要求去掉 colorInfo 和 numberInfo 这两个展示区域，我们就要分别改动 colorSelect.onchange 和numberInput.onput 里面的代码，因为在先前的代码中，这些对象确实是耦合在一起的。目前我们面临的对象还不算太多，当这个页面里的节点激增到 10 个或者 15 个时，它们之间的联系可能变得更加错综复杂，任何一次改动都将变得很棘手。为了证实这一点，我们假设页面中将新增另外一个下拉选择框，代表选择手机内存。现在我们需要计算颜色、内存和购买数量，来判断 nextBtn 是显示库存不足还是放入购物车。</p>
+<p>首先我们要增加两个 HTML 节点：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">选择颜色：<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"colorSelect"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>请选择<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"red"</span>&gt;</span>红色<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"blue"</span>&gt;</span>蓝色<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">选择内存: <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"memorySelect"</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>请选择<span class="tag">&lt;/<span class="name">option</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"32G"</span>&gt;</span>32G<span class="tag">&lt;/<span class="name">option</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"16G"</span>&gt;</span>16G<span class="tag">&lt;/<span class="name">option</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span> 	</span><br><span class="line">输入购买数量：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"numberInput"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span> </span><br><span class="line">您选择了颜色：<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"colorInfo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span> </span><br><span class="line">您选择了内存: <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"memoryInfo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span> </span><br><span class="line">您输入了数量：<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"numberInfo"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"nextBtn"</span> <span class="attr">disabled</span>=<span class="string">"true"</span>&gt;</span>请选择手机颜色和购买数量<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>接着增加 memorySelect 的onchange 事件函数，改变之前的 colorSelect 和 numberInput事件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> colorSelect = <span class="built_in">document</span>.getElementById(<span class="string">'colorSelect'</span>),</span><br><span class="line">numberInput = <span class="built_in">document</span>.getElementById(<span class="string">'numberInput'</span>),</span><br><span class="line">colorInfo = <span class="built_in">document</span>.getElementById(<span class="string">'colorInfo'</span>),</span><br><span class="line">numberInfo = <span class="built_in">document</span>.getElementById(<span class="string">'numberInfo'</span>),</span><br><span class="line">nextBtn = <span class="built_in">document</span>.getElementById(<span class="string">'nextBtn'</span>),</span><br><span class="line">memorySelect = <span class="built_in">document</span>.getElementById( <span class="string">'memorySelect'</span> ), </span><br><span class="line">memoryInfo = <span class="built_in">document</span>.getElementById( <span class="string">'memoryInfo'</span> );</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> goods =&#123;</span><br><span class="line">    <span class="string">"red|32G"</span>: <span class="number">3</span>, <span class="comment">// 红色 32G，库存数量为 3 </span></span><br><span class="line">    <span class="string">"red|16G"</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="string">"blue|32G"</span>: <span class="number">1</span>, </span><br><span class="line">    <span class="string">"blue|16G"</span>: <span class="number">6</span> </span><br><span class="line">&#125;</span><br><span class="line">colorSelect.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> color = <span class="keyword">this</span>.value,</span><br><span class="line">    memory = memorySelect.value, </span><br><span class="line">    number = numberInput.value,</span><br><span class="line">    stock = goods[color+<span class="string">'|'</span>+memory];</span><br><span class="line">    colorInfo.innerHTML = color;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!memory)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择内存大小'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">    nextBtn.innerHTML = <span class="string">'放入购物车'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">memorySelect.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> color = colorSelect.value,</span><br><span class="line">    memory = <span class="keyword">this</span>.value, </span><br><span class="line">    number = numberInput.value,</span><br><span class="line">    stock = goods[color+<span class="string">'|'</span>+memory];</span><br><span class="line">    memoryInfo.innerHTML = memory;</span><br><span class="line">    <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!memory)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择内存大小'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;			</span><br><span class="line">    <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">    nextBtn.innerHTML = <span class="string">'放入购物车'</span>;</span><br><span class="line">&#125;		</span><br><span class="line">numberInput.oninput = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> color = colorSelect.value,</span><br><span class="line">    memory = memorySelect.value, </span><br><span class="line">    number = <span class="keyword">this</span>.value,</span><br><span class="line">    stock = goods[color+<span class="string">'|'</span>+memory];</span><br><span class="line">    numberInfo.innerHTML = number;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!memory)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请选择内存大小'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">        nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">        nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">    nextBtn.innerHTML = <span class="string">'放入购物车'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们仅仅是增加一个内存的选择条件，就要改变如此多的代码，这是因为在目前的实现中，每个节点对象都是耦合在一起的，改变或者增加任何一个节点对象，都要通知到与其相关的对象。</p>
+<h3 id="引入中介者"><a href="#引入中介者" class="headerlink" title="引入中介者"></a>引入中介者</h3><p>现在我们来引入中介者对象，所有的节点对象只跟中介者通信。当下拉选择框 colorSelect、memorySelect 和文本输入框 numberInput 发生了事件行为时，它们仅仅通知中介者它们被改了，同时把自身当作参数传入中介者，以便中介者辨别是谁发生了改变。剩下的所有事情都交给中介者对象来完成，这样一来，无论是修改还是新增节点，都只需要改动中介者对象里的代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> goods =&#123;</span><br><span class="line">    <span class="string">"red|32G"</span>: <span class="number">3</span>, <span class="comment">// 红色 32G，库存数量为 3 </span></span><br><span class="line">    <span class="string">"red|16G"</span>: <span class="number">0</span>, </span><br><span class="line">    <span class="string">"blue|32G"</span>: <span class="number">1</span>, </span><br><span class="line">    <span class="string">"blue|16G"</span>: <span class="number">6</span> </span><br><span class="line">&#125;		</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mediator = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> colorSelect = <span class="built_in">document</span>.getElementById(<span class="string">'colorSelect'</span>),</span><br><span class="line">    numberInput = <span class="built_in">document</span>.getElementById(<span class="string">'numberInput'</span>),</span><br><span class="line">    colorInfo = <span class="built_in">document</span>.getElementById(<span class="string">'colorInfo'</span>),</span><br><span class="line">    numberInfo = <span class="built_in">document</span>.getElementById(<span class="string">'numberInfo'</span>),</span><br><span class="line">    nextBtn = <span class="built_in">document</span>.getElementById(<span class="string">'nextBtn'</span>),</span><br><span class="line">    memorySelect = <span class="built_in">document</span>.getElementById( <span class="string">'memorySelect'</span> ), </span><br><span class="line">    memoryInfo = <span class="built_in">document</span>.getElementById( <span class="string">'memoryInfo'</span> );</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        changed:<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> color = colorSelect.value,</span><br><span class="line">            memory = memorySelect.value,</span><br><span class="line">            number = numberInput.value,</span><br><span class="line">            stock = goods[color+<span class="string">'|'</span>+memory];</span><br><span class="line">            <span class="keyword">if</span>(obj === colorSelect)&#123; <span class="comment">// 判断是哪个选择框或者是输入框对应赋值</span></span><br><span class="line">                colorInfo.innerHTML = color;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(obj === memorySelect)&#123;</span><br><span class="line">                memoryInfo.innerHTML = memory;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(obj === numberInput)&#123;</span><br><span class="line">                numberInfo.innerHTML = number;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!color)&#123;</span><br><span class="line">                nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">                nextBtn.innerHTML = <span class="string">'请选择手机颜色'</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(!memory)&#123;</span><br><span class="line">                nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">                nextBtn.innerHTML = <span class="string">'请选择内存大小'</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(((number - <span class="number">0</span>)|<span class="number">0</span>) !== number - <span class="number">0</span>)&#123; <span class="comment">//用户输入的购买数量是为正整数</span></span><br><span class="line">                nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">                nextBtn.innerHTML = <span class="string">'请输入正确的购买数量'</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(number &gt; stock)&#123;</span><br><span class="line">                nextBtn.disabled = <span class="literal">true</span>;</span><br><span class="line">                nextBtn.innerHTML = <span class="string">'库存不足'</span>;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            nextBtn.disabled = <span class="literal">false</span>;</span><br><span class="line">            nextBtn.innerHTML = <span class="string">'放入购物车'</span>;					</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件函数</span></span><br><span class="line">colorSelect.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    mediator.changed(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">memorySelect.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    mediator.changed(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">numberInput.onchange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    mediator.changed(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以想象，某天我们又要新增一些跟需求相关的节点，比如 CPU 型号，那我们只需要稍稍改动 mediator 对象即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> goods = &#123; <span class="comment">// 手机库存</span></span><br><span class="line"> <span class="string">"red|32G|800"</span>: <span class="number">3</span>, <span class="comment">// 颜色 red，内存 32G，cpu800，对应库存数量为 3 </span></span><br><span class="line"> <span class="string">"red|16G|801"</span>: <span class="number">0</span>, </span><br><span class="line"> <span class="string">"blue|32G|800"</span>: <span class="number">1</span>, </span><br><span class="line"> <span class="string">"blue|16G|801"</span>: <span class="number">6</span> </span><br><span class="line">&#125;; </span><br><span class="line"><span class="keyword">var</span> mediator = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"> <span class="comment">// 略</span></span><br><span class="line"> <span class="keyword">var</span> cpuSelect = <span class="built_in">document</span>.getElementById( <span class="string">'cpuSelect'</span> ); </span><br><span class="line">     <span class="keyword">return</span> &#123; </span><br><span class="line">         change: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123; </span><br><span class="line">             <span class="comment">// 略</span></span><br><span class="line">             <span class="keyword">var</span> cpu = cpuSelect.value, </span><br><span class="line">             stock = goods[ color + <span class="string">'|'</span> + memory + <span class="string">'|'</span> + cpu ]; </span><br><span class="line">             <span class="keyword">if</span> ( obj === cpuSelect )&#123; </span><br><span class="line">             cpuInfo.innerHTML = cpu; </span><br><span class="line">         &#125; </span><br><span class="line">     <span class="comment">// 略</span></span><br><span class="line">     &#125; </span><br><span class="line"> &#125; </span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>中介者模式是迎合迪米特法则的一种实现。也叫做最少知识原则，是指一个对象应该尽可能少地了解另外的对象。如果对象之间耦合性太高，一个对象发生改变之后，难免会影响其他的对象。而在中介者模式中，对象之间几乎不知道彼此的存在，它们只能通过中介者对象来互相影响对方。</p>
+<p>因此，中介者模式使各个对象之间得以解耦，以中介者和对象之间的一对多关系取代了对象之间网状的多对多的关系。各个对象只需要关注功能的说笑呢，对象之间的交互关系交给了中介者对象来维护。</p>
+<p>不过，中介者模式也存在一些缺点。其中，最大的缺点就是系统中会新增一个中介者对象，因此对象之间交互的复杂性，转移成了中介者对象的复杂性，使得中介者对象经常是巨大的。中介者对象自身往往是一个难以维护的对象。</p>
+<p>我们都知道，毒贩子虽然使吸毒者和制毒者之间的耦合度降低，但毒贩子也要抽走一部分利润。同样，在程序中，中介者对象要占去一部分内存。而且毒贩本身还要防止被警察抓住，因为它了解整个犯罪链条中的所有关系，这表明中介者对象自身往往是一个难以维护的对象。</p>
+<p>中介者模式可以非常方便地对模块或者对象进行解耦，但对象之间并非一定需要解耦。在实际项目中，模块或对象之间有些依赖关系是很正常的。关键在于如何取衡量对象之间的耦合程度。一般来说，如果对象之间 的复杂耦合确实导致调用和维护出现了困难，而且这些耦合度随着项目的变化呈现出来指数增长曲线，那我们就可以考虑用中介者模式来重构代码。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2019-03-13-JavaScript设计模式——中介者模式.html" title="JavaScript设计模式——中介者模式">http://laibh.top/2019-03-13-JavaScript设计模式——中介者模式.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript设计模式/" <i class="fa fa-tag"></i> JavaScript设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-03-12-JavaScript设计模式——职责链模式.html" rel="next" title="JavaScript设计模式——职责链模式">
+                <i class="fa fa-chevron-left"></i> JavaScript设计模式——职责链模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-03-14-JavaScript设计模式——装饰者模式.html" rel="prev" title="JavaScript设计模式——装饰者模式">
+                JavaScript设计模式——装饰者模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript设计模式——中介者模式"><span class="nav-number">1.</span> <span class="nav-text">JavaScript设计模式——中介者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#现实中的中介者"><span class="nav-number">1.1.</span> <span class="nav-text">现实中的中介者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子——泡泡堂游戏"><span class="nav-number">1.2.</span> <span class="nav-text">例子——泡泡堂游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为游戏增加队伍"><span class="nav-number">1.2.1.</span> <span class="nav-text">为游戏增加队伍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#玩家增多带来的困扰"><span class="nav-number">1.2.2.</span> <span class="nav-text">玩家增多带来的困扰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用中介者模式改造"><span class="nav-number">1.2.3.</span> <span class="nav-text">用中介者模式改造</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子——购买商品"><span class="nav-number">1.3.</span> <span class="nav-text">例子——购买商品</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编写代码"><span class="nav-number">1.3.1.</span> <span class="nav-text">编写代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能遇到的困难"><span class="nav-number">1.3.2.</span> <span class="nav-text">可能遇到的困难</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入中介者"><span class="nav-number">1.3.3.</span> <span class="nav-text">引入中介者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

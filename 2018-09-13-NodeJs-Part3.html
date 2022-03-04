@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="主要内容：  编写第一个 Node.js 程序 异步式 I/O 和事件循环 模块和包 调试  Node.js 快速入门Node.js 具有深厚的开源血统，它诞生于托管了许多优秀开源项目的网站—— github。 开始使用 Node.js 编程Hello World打开常用文本编辑器，输入 1console.log(&apos;Hello World&apos;); 文件保存为 helloworld.js ，打开终端，">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好玩的Nodejs —— Node.js快速入门">
+<meta property="og:url" content="http://laibh.top/2018-09-13-NodeJs-Part3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="主要内容：  编写第一个 Node.js 程序 异步式 I/O 和事件循环 模块和包 调试  Node.js 快速入门Node.js 具有深厚的开源血统，它诞生于托管了许多优秀开源项目的网站—— github。 开始使用 Node.js 编程Hello World打开常用文本编辑器，输入 1console.log(&apos;Hello World&apos;); 文件保存为 helloworld.js ，打开终端，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-09-13-NodeJs-Part3-http服务器.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-13-NodeJs-Part3-多线程同步式%20IO.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-13-NodeJs-Part3-单线程异步式%20IO.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-13-NodeJs-Part3-事件循环.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="好玩的Nodejs —— Node.js快速入门">
+<meta name="twitter:description" content="主要内容：  编写第一个 Node.js 程序 异步式 I/O 和事件循环 模块和包 调试  Node.js 快速入门Node.js 具有深厚的开源血统，它诞生于托管了许多优秀开源项目的网站—— github。 开始使用 Node.js 编程Hello World打开常用文本编辑器，输入 1console.log(&apos;Hello World&apos;); 文件保存为 helloworld.js ，打开终端，">
+<meta name="twitter:image" content="http://laibh.top/images/2018-09-13-NodeJs-Part3-http服务器.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-09-13-NodeJs-Part3.html"/>
+
+
+
+
+
+  <title>好玩的Nodejs —— Node.js快速入门 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-09-13-NodeJs-Part3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">好玩的Nodejs —— Node.js快速入门</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T15:31:54+08:00">
+                2018-09-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-09-13-NodeJs-Part3.html" class="leancloud_visitors" data-flag-title="好玩的Nodejs —— Node.js快速入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  8,609
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>主要内容：</p>
+<ul>
+<li>编写第一个 Node.js 程序</li>
+<li>异步式 I/O 和事件循环</li>
+<li>模块和包</li>
+<li>调试</li>
+</ul>
+<h2 id="Node-js-快速入门"><a href="#Node-js-快速入门" class="headerlink" title="Node.js 快速入门"></a>Node.js 快速入门</h2><p>Node.js 具有深厚的开源血统，它诞生于托管了许多优秀开源项目的网站—— github。</p>
+<h3 id="开始使用-Node-js-编程"><a href="#开始使用-Node-js-编程" class="headerlink" title="开始使用 Node.js 编程"></a>开始使用 Node.js 编程</h3><h4 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h4><p>打开常用文本编辑器，输入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'Hello World'</span>);</span><br></pre></td></tr></table></figure>
+<p>文件保存为 helloworld.js ，打开终端，进入文件所在的目录，执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node helloworld.js</span><br></pre></td></tr></table></figure>
+<p>就可以在终端看到输出 Hello World </p>
+<p><code>console</code> 是 Node.js 提供的控制台对象，其中包含了向标准输出写入的操作，如 <code>console.log</code> 、<code>console.error</code></p>
+<h4 id="Node-js-命令行工具"><a href="#Node-js-命令行工具" class="headerlink" title="Node.js 命令行工具"></a>Node.js 命令行工具</h4><p>终端输入 node –help 可以看到详细的帮助信息。</p>
+<blockquote>
+<p>C:\Users\Administrator\Desktop&gt;node –help<br>Usage: node [options][ -e script | script.js | - ] [arguments]<br>      node inspect script.js [arguments]</p>
+<p>Options:<br> -v, –version              print Node.js version<br> -e, –eval script          evaluate script<br> -p, –print                evaluate script and print result<br> -c, –check                syntax check script without executing<br> -i, –interactive          always enter the REPL even if stdin<br>                            does not appear to be a terminal<br> -r, –require              module to preload (option can be repeated)</p>
+<ul>
+<li>script read from stdin (default; interactive mode i<br>f a tty)<br>–inspect[=[host:]port]    activate inspector on host:port<br>(default: 127.0.0.1:9229)<br>–inspect-brk[=[host:]port]<br>activate inspector on host:port<br>and break at start of user script<br>–inspect-port=[host:]port<br>set host:port for inspector<br>–no-deprecation           silence deprecation warnings<br>–trace-deprecation        show stack traces on deprecations<br>–throw-deprecation        throw an exception on deprecations<br>–pending-deprecation      emit pending deprecation warnings<br>–no-warnings              silence all process warnings<br>–napi-modules             load N-API modules (no-op - option<br>kept for compatibility)<br>–abort-on-uncaught-exception<br>aborting instead of exiting causes a<br>core file to be generated for analysis<br>–trace-warnings           show stack traces on process warnings<br>–redirect-warnings=file<br>write warnings to file instead of<br>stderr<br>–trace-sync-io            show stack trace when use of sync IO<br>is detected after the first tick<br>–force-async-hooks-checks<br>enables checks for async_hooks<br>–trace-events-enabled     track trace events<br>–trace-event-categories   comma separated list of trace event<br>categories to record<br>–track-heap-objects       track heap object allocations for heap snapshots<br>–prof-process             process v8 profiler output generated<br>using –prof<br>–zero-fill-buffers        automatically zero-fill all newly allocated<br>Buffer and SlowBuffer instances<br>–v8-options               print v8 command line options<br>–v8-pool-size=num         set v8’s thread pool size<br>–tls-cipher-list=val      use an alternative default TLS cipher list<br>–use-bundled-ca           use bundled CA store (default)<br>–use-openssl-ca           use OpenSSL’s default CA store<br>–openssl-config=file      load OpenSSL configuration from the<br>specified file (overrides<br>OPENSSL_CONF)<br>–icu-data-dir=dir         set ICU data load path to dir<br>(overrides NODE_ICU_DATA)<br>–preserve-symlinks        preserve symbolic links when resolving<br>–experimental-modules     experimental ES Module support<br>and caching modules</li>
+</ul>
+<p>Environment variables:<br>NODE_DEBUG                   ‘,’-separated list of core modules<br>                            that should print debug information<br>NODE_DISABLE_COLORS          set to 1 to disable colors in the REPL<br>NODE_EXTRA_CA_CERTS          path to additional CA certificates<br>                            file<br>NODE_ICU_DATA                data path for ICU (Intl object) data<br>NODE_NO_WARNINGS             set to 1 to silence process warnings<br>NODE_NO_HTTP2                set to 1 to suppress the http2 module<br>NODE_OPTIONS                 set CLI options in the environment<br>                            via a space-separated list<br>NODE_PATH                    ‘;’-separated list of directories<br>                            prefixed to the module search path<br>NODE_PENDING_DEPRECATION     set to 1 to emit pending deprecation<br>                            warnings<br>NODE_REPL_HISTORY            path to the persistent REPL history<br>                            file<br>NODE_REDIRECT_WARNINGS       write warnings to path instead of<br>                            stderr<br>OPENSSL_CONF                 load OpenSSL configuration from file</p>
+<p>Documentation can be found at <a href="https://nodejs.org/">https://nodejs.org/</a></p>
+</blockquote>
+<p>其中显示了 node 的用法，运行 Node.js 程序的基本方法就是执行 node script.js ，其中  script.js 是脚本的文件名。</p>
+<p>除了直接运行脚本文件外， node –help  显示的使用方法中说明了另一种输出 Hello<br>World 的方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> node -e <span class="string">"console.log('Hello World');"</span></span></span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+<p>我们可以把要执行的语句作为 node -e  的参数直接执行。</p>
+<h5 id="使用-node-的-REPL-模式"><a href="#使用-node-的-REPL-模式" class="headerlink" title="使用  node 的 REPL 模式"></a>使用  node 的 REPL 模式</h5><p>REPL （Read-eval-print loop），即输入—求值—输出循环,运行无参数的 node  将会启动一个 JavaScript的交互式 shell：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> node</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> console.log(<span class="string">'1'</span>);</span></span><br><span class="line">ReferenceError: console is not defined</span><br></pre></td></tr></table></figure>
+<p>进入 REPL 模式以后，会出现一个“ &gt; ”提示符提示你输入命令，输入后按回车，Node.js<br>将会解析并执行命令。如果你执行了一个函数，那么 REPL 还会在下面显示这个函数的返回值.</p>
+<p>如果你输入了一个错误的指令，REPL 则会立即显示错误并输出调用栈。在任何时候，连续按两次 Ctrl + C 即可推出Node.js 的 REPL 模式。</p>
+<h4 id="建立-HTTP-服务器"><a href="#建立-HTTP-服务器" class="headerlink" title="建立 HTTP 服务器"></a>建立 HTTP 服务器</h4><p>Node.js 是为网络而诞生的平台，但又与 ASP、PHP 有很大的不同，究竟不同在哪里呢？</p>
+<p>PHP 架构是一种“浏览器 - HTTP 服务器 - PHP 解释器”的组织方式。而 Node.js 则是 “浏览器 - Node”</p>
+<p>创建一个HTTP 服务器，建立一个名为 app.js 的文件，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">  res.writeHead(<span class="number">200</span>, &#123;<span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>&#125;);</span><br><span class="line">  res.write(<span class="string">'&lt;h1&gt;Node.js&lt;/h1&gt;'</span>);</span><br><span class="line">  res.end(<span class="string">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"HTTP server is listening at port 3000."</span>);</span><br></pre></td></tr></table></figure>
+<p>接下来运行 <code>node app.js</code> 命令，打开浏览器访问 <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a> 就可以看到以下内容</p>
+<p><img src="/images/2018-09-13-NodeJs-Part3-http服务器.png" alt="建立 HTTP 服务器"></p>
+<p>用 Node.js 实现的最简单的 HTTP 服务器就这样诞生了。这个程序调用了 Node.js 提供的http  模块，对所有 HTTP 请求答复同样的内容并监听 3000 端口。在终端中运行这个脚本时，我们会发现它并不像 Hello World 一样结束后立即退出，而是一直等待，直到按下 Ctrl +C 才会结束。这是因为 listen  函数中创建了事件监听器，使得 Node.js 进程不会退出事件循环。</p>
+<h5 id="小技巧——使用-supervisor"><a href="#小技巧——使用-supervisor" class="headerlink" title="小技巧——使用 supervisor"></a>小技巧——使用 supervisor</h5><p>upervisor 监视你对代码的改动，并自动重启 Node.js，但是浏览器还是得手动刷新。使用方法很简单，首先使用 npm 安装 supervisor：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> supervisor app.js </span></span><br><span class="line">Running node-supervisor with</span><br><span class="line">  program 'app.js'</span><br><span class="line">  --watch '.'</span><br><span class="line">  --extensions 'node,js'</span><br><span class="line">  --exec 'node'</span><br><span class="line"></span><br><span class="line">Starting child process with 'node app.js'</span><br><span class="line">Watching directory 'C:\Users\Administrator\Desktop' for changes.</span><br><span class="line">Press rs for restarting the process.</span><br><span class="line">HTTP server is listening at port 3000.</span><br></pre></td></tr></table></figure>
+<p>当代码变化的时候，运行的脚本会被终止，然后重新启动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crashing child</span><br><span class="line">Starting child process with 'node app.js'</span><br><span class="line">HTTP server is listening at port 3000.</span><br></pre></td></tr></table></figure>
+<p>supervisor 这个小工具可以解决开发中的调试问题。</p>
+<h3 id="异步式-I-O-与事件式编程"><a href="#异步式-I-O-与事件式编程" class="headerlink" title="异步式 I/O 与事件式编程"></a>异步式 I/O 与事件式编程</h3><p>Node.js 最大的特点就是异步式 I/O（或者非阻塞 I/O）与事件紧密结合的编程模式。这种模式与传统的同步式 I/O 线性的编程思路有很大的不同，因为控制流很大程度上要靠事件和回调函数来组织，一个逻辑要拆分为若干个单元。</p>
+<h4 id="阻塞与线程"><a href="#阻塞与线程" class="headerlink" title="阻塞与线程"></a>阻塞与线程</h4><p>什么是阻塞（block）呢？线程在执行中如果遇到磁盘读写或网络通信（统称为 I/O 操作），通常要耗费较长的时间，这时操作系统会剥夺这个线程的 CPU 控制权，使其暂停执行，同时将资源让给其他的工作线程，这种线程调度方式称为 阻塞。当 I/O 操作完毕时，操作系统将这个线程的阻塞状态解除，恢复其对CPU的控制权，令其继续执行。这种 I/O 模式就是通常的同步式 I/O（Synchronous I/O）或阻塞式 I/O （Blocking I/O）。</p>
+<p>相应地，异步式 I/O （Asynchronous I/O）或非阻塞式 I/O （Non-blocking I/O）则针对所有 I/O 操作不采用阻塞的策略。当线程遇到 I/O 操作时，不会以阻塞的方式等待 I/O 操作的完成或数据的返回，而只是将 I/O 请求发送给操作系统，继续执行下一条语句。当操作系统完成 I/O 操作时，以事件的形式通知执行 I/O 操作的线程，线程会在特定时候处理这个事件。为了处理异步 I/O，线程必须有事件循环，不断地检查有没有未处理的事件，依次予以处理。</p>
+<p>阻塞模式下，一个线程只能处理一项任务，要想提高吞吐量必须通过多线程。而非阻塞模式下，一个线程永远在执行计算操作，这个线程所使用的 CPU 核心利用率永远是 100%，I/O 以事件的方式通知。在阻塞模式下，多线程往往能提高系统吞吐量，因为一个线程阻塞时还有其他线程在工作，多线程可以让 CPU 资源不被阻塞中的线程浪费。而在非阻塞模式下，线程不会被 I/O 阻塞，永远在利用 CPU。多线程带来的好处仅仅是在多核 CPU 的情况下利用更多的核，而Node.js的单线程也能带来同样的好处。这就是为什么 Node.js 使用了单线程、非阻塞的事件编程模式。</p>
+<p>假设我们有一项工作，可以分为两个计算部分和一个 I/O 部分，I/O 部分占的时间比计算多得多（通常都是这样）。如果我们使用阻塞 I/O，那么要想获得高并发就必须开启多个线程。而使用异步式 I/O时，单线程即可胜任。</p>
+<p><img src="/images/2018-09-13-NodeJs-Part3-多线程同步式 IO.png" alt="多线程同步式 IO"></p>
+<p><img src="/images/2018-09-13-NodeJs-Part3-单线程异步式 IO.png" alt="单线程异步式 IO"></p>
+<p>单线程时间驱动的异步式 I/O 比传统的多线程阻塞式 I/O 究竟好在哪里？</p>
+<p>简而言之。异步式 I/O 就是少了多线程的开销，对操作系统来说，创建一个线程的代价是十分昂贵的，需要给它分配内存，列入调度，同时在线程切换的时候还要执行内存换页，CPU 的缓存被清空，切换回来的时候还要重新从内存中读取信息，破坏了数据的局限性（基于多线程的模型也有相应的解决方案，如轻量级线程（lightweight thread）等。事件驱动的单线程异步模型与多线程同步模型到底谁更好是一件非常有争议的事情，因为尽管消耗资源，后者的吞吐率并不比前者低。）。</p>
+<p>当然异步式编程的缺点在于不符合人们一把你的程序设计思维，容易让控制流变得晦涩难懂，给编码和调试都带来了不小困难。</p>
+<p>下表比较了同步式 I/O 和异步式 I/O 的特点。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">同步I/O（阻塞式）</th>
+<th style="text-align:center">异步式I/O（非阻塞式）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">利用多线程提供吞吐量</td>
+<td style="text-align:center">单线程即可实现高吞吐量</td>
+</tr>
+<tr>
+<td style="text-align:center">通过事件片分割和线程调度利用多核 CPU</td>
+<td style="text-align:center">通过功能划分利用多核 CPU</td>
+</tr>
+<tr>
+<td style="text-align:center">需要操作由操作系统调度多线程使用多核 CPU</td>
+<td style="text-align:center">可以将单进程绑定到单核 CPU</td>
+</tr>
+<tr>
+<td style="text-align:center">难以充分利用 CPU 资源</td>
+<td style="text-align:center">可以充分利用 CPU 资源</td>
+</tr>
+<tr>
+<td style="text-align:center">内存轨迹大、数据局部性弱</td>
+<td style="text-align:center">内存轨迹小、数据局部性强</td>
+</tr>
+<tr>
+<td style="text-align:center">符合线性的编程思维</td>
+<td style="text-align:center">不符合传统编程思维</td>
+</tr>
+</tbody>
+</table>
+<h4 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h4><p>Node.js 中如何使用异步的方式读取一个文件，例子如下：</p>
+<p>file.text</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你好呀！</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// readfile.js</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'file.text'</span>, <span class="string">'utf-8'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>);</span><br></pre></td></tr></table></figure>
+<p>运行结果如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">end</span><br><span class="line">你好呀！</span><br></pre></td></tr></table></figure>
+<p>Node.js 也提供了同步读取文件的 API </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//readfilesync.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> data = fs.readFileSync(<span class="string">'file.text'</span>, <span class="string">'utf-8'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(data);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>);</span><br></pre></td></tr></table></figure>
+<p>运行的结果与上一个有点不一样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> node readfilesync.js</span></span><br><span class="line">你好呀！</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>同步式读取文件时，将文件名作为参数传入 <code>fs.readFileSync</code> 函数，阻塞等待读取完成后，将文件的内容作为函数的返回值赋给 data 变量，接下来，控制台输出 data 的值，最后输出 end。</p>
+<p>异步式读取文件则是 end 先被输出。<code>fs.readFile</code> 接受了三个参数，第一个是文件名，第二个是编码方式，第三个是一个函数，我们称这个函数为回调函数。 JavaScript 支持匿名的函数定义方式。这种定义方式在 JavaScript 程序中极为普遍，与下面这种定义方式实现的功能是一致的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//readfilecallback.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readfilecallback</span>(<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">fs.readFile(<span class="string">'file.text'</span>, <span class="string">'utf-8'</span>, readFileCallBack);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'end'</span>);</span><br></pre></td></tr></table></figure>
+<p><code>fs.readFile</code> 调用时所做的工作只是将异步式 I/O 请求发送给了操作系统，然后立即返回并执行了后面的语句，执行完以后进入事件循环监听事件。当 fs 接受到了 I/O 请求完成的事件时，事件循环会主动调用函数以后完成后续工作。因此我们会先看到 end ，然后再看到 文件中的内容。</p>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>Node.js 所有异步 I/O 操作在完成时都会发送一个事件到事件队列。事件由 <code>EventEmitter</code> 对象提供。<code>fs.readFile</code> 和 <code>http.createServer</code> 的回调函数都是通过 <code>EventEmitter</code> 来实现的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// event.js </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</span><br><span class="line"><span class="keyword">var</span> event = <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">event.on(<span class="string">'some_event'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'some_event occured.'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  event.emit(<span class="string">'some_event'</span>);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>运行这段代码，1秒后控制台输出了 some_event occured. 。其原理是  event  对象注册了事件  some_event  的一个监听器，然后我们通过  setTimeout  在1000毫秒以后向event  对象发送事件  some_event ，此时会调用 some_event 的监听器。</p>
+<h5 id="Node-js-的事件循环机制"><a href="#Node-js-的事件循环机制" class="headerlink" title="Node.js 的事件循环机制"></a>Node.js 的事件循环机制</h5><p>Node.js 在什么时候会进入事件循环呢？</p>
+<p>Node.js 程序由事件循环开始，直到事件循环结束，所有逻辑都是事件的回调函数，所以 Node.js 始终在事件循环中，程序入口就是事件循环第一个事件的回调函数。事件的回调函数在执行的过程中，可能会发出 I/O 请求或直接发射（emit）事件，执行完毕后再返回事件循环，事件循环会检查事件队列中有没有未处理的事件，直到程序结束。下图说明了事件循环的原理。</p>
+<p><img src="/images/2018-09-13-NodeJs-Part3-事件循环.png" alt="事件循环"></p>
+<p>与其他语言不同的是，Node.js 没有显式的事件循环。Node.js 的事件循环对开发者不可见，由 libev  库实现。 libev支持多种类型的事件，如  ev_io 、 ev_timer 、 ev_signal 、 ev_idle  等，在 Node.js 中均被EventEmitter  封装。 libev 事件循环的每一次迭代，在 Node.js 中就是一次 Tick， libev 不断检查是否有活动的、可供检测的事件监听器，直到检测不到时才退出事件循环，进程结束。</p>
+<h3 id="模块和包"><a href="#模块和包" class="headerlink" title="模块和包"></a>模块和包</h3><p>模块（Module）和包（Package）是 Node.js 最重要的支柱。开发一个具有一定规模的程序不可能只用一个文件，通常需要把各个功能拆分、封装，然后组合起来，模块正是为了实现这种方式而诞生的。在浏览器 JavaScript 中，脚本模块的拆分和组合通常使用 HTML 的script  标签来实现。Node.js 提供了 require  函数来调用其他模块，而且模块都是基于文件的，机制十分简单。<br>Node.js 的模块和包机制的实现参照了 CommonJS 的标准，但并未完全遵循。不过两者的区别并不大。只有试图制作一个除了支持 Node.js之外还要支持其他平台的模块或包的时候才需要仔细研究。通常，两者没有直接冲突的地方。</p>
+<p>我们经常把 Node.js 的模块和包相提并论，因为模块和包是没有本质区别的，两个概念也时常混用。如果要辨析，那么可以把包理解成是实现了某个功能模块的集合，用于发布和维护。对使用者来说，模块和包的区别是透明的，因此经常不作区分。</p>
+<h4 id="什么是模块"><a href="#什么是模块" class="headerlink" title="什么是模块"></a>什么是模块</h4><p>模块是 Node.js 应用程序的基本组成部分，文件和模块是一一对应的。换言之，一个Node.js 文件就是一个模块，这个文件可能是 JavaScript 代码、JSON 或者编译过的 C/C++ 扩展。</p>
+<p>在前面例子中，曾经用到了  var http = require(‘http’)， 其中 http是 Node.js 的一个核心模块，其内部是用 C++ 实现的，外部用 JavaScript 封装。我们通过require 函数获取了这个模块，然后才能使用其中的对象。</p>
+<h4 id="创建及加载模块"><a href="#创建及加载模块" class="headerlink" title="创建及加载模块"></a>创建及加载模块</h4><h5 id="创建模块"><a href="#创建模块" class="headerlink" title="创建模块"></a>创建模块</h5><p>Node.js 中，一个文件就是一个模块，Node.js提供了 <code>exports</code> 和 <code>require</code> 两个对象，其中 <code>exports</code> 是模块公开的接口， <code>require</code> 用于从外部获取一个模块的即可欧，即获取模块的 <code>exports</code> 对象。</p>
+<p>创建一个 module.js 文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> name;</span><br><span class="line">exports.setName = <span class="function"><span class="keyword">function</span>(<span class="params">thyName</span>) </span>&#123;</span><br><span class="line">  name = thyName;</span><br><span class="line">&#125;</span><br><span class="line">exports.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在同一目录下，创建一个 getmodule.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// getmodule.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myModule = <span class="built_in">require</span>(<span class="string">'./module'</span>);</span><br><span class="line">myModule.setName(<span class="string">'NodeJs'</span>);</span><br><span class="line">myModule.sayHello();</span><br></pre></td></tr></table></figure>
+<p>运行node getmodule.js，结果是：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello NodeJs</span><br></pre></td></tr></table></figure>
+<p>在以上示例中，module.js 通过  <code>exports</code> 对象把 <code>setName</code>  和  <code>sayHello</code> 作为模块的访问接口，在 getmodule.js 中通过  <code>require(&#39;./module&#39;)</code> 加载这个模块，然后就可以直接访问 module.js 中  exports 对象的成员函数了。</p>
+<p>这种接口封装方式比许多语言要简洁得多，同时也不失优雅，未引入违反语义的特性，符合传统的编程逻辑。在这个基础上，我们可以构建大型的应用程序，npm 提供的上万个模块都是通过这种简单的方式搭建起来的。</p>
+<h5 id="单次加载"><a href="#单次加载" class="headerlink" title="单次加载"></a>单次加载</h5><p>上面这个例子有点类似于创建一个对象，但实际上和对象又有本质的区别，因为 <code>require</code> 不会重复加载模块，也就是说无论调用多少次  <code>require</code>， 获得的模块都是同一个。在 getmodule.js 的基础上稍作修改：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//loadmodule.js</span></span><br><span class="line"><span class="keyword">var</span> hello1 = <span class="built_in">require</span>(<span class="string">'./module'</span>);</span><br><span class="line">hello1.setName(<span class="string">'NAME 1'</span>);</span><br><span class="line"><span class="keyword">var</span> hello2 = <span class="built_in">require</span>(<span class="string">'./module'</span>);</span><br><span class="line">hello2.setName(<span class="string">'NAME 2'</span>);</span><br><span class="line">hello1.sayHello();</span><br></pre></td></tr></table></figure>
+<p>运行后发现输出结果是  NAME 2 ，这是因为变量  hello1 和  hello2 指向的是同一个实例，因此  hello1.setName  的结果被 hello2.setName 覆盖，最终输出结果是由后者决定的。</p>
+<h5 id="覆盖-exports"><a href="#覆盖-exports" class="headerlink" title="覆盖  exports"></a>覆盖  exports</h5><p>有时候我们只是想把一个对象封装到模块中，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//singleobject.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hello</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name;</span><br><span class="line">  <span class="keyword">this</span>.setName = <span class="function"><span class="keyword">function</span>(<span class="params">thyName</span>) </span>&#123;</span><br><span class="line">    name = thyName;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">this</span>.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + name);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">exports.Hello = Hello;</span><br></pre></td></tr></table></figure>
+<p>此时我们在其他文件中需要通过 require(‘./singleobject’).Hello  来获取Hello  对象，这略显冗余，可以用下面方法稍微简化：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//hello.js</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Hello</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> name;</span><br><span class="line">  <span class="keyword">this</span>.setName = <span class="function"><span class="keyword">function</span>(<span class="params">thyName</span>) </span>&#123;</span><br><span class="line">    name = thyName;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">this</span>.sayHello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello '</span> + name);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = Hello;</span><br></pre></td></tr></table></figure>
+<p>这样就可以直接获得这个对象了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//gethello.js</span></span><br><span class="line"><span class="keyword">var</span> Hello = <span class="built_in">require</span>(<span class="string">'./hello'</span>);</span><br><span class="line">hello = <span class="keyword">new</span> Hello();</span><br><span class="line">hello.setName(<span class="string">'NAME 3'</span>);</span><br><span class="line">hello.sayHello();</span><br></pre></td></tr></table></figure>
+<p>注意，模块接口的唯一变化是使用  module.exports = Hello 代替了  exports.Hello=Hello 。在外部引用该模块时，其接口对象就是要输出的  Hello 对象本身，而不是原先的<code>exports</code> 。</p>
+<p>事实上， exports  本身仅仅是一个普通的空对象，即 {} ，它专门用来声明接口，本<br>质上是通过它为模块闭包的内部建立了一个有限的访问接口。因为它没有任何特殊的地方，所以可以用其他东西来代替，如上面例子中的 Hello  对象。</p>
+<blockquote>
+<p>不可以通过对  exports 直接赋值代替对  module.exports 赋值。exports 实际上只是一个和  module.exports 指向同一个对象的变量，它本身会在模块执行结束后释放，但  module  不会，因此只能通过指定module.exports  来改变访问接口。</p>
+</blockquote>
+<h4 id="创建包"><a href="#创建包" class="headerlink" title="创建包"></a>创建包</h4><p>包是在模块基础上更深一步的抽象，Node.js 的包类似于 C/C++ 的函数库或者 Java/.Net 的类库。它将某个独立的功能封装起来，用于发布、更新、依赖管理和版本控制。Node.js 根据 CommonJS 规范实现了包机制，开发了 npm  来解决包的发布和获取需求。</p>
+<p>Node.js 的包是一个目录，其中包含了一个 JSON 格式的包说明文件 package.json 。严格符合 CommonJS 规范的包应该具备以下特征。</p>
+<ul>
+<li>package.json 必须在包的目录下；</li>
+<li>二进制文件应该在 bin 目录下；</li>
+<li>JavaScript 代码应该在 lib 目录下</li>
+<li>文档应该在 doc 目录下</li>
+<li>单元测试应该在 test 目录下</li>
+</ul>
+<p>Node.js 对包的要求并没有这么严格。只要顶层目录下有一个 package.json，并符合一些规范即可。当然为了提高兼容性，还是建议在制作包的时候，严格遵守 CommonJS 规范。</p>
+<h5 id="作为文件夹的模块"><a href="#作为文件夹的模块" class="headerlink" title="作为文件夹的模块"></a>作为文件夹的模块</h5><p>模块与文件是一一对应的。文件不仅可以是 JavaScript 代码或二进制代码，还可以是一个文件夹。最简单的包，就是一个作为文件夹的模块。下面我们来看一个例子，建立一个叫做 somepackage  的文件夹，在其中创建 index.js，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//somepackage/index.js</span></span><br><span class="line"></span><br><span class="line">exports.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello.'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 somepackage 之外建立 getpackage.js 内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// getpackage.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> somePackage = <span class="built_in">require</span>(<span class="string">'./somepackage'</span>);</span><br><span class="line">somePackage.hello();</span><br></pre></td></tr></table></figure>
+<p>运行 node getpackage.js，控制台将输出结果 Hello. 。</p>
+<p>使用这种方法可以把文件夹封装为一个模块，即所谓的包。包通常是一些模块的集合，在模块的基础上提供了更高层的抽象，相当于提供了一些固定接口的函数库。通过定制package.json，我们可以创建更复杂、更完善、更符合规范的包用于发布。</p>
+<h5 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h5><p>在somepackage 文件夹下，创建一个叫做 package.json 的文件，内容如下:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"main"</span>: <span class="string">"./lib/interface.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将 index.js 重命名为 interface.js 并放入 lib 文件夹下面。以同样的方式再次调用这个<br>包，依然可以正常使用。</p>
+<p>Node.js 在调用某个包时，会首先检查包中 <code>package.json</code> 文件的 <code>main</code>  字段，将其作为包的接口模块，如果 <code>package.json</code> 或 <code>main</code> 字段不存在，会尝试寻找 i<code>ndex.js</code> 或 <code>index.node</code> 作为包的接口。</p>
+<p><code>package.json</code> 是 CommonJS 规定的用来描述包的文件，完全符合规范的 <code>package.json</code> 文件应该含有以下字段。</p>
+<ul>
+<li>name：包的名称，必须是唯一的，由小写英文、数字和下划线组成，不能包含空格。</li>
+<li>description：包的简要说明。</li>
+<li>version：符合语义化版本识别规范的版本字符串。</li>
+<li>keywords：关键字数组，通常用于搜索、</li>
+<li>maintainers：维护者数组，每个元素要包含 name、email（可选）、web（可选）字段。</li>
+<li>contributions：贡献者数组，格式和 maintainers 相同。包的作者应该是贡献者数组的第一个元素。</li>
+<li>bugs：提交 bug 的地址，可以是网址或者是电子邮件地址。</li>
+<li>license：许可证数组，每个元素要包含 type（许可证的名称）和 url （链接到许可证文本的地址）子段。</li>
+<li>respositories：仓库托管地址数组，每个元素要包含 type （仓库的类型，如 git）、url（仓库的地址）和 path（相对于仓库的路径，可选）字段。</li>
+<li>dependencies：包的依赖，一个关联数组，由包名称和版本号组成。</li>
+</ul>
+<p>下面是一个完全符合 CommonJS 规范的 package.json 示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"mypackage"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"Sample package for CommonJS. This package demonstrates the required elements of a CommonJS package."</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.7.0"</span>,</span><br><span class="line">  <span class="attr">"keywords"</span>: [</span><br><span class="line">    <span class="string">"package"</span>,</span><br><span class="line">    <span class="string">"example"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"maintainers"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Bill Smith"</span>,</span><br><span class="line">    <span class="attr">"email"</span>: <span class="string">"bills@example.com"</span>,</span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"contributors"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"BYVoid"</span>,</span><br><span class="line">    <span class="attr">"web"</span>: <span class="string">"http://www.byvoid.com/"</span></span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"bugs"</span>: &#123;</span><br><span class="line">    <span class="attr">"mail"</span>: <span class="string">"dev@example.com"</span>,</span><br><span class="line">    <span class="attr">"web"</span>: <span class="string">"http://www.example.com/bugs"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"licenses"</span>: [&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"GPLv2"</span>,</span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"http://www.example.org/licenses/gpl.html"</span></span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"repositories"</span>: [&#123;</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"git"</span>,</span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"http://github.com/BYVoid/mypackage.git"</span></span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"webkit"</span>: <span class="string">"1.2"</span>,</span><br><span class="line">    <span class="attr">"ssl"</span>: &#123;</span><br><span class="line">      <span class="attr">"gnutls"</span>: [<span class="string">"1.0"</span>, <span class="string">"2.0"</span>],</span><br><span class="line">      <span class="attr">"openssl"</span>: <span class="string">"0.9.8"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Node-js-包管理器"><a href="#Node-js-包管理器" class="headerlink" title="Node.js 包管理器"></a>Node.js 包管理器</h4><p>Node.js包管理器，即 <code>npm</code> 是 Node.js 官方提供的包管理工具，它已经成了 Node.js 包的标准发布平台，用于 Node.js 包的发布、传播、依赖控制。<code>npm</code> 提供了命令行工具，使你可以方便地下载、安装、升级、删除包，也可以让你作为开发者发布并维护包。</p>
+<h5 id="获取一个包"><a href="#获取一个包" class="headerlink" title="获取一个包"></a>获取一个包</h5><p>使用 <code>npm</code> 安装包的命令格式为：</p>
+<blockquote>
+<p>npm [install/i][package_name]</p>
+</blockquote>
+<p>例如你要安装 express ，可以在命令行运行：</p>
+<blockquote>
+<p>$ npm install express</p>
+</blockquote>
+<p>或者：</p>
+<blockquote>
+<p>$ npm i express</p>
+</blockquote>
+<p>express  安装成功之后被放置在当前目录的 node_modules 子目录下。npm 在获取 express  的时候还将自动解析其依赖，并获取 express 依赖的 mime 、 mkdirp 、qs 和  connect 。</p>
+<h5 id="本地模式和全局模式"><a href="#本地模式和全局模式" class="headerlink" title="本地模式和全局模式"></a>本地模式和全局模式</h5><p><code>npm</code> 在默认情况下会从<a href="http://npmjs.org搜索或下载包，将包安装到当前目录的">http://npmjs.org搜索或下载包，将包安装到当前目录的</a> <code>node_modules</code> 子目录下。</p>
+<p>在使用 <code>npm</code> 安装包的时候，有两种模式：本地模式和全局模式。默认情况下我们使用  <code>npm install</code>  命令就是采用本地模式，即把包安装到当前目录的  <code>node_modules</code> 子目录下。Node.js 的  <code>require</code> 在加载模块时会尝试搜寻 <code>node_modules</code> 子目录，因此使用 <code>npm</code> 本地模式安装的包可以直接被引用。</p>
+<p><code>npm</code> 还有另一种不同的安装模式被成为全局模式，使用方法为：</p>
+<blockquote>
+<p>npm [install/i] -g [package_name]</p>
+</blockquote>
+<p>与本地模式的不同之处就在于多了一个参数  <code>-g</code> 。</p>
+<p>为什么要使用全局模式呢？多数时候并不是因为许多程序都有可能用到它，为了减少多重副本而使用全局模式，而是因为本地模式不会注册  PATH 环境变量。</p>
+<p>我们安装 <code>supervisor</code> 是为了在命令行中运行它，假如直接运行 supervisor script.js，这时就需要在  PATH 环境变量中注册 <code>supervisor</code>。<code>npm</code> 本地模式仅仅是把包安装到 <code>node_modules</code> 子目录下，其中的 <code>bin</code> 目录没有包含在 PATH  环境变量中，不能直接在命令行中调用。而当使用全局模式安装时，<code>npm</code> 会将包安装到系统目录，譬如/usr/local/lib/node_modules/，同时 <code>package.json</code> 文件中 <code>bin</code> 字段包含的文件会被链接到 /usr/local/bin/。/usr/local/bin/ 是在 PATH 环境变量中默认定义的，因此就可以直接在命令行中运行 supervisor script.js 命令了。</p>
+<p>使用全局模式安装的包并不能直接在 JavaScript 文件中用  <code>require</code> 获得，因为  <code>require</code> 不会搜索 /usr/local/lib/node_modules/。</p>
+<p>本地模式和全局模式的特点</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:center">可通过 require 使用</th>
+<th style="text-align:center">注册 PATH</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">本地模式</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">全局模式</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+<p>总而言之，要把某个包作为工程运行时的一部分时，通过本地模式获取，如果要在命令行下使用，则使用全局模式安装。</p>
+<h5 id="创建全局链接"><a href="#创建全局链接" class="headerlink" title="创建全局链接"></a>创建全局链接</h5><p><code>npm</code> 提供了一个有趣的命令 <code>npm link</code>， 它的功能是在本地包和全局包之间创建符号链<br>接。使用全局模式安装的包不能直接通过  <code>require</code> 使用，但通过  <code>npm link</code> 命令可以打破这一限制。举个例子，我们已经通过  <code>npm install -g express</code> 安装了  <code>express</code> ，这时在工程的目录下运行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm link express</span></span><br><span class="line">./node_modules/express -&gt; /usr/local/lib/node_modules/express</span><br></pre></td></tr></table></figure>
+<p>可以在 node_modules 子目录中发现一个指向安装到全局的包的符号链接。通过这种方法，我们就可以把全局包当本地包来使用了。(npm link 命令不支持 Windows。)</p>
+<h5 id="包的发布"><a href="#包的发布" class="headerlink" title="包的发布"></a>包的发布</h5><p><code>npm</code> 可以非常方便地发布一个包，比 pip、gem、pear 要简单得多。在发布之前，首先<br>需要让我们的包符合 <code>npm</code> 的规范，<code>npm</code> 有一套以 <code>CommonJS</code> 为基础包规范，但与 <code>CommonJS</code><br>并不完全一致，其主要差别在于必填字段的不同。通过使用  <code>npm init</code> 可以根据交互式问答<br>产生一个符合标准的 package.json，例如创建一个名为 byvoidmodule 的目录，然后在这个<br>目录中运行 <code>npm init</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm init</span></span><br><span class="line">Package name: (byvoidmodule) byvoidmodule</span><br><span class="line">Description: A module</span><br><span class="line">for learning perpose.</span><br><span class="line">Package version: (0.0 .0) 0.0 .1</span><br><span class="line">Project homepage: (none) http: //www.byvoid.com/</span><br><span class="line">Project git repository: (none)</span><br><span class="line">Author name: BYVoid</span><br><span class="line">Author email: (none) byvoid.kcp @gmail.com</span><br><span class="line">Author url: (none) http: //www.byvoid.com/</span><br><span class="line">Main module / entry point: (none)</span><br><span class="line">Test command: (none)</span><br><span class="line">What versions of node does it run on ? (~0.6 .10)</span><br><span class="line">About to write to / home / byvoid / byvoidmodule / package.json &#123;</span><br><span class="line">"author": "BYVoid &lt;byvoid.kcp@gmail.com&gt; (http://www.byvoid.com/)",</span><br><span class="line">"name": "byvoidmodule",</span><br><span class="line">"description": "A module for learning perpose.",</span><br><span class="line">"version": "0.0.1",</span><br><span class="line">"homepage": "http://www.byvoid.com/",</span><br><span class="line">"repository": &#123;</span><br><span class="line">  "url": ""</span><br><span class="line">&#125;,</span><br><span class="line">"engines": &#123;</span><br><span class="line">  "node": "~0.6.12"</span><br><span class="line">&#125;,</span><br><span class="line">"dependencies": &#123;&#125;,</span><br><span class="line">"devDependencies": &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Is this ok ? (yes) yes</span><br></pre></td></tr></table></figure>
+<p>这样就在 byvoidmodule 目录中生成一个符合 npm 规范的 package.json 文件。创建一个<br>index.js 作为包的接口，一个简单的包就制作完成了。在发布前，我们还需要获得一个账号用于今后维护自己的包，使用  npm adduser  根据提示输入用户名、密码、邮箱，等待账号创建完成。完成后可以使用  npm whoami  测验是否已经取得了账号。</p>
+<p>接下来，在 package.json 所在目录下运行 npm publish ，稍等片刻就可以完成发布了。打开浏览器，访问 <a href="http://search.npmjs.org/">http://search.npmjs.org/</a> 就可以找到自己刚刚发布的包了。现在我们可以在计算机上使用  npm install byvoidmodule  命令来安装它。</p>
+<p>如果你的包将来有更新，只需要在 package.json 文件中修改  version  字段，然后重新使用 npm publish 命令就行了。如果你对已发布的包不满意（比如我们发布的这个毫无意义的包），可以使用  npm unpublish 命令来取消发布。</p>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>写程序时免不了遇到 bug，而当 bug 发生以后，除了抓耳挠腮之外，一个常用的技术是单步调试。Node.js 的调试功能正是由 V8 提供的，保持了一贯的高效和方便的特性。</p>
+<p>那么如何使用 Node.js 内置的工具和第三方模块来进行单步调试？</p>
+<h5 id="命令行调试"><a href="#命令行调试" class="headerlink" title="命令行调试"></a>命令行调试</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// debug.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="string">'world'</span>;</span><br><span class="line"><span class="keyword">var</span> c = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello '</span> + x + a);</span><br><span class="line">&#125;;</span><br><span class="line">c(b);</span><br></pre></td></tr></table></figure>
+<p>在命令行下执行 node debug debug.js ，将会启动调试工具：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop&gt;node debug debug.js</span><br><span class="line">(node:12120) [DEP0068] DeprecationWarning: `node debug` is deprecated. Please us</span><br><span class="line">e `node inspect` instead.</span><br><span class="line">&lt; Debugger listening on ws://127.0.0.1:9229/7df244e0-68fc-4469-8e55-fdff7dbbb0ed</span><br><span class="line"></span><br><span class="line">&lt; For help see https://nodejs.org/en/docs/inspector</span><br><span class="line">Break on start in debug.js:1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 1 (<span class="keyword">function</span> (exports, require, module, __filename, __dirname) &#123; var a = 1;</span></span><br><span class="line">  2 var b = 'world';</span><br><span class="line">  3 var c = function(x) &#123;</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<p>这样就打开了一个 Node.js 的调试终端，用一些基本的命令进行单步跟踪调试.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命 令</th>
+<th>功 能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">run</td>
+<td>执行脚本，在第一行暂停</td>
+</tr>
+<tr>
+<td style="text-align:left">restart</td>
+<td>重新执行脚本</td>
+</tr>
+<tr>
+<td style="text-align:left">cont, c</td>
+<td>继续执行，直到遇到下一个断点</td>
+</tr>
+<tr>
+<td style="text-align:left">next, n</td>
+<td>单步执行</td>
+</tr>
+<tr>
+<td style="text-align:left">step, s</td>
+<td>单步执行并进入函数</td>
+</tr>
+<tr>
+<td style="text-align:left">out, o</td>
+<td>从函数中步出</td>
+</tr>
+<tr>
+<td style="text-align:left">setBreakpoint(), sb()</td>
+<td>在当前行设置断点</td>
+</tr>
+<tr>
+<td style="text-align:left">setBreakpoint(‘f()’), sb(…)</td>
+<td>在函数f的第一行设置断点</td>
+</tr>
+<tr>
+<td style="text-align:left">setBreakpoint(‘script.js’, 20), sb(…)</td>
+<td>在 script.js 的第20行设置断点</td>
+</tr>
+<tr>
+<td style="text-align:left">setBreakpoint(‘script.js’, 20), sb(…)</td>
+<td>显示当前执行到的前后5行代码</td>
+</tr>
+<tr>
+<td style="text-align:left">clearBreakpoint, cb(…)</td>
+<td>显示当前执行到的前后5行代码</td>
+</tr>
+<tr>
+<td style="text-align:left">backtrace, bt</td>
+<td>显示当前执行到的前后5行代码</td>
+</tr>
+<tr>
+<td style="text-align:left">list(5)</td>
+<td>显示当前执行到的前后5行代码</td>
+</tr>
+<tr>
+<td style="text-align:left">watch(expr)</td>
+<td>把表达式 expr 加入监视列表</td>
+</tr>
+<tr>
+<td style="text-align:left">unwatch(expr)</td>
+<td>把表达式 expr 从监视列表移除</td>
+</tr>
+<tr>
+<td style="text-align:left">watchers</td>
+<td>显示监视列表中所有的表达式和值</td>
+</tr>
+<tr>
+<td style="text-align:left">repl</td>
+<td>在当前上下文打开即时求值环境</td>
+</tr>
+<tr>
+<td style="text-align:left">kill</td>
+<td>终止当前执行的脚本</td>
+</tr>
+<tr>
+<td style="text-align:left">scripts</td>
+<td>显示当前已加载的所有脚本</td>
+</tr>
+<tr>
+<td style="text-align:left">version</td>
+<td>显示 V8 的版本</td>
+</tr>
+</tbody>
+</table>
+<p>下面是简单的实例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\Desktop&gt;node debug debug.js</span><br><span class="line">(node:30052) [DEP0068] DeprecationWarning: `node debug` is deprecated. Please us</span><br><span class="line">e `node inspect` instead.</span><br><span class="line">&lt; Debugger listening on ws://127.0.0.1:9229/faddd156-7d49-4731-85c5-562a3b718eb7</span><br><span class="line"></span><br><span class="line">&lt; For help see https://nodejs.org/en/docs/inspector</span><br><span class="line">Break on start in debug.js:1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 1 (<span class="keyword">function</span> (exports, require, module, __filename, __dirname) &#123; var a = 1;</span></span><br><span class="line">  2 var b = 'world';</span><br><span class="line">  3 var c = function(x) &#123;</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> n</span></span><br><span class="line">break in debug.js:1</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 1 (<span class="keyword">function</span> (exports, require, module, __filename, __dirname) &#123; var a = 1;</span></span><br><span class="line">  2 var b = 'world';</span><br><span class="line">  3 var c = function(x) &#123;</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> sb(<span class="string">'debug.js'</span>,4)</span></span><br><span class="line">  1 (function (exports, require, module, __filename, __dirname) &#123; var a = 1;</span><br><span class="line">  2 var b = 'world';</span><br><span class="line">  3 var c = function(x) &#123;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 4   console.log(<span class="string">'hello '</span> + x + a);</span></span><br><span class="line">  5 &#125;;</span><br><span class="line">  6 c(b);</span><br><span class="line">  7 &#125;);</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> c</span></span><br><span class="line">break in debug.js:4</span><br><span class="line">  2 var b = 'world';</span><br><span class="line">  3 var c = function(x) &#123;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 4   console.log(<span class="string">'hello '</span> + x + a);</span></span><br><span class="line">  5 &#125;;</span><br><span class="line">  6 c(b);</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> repl</span></span><br><span class="line">Press Ctrl + C to leave debug repl</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> x</span></span><br><span class="line">'world'</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> a + 1</span></span><br><span class="line">2</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> c</span></span><br><span class="line">&lt; hello world1</span><br><span class="line">&lt; Debugger attached.</span><br><span class="line">&lt; Waiting for the debugger to disconnect...</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<h5 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h5><p>V8 提供的调试功能是基于 TCP 协议的，因此 Node.js 可以轻松地实现远程调试。在命令行下使用以下两个语句之一可以打开调试服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node --debug [= port ] script.js</span><br><span class="line">node --debug-brk [= port ] script.js</span><br></pre></td></tr></table></figure>
+<p>node –debug  命令选项可以启动调试服务器，默认情况下调试端口是 5858，也可以使用  –debug=1234  指定调试端口为 1234。使用 –debug  选项运行脚本时，脚本会正常执行，但不会暂停，在执行过程中调试客户端可以连接到调试服务器。如果要求脚本暂停执行等待客户端连接，则应该使用  –debug-brk 选项。这时调试服务器在启动后会立刻暂停执行脚本，等待调试客户端连接。<br>当调试服务器启动以后，可以用命令行调试工具作为调试客户端连接，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//在一个终端中</span><br><span class="line"><span class="meta">$</span><span class="bash"> node --debug-brk debug.js</span></span><br><span class="line">debugger listening on port 5858</span><br><span class="line">//在另一个终端中</span><br><span class="line"><span class="meta">$</span><span class="bash"> node debug 127.0.0.1:5858</span></span><br><span class="line">connecting... ok</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"> n</span></span><br><span class="line">break in /home/byvoid/debug.js:2</span><br><span class="line">    1 var a = 1;</span><br><span class="line">    2 var b = 'world';</span><br><span class="line">    3 var c = function (x) &#123;</span><br><span class="line">    4 console.log('hello ' + x + a);</span><br><span class="line"><span class="meta">debug&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<h5 id="使用-node-inspector-调试-Node-js"><a href="#使用-node-inspector-调试-Node-js" class="headerlink" title="使用 node-inspector 调试 Node.js"></a>使用 node-inspector 调试 Node.js</h5><p>大部分基于 Node.js 的应用都是运行在浏览器中的，例如强大的调试工具 node-inspector。node-inspector 是一个完全基于 Node.js 的开源在线调试工具，提供了强大的调试功能和友好的用户界面，它的使用方法十分简便。<br>首先，使用  npm install -g node-inspector  命令安装 node-inspector，然后在终端中通过 node –debug-brk=5858 debug.js  命令连接你要除错的脚本的调试服务器，启动 node-inspector：</p>
+<blockquote>
+<p>$ node-inspector</p>
+</blockquote>
+<p>在浏览器中打开 <a href="http://127.0.0.1:8080/debug?port=5858">http://127.0.0.1:8080/debug?port=5858</a> ， 即可显示出优雅的 Web 调试工<br>具.node-inspector 的使用方法十分简单，和浏览器脚本调试工具一样，支持单步、断点、调用栈帧查看等功能。（node-inspector 使用了 WebKit Web Inspector，因此只能在 Chrome、Safari等 WebKit 内核的浏览器中使用，而不支持 Firefox 或 Internet Explorer。）</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-09-13-NodeJs-Part3.html" title="好玩的Nodejs —— Node.js快速入门">http://laibh.top/2018-09-13-NodeJs-Part3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-09-13-NodeJs-Part2.html" rel="next" title="好玩的Nodejs —— 安装和配置 Node.js">
+                <i class="fa fa-chevron-left"></i> 好玩的Nodejs —— 安装和配置 Node.js
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-09-15-read-图解HTTP-Part9.html" rel="prev" title="深入浅出HTTP，从开始到放弃（第九章）—— 基于 HTTP 的功能追加协议">
+                深入浅出HTTP，从开始到放弃（第九章）—— 基于 HTTP 的功能追加协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-快速入门"><span class="nav-number">1.</span> <span class="nav-text">Node.js 快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始使用-Node-js-编程"><span class="nav-number">1.1.</span> <span class="nav-text">开始使用 Node.js 编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.1.1.</span> <span class="nav-text">Hello World</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-命令行工具"><span class="nav-number">1.1.2.</span> <span class="nav-text">Node.js 命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-node-的-REPL-模式"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">使用  node 的 REPL 模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立-HTTP-服务器"><span class="nav-number">1.1.3.</span> <span class="nav-text">建立 HTTP 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#小技巧——使用-supervisor"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">小技巧——使用 supervisor</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步式-I-O-与事件式编程"><span class="nav-number">1.2.</span> <span class="nav-text">异步式 I/O 与事件式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#阻塞与线程"><span class="nav-number">1.2.1.</span> <span class="nav-text">阻塞与线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回调函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">回调函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件"><span class="nav-number">1.2.3.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Node-js-的事件循环机制"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Node.js 的事件循环机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块和包"><span class="nav-number">1.3.</span> <span class="nav-text">模块和包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是模块"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建及加载模块"><span class="nav-number">1.3.2.</span> <span class="nav-text">创建及加载模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建模块"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">创建模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#单次加载"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">单次加载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#覆盖-exports"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">覆盖  exports</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建包"><span class="nav-number">1.3.3.</span> <span class="nav-text">创建包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#作为文件夹的模块"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">作为文件夹的模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#package-json"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">package.json</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-包管理器"><span class="nav-number">1.3.4.</span> <span class="nav-text">Node.js 包管理器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取一个包"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">获取一个包</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地模式和全局模式"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">本地模式和全局模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建全局链接"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">创建全局链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#包的发布"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">包的发布</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试"><span class="nav-number">1.3.5.</span> <span class="nav-text">调试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#命令行调试"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">命令行调试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#远程调试"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">远程调试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-node-inspector-调试-Node-js"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">使用 node-inspector 调试 Node.js</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

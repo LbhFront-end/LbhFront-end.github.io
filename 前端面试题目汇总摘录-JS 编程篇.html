@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="前端面试题," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="温故而知新，保持空杯心态.leetCode 题目整理。 JS 编程题难度：简单两数之和给定一个整数数组 nums 和 一个目标值 target，找出和为目标值的那两个整数，并返回他们的数组下标。可以假设每种输入只会对应一个答案，但是，不能重复利用这个数组中相同的元素。 1234567891011121314151617181920212223242526// 最笨的解法/*** @param &amp;#">
+<meta name="keywords" content="前端面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题目汇总摘录（JS 编程篇）">
+<meta property="og:url" content="http://laibh.top/前端面试题目汇总摘录-JS 编程篇.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="温故而知新，保持空杯心态.leetCode 题目整理。 JS 编程题难度：简单两数之和给定一个整数数组 nums 和 一个目标值 target，找出和为目标值的那两个整数，并返回他们的数组下标。可以假设每种输入只会对应一个答案，但是，不能重复利用这个数组中相同的元素。 1234567891011121314151617181920212223242526// 最笨的解法/*** @param &amp;#">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试题目汇总摘录（JS 编程篇）">
+<meta name="twitter:description" content="温故而知新，保持空杯心态.leetCode 题目整理。 JS 编程题难度：简单两数之和给定一个整数数组 nums 和 一个目标值 target，找出和为目标值的那两个整数，并返回他们的数组下标。可以假设每种输入只会对应一个答案，但是，不能重复利用这个数组中相同的元素。 1234567891011121314151617181920212223242526// 最笨的解法/*** @param &amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/前端面试题目汇总摘录-JS 编程篇.html"/>
+
+
+
+
+
+  <title>前端面试题目汇总摘录（JS 编程篇） | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/前端面试题目汇总摘录-JS 编程篇.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">前端面试题目汇总摘录（JS 编程篇）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-18T09:30:54+08:00">
+                2018-12-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/前端面试题目汇总摘录-JS 编程篇.html" class="leancloud_visitors" data-flag-title="前端面试题目汇总摘录（JS 编程篇）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,350
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>温故而知新，保持空杯心态.<br><a href="https://leetcode-cn.com">leetCode</a> 题目整理。</p>
+<h2 id="JS-编程题"><a href="#JS-编程题" class="headerlink" title="JS 编程题"></a>JS 编程题</h2><h3 id="难度：简单"><a href="#难度：简单" class="headerlink" title="难度：简单"></a>难度：简单</h3><h3 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h3><p>给定一个整数数组 <code>nums</code> 和 一个目标值 <code>target</code>，找出和为目标值的那两个整数，并返回他们的数组下标。可以假设每种输入只会对应一个答案，但是，不能重复利用这个数组中相同的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最笨的解法</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;number[]&#125; nums</span></span><br><span class="line"><span class="comment">* @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment">* @param &#123;number[]&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> twoNum = <span class="function"><span class="keyword">function</span>(<span class="params">nums,target</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j=<span class="number">0</span>;j&lt;nums.length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i !== j &amp;&amp; nums[i] + nums[j] === target)&#123;</span><br><span class="line">                <span class="keyword">return</span> [i,j]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 其他解法map</span></span><br><span class="line"><span class="keyword">var</span> twoNum = <span class="function"><span class="keyword">function</span>(<span class="params">nums,target</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(map.has(target-nums[i]))&#123;</span><br><span class="line">            <span class="keyword">return</span> [map.get(target-nums[i]),i]</span><br><span class="line">        &#125;</span><br><span class="line">        map.set(nums[i],i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">twoSum([<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>],<span class="number">6</span>)</span><br><span class="line"><span class="comment">// [1,2]</span></span><br></pre></td></tr></table></figure>
+<h3 id="两数之和-输出有序数组"><a href="#两数之和-输出有序数组" class="headerlink" title="两数之和-输出有序数组"></a>两数之和-输出有序数组</h3><p>给定一个已按照升序排列的有序数组，找出两个数使得它们相加之和等于目标数。</p>
+<p>函数应该返回这两下标志 <code>index1</code> 和 <code>index2</code>，其中 <code>index1</code>必须小于 <code>index2</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; numbers</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; target</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoNum = <span class="function"><span class="keyword">function</span>(<span class="params">numbers,target</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;numbers.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(map.has(target-numbers[i]))&#123;</span><br><span class="line">            <span class="keyword">return</span> [map.get(target-numbers[i]),i+<span class="number">1</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        map.set(numbers[i],i+<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 双指针</span></span><br><span class="line"><span class="keyword">var</span> twoNum = <span class="function"><span class="keyword">function</span>(<span class="params">numbers,target</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> left = <span class="number">0</span>,</span><br><span class="line">        right=numbers.length<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt; right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(numbers[left]+numbers[right] === target)&#123;</span><br><span class="line">            <span class="keyword">return</span> [left+<span class="number">1</span>,right+<span class="number">1</span>]</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(numbers[left]+numbers[right]&lt;target)&#123;</span><br><span class="line">            left++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="两数之和-输入-BST"><a href="#两数之和-输入-BST" class="headerlink" title="两数之和-输入 BST"></a>两数之和-输入 BST</h3><p>给定一个二叉树和一个目标结果，如果 BST 中存在两个元素且它们的和一个目标结果，如果 BST 中存在两个元素且它们的和等于给定的目标结果，则返回 true</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;TreeNode&#125; root</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; k</span></span><br><span class="line"><span class="comment"> * @return &#123;boolean&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> findTarget = <span class="function"><span class="keyword">function</span>(<span class="params">root,k</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> array = [];</span><br><span class="line">    dfs(node,array);</span><br><span class="line">    <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;array.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(map.has(k-array[i])) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        map.set(array[i],i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dfs</span>(<span class="params">node,array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!node) <span class="keyword">return</span>;</span><br><span class="line">    dfs(node.right,array);</span><br><span class="line">    array.push(node.val);</span><br><span class="line">    dfs(node.left,array)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="整数反转"><a href="#整数反转" class="headerlink" title="整数反转"></a>整数反转</h3><p>给出一个32位有符号整数，需要将这个整数中每位的数字进行反转</p>
+<p><strong>注意:</strong></p>
+<p>假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输入：123</span></span><br><span class="line"><span class="comment">// 输出：321</span></span><br><span class="line"><span class="comment">// 输入：-123</span></span><br><span class="line"><span class="comment">// 输出：-321</span></span><br><span class="line"><span class="comment">// 输入：120</span></span><br><span class="line"><span class="comment">// 输出：21</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;number&#125; x</span></span><br><span class="line"><span class="comment">* @return &#123;number&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> reverse = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> MAX_VALUE = <span class="built_in">Math</span>.pow(<span class="number">2</span>,<span class="number">31</span>) - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">const</span> MIN_VALUE = <span class="built_in">Math</span>.pow(<span class="number">-2</span>,<span class="number">31</span>);</span><br><span class="line">    <span class="keyword">let</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(x)&#123;</span><br><span class="line">        sum = sum * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">        x = x / <span class="number">10</span> &gt;&gt; <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(sum &lt; MAX_VALUE &amp;&amp; sum &gt; MIN_VALUE)&#123;</span><br><span class="line">        <span class="keyword">return</span> sum</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&gt;&gt;0</code> 与 <code>&gt;&gt;&gt;0</code>：前者是有符号右移，后者是无符号</p>
+<p>移位操作符在移位前做了两种转换，第一将不是 <code>number</code> 类型的数据转换成 <code>number</code>，第二将 <code>number</code> 转换成无符号的 <code>32bit</code>数据，也就是 <code>Uint32</code>类型。这些与移位的位数无关，移位 0 位 主要就是用了 js 的内部特性做了前两种的转换。</p>
+<p><code>Unit32</code>类型是如何转换的：</p>
+<ol>
+<li>如果不能转换为 <code>Number</code>，那就是为 0</li>
+<li>如果为非整数，先转换成为整数</li>
+<li>如果是正数，就返回正数，如果是负数，就返回负数 +2 的 32次方</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ToInteger</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    x = <span class="built_in">Number</span>(x);</span><br><span class="line">    <span class="keyword">return</span> x &lt; <span class="number">0</span> ? <span class="built_in">Math</span>.ceil(x) : <span class="built_in">Math</span>.floor(x)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">modulo</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a - <span class="built_in">Math</span>.floor(a/b) * b</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ToUnit32</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>(ToInteger(x),<span class="built_in">Math</span>.pow(<span class="number">2</span>,<span class="number">32</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="颠倒二进制"><a href="#颠倒二进制" class="headerlink" title="颠倒二进制"></a>颠倒二进制</h3><p>颠倒给定的 32 位无符号整数的二进制位</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**输入: 00000010100101000001111010011100</span></span><br><span class="line"><span class="comment">输出: 00111001011110000010100101000000</span></span><br><span class="line"><span class="comment">解释: 输入的二进制串 00000010100101000001111010011100 表示无符号整数 43261596，</span></span><br><span class="line"><span class="comment">      因此返回 964176192，其二进制表示形式为 00111001011110000010100101000000。</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line"><span class="comment">/**输入：11111111111111111111111111111101</span></span><br><span class="line"><span class="comment">输出：10111111111111111111111111111111</span></span><br><span class="line"><span class="comment">解释：输入的二进制串 11111111111111111111111111111101 表示无符号整数 4294967293，</span></span><br><span class="line"><span class="comment">      因此返回 3221225471 其二进制表示形式为 10101111110010110010011101101001。</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;numebr&#125; n - a positive integer</span></span><br><span class="line"><span class="comment">* @param &#123;return&#125; n - a positive integer</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> reverseBits = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Number</span>.parseInt([...n.toString(<span class="number">2</span>)].reverse().join(<span class="string">''</span>).padEnd(<span class="number">32</span>,<span class="string">'0'</span>),<span class="number">2</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>padEnd、padStart</code></p>
+<p>ES2017引入了字符串不全长度的功能，如果某个字符串不够指定长度，会在头部或者尾部补全。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'x'</span>.padStart(<span class="number">4</span>,<span class="string">'ab'</span>); <span class="comment">// abax</span></span><br><span class="line"><span class="string">'x'</span>.padStart(<span class="number">5</span>,<span class="string">'ab'</span>); <span class="comment">// ababx</span></span><br><span class="line"></span><br><span class="line"><span class="string">'x'</span>.padEnd(<span class="number">4</span>,<span class="string">'ab'</span>); <span class="comment">// xaba</span></span><br><span class="line"><span class="string">'x'</span>.padEnd(<span class="number">5</span>,<span class="string">'ab'</span>); <span class="comment">// xabab</span></span><br><span class="line"><span class="comment">// 如果原字符串的长度，等于或者大于指定的最小长度，则返回原字符串</span></span><br><span class="line"><span class="comment">//常见用途</span></span><br><span class="line"><span class="comment">// 为数值补全指定位数</span></span><br><span class="line"><span class="string">'1'</span>.padStart(<span class="number">10</span>,<span class="string">'0'</span>); <span class="comment">// 000000001</span></span><br><span class="line"><span class="string">'12'</span>.padStart(<span class="number">10</span>,<span class="string">'0'</span>); <span class="comment">// 000000012</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 提示字符串格式</span></span><br><span class="line"><span class="string">'12'</span>.padEnd(<span class="number">10</span>,<span class="string">'YYYY-MM-DD'</span>) <span class="comment">// 'YYYY-MM-DD'</span></span><br><span class="line"><span class="string">'09-12'</span>.padStart(<span class="number">10</span>,<span class="string">'YYYY-MM-DD'</span>); <span class="comment">// 'YYYY-09-12'</span></span><br></pre></td></tr></table></figure>
+<h3 id="回文数"><a href="#回文数" class="headerlink" title="回文数"></a>回文数</h3><p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;number&#125; x</span></span><br><span class="line"><span class="comment">* return &#123;boolean&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// 最笨的方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> isPalindrome = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line"> 	<span class="keyword">let</span> str = x.toString();</span><br><span class="line">    <span class="keyword">let</span> len = str.length;</span><br><span class="line">    <span class="keyword">let</span> j = len - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(str[i] !== str[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 书写简单但是速度慢</span></span><br><span class="line"><span class="keyword">var</span> isPalindrome = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x == x.toString().split(<span class="string">''</span>).reverse().join(<span class="string">''</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不转换为字符串，用原来的数字解</span></span><br><span class="line"><span class="keyword">var</span> isPalindrome = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> original = x ; </span><br><span class="line">    <span class="keyword">let</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(x)&#123;</span><br><span class="line">        result = result * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">        x = x /<span class="number">10</span> &gt;&gt; <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> original === result</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="唯一的摩尔斯密码"><a href="#唯一的摩尔斯密码" class="headerlink" title="唯一的摩尔斯密码"></a>唯一的摩尔斯密码</h3><p>际摩尔斯密码定义一种标准编码方式，将每个字母对应于一个由一系列点和短线组成的字符串， 比如: “a” 对应 “.-“, “b” 对应 “-…”, “c” 对应 “-.-.”, 等等。</p>
+<p>为了方便，所有26个英文字母对应摩尔斯密码表如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&quot;.-&quot;,&quot;-...&quot;,&quot;-.-.&quot;,&quot;-..&quot;,&quot;.&quot;,&quot;..-.&quot;,&quot;--.&quot;,&quot;....&quot;,&quot;..&quot;,&quot;.---&quot;,&quot;-.-&quot;,&quot;.-..&quot;,&quot;--&quot;,&quot;-.&quot;,&quot;---&quot;,&quot;.--.&quot;,&quot;--.-&quot;,&quot;.-.&quot;,&quot;...&quot;,&quot;-&quot;,&quot;..-&quot;,&quot;...-&quot;,&quot;.--&quot;,&quot;-..-&quot;,&quot;-.--&quot;,&quot;--..&quot;]</span><br></pre></td></tr></table></figure>
+<p>给定一个单词列表，每个单词可以写成每个字母对应摩尔斯密码的组合。例如，”cab” 可以写成 “-.-..–…”，(即 “-.-.” + “-…” + “.-“字符串的结合)。我们将这样一个连接过程称作单词翻译。</p>
+<p>返回我们可以获得所有词不同单词翻译的数量。</p>
+<p>例如:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输入: </span></span><br><span class="line">words = [<span class="string">"gin"</span>, <span class="string">"zen"</span>, <span class="string">"gig"</span>, <span class="string">"msg"</span>]</span><br><span class="line"><span class="comment">//输出: </span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 解释: </span></span><br><span class="line"><span class="comment">// 各单词翻译如下:</span></span><br><span class="line"><span class="string">"gin"</span> -&gt; <span class="string">"--...-."</span></span><br><span class="line"><span class="string">"zen"</span> -&gt; <span class="string">"--...-."</span></span><br><span class="line"><span class="string">"gig"</span> -&gt; <span class="string">"--...--."</span></span><br><span class="line"><span class="string">"msg"</span> -&gt; <span class="string">"--...--."</span></span><br></pre></td></tr></table></figure>
+<p>共有 2 种不同翻译, “–…-.” 和 “–…–.”.</p>
+<p><strong>注意:</strong></p>
+<ul>
+<li>单词列表words 的长度不会超过 100。</li>
+<li>每个单词 words[i]的长度范围为 [1, 12]。</li>
+<li>每个单词 words[i]只包含小写字母。</li>
+</ul>
+<p><strong>解题思路</strong>：</p>
+<p>循环遍历获取单次列表中每个单词的 Unicode 编码，已知所有的单词都是小写字母，然后 <strong>97~122</strong>是26个小写字母的编码，减去 97 后可以对应密码表的索引。取出每个单词的密码相互比较，得出所有词不同单词的长度。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> code = [<span class="string">".-"</span>,<span class="string">"-..."</span>,<span class="string">"-.-."</span>,<span class="string">"-.."</span>,<span class="string">"."</span>,<span class="string">"..-."</span>,<span class="string">"--."</span>,<span class="string">"...."</span>,<span class="string">".."</span>,<span class="string">".---"</span>,<span class="string">"-.-"</span>,<span class="string">".-.."</span>,<span class="string">"--"</span>,<span class="string">"-."</span>,<span class="string">"---"</span>,<span class="string">".--."</span>,<span class="string">"--.-"</span>,<span class="string">".-."</span>,<span class="string">"..."</span>,<span class="string">"-"</span>,<span class="string">"..-"</span>,<span class="string">"...-"</span>,<span class="string">".--"</span>,<span class="string">"-..-"</span>,<span class="string">"-.--"</span>,<span class="string">"--.."</span>];</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *@params &#123;string[]&#125; words</span></span><br><span class="line"><span class="comment"> *@return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">const</span> words = [<span class="string">"gin"</span>, <span class="string">"zen"</span>, <span class="string">"gig"</span>, <span class="string">"msg"</span>];</span><br><span class="line"> <span class="keyword">var</span> uniqueMorseRepresentations = <span class="function"><span class="keyword">function</span>(<span class="params">words</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> len = words.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; len;i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> str = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; words[i].length; j++)&#123;</span><br><span class="line">            str +=code[words[i][j].charCodeAt()<span class="number">-97</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        words[i] = str</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> [...new <span class="built_in">Set</span>(words)].length;</span><br><span class="line"> &#125;</span><br><span class="line"> uniqueMorseRepresentations(words);</span><br></pre></td></tr></table></figure>
+<h3 id="宝石与石头"><a href="#宝石与石头" class="headerlink" title="宝石与石头"></a>宝石与石头</h3><p>给定字符串<code>J</code> 代表石头中宝石的类型，和字符串 <code>S</code>代表你拥有的石头。 <code>S</code> 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。</p>
+<p><code>J</code> 中的字母不重复，<code>J</code> 和 <code>S</code>中的所有字符都是字母。字母区分大小写，因此<code>&quot;a&quot;</code>和<code>&quot;A&quot;</code>是不同类型的石头。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: J = &quot;aA&quot;, S = &quot;aAAbbbb&quot;</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: J = &quot;z&quot;, S = &quot;ZZ&quot;</span><br><span class="line">输出: 0</span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong></p>
+<ul>
+<li><code>S</code> 和 <code>J</code> 最多含有50个字母。</li>
+<li><code>J</code> 中的字符不重复。</li>
+</ul>
+<p><strong>解题思路</strong>：</p>
+<p>遍历获取石头 <code>S</code>中每个字母，用  match函数对  <code>J</code> 进行匹配，匹配成功计数加1。</p>
+<p><strong>match:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	searchvalue 必需。规定要检索的字符串值。</span></span><br><span class="line"><span class="comment">	regexp  必需。规定要匹配的模式的 RegExp 对象。如果该参数不是 RegExp 对象，则需要首先把它传递给 RegExp 构造函数，将其转换为 RegExp 对象。</span></span><br><span class="line"><span class="comment">	返回值 存放匹配结果的数组。该数组的内容依赖于 regexp 是否具有全局标志 g。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">stringObject.match(searchvalue)</span><br><span class="line">stringObject.match(regexp)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param &#123;string&#125; J</span></span><br><span class="line"><span class="comment">* @param &#123;string&#125; K</span></span><br><span class="line"><span class="comment">* @return &#123;number&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> J = <span class="string">"aA"</span>, S = <span class="string">"aAAbbbb"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> numJewelsInStones = <span class="function"><span class="keyword">function</span>(<span class="params">J,S</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; S.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(J.match(S.charAt(i))&#123;</span><br><span class="line">            count++;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line">numJewelsInStones(J,S);</span><br></pre></td></tr></table></figure>
+<h3 id="按奇偶排序数组"><a href="#按奇偶排序数组" class="headerlink" title="按奇偶排序数组"></a>按奇偶排序数组</h3><p>给定一个非负整数数组 A，返回一个由 A 的所有偶数元素组成的数组，后面跟 A 的所有奇数元素。</p>
+<p>你可以返回满足此条件的任何数组作为答案。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：[3,1,2,4]</span><br><span class="line">输出：[2,4,3,1]</span><br><span class="line">输出 [4,2,3,1]，[2,4,1,3] 和 [4,2,1,3] 也会被接受。</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;= A.length &lt;= 5000</li>
+<li>0 &lt;= A[i] &lt;= 5000</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>遍历数组中的元素，双指针，当指针1从开头开始，指针2从结尾开始。指针1检测到元素对2取余的时候等于0，跳出循环；接着指针2检测到元素对2取余时等于1，跳出循环，交换两个指针上面的值。指针1继续向右（+1），指针2继续向左（-1）搜寻。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; A</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">const</span> numberArray = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"> <span class="keyword">var</span> sortArrayByParity = <span class="function"><span class="keyword">function</span>(<span class="params">A</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> len = A.length;</span><br><span class="line">    <span class="keyword">if</span>(len === <span class="number">1</span>) <span class="keyword">return</span> A;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> j = len<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i] % <span class="number">2</span> === <span class="number">0</span>)&#123;</span><br><span class="line">            i++;	</span><br><span class="line">            <span class="keyword">continue</span>;	 			</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(A[j] % <span class="number">2</span> === <span class="number">1</span>)&#123;</span><br><span class="line">            j--;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> temp = A[i];</span><br><span class="line">        A[i] = A[j];</span><br><span class="line">        A[j] = temp;</span><br><span class="line">        i++;</span><br><span class="line">        j--</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// return A.sort(function(x)&#123;</span></span><br><span class="line">    <span class="comment">// 	if(x % 2 === 1) return 1;</span></span><br><span class="line">    <span class="comment">// &#125;);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// const result = [];</span></span><br><span class="line">    <span class="comment">// A.map(v=&gt;&#123;</span></span><br><span class="line">    <span class="comment">// 	return v%2?result.push(v):result.unshift(v);</span></span><br><span class="line">    <span class="comment">// &#125;);	</span></span><br><span class="line">    <span class="comment">// return result;	</span></span><br><span class="line">    <span class="keyword">return</span> A;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sortArrayByParity(numberArray));</span><br></pre></td></tr></table></figure>
+<h3 id="按奇偶排序数组2"><a href="#按奇偶排序数组2" class="headerlink" title="按奇偶排序数组2"></a>按奇偶排序数组2</h3><p>给定一个非负整数数组 A， A 中一半整数是奇数，一半整数是偶数。</p>
+<p>对数组进行排序，以便当 A[i] 为奇数时，i 也是奇数；当 A[i] 为偶数时， i 也是偶数。</p>
+<p>你可以返回任何满足上述条件的数组作为答案。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：[4,2,5,7]</span><br><span class="line">输出：[4,5,2,7]</span><br><span class="line">解释：[4,7,2,5]，[2,5,4,7]，[2,7,4,5] 也会被接受。</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li>2 &lt;= A.length &lt;= 20000</li>
+<li>A.length % 2 == 0</li>
+<li>0 &lt;= A[i] &lt;= 1000 </li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p>A[i] 为奇数时，i 也是奇数；当 A[i] 为偶数时， i 也是偶数。设定一个变量j为1，A[j]为奇数，i设为0，从0,2,4这样的间隔开始遍历，当 A[i]上的元素为奇数时，检测A[j]上面的数是否为奇数，如果是的话就+2检查下一项，如果不是奇数，就交换i,j位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array = [<span class="number">5</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">2</span>];</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; A</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">var</span> sortArrayByParity2 = <span class="function"><span class="keyword">function</span>(<span class="params">A</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; A.length<span class="number">-1</span>; i = i+<span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i] % <span class="number">2</span> === <span class="number">1</span>)&#123;           </span><br><span class="line">            <span class="keyword">while</span>(A[j] % <span class="number">2</span> === <span class="number">1</span>)&#123;        </span><br><span class="line">                j = j + <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> temp = A[i];</span><br><span class="line">            A[i] = A[j];</span><br><span class="line">            A[j] = temp;</span><br><span class="line">        &#125;				</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> A;</span><br><span class="line">&#125;</span><br><span class="line">sortArrayByParity2(array);</span><br></pre></td></tr></table></figure>
+<h3 id="机器人能否返回原点"><a href="#机器人能否返回原点" class="headerlink" title="机器人能否返回原点"></a>机器人能否返回原点</h3><p>在二维平面上，有一个机器人从原点 (0, 0) 开始。给出它的移动顺序，判断这个机器人在完成移动后是否在 (0, 0) 处结束。</p>
+<p>移动顺序由字符串表示。字符 move[i] 表示其第 i 次移动。机器人的有效动作有 R（右），L（左），U（上）和 D（下）。如果机器人在完成所有动作后返回原点，则返回 true。否则，返回 false。</p>
+<p>注意：机器人“面朝”的方向无关紧要。 “R” 将始终使机器人向右移动一次，“L” 将始终向左移动等。此外，假设每次移动机器人的移动幅度相同。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;UD&quot;</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+<p>解释：机器人向上移动一次，然后向下移动一次。所有动作都具有相同的幅度，因此它最终回到它开始的原点。因此，我们返回 true。<br><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;LL&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
+<p>解释：机器人向左移动两次。它最终位于原点的左侧，距原点有两次 “移动” 的距离。我们返回 false，因为它在移动结束时没有返回原点。</p>
+<p><strong>解题思路：</strong></p>
+<p>设定x,y坐标，遍历字符串，根据不同的字符串来移动x,y的距离。最后判断x,y是否等于初始值来判断是否在原地。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *@params &#123;string&#125; moves</span></span><br><span class="line"><span class="comment"> *@return &#123;boolean&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">var</span> judgeCircle = <span class="function"><span class="keyword">function</span>(<span class="params">moves</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> x=<span class="number">0</span>,y=<span class="number">0</span>,moveArr = moves.split(<span class="string">''</span>);</span><br><span class="line">    moveArr.map(<span class="function"><span class="params">i</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(i) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'R'</span>:</span><br><span class="line">            x++</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'L'</span>:</span><br><span class="line">            x--;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'U'</span>:</span><br><span class="line">            y++</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'D'</span>:</span><br><span class="line">            y--;</span><br><span class="line">            <span class="keyword">break</span>;		 				</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> x === <span class="number">0</span> &amp;&amp; y === <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">console</span>.log(judgeCircle(<span class="string">'UD'</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="汉明距离"><a href="#汉明距离" class="headerlink" title="汉明距离"></a>汉明距离</h3><p>两个整数之间的汉明距离指的是这两个数字对应二进制位不同的位置的数目。</p>
+<p>给出两个整数 x 和 y，计算它们之间的汉明距离。</p>
+<p><strong>注意：</strong><br>0 ≤ x, y &lt; 231.</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: x = 1, y = 4</span><br><span class="line">输出: 2</span><br></pre></td></tr></table></figure>
+<p><strong>解释:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1   (0 0 0 1)</span><br><span class="line">4   (0 1 0 0)</span><br><span class="line">       ↑   ↑</span><br></pre></td></tr></table></figure>
+<p>上面的箭头指出了对应二进制位不同的位置。</p>
+<p><strong>解题思路：</strong></p>
+<p>异或（^）:位不相等时取1，否则取零</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1   (0 0 0 1)</span><br><span class="line">^</span><br><span class="line">4   (0 1 0 0)</span><br><span class="line">-----------------</span><br><span class="line">	(0 1 0 1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; x</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; y</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">var</span> hammingDistance = <span class="function"><span class="keyword">function</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x^y).toString(<span class="number">2</span>).replace(<span class="regexp">/0/g</span>,<span class="string">''</span>).length;</span><br><span class="line"> &#125;;</span><br><span class="line"> hammingDistance(<span class="number">1</span>,<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="翻转图像"><a href="#翻转图像" class="headerlink" title="翻转图像"></a>翻转图像</h3><p>给定一个二进制矩阵 A，我们想先水平翻转图像，然后反转图像并返回结果。</p>
+<p>水平翻转图片就是将图片的每一行都进行翻转，即逆序。例如，水平翻转 [1, 1, 0] 的结果是 [0, 1, 1]。</p>
+<p>反转图片的意思是图片中的 0 全部被 1 替换， 1 全部被 0 替换。例如，反转 [0, 1, 1] 的结果是 [1, 0, 0]。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [[1,1,0],[1,0,1],[0,0,0]]</span><br><span class="line">输出: [[1,0,0],[0,1,0],[1,1,1]]</span><br></pre></td></tr></table></figure>
+<p>解释: 首先翻转每一行: [[0,1,1],[1,0,1],[0,0,0]]；<br>​     然后反转图片: [[1,0,0],[0,1,0],[1,1,1]]<br><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: [[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]</span><br><span class="line">输出: [[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]</span><br></pre></td></tr></table></figure>
+<p>解释: 首先翻转每一行: [[0,0,1,1],[1,0,0,1],[1,1,1,0],[0,1,0,1]]；<br>​     然后反转图片: [[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]<br><strong>说明:</strong></p>
+<ul>
+<li>1 &lt;= A.length = A[0].length &lt;= 20</li>
+<li>0 &lt;= A[i][j] &lt;= 1</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<p><strong>~1</strong>的计算步骤：</p>
+<ul>
+<li>将<strong>1</strong>(这里叫：原码)转二进制 ＝ <strong>00000001</strong></li>
+<li>按位取反 ＝ <strong>11111110</strong></li>
+<li>发现符号位(即最高位)为<strong>1</strong>(表示负数)，将除符号位之外的其他数字取反 ＝ <strong>10000001</strong></li>
+<li>末位加1取其补码 ＝ <strong>10000010</strong></li>
+<li>转换回十进制 ＝ <strong>-2</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[][]&#125; A</span></span><br><span class="line"><span class="comment"> * return &#123;number[][]&#125;</span></span><br><span class="line"><span class="comment"> */</span>	</span><br><span class="line"> <span class="keyword">const</span> img = [[<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]];</span><br><span class="line"> <span class="keyword">var</span> flipAndInvertImage = <span class="function"><span class="keyword">function</span>(<span class="params">A</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> A.map(<span class="function"><span class="params">v</span>=&gt;</span> v.map( <span class="function"><span class="params">i</span> =&gt;</span> ~i + <span class="number">2</span>).reverse()) </span><br><span class="line"> &#125;</span><br><span class="line"> flipAndInvertImage(img);</span><br></pre></td></tr></table></figure>
+<h3 id="增减字符串匹配"><a href="#增减字符串匹配" class="headerlink" title="增减字符串匹配"></a>增减字符串匹配</h3><p>给定只含 “I”（增大）或 “D”（减小）的字符串 S ，令 N = S.length。</p>
+<p>返回 [0, 1, …, N] 的任意排列 A 使得对于所有 i = 0, …, N-1，都有：</p>
+<p>如果 S[i] == “I”，那么 A[i] &lt; A[i+1]<br>如果 S[i] == “D”，那么 A[i] &gt; A[i+1]</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输出：&quot;IDID&quot;</span><br><span class="line">输出：[0,4,1,3,2]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输出：&quot;III&quot;</span><br><span class="line">输出：[0,1,2,3]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输出：&quot;DDI&quot;</span><br><span class="line">输出：[3,2,0,1]</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<p>1 &lt;= S.length &lt;= 1000<br>S 只包含字符 “I” 或 “D”。</p>
+<p><strong>解题思路:</strong></p>
+<p>对 长度为N的从0开始顺序排序的数组根据 ‘I’,’D’进行排序。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; S</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">const</span> str = <span class="string">'IDID'</span>;</span><br><span class="line"> <span class="keyword">var</span> diStringMatch = <span class="function"><span class="keyword">function</span>(<span class="params">S</span>)</span>&#123;</span><br><span class="line">    S += <span class="string">"I"</span></span><br><span class="line">    <span class="keyword">let</span> stArr = S.split(<span class="string">''</span>);</span><br><span class="line">    <span class="keyword">let</span> Arr = [...new <span class="built_in">Array</span>(S.length)].map(<span class="function">(<span class="params">v,i</span>) =&gt;</span> i);</span><br><span class="line">    <span class="keyword">let</span> result = [];</span><br><span class="line">    stArr.map(<span class="function"><span class="params">v</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(v === <span class="string">'I'</span>)&#123;</span><br><span class="line">            result.push(Arr.shift());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            result.push(Arr.pop());</span><br><span class="line">        &#125;		 		</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line"> &#125;</span><br><span class="line"> diStringMatch(str);</span><br></pre></td></tr></table></figure>
+<h3 id="山脉数组的峰顶索引"><a href="#山脉数组的峰顶索引" class="headerlink" title="山脉数组的峰顶索引"></a>山脉数组的峰顶索引</h3><p>我们把符合下列属性的数组 A 称作山脉：</p>
+<p>A.length &gt;= 3<br>存在 0 &lt; i &lt; A.length - 1 使得A[0] &lt; A[1] &lt; … A[i-1] &lt; A[i] &gt; A[i+1] &gt; … &gt; A[A.length - 1]<br>给定一个确定为山脉的数组，返回任何满足 A[0] &lt; A[1] &lt; … A[i-1] &lt; A[i] &gt; A[i+1] &gt; … &gt; A[A.length - 1] 的 i 的值。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[0,1,0]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：[0,2,1,0]</span><br><span class="line">输出：1</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<p>3 &lt;= A.length &lt;= 10000<br>0 &lt;= A[i] &lt;= 10^6<br>A 是如上定义的山脉 </p>
+<p><strong>解题思路：</strong></p>
+<p>由于已知数组一定是山脉数组，所以可以理解为求数组中的最大数？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number[]&#125; A</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">const</span> arr = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>];</span><br><span class="line"> <span class="keyword">var</span> peakIndexInMoutainArray = <span class="function"><span class="keyword">function</span>(<span class="params">A</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> max = A[<span class="number">0</span>],index;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i =<span class="number">0</span>; i &lt; A.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i]&gt;max)&#123;</span><br><span class="line">            max = A[i]</span><br><span class="line">            index=i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> index;</span><br><span class="line"> &#125;</span><br><span class="line"> peakIndexInMoutainArray(arr);</span><br></pre></td></tr></table></figure>
+<h3 id="二叉树的最大深度"><a href="#二叉树的最大深度" class="headerlink" title="二叉树的最大深度"></a>二叉树的最大深度</h3><p>给定一个二叉树，找出其最大深度。</p>
+<p>二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。</p>
+<p>说明: 叶子节点是指没有子节点的节点。</p>
+<p><strong>示例：</strong><br>给定二叉树 [3,9,20,null,null,15,7]，</p>
+<pre><code>  3
+ / \
+9  20
+  /  \
+ 15   7
+</code></pre><p>返回它的最大深度 3 </p>
+<p><strong>解题思路：</strong></p>
+<p>递归</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;TreeNode&#125; root</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="keyword">var</span> maxDepth = <span class="function"><span class="keyword">function</span>(<span class="params">root</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.max(<span class="built_in">arguments</span>.callee(root.left),<span class="built_in">arguments</span>.callee(root.right))+<span class="number">1</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数字的补数"><a href="#数字的补数" class="headerlink" title="数字的补数"></a>数字的补数</h3><p>给定一个正整数，输出它的补数。补数是对该数的二进制表示取反。</p>
+<p><strong>注意:</strong></p>
+<p>给定的整数保证在32位带符号整数的范围内。<br>你可以假定二进制数不包含前导零位。<br><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 5</span><br><span class="line">输出: 2</span><br></pre></td></tr></table></figure>
+<p>解释: 5的二进制表示为101（没有前导零位），其补数为010。所以你需要输出2。<br><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: 1</span><br><span class="line">输出: 0</span><br></pre></td></tr></table></figure>
+<p>解释: 1的二进制表示为1（没有前导零位），其补数为0。所以你需要输出0。</p>
+<p><strong>解题思路：</strong></p>
+<p>异或（^）:位不相等时取1，否则取零</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; num</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;		 </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> num = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> findComplement = <span class="function"><span class="keyword">function</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(num.toString(<span class="number">2</span>).split(<span class="string">''</span>).map(<span class="function"><span class="params">v</span>=&gt;</span> <span class="number">1</span>^v ).join(<span class="string">''</span>),<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line">findComplement(num);</span><br></pre></td></tr></table></figure>
+<h3 id="数值千分位格式化"><a href="#数值千分位格式化" class="headerlink" title="数值千分位格式化"></a>数值千分位格式化</h3><p>几个常见的截取字符函数</p>
+<h4 id="substr"><a href="#substr" class="headerlink" title="substr"></a>substr</h4><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stringObject.substr(start,length)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>必需。要抽取的子串的起始下标。必需是数值，如果是负数，那么改参数声明从字符串的尾部开始算起的位置。也就是说，-1 指字符串中最后一个字符，-2指倒数第二个字符</td>
+</tr>
+<tr>
+<td>length</td>
+<td>可选，子串中字符数，必须是数值。如果省略了该参数，那么返回从 stringobject 的开始位置到结尾的子串</td>
+</tr>
+</tbody>
+</table>
+<h4 id="substring"><a href="#substring" class="headerlink" title="substring"></a>substring</h4><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stringObject.substring(start,stop)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>必需。一个非负的整数，规定要提取的子串的第一个字符在 stringObject 中的位置</td>
+</tr>
+<tr>
+<td>stop</td>
+<td>可选。一个非负的整数，比要提取的子串的最后一个字符在 stringObject 中的位置多1.如果忽略该参数，那么返回的子串会一直到字符串的结尾</td>
+</tr>
+<tr>
+<td>返回</td>
+<td>一个新的字符串，该字符串值包含 stringObject 的一个子字符串，内容是从 start 到 stop-1 的所有字符，其长度为 stop 减 start</td>
+</tr>
+</tbody>
+</table>
+<h4 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h4><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stringObject.slice(start,end)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>要抽取的片断的起始下标。如果是负数，则该参数规定是从字符串的尾部开始算起的位置。也就是说，-1指字符串的最后一个字符，-2指倒数第二个字符，以此类推</td>
+</tr>
+<tr>
+<td>end</td>
+<td>紧接着要抽取的片段的结尾的下标。若未指定该参数，则要提取的子串包括 start 到原字符串结尾的字符串。如果该参数是负数，那么它规定的是从字符串的尾部开始算起的位置</td>
+</tr>
+<tr>
+<td>return</td>
+<td>一个新的字符串，包括字符串从 start 开始从 end （不包括end）结束为止的所有字符</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> n = <span class="number">12345678910</span>;</span><br><span class="line"><span class="comment">// 方法1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = [];</span><br><span class="line">    <span class="keyword">const</span> str = n.toString();</span><br><span class="line">    <span class="keyword">const</span> len = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>;i&lt;=len/<span class="number">3</span>;i++)&#123;</span><br><span class="line">        result.unshift(str.substr(len-i*<span class="number">3</span>,<span class="number">3</span>));</span><br><span class="line">        <span class="keyword">if</span>(len-i*<span class="number">3</span>&lt;<span class="number">3</span>)&#123;</span><br><span class="line">            result.unshift(str.substr(<span class="number">0</span>,len-i*<span class="number">3</span>))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result.join(<span class="string">','</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> resultStr = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> str = n.toString();</span><br><span class="line">    <span class="keyword">const</span> len = str.length;</span><br><span class="line">    <span class="keyword">let</span> j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=len<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;	</span><br><span class="line">    j++;			</span><br><span class="line">        resultStr=str.charAt(i)+resultStr</span><br><span class="line">        <span class="keyword">if</span>(!(j%<span class="number">3</span>) &amp;&amp; i!=<span class="number">0</span>)&#123;</span><br><span class="line">            resultStr=<span class="string">','</span>+resultStr</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resultStr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = [];</span><br><span class="line">    <span class="keyword">const</span> str = n.toString();</span><br><span class="line">    <span class="keyword">const</span> len = str.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;len/<span class="number">3</span>;i++)&#123;</span><br><span class="line">        result.unshift(str.substring(len-(i+<span class="number">1</span>)*<span class="number">3</span>,len-i*<span class="number">3</span>))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result.join(<span class="string">','</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法4</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法5</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">format</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (n.toFixed(<span class="number">2</span>) + <span class="string">''</span>).replace(<span class="regexp">/\d&#123;1,3&#125;(?=(\d&#123;3&#125;)+(\.\d*)?$)/g</span>,<span class="string">'$&amp;,'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/前端面试题目汇总摘录-JS 编程篇.html" title="前端面试题目汇总摘录（JS 编程篇）">http://laibh.top/前端面试题目汇总摘录-JS 编程篇.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端面试题/" <i class="fa fa-tag"></i> 前端面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-17-NodeJs2-Part7.html" rel="next" title="Nodejs实战 —— Web 程序的模板">
+                <i class="fa fa-chevron-left"></i> Nodejs实战 —— Web 程序的模板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-21-NodeJs2-Part8.html" rel="prev" title="Nodejs实战 —— 存储数据">
+                Nodejs实战 —— 存储数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-编程题"><span class="nav-number">1.</span> <span class="nav-text">JS 编程题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#难度：简单"><span class="nav-number">1.1.</span> <span class="nav-text">难度：简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数之和"><span class="nav-number">1.2.</span> <span class="nav-text">两数之和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数之和-输出有序数组"><span class="nav-number">1.3.</span> <span class="nav-text">两数之和-输出有序数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数之和-输入-BST"><span class="nav-number">1.4.</span> <span class="nav-text">两数之和-输入 BST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数反转"><span class="nav-number">1.5.</span> <span class="nav-text">整数反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颠倒二进制"><span class="nav-number">1.6.</span> <span class="nav-text">颠倒二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文数"><span class="nav-number">1.7.</span> <span class="nav-text">回文数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唯一的摩尔斯密码"><span class="nav-number">1.8.</span> <span class="nav-text">唯一的摩尔斯密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#宝石与石头"><span class="nav-number">1.9.</span> <span class="nav-text">宝石与石头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按奇偶排序数组"><span class="nav-number">1.10.</span> <span class="nav-text">按奇偶排序数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按奇偶排序数组2"><span class="nav-number">1.11.</span> <span class="nav-text">按奇偶排序数组2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#机器人能否返回原点"><span class="nav-number">1.12.</span> <span class="nav-text">机器人能否返回原点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#汉明距离"><span class="nav-number">1.13.</span> <span class="nav-text">汉明距离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#翻转图像"><span class="nav-number">1.14.</span> <span class="nav-text">翻转图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增减字符串匹配"><span class="nav-number">1.15.</span> <span class="nav-text">增减字符串匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#山脉数组的峰顶索引"><span class="nav-number">1.16.</span> <span class="nav-text">山脉数组的峰顶索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树的最大深度"><span class="nav-number">1.17.</span> <span class="nav-text">二叉树的最大深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字的补数"><span class="nav-number">1.18.</span> <span class="nav-text">数字的补数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数值千分位格式化"><span class="nav-number">1.19.</span> <span class="nav-text">数值千分位格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#substr"><span class="nav-number">1.19.1.</span> <span class="nav-text">substr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#substring"><span class="nav-number">1.19.2.</span> <span class="nav-text">substring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#slice"><span class="nav-number">1.19.3.</span> <span class="nav-text">slice</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

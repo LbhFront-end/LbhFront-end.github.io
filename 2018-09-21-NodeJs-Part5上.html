@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本章从零开始用 Node.js 实现一个微博系统，功能包括路由控制、页面模板、数据库访问、用户注册、登录、用户会话等内容。介绍 Express 框架、MVC 设计模式、ejs 模板引擎以及 MongoDB 数据库的操作。由于篇幅看起来过长，就打算分成几节来记录，具体几节看后面情况，好了，让我们一起来实践用Node.js进行Web开发吧 使用 Node.js进行 Web 开发准备工作MVC（Mode">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）">
+<meta property="og:url" content="http://laibh.top/2018-09-21-NodeJs-Part5上.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="本章从零开始用 Node.js 实现一个微博系统，功能包括路由控制、页面模板、数据库访问、用户注册、登录、用户会话等内容。介绍 Express 框架、MVC 设计模式、ejs 模板引擎以及 MongoDB 数据库的操作。由于篇幅看起来过长，就打算分成几节来记录，具体几节看后面情况，好了，让我们一起来实践用Node.js进行Web开发吧 使用 Node.js进行 Web 开发准备工作MVC（Mode">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-express.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-express网站的架构.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）">
+<meta name="twitter:description" content="本章从零开始用 Node.js 实现一个微博系统，功能包括路由控制、页面模板、数据库访问、用户注册、登录、用户会话等内容。介绍 Express 框架、MVC 设计模式、ejs 模板引擎以及 MongoDB 数据库的操作。由于篇幅看起来过长，就打算分成几节来记录，具体几节看后面情况，好了，让我们一起来实践用Node.js进行Web开发吧 使用 Node.js进行 Web 开发准备工作MVC（Mode">
+<meta name="twitter:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-express.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-09-21-NodeJs-Part5上.html"/>
+
+
+
+
+
+  <title>好玩的Nodejs —— 使用 Node.js进行 Web 开发（上） | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-09-21-NodeJs-Part5上.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T15:31:54+08:00">
+                2018-09-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-09-21-NodeJs-Part5上.html" class="leancloud_visitors" data-flag-title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,382
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章从零开始用 Node.js 实现一个微博系统，功能包括路由控制、页面模板、数据库访问、用户注册、登录、用户会话等内容。<br>介绍 Express 框架、MVC 设计模式、ejs 模板引擎以及 MongoDB 数据库的操作。<br>由于篇幅看起来过长，就打算分成几节来记录，具体几节看后面情况，好了，让我们一起来实践用Node.js进行Web开发吧</p>
+<h2 id="使用-Node-js进行-Web-开发"><a href="#使用-Node-js进行-Web-开发" class="headerlink" title="使用 Node.js进行 Web 开发"></a>使用 Node.js进行 Web 开发</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>MVC（Model-View-Controller，模型-视图-控制器）是一种软件的设计模式，即把一个复杂的软件工程分解成三个层面：模型、视图和控制器。</p>
+<ul>
+<li>模型是对象及其数据结构的实现，通常包含数据库操作</li>
+<li>视图表示用户界面，在网站中通常就是 HTML 的组织结构</li>
+<li>控制器用于处理用户请求和数据流、复杂模型，将输出传递给视图</li>
+</ul>
+<p>称 PHP、ASP、JSP 为 “模板为中心的架构”，下表是两种 Web 开发架构的对比</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>模板为中心架构</th>
+<th>MVC架构</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>页面产生方式</td>
+<td>执行并替换标签中的语句</td>
+<td>由模板引擎生成 HTML 页面</td>
+</tr>
+<tr>
+<td>路径解析</td>
+<td>对应到文件系统</td>
+<td>由控制器定义</td>
+</tr>
+<tr>
+<td>数据访问</td>
+<td>通过 SQL 语句查询或访问文件系统</td>
+<td>对象关系模型</td>
+</tr>
+<tr>
+<td>架构中心</td>
+<td>脚本语言是静态 HTTP 服务器的扩展</td>
+<td>静态 HTTP 服务器是脚本语言的补充</td>
+</tr>
+<tr>
+<td>适用范围</td>
+<td>小规模网站</td>
+<td>大规模网站</td>
+</tr>
+<tr>
+<td>学习难度</td>
+<td>容易</td>
+<td>较难</td>
+</tr>
+</tbody>
+</table>
+<p>这两种架构都出自原始的 CGI，但不同之处是前者走了一条粗放扩张的发展路线，由于易学易用，在几年前应用较广，而随着互联网规模的扩大，后者优势逐渐体现，目前已经成为主流。</p>
+<p>Node.js 本质上和 Perl 或 C++ 一样，都可以作为 CGI 扩展被调用，但它还可以跳过 HTTP 服务器，因为它本身就是。传统的架构中 HTTP 服务器的角色会由 Apache、Nginx、IIS 之类的软件来担任，而 Node.js 不需要。Node.js 提供了 http  模块，它是由 C++ 实现的，性能可靠，可以直接应用到生产环境。</p>
+<p>Node.js 和其他的语言相比的另一个显著区别，在于它的原始封装程度较低。例如 PHP 中可以访问  $_REQUEST  获取客户端的 POST 或 GET 请求，通常不需要直接处理 HTTP 协议。这些语言要求由 HTTP 服务器来调用，因此需要设置一个 HTTP 服务器来处理客户端的请求，HTTP 服务器通过 CGI 或其他方式调用脚本语言解释器，将运行的结果传递回HTTP 服务器，最终再把内容返回给客户端。而在 Node.js 中，很多工作需要自己来做（并不是都要自己动手，因为有第三方框架的帮助）。</p>
+<h4 id="使用-http-模块"><a href="#使用-http-模块" class="headerlink" title="使用 http  模块"></a>使用 http  模块</h4><p>Node.js 由于不需要另外的 HTTP 服务器，因此减少了一层抽象，给性能带来不少提升，但同时也因此而提高了开发难度。举例来说，要实现一个 POST 数据的表单，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span> = <span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"http://localhost:3000"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"title"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">"text"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个表单包含两个字段： title 和  text ，提交时以 POST 的方式将请求发送给 <a href="http://localhost:3000/。">http://localhost:3000/。</a> 假设我们要实现的功能是将这两个字段的东西原封不动地返回给用户，PHP 只需写两行代码，储存为 index.php 放在网站根目录下即可：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> $_POST[<span class="string">'title'</span>]</span><br><span class="line"><span class="keyword">echo</span> $_POST[<span class="string">'text'</span>]</span><br></pre></td></tr></table></figure>
+<p>在第三章使用了类似下面的方法（用 <code>http</code>模块）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">var</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> post = <span class="string">''</span>;</span><br><span class="line">	req.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</span><br><span class="line">		post += chunk;</span><br><span class="line">	&#125;);</span><br><span class="line">	req.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		post = querystring.parse(post);</span><br><span class="line">        res.write(post.title);</span><br><span class="line">        res.write(post.text);</span><br><span class="line">		res.end();</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;).listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>PHP 的实现要比Node.js容易得多。Node.js完成一个简单的任务需要这么复杂：先建立一个 <code>http</code>实例，在其请求处理函数手动编写 <code>req</code> 对象的事件监听器，当客户端数据到达时，将POST 数据暂存在闭包的变量中，直到 <code>end</code>事件触发，解析 POST 请求，处理后返回客户端。</p>
+<p>PHP之所以这么简单也是因为它很多事情都封装好了，而Node.js 的 <code>http</code> 模块则是底层的接口。尽管使用起来复制，但是可以帮助我们对于 HTTP 协议的理解更加清晰。</p>
+<p>实际上，Node.js 虽然提供了  <code>http</code> 模块，却不是让你直接用这个模块进行 Web 开发的。<code>http</code> 模块仅仅是一个 HTTP 服务器内核的封装，你可以用它做任何 HTTP 服务器能做的事情，不仅仅是做一个网站，甚至实现一个 HTTP 代理服务器都行。你如果想用它直接开发网站，那么就必须手动实现所有的东西了，小到一个 POST 请求，大到 Cookie、会话的管理。当你用这种方式建成一个网站的时候，你就几乎已经做好了一个完整的框架了。</p>
+<h4 id="Express-框架"><a href="#Express-框架" class="headerlink" title="Express 框架"></a>Express 框架</h4><p><code>npm</code> 提供了大量的第三方模块，其中 <code>Express</code> 是目前最稳定、使用最广泛，而且 Node.js 官方推荐的唯一一个 Web 开发框架。<a href="http://expressjs.com/">Express</a> 除了为  http 模块提供了更高层的接口外，还实现了许多功能，其中包括：</p>
+<ul>
+<li>路由控制</li>
+<li>模板解析支持</li>
+<li>动态视图</li>
+<li>用户会话</li>
+<li>CSRF 保护</li>
+<li>静态文件服务</li>
+<li>操作控制器</li>
+<li>访问日志</li>
+<li>缓存</li>
+<li>插件支持</li>
+</ul>
+<p>需要指出的是，Express 不是一个无所不包的全能框架，像 Rails 或 Django 那样实现了模板引擎甚至 ORM （Object Relation Model，对象关系模型）。架，多数功能只是对 HTTP 协议中常用操作的封装，更多的功能需要插件或者整合其他模块来完成。</p>
+<p>下面是 用 Express 重新实现的前面的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app =  express.createServer();</span><br><span class="line">app.use(express.bodyParser());</span><br><span class="line">app.all(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    res.send(req.body.title + req.body.text);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><h4 id="安装-Express"><a href="#安装-Express" class="headerlink" title="安装 Express"></a>安装 Express</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> npm install -g express</span></span><br></pre></td></tr></table></figure>
+<p>安装完成后， 使用 <code>express --help</code>  查看帮助信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;express --help</span><br><span class="line"></span><br><span class="line">  Usage: express [options] [dir]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Options:</span><br><span class="line"></span><br><span class="line">        --version        output the version number</span><br><span class="line">    -e, --ejs            add ejs engine support</span><br><span class="line">        --pug            add pug engine support</span><br><span class="line">        --hbs            add handlebars engine support</span><br><span class="line">    -H, --hogan          add hogan.js engine support</span><br><span class="line">    -v, --view &lt;engine&gt;  add view &lt;engine&gt; support (dust|ejs|hbs|hjs|jade|pug|tw</span><br><span class="line">ig|vash) (defaults to jade)</span><br><span class="line">        --no-view        use static html instead of view engine</span><br><span class="line">    -c, --css &lt;engine&gt;   add stylesheet &lt;engine&gt; support (less|stylus|compass|sa</span><br><span class="line">ss) (defaults to plain css)</span><br><span class="line">        --git            add .gitignore</span><br><span class="line">    -f, --force          force on non-empty directory</span><br><span class="line">    -h, --help           output usage information</span><br></pre></td></tr></table></figure>
+<p>Express 在初始化一个项目的时候需要指定模板引擎，默认支持Jade和ejs，为了降低学习难度推荐使用 ejs ，同时暂时不添加 CSS 引擎和会话支持。（ejs （Embedded JavaScript） 是一个标签替换引擎，其语法与 ASP、PHP 相似，易于学习，目前被广泛应用。Express 默认提供的引擎是 jade，它颠覆了传统的模板引擎，制定了一套完整的语法用来生成 HTML 的每个标签结构，功能强大但不易学习。）</p>
+<h4 id="建立工程"><a href="#建立工程" class="headerlink" title="建立工程"></a>建立工程</h4><p>通过以下命令建立网站基本结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">express -e microblog</span><br></pre></td></tr></table></figure>
+<p>当前目录下出现了子目录 microblog，并且产生了一些文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">F:\赖彬鸿\git-project\usual\LearnNodeJsCode\express&gt;express -e microblog</span><br><span class="line"></span><br><span class="line">  warning: option `--ejs' has been renamed to `--view=ejs'</span><br><span class="line"></span><br><span class="line">   create : microblog\</span><br><span class="line">   create : microblog\public\</span><br><span class="line">   create : microblog\public\javascripts\</span><br><span class="line">   create : microblog\public\images\</span><br><span class="line">   create : microblog\public\stylesheets\</span><br><span class="line">   create : microblog\public\stylesheets\style.css</span><br><span class="line">   create : microblog\routes\</span><br><span class="line">   create : microblog\routes\index.js</span><br><span class="line">   create : microblog\routes\users.js</span><br><span class="line">   create : microblog\views\</span><br><span class="line">   create : microblog\views\error.ejs</span><br><span class="line">   create : microblog\views\index.ejs</span><br><span class="line">   create : microblog\app.js</span><br><span class="line">   create : microblog\package.json</span><br><span class="line">   create : microblog\bin\</span><br><span class="line">   create : microblog\bin\www</span><br><span class="line"></span><br><span class="line">   change directory:</span><br><span class="line">     &gt; cd microblog</span><br><span class="line"></span><br><span class="line">   install dependencies:</span><br><span class="line">     &gt; npm install</span><br><span class="line"></span><br><span class="line">   run the app:</span><br><span class="line">     &gt; SET DEBUG=microblog:* &amp; npm start</span><br></pre></td></tr></table></figure>
+<p>按照提示进入 microblog 文件夹，安装依赖 ，打开 目录中的 <code>package.json</code> 文件，可以看到具体的内容。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"microblog"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"node ./bin/www"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"cookie-parser"</span>: <span class="string">"~1.4.3"</span>,</span><br><span class="line">    <span class="attr">"debug"</span>: <span class="string">"~2.6.9"</span>,</span><br><span class="line">    <span class="attr">"express"</span>: <span class="string">"~4.16.0"</span>,</span><br><span class="line">    <span class="attr">"http-errors"</span>: <span class="string">"~1.6.2"</span>,</span><br><span class="line">    <span class="attr">"jade"</span>: <span class="string">"~1.11.0"</span>,</span><br><span class="line">    <span class="attr">"morgan"</span>: <span class="string">"~1.9.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h4><p><code>npm start</code>启动服务器，可以看到以下内容，打开 <a href="http://localhost:3000/">http://localhost:3000/</a></p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-express.png" alt="express启动页面"></p>
+<h4 id="工程的结构"><a href="#工程的结构" class="headerlink" title="工程的结构"></a>工程的结构</h4><p>除了 package.json，它只产生了三个个 JavaScript 文件 app.js ， routes/index.js和routes/users.js。可以看出来这里将路由进行了分类，其中users.js 的是路由的路径前缀有user的。模板引擎 ejs 也有两个文件 index.ejs 和layout.ejs，此外还有样式表 style.css。</p>
+<h5 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createError = <span class="built_in">require</span>(<span class="string">'http-errors'</span>);</span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"><span class="keyword">var</span> logger = <span class="built_in">require</span>(<span class="string">'morgan'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> indexRouter = <span class="built_in">require</span>(<span class="string">'./routes/index'</span>);</span><br><span class="line"><span class="keyword">var</span> usersRouter = <span class="built_in">require</span>(<span class="string">'./routes/users'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// view engine setup</span></span><br><span class="line">app.set(<span class="string">'views'</span>, path.join(__dirname, <span class="string">'views'</span>));</span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line">app.use(logger(<span class="string">'dev'</span>));</span><br><span class="line">app.use(express.json());</span><br><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(cookieParser());</span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">'public'</span>)));</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/'</span>, indexRouter);</span><br><span class="line">app.use(<span class="string">'/users'</span>, usersRouter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// catch 404 and forward to error handler</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  next(createError(<span class="number">404</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// error handler</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// set locals, only providing error in development</span></span><br><span class="line">  res.locals.message = err.message;</span><br><span class="line">  res.locals.error = req.app.get(<span class="string">'env'</span>) === <span class="string">'development'</span> ? err : &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render the error page</span></span><br><span class="line">  res.status(err.status || <span class="number">500</span>);</span><br><span class="line">  res.render(<span class="string">'error'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = app;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>var indexRouter = require(‘./routes/index’); var usersRouter = require(‘./routes/users’);</p>
+</blockquote>
+<p>可以看出来 express 将路由分成了两个，并且进行了封装，在相对应的页面是用 <code>router.get</code>去替换教程中 <code>app.get</code>，然后再将 <code>router</code> exports  出来。</p>
+<p><code>app.set</code> 是 Express 的参数设置工具，接受一个键（key）和一个值（value），可用的参数如下所示。</p>
+<ul>
+<li><code>basepath</code> ：基础地址，通常用于 res.redirect() 跳转。</li>
+<li><code>views</code> ：视图文件的目录，存放模板文件。</li>
+<li><code>view engine</code> ：视图模板引擎。</li>
+<li><code>view options</code> ：全局视图参数对象。</li>
+<li><code>view cache</code> ：启用视图缓存。</li>
+<li><code>case sensitive routes</code> ：路径区分大小写。</li>
+<li><code>strict routing</code> ：严格路径，启用后不会忽略路径末尾的“  / ”。</li>
+<li><code>jsonp callback</code> ：开启透明的 JSONP 支持。</li>
+</ul>
+<h5 id="routes-index-js和routes-users-js"><a href="#routes-index-js和routes-users-js" class="headerlink" title="routes/index.js和routes/users.js"></a>routes/index.js和routes/users.js</h5><p>routes/index.js以及users.js 是路由文件，相当于控制器，用于组织展示的内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index.js </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">/* GET home page. */</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'index'</span>, &#123; <span class="attr">title</span>: <span class="string">'Express'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// users.js</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">/* GET users listing. */</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'respond with a resource'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+<p>两个文件的区别在于 users.js 的路由前面还有个 users的前缀，即是访问 <a href="http://localhost:3000/users">http://localhost:3000/users</a> ,才可以看到 <code>respond with a resource</code>。这个在 <code>app.js</code>中可以看出来。</p>
+<p><code>res.render(&#39;index&#39;, { title: &#39;Express&#39; })</code>,功能是调用模板解析引擎，翻译名为 <code>index</code> 的模板，并传入一个对象作为参数，这个对象只有一个属性，即  <code>title: &#39;Express&#39;</code> 。</p>
+<h5 id="index-ejs"><a href="#index-ejs" class="headerlink" title="index.ejs"></a>index.ejs</h5><p>ndex.ejs 是模板文件，即 routes/index.js 中调用的模板，内容是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&apos;stylesheet&apos; href=&apos;/stylesheets/style.css&apos; /&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Welcome to &lt;%= title %&gt;&lt;/p&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>它的基础是 HTML 语言，其中包含了形如  <code>&lt;%= title %&gt;</code>  的标签，功能是显示引用的变量，即  <code>res.render</code> 函数第二个参数传入的对象的属性。</p>
+<h3 id="路由控制"><a href="#路由控制" class="headerlink" title="路由控制"></a>路由控制</h3><h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p>当通过浏览器访问 app.js 建立的服务器时，会看到一个简单的页面，实际上它已经完成了许多透明的工作，现在就来解释一下它的工作机制，以帮助理解网站的整体架构。访问 <a href="http://localhost:3000，浏览器会向服务器发送以下请求：">http://localhost:3000，浏览器会向服务器发送以下请求：</a></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: localhost:3000</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">Pragma</span>: no-cache</span><br><span class="line"><span class="attribute">Cache-Control</span>: no-cache</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span>: 1</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.81 Safari/537.36</span><br><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Encoding</span>: gzip, deflate, br</span><br><span class="line"><span class="attribute">Accept-Language</span>: zh-CN,zh;q=0.9</span><br><span class="line"><span class="attribute">Cookie</span>: bdshare_firstime=1534228662871; scroll-cookie=0|/</span><br></pre></td></tr></table></figure>
+<p>其中第一行是请求的方法、路径和 HTTP 协议版本，后面若干行是 HTTP 请求头。 app  会解析请求的路径，调用相应的逻辑。最终视图模板生成 HTML 页面，返回给浏览器，返回的内容是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Express<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">'stylesheet'</span> <span class="attr">href</span>=<span class="string">'/stylesheets/style.css'</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Express<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Welcome to Express<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>浏览器在接收到内容以后，经过分析发现要获取 /stylesheets/style.css，因此会再次向服务器发起请求。app.js 中并没有一个路由规则指派到 /stylesheets/style.css，但  app 通过<code>app.use(express.static(__dirname + &#39;/public&#39;))</code>  配置了静态文件服务器，因此 /stylesheets/style.css 会定向到 <code>app.js</code> 所在目录的子目录中的文件 public/stylesheets/style.css，向客户端返回以下信息：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">X-Powered-By</span>: Express</span><br><span class="line"><span class="attribute">Accept-Ranges</span>: bytes</span><br><span class="line"><span class="attribute">Cache-Control</span>: public, max-age=0</span><br><span class="line"><span class="attribute">Last-Modified</span>: Fri, 21 Sep 2018 02:09:44 GMT</span><br><span class="line"><span class="attribute">ETag</span>: W/"6f-165f9e3dc52"</span><br><span class="line"><span class="attribute">Content-Type</span>: text/css; charset=UTF-8</span><br><span class="line"><span class="attribute">Content-Length</span>: 111</span><br><span class="line"><span class="attribute">Date</span>: Fri, 21 Sep 2018 02:25:45 GMT</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"></span><br><span class="line">body &#123;</span><br><span class="line">  <span class="attribute">padding</span>: 50px;</span><br><span class="line">  <span class="attribute">font</span>: 14px "Lucida Grande", Helvetica, Arial, sans-serif;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a &#123;</span><br><span class="line">  <span class="attribute">color</span>: #00B7FF;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由 Express 创建的网络架构如下图</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-express网站的架构.png" alt="express网站的架构"></p>
+<p>这是一个典型的 MVC 架构，浏览器发起请求，由路由控制器接受，根据不同的路径定向到不同的控制器。控制器处理用户的具体请求，可能会访问数据库中的对象，即模型部分。控制器还要访问模板引擎，生成视图的 HTML，最后再由控制器返回给浏览器，完成一次请求。</p>
+<h4 id="创建路由规则"><a href="#创建路由规则" class="headerlink" title="创建路由规则"></a>创建路由规则</h4><p>当我们在浏览器中访问譬如 <a href="http://localhost:3000/abc">http://localhost:3000/abc</a> 这样不存在的页面时，服务器会在响应头中返回 404 Not Found 错误,这是因为 /abc 是一个不存在的路由规则，而且它也不是一个 public 目录下的文件，所以Express返回了404 Not Found的错误。</p>
+<p>假设要创建一个地址为  /hello 的页面，内容是当前的服务器时间，在 routes/index.js 中加一行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'The time is '</span> + <span class="keyword">new</span> <span class="built_in">Date</span>().toString());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>重启 app.js，在浏览器中访问 <a href="http://localhost:3000/hello">http://localhost:3000/hello</a> ，就可以看到输出的时间。刷新网页看到时间的变化，同样可以在 routes/users.js 中添加，那就是要访问 <a href="http://localhost:3000/users/hello">http://localhost:3000/users/hello</a> .</p>
+<p>服务器在开始监听之前，设置好了所有的路由规则，当请求到达时直接分配到响应函数。routes.get 是路由规则创建函数，它接受两个参数，第一个参数是请求的路径，第二个参数是一个回调函数，该路由规则被触发时调用回调函数，其参数表传递三个参数，分别是  req，  res 和 next，表示请求信息，响应信息和<code>next()</code>在函数体内调用以将控制权交给下一个回调。</p>
+<h4 id="路径匹配"><a href="#路径匹配" class="headerlink" title="路径匹配"></a>路径匹配</h4><p>上面的例子是为固定的路径设置路由规则，Express 还支持更高级的路径匹配模式。例如想要展示一个用户的个人页面，路径为 <code>/users/[username]</code>，可以用下面的方法定义路由规则：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/users.js</span></span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/:username'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'user: '</span> + req.params.username);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>修改以后重启 app.js，访问 <a href="http://localhost:3000/users/lbh，">http://localhost:3000/users/lbh，</a> 可以看到页面显示了以下内容：</p>
+<blockquote>
+<p>user: lbh</p>
+</blockquote>
+<p>路径规则 <code>/:username</code> 会被自动编译为正则表达式，类似于 <code>\/user\/([^\/]+)\/?</code>这样的形式。路径参数可以在响应函数中通过 <code>req.params</code>  的属性访问。</p>
+<p>路径规则同样支持 JavaScript 正则表达式，例如  <code>router.get(\/user\/([^\/]+)\/?,callback)</code> 。这样的好处在于可以定义更加复杂的路径规则，而不同之处是匹配的参数是匿名的，因此需要通过 <code>req.params[0]</code> 、 <code>req.params[1]</code>  这样的形式访问。</p>
+<h4 id="REST-风格的路由规则"><a href="#REST-风格的路由规则" class="headerlink" title="REST 风格的路由规则"></a>REST 风格的路由规则</h4><p>Express 支持 REST 风格的请求方式，REST 的意思是 表征状态转移（Representational State Transfer），它是一种基于 HTTP 协议的网络应用的接口风格，充分利用 HTTP 的方法实现统一风格接口的服务。HTTP 协议定义了以下8种标准的方法。</p>
+<ul>
+<li>GET：请求获取指定资源。</li>
+<li><p>HEAD：请求指定资源的响应头。</p>
+</li>
+<li><p>POST：向指定资源提交数据。</p>
+</li>
+<li>PUT：请求服务器存储一个资源。</li>
+<li>DELETE：请求服务器删除指定资源。</li>
+<li>TRACE：回显服务器收到的请求，主要用于测试或诊断。</li>
+<li>CONNECT：HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器。</li>
+<li>OPTIONS：返回服务器支持的HTTP请求方法。</li>
+</ul>
+<p>其中我们经常用到的是 GET、POST、PUT 和 DELETE 方法。根据 REST 设计模式，这4种方法通常分别用于实现以下功能。</p>
+<ul>
+<li>GET：获取</li>
+<li>POST：新增</li>
+<li>PUT：更新</li>
+<li>DELETE：删除</li>
+</ul>
+<p>它们的特点</p>
+<table>
+<thead>
+<tr>
+<th>请求方式</th>
+<th>安 全</th>
+<th>幂 等</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>否</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p>所谓的安全是指没有副作用，即请求不会对资源产生变动，连续访问多次所获得的结果不受访问者的影响。而幂等指的是重复请求多次与请求一次的效果是一样的，比如获取和更新操作是幂等的，这与新增不同。删除也是幂等的，即重复删除一个资源，和删除一次是一样的。</p>
+<p>Express 对每种 HTTP 请求方法都设计了不同的路由绑定函数，例如前面例子全部是 <code>router.get</code> ，表示为该路径绑定了 GET 请求，向这个路径发起其他方式的请求不会被响应。</p>
+<p>下表是 Express 支持的所有 HTTP 请求的绑定函数。（没有封装前）</p>
+<table>
+<thead>
+<tr>
+<th>请求方式</th>
+<th>绑定函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>app.get(path, callback)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>app.post(path, callback)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>app.put(path, callback)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>app.delete(path, callback)</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>app.patch(path, callback)</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>app.trace(path, callback)</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>app.connect(path, callback)</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>app.options(path, callback)</td>
+</tr>
+<tr>
+<td>所有方法</td>
+<td>app.all(path, callback)</td>
+</tr>
+</tbody>
+</table>
+<p>绑定某个路径的 POST 请求，则可以用 <code>app.post(path, callback)</code>  的方法。需要注意的是 <code>app.all</code>  函数，它支持把所有的请求方式绑定到同一个响应函数，是一个非常灵活的函数。</p>
+<h4 id="控制权转移"><a href="#控制权转移" class="headerlink" title="控制权转移"></a>控制权转移</h4><p>Express 支持同一路径绑定多个路由响应函数，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">'/user/:username'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.send(<span class="string">'all methods captured'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/user/:username'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.send(<span class="string">'user: '</span> + req.params.username);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>但当你访问任何被这两条同样的规则匹配到的路径时，会发现请求总是被前一条路由规则捕获，后面的规则会被忽略。原因是 Express 在处理路由规则时，会优先匹配先定义的路由规则，因此后面相同的规则被屏蔽。</p>
+<p>Express 提供了路由控制权转移的方法，即回调函数的第三个参数 <code>next</code> ，通过调用next() ，会将路由控制权转移给后面的规则，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.all(<span class="string">'/user/:username'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.send(<span class="string">'all methods captured'</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;);</span><br><span class="line">app.get(<span class="string">'/user/:username'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.send(<span class="string">'user: '</span> + req.params.username);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当访问被匹配到的路径时，如 <a href="http://localhost:3000/user/lbh">http://localhost:3000/user/lbh</a> ，会发现终端中打印了  all methods captured ，而且浏览器中显示了  user: lbh 。这说明请求先被第一条路由规则捕获，完成 console.log  使用 <code>next()</code> 转移控制权，又被第二条规则捕获，向浏览器返回了信息。</p>
+<p>这是一个非常有用的工具，可以让我们轻易地实现中间件，而且还能提高代码的复用程度。例如我们针对一个用户查询信息和修改信息的操作，分别对应了 GET 和 PUT 操作，而两者共有的一个步骤是检查用户名是否合法，因此可以通过 <code>next()</code>  方法实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/users.js</span></span><br><span class="line"><span class="keyword">var</span> users = &#123;</span><br><span class="line">  <span class="string">'lbh'</span>: &#123;</span><br><span class="line">    name: <span class="string">'lbh'</span>,</span><br><span class="line">    website: <span class="string">'http://laibh.top'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">router.all(<span class="string">'/:username'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查用户是否存在</span></span><br><span class="line">  <span class="keyword">if</span> (users[req.params.username]) &#123;</span><br><span class="line">    next();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    next(<span class="keyword">new</span> <span class="built_in">Error</span>(req.params.username + <span class="string">' does not exist.'</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">router.get(<span class="string">'/:username'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 用户一定存在，直接展示</span></span><br><span class="line">  res.send(<span class="built_in">JSON</span>.stringify(users[req.params.username]));</span><br><span class="line">&#125;);</span><br><span class="line">router.put(<span class="string">'/:username'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 修改用户信息</span></span><br><span class="line">  res.send(<span class="string">'Done'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>访问 <a href="http://localhost:3000/users/lbh">http://localhost:3000/users/lbh</a> 可以看到：</p>
+<blockquote>
+<p>{“name”:”lbh”,”website”:”<a href="http://laibh.top&quot;}">http://laibh.top&quot;}</a></p>
+</blockquote>
+<p>访问其他网址，例如： <a href="http://localhost:3000/users/xxx，则会出现">http://localhost:3000/users/xxx，则会出现</a></p>
+<blockquote>
+<p>xxx does not exist.</p>
+</blockquote>
+<p>上面例子中， <code>router.all</code>  定义的这个路由规则实际上起到了中间件的作用，把相似请求的相同部分提取出来，有利于代码维护其他 <code>next</code> 方法如果接受了参数，即代表发生了错误。使用这种方法可以把错误检查分段化，降低代码耦合度。</p>
+<p>未完待续，后面即将讲模板引擎、建立微博网站、用户注册登录、发表微博等等</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-09-21-NodeJs-Part5上.html" title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（上）">http://laibh.top/2018-09-21-NodeJs-Part5上.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-09-20-NodeJs-Part4.html" rel="next" title="好玩的Nodejs —— Node.js核心模块">
+                <i class="fa fa-chevron-left"></i> 好玩的Nodejs —— Node.js核心模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-09-27-NodeJs-Part5中.html" rel="prev" title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（中）">
+                好玩的Nodejs —— 使用 Node.js进行 Web 开发（中） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Node-js进行-Web-开发"><span class="nav-number">1.</span> <span class="nav-text">使用 Node.js进行 Web 开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-http-模块"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用 http  模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express-框架"><span class="nav-number">1.1.2.</span> <span class="nav-text">Express 框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速开始"><span class="nav-number">1.2.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-Express"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装 Express</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建立工程"><span class="nav-number">1.2.2.</span> <span class="nav-text">建立工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动服务器"><span class="nav-number">1.2.3.</span> <span class="nav-text">启动服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工程的结构"><span class="nav-number">1.2.4.</span> <span class="nav-text">工程的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#app-js"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">app.js</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#routes-index-js和routes-users-js"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">routes/index.js和routes/users.js</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#index-ejs"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">index.ejs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由控制"><span class="nav-number">1.3.</span> <span class="nav-text">路由控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作原理"><span class="nav-number">1.3.1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建路由规则"><span class="nav-number">1.3.2.</span> <span class="nav-text">创建路由规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路径匹配"><span class="nav-number">1.3.3.</span> <span class="nav-text">路径匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REST-风格的路由规则"><span class="nav-number">1.3.4.</span> <span class="nav-text">REST 风格的路由规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制权转移"><span class="nav-number">1.3.5.</span> <span class="nav-text">控制权转移</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

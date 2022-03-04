@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本章学习使用字典和散列表来存储唯一值（不重复的值）的数据结构。集合、字典和散列表可以存储不重复的值。在集合中，我们感兴趣的是每个值本身，并把它作为主要元素。而字典和散列表中都是用 [键，值]的形式来存储数据。但是两个数据结构的实现方式略有不同。 第七章 字典和散列表字典集合表示一组互不相同的元素（不重复的元素）。在字典里，存储的是 [键，值] 对，其中键名是用来查询特定元素的。字典和结合很相似，集">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表">
+<meta property="og:url" content="http://laibh.top/2018-11-02-JavaScipt数据结构与算法Part7.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="本章学习使用字典和散列表来存储唯一值（不重复的值）的数据结构。集合、字典和散列表可以存储不重复的值。在集合中，我们感兴趣的是每个值本身，并把它作为主要元素。而字典和散列表中都是用 [键，值]的形式来存储数据。但是两个数据结构的实现方式略有不同。 第七章 字典和散列表字典集合表示一组互不相同的元素（不重复的元素）。在字典里，存储的是 [键，值] 对，其中键名是用来查询特定元素的。字典和结合很相似，集">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-散列表-分离链接.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表">
+<meta name="twitter:description" content="本章学习使用字典和散列表来存储唯一值（不重复的值）的数据结构。集合、字典和散列表可以存储不重复的值。在集合中，我们感兴趣的是每个值本身，并把它作为主要元素。而字典和散列表中都是用 [键，值]的形式来存储数据。但是两个数据结构的实现方式略有不同。 第七章 字典和散列表字典集合表示一组互不相同的元素（不重复的元素）。在字典里，存储的是 [键，值] 对，其中键名是用来查询特定元素的。字典和结合很相似，集">
+<meta name="twitter:image" content="http://laibh.top/images/js数据结构与算法-散列表-分离链接.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-11-02-JavaScipt数据结构与算法Part7.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-11-02-JavaScipt数据结构与算法Part7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-02T16:13:41+08:00">
+                2018-11-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-11-02-JavaScipt数据结构与算法Part7.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,553
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章学习使用字典和散列表来存储唯一值（不重复的值）的数据结构。<br>集合、字典和散列表可以存储不重复的值。在集合中，我们感兴趣的是每个值本身，并把它作为主要元素。而字典和散列表中都是用 <code>[键，值]</code>的形式来存储数据。但是两个数据结构的实现方式略有不同。</p>
+<h2 id="第七章-字典和散列表"><a href="#第七章-字典和散列表" class="headerlink" title="第七章 字典和散列表"></a>第七章 字典和散列表</h2><h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><p>集合表示一组互不相同的元素（不重复的元素）。在字典里，存储的是 <code>[键，值]</code> 对，其中键名是用来查询特定元素的。字典和结合很相似，集合以 <code>[值，值]</code> 的形式存储元素，字典则是以 <code>[键，值]</code>的形式来存储元素。字典也成为映射。</p>
+<h3 id="创建字典"><a href="#创建字典" class="headerlink" title="创建字典"></a>创建字典</h3><p>与 Set 类相似，ES6 中也包含了一个 Map 类的实现，即我们所说的字典。</p>
+<p>我们在本章中，将要实现的是以ES6 中 Map 类的实现为基础的。你会发现它跟 Set 类很相似（但不同与存储 <code>[值，值]</code>对的形式，我们将要存储的是 <code>[键，值]</code>对。）</p>
+<p>下面是我们的 Dictionary 类的骨架：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dictionary</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> items = &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们要声明一些 映射/ 字典 所能使用的方法。</p>
+<ul>
+<li>set（key,value）：想字典中添加新的元素。</li>
+<li>delete（key）：通过使用键值来从字典中移除键值对应的数据值</li>
+<li>has（key）：如果某个键值存在于这个字典，则返回true,没有则返回 false</li>
+<li>get（key）：通过键值查找特定的数值并返回</li>
+<li>clear（）：键这个字典中的所有元素全部删除</li>
+<li>size（）：返回字典所包含元素的数量。与数组的 length 相似</li>
+<li>keys（）：将字典所包含的所有键名以数组形式返回</li>
+<li>values（）：将字典所包含的所有数值以数组形式返回。</li>
+</ul>
+<h3 id="has-和-set-方法"><a href="#has-和-set-方法" class="headerlink" title="has 和 set 方法"></a>has 和 set 方法</h3><p>首先要实现 has 这个方法，因为它会被 set 和 remove 其他方法调用。我么可以通过以下代码实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.has = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.hasOwnProperty(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法 的实现和我们之前在 Set 类中的实现是一样的。我们使用 JavaScript 中的 in 操作符来验证一个 key 是否是 items 对象的一个属性。</p>
+<p>然后就是 set 方法的实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.set = <span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">    items[key] = value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法接受一个 key 和 一个 value 作为参数。我们直接将 value 设为 items 对象的 key 属性的值。它可以用来给字典添加一个新的值，或者用来更新一个已有的值。</p>
+<h3 id="delete方法"><a href="#delete方法" class="headerlink" title="delete方法"></a>delete方法</h3><p>它和 Set 类的 delete 方法很类似，唯一不同的是，我们将先搜索 key (而不是 value)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.delete = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.has(key))&#123;</span><br><span class="line">        <span class="keyword">delete</span> items[key];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以使用 JavaScript 中的 delete 操作符来删除 items 对象中的 key 属性。</p>
+<h3 id="get-和-values-方法"><a href="#get-和-values-方法" class="headerlink" title="get 和 values 方法"></a>get 和 values 方法</h3><p>如果我们想在字典里查找一个特定的项，并检索它的值，可以通过以下方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.get = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.has(key) ? items[key] : <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>get 方法会首先通过has 方法验证是否有 key 值存在，存在就返回该值，没有就返回一个 undefined 。</p>
+<p>下面是 values 方法，以数组的形式返回 字典中所有的 values 的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> values = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> k i items)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.has(k))&#123;</span><br><span class="line">            values.push(items[k]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> values;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="clear、size、keys-和-getItems-方法"><a href="#clear、size、keys-和-getItems-方法" class="headerlink" title="clear、size、keys 和 getItems 方法"></a>clear、size、keys 和 getItems 方法</h3><p>clear 和 size 方法和 集合那章的实现是完全一模一样的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.items = &#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">let</span> k <span class="keyword">in</span> items)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.has(k))&#123;</span><br><span class="line">            ++count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>keys 方法返回所有用于标识值的键名，可以使用 Object 类的 keys 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.keys = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.keys(items);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，验证 items 属性的输出值，我们加多一个返回 items 变量的方法，叫做 getItems</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getItem = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用-Dictionary-类"><a href="#使用-Dictionary-类" class="headerlink" title="使用 Dictionary 类"></a>使用 Dictionary 类</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dictionary = <span class="keyword">new</span> Dictionary();</span><br><span class="line">dictionary.set(<span class="string">'mail'</span>,<span class="string">'544289495@qq.com'</span>);</span><br><span class="line">dictionary.set(<span class="string">'website'</span>,<span class="string">'http://laibh.top'</span>);</span><br><span class="line">dictionary.set(<span class="string">'name'</span>,<span class="string">'lbh'</span>);</span><br><span class="line">dictionary.set(<span class="string">'word'</span>,<span class="string">'1414'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(dictionary.getItem()); <span class="comment">// &#123;mail: "544289495@qq.com", website: "http://laibh.top", name: "lbh", word: "1414"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.get(<span class="string">'word'</span>)); <span class="comment">// 1414</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.size()); <span class="comment">// 4</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.keys()); <span class="comment">// ["mail", "website", "name", "word"]</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.values()); <span class="comment">// ["544289495@qq.com", "http://laibh.top", "lbh", "1414"]</span></span><br><span class="line"></span><br><span class="line">dictionary.delete(<span class="string">'word'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.getItem()); <span class="comment">// &#123;mail: "544289495@qq.com", website: "http://laibh.top", name: "lbh"&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.get(<span class="string">'word'</span>)); <span class="comment">// undefined	</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.size()); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.keys());	<span class="comment">// ["mail", "website", "name"]</span></span><br><span class="line"><span class="built_in">console</span>.log(dictionary.values()); <span class="comment">// ["544289495@qq.com", "http://laibh.top", "lbh"]</span></span><br></pre></td></tr></table></figure>
+<h3 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h3><p>本节中，你将会学到 HashTable 类，也叫 HashMap 类，它是 Dictionary 类的一种散列表实现方式。</p>
+<p><strong>散列算法</strong>的作用是尽可能快地在数据结构中找到一个值。之前的章节里面你已经知道要在数据结构中获得一个值（使用 get 方法），需要遍历整个数据结构来找到它。如果使用散列函数，就知道值的具体位置，因此能够快速检索到该值。散列函数的作用是给定一个键值，然后返回值在表中的地址。</p>
+<h3 id="创建散列表"><a href="#创建散列表" class="headerlink" title="创建散列表"></a>创建散列表</h3><p>我们将使用数组来表示我们的数据结构，与之前一样，从搭建类的骨架开始</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HashTable</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> table = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，给类加一些方法。我们给每个类实现三个基本方法.</p>
+<ul>
+<li>put（key,value）：向散列表中增加一个新的项（也能更新散列表）</li>
+<li>remove（key）：根据键值从散列表中移除值</li>
+<li>get（key）：返回根据键值检索到的特定的值。</li>
+</ul>
+<p>在实现三个方法之前，要实现的第一个方法就是散列函数，它是 HashTable 类中的一个私有方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> loseloseHashCode = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> hash = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; key.length; i++)&#123;</span><br><span class="line">        hash += key.charCodeAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hash % <span class="number">37</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>给定一个 key 参数，我们就能根据组成 key 的每个字符的 ASCII码值的和的得到一个数字。所以，首先需要一个变量来存储这个总和。然后，遍历 key 并将从 ASCII 表中查到的每个字符对应的 ASCII 值加到 hash 变量中（可以使用String 类的 charCodeAt方法）。最后，返回 hash 值。为了得到较小的值，我们会使用 hash 值和一个任意的数做除法的余数。</p>
+<p>现在有了散列函数，基于可以实现 put 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.put = <span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> position  = loseloseHashCode(key);</span><br><span class="line">    <span class="built_in">console</span>.log(position + <span class="string">'-'</span> + key);</span><br><span class="line">    table[position] = value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，根据给定的 key ，我们需要根据所创建的散列函数计算出它在表中的位置。为了方便展示消息，我们需要计算出的位置输出至控制台。由于它不是必需的，我们也可以选择省略。然后要做的就是，将 value 参数添加到 用散列函数计算出的对应的位置上。</p>
+<p>从 HashTable 实例中查找一个值也很简单。为此我们会实现一个 get 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.get = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> table[loseloseHashCode(key)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们会使用所创建的散列函数来求出所对应的位置。这个函数会返回值的位置，因为我们需要做的就是根据这个位置来从数组 table 中获得这个值。</p>
+<p>实现的最后一个方法是 remove 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    table[loseloseHashCode(key)] = <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要从 HashTable 实例中移除一个元素，只需要求出元素的位置并赋值为 undefined。</p>
+<p>对于 HashTable 类来说，我们不需要像链表一样从 table 数组中将位置也移除。由于元素分布整个数组范围内，一些位置会没有任何元素占据，并默认为 undefined值。我们也不能将位置本身刚从数组中移除（这样会改变元素的位置），否则，当下次需要获得或者是移除一个元素的时候，这个元素会不在我们用散列函数求出的位置上。</p>
+<h3 id="使用-HashTable-类"><a href="#使用-HashTable-类" class="headerlink" title="使用 HashTable 类"></a>使用 HashTable 类</h3><p>测试 HashTable 类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hashTable = <span class="keyword">new</span> HashTable();</span><br><span class="line"></span><br><span class="line">hashTable.put(<span class="string">'mail'</span>,<span class="string">'544289495@qq.com'</span>); <span class="comment">// 12-mail</span></span><br><span class="line">hashTable.put(<span class="string">'website'</span>,<span class="string">'http://laibh.top'</span>); <span class="comment">// 15-website</span></span><br><span class="line">hashTable.put(<span class="string">'name'</span>,<span class="string">'lbh'</span>); <span class="comment">// 10-name</span></span><br><span class="line">hashTable.put(<span class="string">'word'</span>,<span class="string">'1414'</span>); <span class="comment">// 0-word</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hashTable.get(<span class="string">'website'</span>)); <span class="comment">// http://laibh.top</span></span><br><span class="line"><span class="built_in">console</span>.log(hashTable.get(<span class="string">'word'</span>)); <span class="comment">// 1414</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hashTable.remove(<span class="string">'word'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(hashTable.get(<span class="string">'website'</span>)); <span class="comment">// http://laibh.top	</span></span><br><span class="line"><span class="built_in">console</span>.log(hashTable.get(<span class="string">'word'</span>));	<span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<h3 id="散列表和散列结合"><a href="#散列表和散列结合" class="headerlink" title="散列表和散列结合"></a>散列表和散列结合</h3><p>散列表和散列映射是一样的，在一些编程语言中，还有一种叫做散列集合的实现。散列集合由一个集合构成，但是插入、移除或获取元素时，使用的还是散列函数。我们可以重用本章中实现的所有代码来实现散列集合，不同之处在于，不再添加键值对，而是只插入而没有键。例如，可以使用散列集合来存储所有的英文单词（不包括它的定义）。和集合相似，散列集合值存储唯一的不重复的值。</p>
+<h3 id="处理列表中更多冲突"><a href="#处理列表中更多冲突" class="headerlink" title="处理列表中更多冲突"></a>处理列表中更多冲突</h3><p>有时候，一些表会有相同的散列值。不同的值在散列表中对应相同的位置的时候，我们称其为冲突。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">hashTable.put(<span class="string">'Gandalf'</span>,<span class="string">'Gandalf@qq.com'</span>); </span><br><span class="line">hashTable.put(<span class="string">'John'</span>,<span class="string">'John@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Tyrion'</span>,<span class="string">'Tyrion@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Aaron'</span>,<span class="string">'Aaron@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Donnie'</span>,<span class="string">'Donnie@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Ana'</span>,<span class="string">'Ana@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Jonathan'</span>,<span class="string">'Jonathan@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Jamie'</span>,<span class="string">'Jamie@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Sue'</span>,<span class="string">'Sue@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Mindy'</span>,<span class="string">'Mindy@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Paul'</span>,<span class="string">'Paul@qq.com'</span>);</span><br><span class="line">hashTable.put(<span class="string">'Nathan'</span>,<span class="string">'Nathan@qq.com'</span>);</span><br></pre></td></tr></table></figure>
+<p>输出结果如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">19</span>-Gandalf</span><br><span class="line"><span class="number">29</span>-John</span><br><span class="line"><span class="number">16</span>-Tyrion</span><br><span class="line"><span class="number">16</span>-Aaron</span><br><span class="line"><span class="number">13</span>-Donnie</span><br><span class="line"><span class="number">13</span>-Ana</span><br><span class="line"><span class="number">5</span>-Jonathan</span><br><span class="line"><span class="number">5</span>-Jamie</span><br><span class="line"><span class="number">5</span>-Sue</span><br><span class="line"><span class="number">32</span>-Mindy</span><br><span class="line"><span class="number">32</span>-Paul</span><br><span class="line"><span class="number">10</span>-Nathan</span><br></pre></td></tr></table></figure>
+<p>可以看出来，上面有很多相同的散列值。</p>
+<p>为了获得结果，我们来实现一个print 的辅助函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; table.length; ++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(table[i] !== <span class="literal">undefined</span>)&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(i + <span class="string">':'</span> + table[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行 print 函数,得到以下输出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>:Sue@qq.com</span><br><span class="line"><span class="number">10</span>:Nathan@qq.com</span><br><span class="line"><span class="number">13</span>:Ana@qq.com</span><br><span class="line"><span class="number">16</span>:Aaron@qq.com</span><br><span class="line"><span class="number">19</span>:Gandalf@qq.com</span><br><span class="line"><span class="number">29</span>:John@qq.com</span><br><span class="line"><span class="number">32</span>:Paul@qq.com</span><br></pre></td></tr></table></figure>
+<p>可以看出来，按照先后的顺序，有相同 散列值的被后面的覆盖了。</p>
+<p>使用一个数据结构来保存数据的目的显然不是去丢失这些数据，而是通过某个方法将它们全部保存起来。因此，当这种情况发生的时候，处理冲突的方法有几种：分离链接、线性探查、双散列法。</p>
+<p>这里介绍第一种方法</p>
+<h3 id="分离链接"><a href="#分离链接" class="headerlink" title="分离链接"></a>分离链接</h3><p>分离链接法包括为散列表的每一个位置创建一个链表并将元素存储在里面。它是解决冲突的最简单的方法，但是它在 HashTable 实例之外还需要额外的存储空间。</p>
+<p>例如：我们在之前的测试代码中使用分离链接的话，输出结果会是这样的：</p>
+<p><img src="/images/js数据结构与算法-散列表-分离链接.png" alt="散列表-分离链接"></p>
+<p>在位置5上，将会有包含3个元素的 LinkedList 实例;在位置13、16、32上，将会有包含两个元素的 LinkedList 实例;在位置10、19和29上，将会有包含单个元素的 LinkedList 实例。</p>
+<p>对于分离链接和线性探查来说，只需要重写三个方法：put、get和remove。这三个方法在每种技术实现中都是不同的。</p>
+<p>为了实现一个使用分离链接的 HashTable 实例，我们需要一个新的辅助类来表示将要加入 LinkedList 实例的元素，我们管它叫 ValuePair 类（在 HashTable 类内部定义）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ValuePair = <span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.key = key;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'['</span> + <span class="keyword">this</span>.key + <span class="string">'-'</span> + <span class="keyword">this</span>.value + <span class="string">']'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类只会将 key 和 value 存储在一个 Object 实例汇中，我们也重写了 toString 方法，以便于杂浏览器控制台输出结果。</p>
+<h3 id="put-方法"><a href="#put-方法" class="headerlink" title="put 方法"></a>put 方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.put = <span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> position  = loseloseHashCode(key);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(table[position] !== <span class="literal">undefined</span>)&#123;</span><br><span class="line">        table[position] = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    table[position].append(<span class="keyword">new</span> ValuePair(key,value));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个方法中，将验证要加入新元素的位置是否已经被占据，如果这个位置是第一次被加入元素，我们会在这个位置上初始化一个 LinkedList 类的实例。然后使用 LinkedList里面的append 方法来向LinkedList 实例添加一个 ValuePair 实例（键和值）</p>
+<h3 id="get-方法"><a href="#get-方法" class="headerlink" title="get 方法"></a>get 方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.get = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> position = loseloseHashCode(key);</span><br><span class="line">    <span class="keyword">if</span>(table[position] !== <span class="literal">undefined</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历链表来寻找键/值</span></span><br><span class="line">        <span class="keyword">var</span> current = table[position].getHead();</span><br><span class="line">        <span class="keyword">while</span>(current.next)&#123;</span><br><span class="line">            <span class="keyword">if</span>(current.element.key === key)&#123;</span><br><span class="line">                <span class="keyword">return</span> current.element.value;</span><br><span class="line">            &#125;</span><br><span class="line">            current = current.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 检查元素在链表的第一个或者是最后一个</span></span><br><span class="line">        <span class="keyword">if</span>(current.element.key ==== key)&#123;</span><br><span class="line">            <span class="keyword">return</span> current.element.value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先要判断在特定位置上面是否有元素存在，没有则返回一个 undefined 。反之则遍历链表来寻找我们需要的元素，先获取链表表头的引用，然后就可以从链表的头部遍历到尾部</p>
+<p>Node 链表包含 next 和 element 属性。而 element 属性又是 ValuePair 的实例，所以它又有 value 和 key 属性。可以通过 current.element.key 来获得 Node链表的 key 属性，并通过比较它来确定它是否就是我们要找的键。key 相同就返回 Node 值，不相同，就继续遍历。</p>
+<p>如果要找的元素是链表的第一个或者是最后一个节点，就不会进入 while 循环，因此需要在后面加多一个判断。</p>
+<h3 id="remove-方法"><a href="#remove-方法" class="headerlink" title="remove 方法"></a>remove 方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> position = loseloseHashCode(key);</span><br><span class="line">    <span class="keyword">if</span>(table[position] !== <span class="literal">undefined</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> current = table[position].getHead();</span><br><span class="line">        <span class="keyword">while</span>(current.next)&#123;</span><br><span class="line">            <span class="keyword">if</span>(current.element.key === key)&#123;</span><br><span class="line">                table[position].remove(current.element);</span><br><span class="line">                <span class="keyword">if</span>(table[position].isEmpty())&#123;</span><br><span class="line">                    table[position] = <span class="literal">undefined</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            current = current.next;	</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查是否为第一个或者是最后一个元素</span></span><br><span class="line">        <span class="keyword">if</span>(current.element.key === key)&#123;</span><br><span class="line">            table[position].remove(current.element);				</span><br><span class="line">            <span class="keyword">if</span>(table[position].isEmpty())&#123;</span><br><span class="line">                table[position] = <span class="literal">undefined</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 remove方法中，我们使用和get 方法一样的步骤找到要找的元素。遍历 LinkedList 实例，如果链表中的 current 元素就是我们要找的元素，使用 remove 方法将其从链表中移除，然后进一步额外的验证，如果链表为空，就将散列表这个位置设为 undefined ,这样搜索一个元素或打印它的内容的时候，就可以跳过这个位置。最后返回 true 表示整个元素已经被移除或者在最后返回 false 表示整个元素在散列表中不存在。同样，和 get 方法一样，处理元素在第一个或者最后一个的情况。</p>
+<p>重写了这三个方法，我们就拥有了一个分离链接法来处理冲突的HashMap 实例了。</p>
+<p>重新运行之前的例子，会得到以下结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>:[Jonathan-Jonathan@qq.com]-[Jamie-Jamie@qq.com]-[Sue-Sue@qq.com]</span><br><span class="line"><span class="number">10</span>:[Nathan-Nathan@qq.com]</span><br><span class="line"><span class="number">13</span>:[Donnie-Donnie@qq.com]-[Ana-Ana@qq.com]</span><br><span class="line"><span class="number">16</span>:[Tyrion-Tyrion@qq.com]-[Aaron-Aaron@qq.com]</span><br><span class="line"><span class="number">19</span>:[Gandalf-Gandalf@qq.com]</span><br><span class="line"><span class="number">29</span>:[John-John@qq.com]</span><br><span class="line"><span class="number">32</span>:[Mindy-Mindy@qq.com]-[Paul-Paul@qq.com]</span><br></pre></td></tr></table></figure>
+<h3 id="创建更好的散列函数"><a href="#创建更好的散列函数" class="headerlink" title="创建更好的散列函数"></a>创建更好的散列函数</h3><p>我们实现的 <code>lose lose</code>散列函数并不是一个表现良好的散列函数。因为它会产生太多的冲突。一个表现良好的散列函数是由几个方面构成的：插入和检索元素的时间（即性能），当然也包括较低的冲突可能性。</p>
+<p>另一个可以实现的比 <code>lose lose</code> 更好的散列函数是 djb2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> djb2HashCode = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> hash = <span class="number">5381</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; key.length; i++)&#123;</span><br><span class="line">        hash = hash* <span class="number">33</span> + key.charCodeAt(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hash % <span class="number">1013</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它包括初始化一个 hash 变量并赋值一个质数，然后迭代参数 key ，将 hash 与参数33相乘</p>
+<p>，并和当前迭代到的字符的 ASCII码值相加。</p>
+<p>最后，我们将使用相加的和于另一个随机质数相除的余数。</p>
+<p>这并不是最好的散列函数，但是是社区最被推崇的散列函数之一。</p>
+<h3 id="ES6——Map类"><a href="#ES6——Map类" class="headerlink" title="ES6——Map类"></a>ES6——Map类</h3><p>ES6中有Map,我们可以基于这个类来开发Dictionary 类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">map.set(<span class="string">'Gandalf'</span>,<span class="string">'Gandalf@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'John'</span>,<span class="string">'John@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Tyrion'</span>,<span class="string">'Tyrion@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Aaron'</span>,<span class="string">'Aaron@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Donnie'</span>,<span class="string">'Donnie@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Ana'</span>,<span class="string">'Ana@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Jonathan'</span>,<span class="string">'Jonathan@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Jamie'</span>,<span class="string">'Jamie@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Sue'</span>,<span class="string">'Sue@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Mindy'</span>,<span class="string">'Mindy@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Paul'</span>,<span class="string">'Paul@qq.com'</span>);</span><br><span class="line">map.set(<span class="string">'Nathan'</span>,<span class="string">'Nathan@qq.com'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(map.has(<span class="string">'Gandalf'</span>)); <span class="comment">//true	</span></span><br><span class="line"><span class="built_in">console</span>.log(map.size); <span class="comment">// 12</span></span><br><span class="line"><span class="built_in">console</span>.log(map.keys()); <span class="comment">// MapIterator</span></span><br><span class="line"><span class="built_in">console</span>.log(map.values());	<span class="comment">// MapIterator</span></span><br><span class="line"><span class="built_in">console</span>.log(map.get(<span class="string">'Gandalf'</span>)); <span class="comment">// Gandalf@qq.com</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，values 和 keys 方法返回都是 MapIterator，而不是值或键构成的数组。另一个区别是，size 是属性。</p>
+<p>删除 map 中的元素可以用 delete 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map.delete(<span class="string">'Gandalf'</span>);</span><br></pre></td></tr></table></figure>
+<p>clear 方法会重置 map 数据结构，这跟我们在之前的实现时一样的。</p>
+<h3 id="ES6——WeakMap-类-和-WeakSet-类"><a href="#ES6——WeakMap-类-和-WeakSet-类" class="headerlink" title="ES6——WeakMap 类 和 WeakSet 类"></a>ES6——WeakMap 类 和 WeakSet 类</h3><p>除了 Set 和 Map 两种新的数据结构，ES6还增加了它们的弱化版本，WeakMap 和 WeakSet  类。</p>
+<p>基本上，Map 和 Set  与其弱化版本之间仅有的区别是</p>
+<ul>
+<li>WeakMap 和 WeakSet  类没有 entries、keys、values 等方法。</li>
+<li>只能用对象作为键</li>
+</ul>
+<p>创建和使用这两个类主要是为了性能。没有强引用的键，这使得JavaScript 的垃圾回收器可以从中清除整个入口。</p>
+<p>另外的一个优点是，必须用键才可以取出值。这些类没有 entries 、keys、values 等迭代器方法，因此，除非你知道键，否则没有办法取出值。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>本章，我们学习了字典的相关知识，了解了如何添加、移除和获取元素已经其他的一些方法，我们还了解了字典和集合的不同之处。</p>
+<p>学习了散列运算，知道该怎么去创建一个散列表数据结构，如何创建一个散列函数。</p>
+<p>下一章，我们将学习一种新的数据结构——树。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-11-02-JavaScipt数据结构与算法Part7.html" title="为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表">http://laibh.top/2018-11-02-JavaScipt数据结构与算法Part7.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-11-01-JavaScipt数据结构与算法Part6.html" rel="next" title="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">
+                <i class="fa fa-chevron-left"></i> 为什么我要放弃javaScript数据结构与算法（第六章）—— 集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-06-JavaScipt数据结构与算法Part9.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第九章）—— 图">
+                为什么我要放弃javaScript数据结构与算法（第九章）—— 图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第七章-字典和散列表"><span class="nav-number">1.</span> <span class="nav-text">第七章 字典和散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">1.1.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建字典"><span class="nav-number">1.2.</span> <span class="nav-text">创建字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#has-和-set-方法"><span class="nav-number">1.3.</span> <span class="nav-text">has 和 set 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete方法"><span class="nav-number">1.4.</span> <span class="nav-text">delete方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-和-values-方法"><span class="nav-number">1.5.</span> <span class="nav-text">get 和 values 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear、size、keys-和-getItems-方法"><span class="nav-number">1.6.</span> <span class="nav-text">clear、size、keys 和 getItems 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Dictionary-类"><span class="nav-number">1.7.</span> <span class="nav-text">使用 Dictionary 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散列表"><span class="nav-number">1.8.</span> <span class="nav-text">散列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建散列表"><span class="nav-number">1.9.</span> <span class="nav-text">创建散列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-HashTable-类"><span class="nav-number">1.10.</span> <span class="nav-text">使用 HashTable 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#散列表和散列结合"><span class="nav-number">1.11.</span> <span class="nav-text">散列表和散列结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理列表中更多冲突"><span class="nav-number">1.12.</span> <span class="nav-text">处理列表中更多冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分离链接"><span class="nav-number">1.13.</span> <span class="nav-text">分离链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-方法"><span class="nav-number">1.14.</span> <span class="nav-text">put 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-方法"><span class="nav-number">1.15.</span> <span class="nav-text">get 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#remove-方法"><span class="nav-number">1.16.</span> <span class="nav-text">remove 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建更好的散列函数"><span class="nav-number">1.17.</span> <span class="nav-text">创建更好的散列函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6——Map类"><span class="nav-number">1.18.</span> <span class="nav-text">ES6——Map类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6——WeakMap-类-和-WeakSet-类"><span class="nav-number">1.19.</span> <span class="nav-text">ES6——WeakMap 类 和 WeakSet 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.20.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

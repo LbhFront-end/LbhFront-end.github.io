@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="你不知道的JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="这个系列的作品是上一次当当网有活动买的，记得是上一年九月份开学季的时候了。后面一直有其他的事情，或者自身一些因素，迟迟没有开封这本书。今天立下一个 flag，希望可以在两个月内看完并记录这个系列的三本书，保持学习的激情，不断弥补自己的基础不够扎实的缺点。 作者的github 书籍的购买链接，自己搜。 你不知道的JavaScript(上)——原型上一章讲了对象，下面介绍和类相关的对象编程，在研究类的">
+<meta name="keywords" content="你不知道的JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的JavaScript(上)——原型">
+<meta property="og:url" content="http://laibh.top/2019-01-22-你不知道的JavaScript(上)——原型.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="这个系列的作品是上一次当当网有活动买的，记得是上一年九月份开学季的时候了。后面一直有其他的事情，或者自身一些因素，迟迟没有开封这本书。今天立下一个 flag，希望可以在两个月内看完并记录这个系列的三本书，保持学习的激情，不断弥补自己的基础不够扎实的缺点。 作者的github 书籍的购买链接，自己搜。 你不知道的JavaScript(上)——原型上一章讲了对象，下面介绍和类相关的对象编程，在研究类的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你不知道的JavaScript(上)——原型">
+<meta name="twitter:description" content="这个系列的作品是上一次当当网有活动买的，记得是上一年九月份开学季的时候了。后面一直有其他的事情，或者自身一些因素，迟迟没有开封这本书。今天立下一个 flag，希望可以在两个月内看完并记录这个系列的三本书，保持学习的激情，不断弥补自己的基础不够扎实的缺点。 作者的github 书籍的购买链接，自己搜。 你不知道的JavaScript(上)——原型上一章讲了对象，下面介绍和类相关的对象编程，在研究类的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2019-01-22-你不知道的JavaScript(上)——原型.html"/>
+
+
+
+
+
+  <title>你不知道的JavaScript(上)——原型 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2019-01-22-你不知道的JavaScript(上)——原型.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">你不知道的JavaScript(上)——原型</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-22T18:30:00+08:00">
+                2019-01-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019-01-22-你不知道的JavaScript(上)——原型.html" class="leancloud_visitors" data-flag-title="你不知道的JavaScript(上)——原型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  8,631
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这个系列的作品是上一次当当网有活动买的，记得是上一年九月份开学季的时候了。后面一直有其他的事情，或者自身一些因素，迟迟没有开封这本书。今天立下一个 flag，希望可以在两个月内看完并记录这个系列的三本书，保持学习的激情，不断弥补自己的基础不够扎实的缺点。</p>
+<p><a href="https://github.com/getify/You-Dont-Know-JS">作者的github</a></p>
+<p>书籍的购买链接，自己搜。</p>
+<h1 id="你不知道的JavaScript-上-——原型"><a href="#你不知道的JavaScript-上-——原型" class="headerlink" title="你不知道的JavaScript(上)——原型"></a>你不知道的JavaScript(上)——原型</h1><p>上一章讲了对象，下面介绍和类相关的对象编程，在研究类的具体机制之前，先介绍面向类的设计模式：实例化（instantitation）、继承（inheritance）和（相对）多态（polymorphism）</p>
+<p>可以看到，这些概念实际上无法直接对应到 JavaScript 的对象机制，因为会介绍许多 JavaScript 开发者所使用的解决方法（比如混入，mixin）</p>
+<h2 id="Prototype"><a href="#Prototype" class="headerlink" title="[[Prototype]]"></a>[[Prototype]]</h2><p>JavaScript 中的对象有一个特殊的 [[Prototype]]内置属性，其实就是对于其他对象的引用。几乎所有的对象在创建的时候 [[Prototype]] 属性都会被赋予一个非空的值。</p>
+<p>注意：很快我们就可以看到，对象的 [[Prototype]] 链接可以为空，虽然很少见</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>[[Prototype]] 引用有什么用？当你试图引用对象的属性时会触发 [[Get]] 操作，比如 myObject.a。对于默认的 [[Get]] 操作来说，第一步是检查对象本身是否有这个属性，如果有就使用它。</p>
+<blockquote>
+<p>ES6 中的 Proxy，如果包含这个的话，这里对于 [[Get]] 和 [[Put]] 的讨论就不适用。</p>
+</blockquote>
+<p>但是如果 a 不在 myObject中，就需要使用对象的 [[Prototype]] 链了。</p>
+<p>对于默认的 [[Get]] 操作来说，如果无法在对象本身找到需要的属性，就会继续访问对象的 [[Prototype]] 链：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建一个关联到 anotherObject 的对象</span></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject);</span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Object.create(…) 会创建一个对象并把这个对象的 [[Prototype]] 关联到指定的对象</p>
+</blockquote>
+<p>现在 myObject 对象的 [[Prototype]] 关联到了 anotherObject。显然 myObject.a 并不存在，但是尽管如此。属性仍然成功地（在 anotherObject中）找到了值2.</p>
+<p>但是，如果 anotherObject 也找不到 a 并且 [[Prototype]] 不为空的话，就会继续查找下去。</p>
+<p>这个过程会持续到找到匹配的属性名或者完整的条 [[Prototype]] 链，如果是后者的话，[[Get]] 操作的返回值就是 undefined.</p>
+<p>使用 for..in 遍历对象时原理和查找 [[Prototype]] 链类似，任何可以通过原型链访问到的（并且是 enumerable）的属性都会被枚举。使用 in 操作符检查属性在对象中是否存在时，同样会查找对象的整条原型链（无论属性是否可以枚举）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建一个关联到 anotherObject 的对象</span></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> k <span class="keyword">in</span> myObject)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'found:'</span>+k);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// found:a</span></span><br><span class="line">(<span class="string">"a"</span> <span class="keyword">in</span> myObject); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>因为，当你通过各种语法进行属性检查时都会查找 [[Prototype]] 链，知道找到属性或者查找完整条原型链</p>
+<h3 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h3><p>但是到哪里是 [[Prototype]] 的尽头呢？</p>
+<p>所有普通的 [[Prototype]] 链最终都会指向内置的 Object.prototype 。由于所有的 “普通”（内置。不是特定主机的扩展）对象都“源于”（或者说 把 [[Prototype]] 的顶端设置为）这个 Object.prototype 对象，所以包含 JavaScript 中通用的功能。</p>
+<p>比如说：.toString() 或者 .valueOf()，.hasOwnProperty() 和 .isPrototype()等等。</p>
+<h3 id="属性设置和屏蔽"><a href="#属性设置和屏蔽" class="headerlink" title="属性设置和屏蔽"></a>属性设置和屏蔽</h3><p>给一个对象设置属性不仅仅是添加一个新属性或者修改已有的属性值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myObject.foo = <span class="string">"bar"</span>;</span><br></pre></td></tr></table></figure>
+<p>如果 myObject 对象中包含名为 foo 的普通数据访问属性，这条赋值语句就会修改已有的属性值。</p>
+<p>如果 foo 不是直接存在于 myObject 中，[[Prototype]] 链就会被遍历，类似 [[Get]] 操作，如果原型链上找不到 foo ，foo 就会被直接添加到 myObject 上。然而，如果foo 存在于原型链上层，那么赋值语句的行为就会有些不同了。</p>
+<p>然后，如果 foo 存在于myObject 中也出现在 myObject 的 [[Prototype]] 链上层，那么就会发生屏蔽。myObject 包含的 foo 属性会屏蔽原型链上层的所有 foo 属性，因为 myObject.foo 总是会选择原型链中最底层的 foo 属性。</p>
+<p>屏蔽比我们想象中要更加复杂，下面分析一下如果 foo 不直接存在于 myObject 中而是存在于原型链上层时 myObject.foo = “bar” 会出现的三种情况：</p>
+<ol>
+<li>如果在 [[Prototype]] 链上层存在名为 foo 的普通数据访问属性并且没有被标记只读（writable:false），那就会直接在 myObject 中添加一个名为 foo 的新属性，它是屏蔽属性</li>
+<li>如果在 [[Prototype]] 链上层存在 foo,但是它被标记为只读（writable:false），那么无法修改已有属性或者在 myObject 上创建屏蔽属性。如果运行在严格模式下，代码会抛出一个错误，否则，这条赋值语句会被忽略，总之，不会发生屏蔽。</li>
+<li>如果在 [[Prototype]] 链上层存在 foo并且它是一个 setter，那就一定会调用这个 setter,foo 不会被添加到（或者说屏蔽于）myObject,也不会重新定义 foo 这个 setter。</li>
+</ol>
+<p>大部分开发者都认为如果向 [[Prototype]] 链上层已经存在的属性([[Put]]) 赋值，就一定会触发屏蔽，但是如你所见，三种情况中只有一种（第一种）是这样的。</p>
+<p>如果你希望在第二种和第三种情况下也屏蔽 foo，那就不能使用 = 操作符来赋值，而是使用 Object.defineProperty(..) 来向 myObject 添加 foo。</p>
+<blockquote>
+<p>第二种情况是最令人以外的，只读属性会阻止 [[Prototype]] 链下层隐式创建（屏蔽）同名属性，这样做的主要是为了模拟类属性的继承。你可以把原型链上层的 foo 看到是父类的属性，它会被 myObject 继承（复制），这样一来 myObject 中的 foo 属性也是只读的，所以无法创建。但是一定要注意，实际上并不会发生类似的继承复制。这看起来有点奇怪，myObject 对象竟然会因为其他对象中有一个只读 foo 就不能包含 foo 属性，更奇怪的是，这个限制只存在 于 = 赋值中，使用 Object.defineProperty(..) 并不会受到影响</p>
+</blockquote>
+<p>如果需要对屏蔽方法进行委托的话就不得不使用丑陋的显式伪多态。通常来说，使用屏蔽得不偿失，所以应当尽量避免使用。后面会介绍一种不使用屏蔽的更加简洁的设计模式。</p>
+<p>有些情况下也会隐式产生屏蔽，思考下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建一个关联到 anotherObject 的对象</span></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject);</span><br><span class="line">anotherObject.a; <span class="comment">// 2</span></span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br><span class="line">anotherObject.hasOwnProperty(<span class="string">"a"</span>); <span class="comment">// true</span></span><br><span class="line">myObject.hasOwnProperty(<span class="string">"a"</span>); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">myObject.a++; <span class="comment">// 隐式屏蔽</span></span><br><span class="line">anotherObject.a; <span class="comment">// 2</span></span><br><span class="line">myObject.a; <span class="comment">// 3</span></span><br><span class="line">myObject.hasOwnProperty(<span class="string">"a"</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>尽管 myObject.a++ 看起来应该（通过委托）查找并增加 anotherObject.a 属性，但是别忘了 ++ 操作相当于 myObject.a = myObject.a + 1.因为 ++ 操作首先通过 [[Prototype]] 查找属性 a 并从 anotherObject.a 获取当前的属性值2，然后给这值加1，接着用 [[Put]] 将值3赋给 myObject 中新建的屏蔽属性 a 。</p>
+<p>修改委托属性时一定要小心，如果想让 anotherObject.a 的值增加，唯一的方法是 anotherObject.a++；</p>
+<h2 id="“类”"><a href="#“类”" class="headerlink" title="“类”"></a>“类”</h2><p>为什么一个对象需要关联到另一个对象？这样的好处是什么？但是在回答这个问题之前我们应知道 [[Prototype]] 不是什么？</p>
+<p>前面说过，JavaScript 和面向类的语言不同，它并没有类作为对象的抽象模式或者说蓝图，实际上，JavaScript 才应该真正被称为 “面向对象”的语言，因为它是少有的可以不通过类，直接创建对象的语言。在 JavaScript 中，类无法描述对象的行为（因为根本就不存在类）对象直接定义自己的行为，JavaScript 中只有对象。</p>
+<h3 id="“类”函数"><a href="#“类”函数" class="headerlink" title="“类”函数"></a>“类”函数</h3><p>多年以来，JavaScript 中有一种奇怪的行为一直被滥用，那就是模仿类。</p>
+<p>这种奇怪的 “类似类”的行为利用了函数的一种特殊特性：所有的函数都默认会拥有一个名为 prototype 的共有的并不可枚举的属性，它会指向另一个对象，这个对象正是调用该构造函数而创建的实例的原型。原型指的是每个 JavaScript 对象在创建的时候会与之关联的另一个对象，这个对象就是原型，每一个对象都会从原型中“继承”属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype; <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个对象通常被称为 Foo 的原型，因为我们通过名为 Foo.prototype 的属性引用来访问它。</p>
+<p>那么找个对象是什么？</p>
+<p>最直接的解释就是，通过调用 new Foo() 创建的每个对象都最终（有点武断）被 [[Prototype]] 链接到这个 “Foo.prototype” 对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(a) === Foo.prototype; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>使用 new Foo() 时会创建 a ,其中一步就是将 a 内部的 [[Prototype]] 链接到 Foo.prototype 所指向的对象。</p>
+<p>在面向类的语言中，类可以被复制（或者说实例化）多次，就像用模具制作东西一样，之所以会这样是因为实例化（或者继承一个类）就意味着“把类的行为复制到物理对象中”，对于每一个新实例来说都会重复这个过程。</p>
+<p>但是在 JavaScript 中，并没有类似的复制机制，你不能创建一个类的多个实例，只能创建多个对象，它们的 [[Prototype]] 关联的是同一个对象，但是在默认的情况下并不会复制，因为这些对象之间并不会完全失去联系，它们是互相关联的。</p>
+<p>new Foo() 会生成一个新对象（我们称之为 a）,这个新对象的内部链接 [[prototype]] 关联的是 Foo.prototype 对象。</p>
+<p>最后我们得到了两个对象，它们之间互相关联，我们并没有初始化一个类，实际上我们并没有从 “类”中复制任何一个行为到一个对象中，只是让两个对象互相关联。</p>
+<p>实际上，绝大多数 JavaScript 开发者不知道的秘密是，new Foo() 这个函数调用实际上并没有直接创建关联，这个关联只是一个意外的副作用。new Foo() 只是间接完成了我们的目标：一个关联到其他对象的新对象。</p>
+<p>那么有没有更直接的方法来做到这一点呢？当然，功臣就是 Object.create()。后面会介绍它。</p>
+<h4 id="关于名称"><a href="#关于名称" class="headerlink" title="关于名称"></a><strong>关于名称</strong></h4><p>在 JavaScript 中，我们并不会将一个对象（“类”）复制到另一个对象（实例），只是将它们关联起来，从数据角度来说，[[Prototype]] 机制如下图所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(b1)--										--(a1)</span><br><span class="line">	|---&gt;(Bar.prototype)---&gt;(Foo.prototype)&lt;---|</span><br><span class="line">(b2)--										--(a2)</span><br></pre></td></tr></table></figure>
+<p>这个机制通常被称为原型继承，它常常被视为动态语言版本的类继承，这个名称主要是为了对应面向类的世界中继承的一样，但是违背了动态脚本对应的语义。</p>
+<p>“继承”这个词会让人产生非常强的心理预期，仅仅在前面加上“原型”并不能区分出 JavaScript 和类继承几乎完全相反的行为。</p>
+<p>继承意味着复制操作，JavaScript （默认）并不会复制对象属性，相反，JavaScript 会在两个对象之间创建一个关联，这样一个对象就可以通过委托访问另一个对象的属性和函数。委托这个术语可以更加准确地描述 JavaScript 中对象的关联机制。</p>
+<p>还有个偶尔会用到的 JavaScript 术语差异继承，基本原则是在描述对象行为时，使用其不同于描述的特质。举个例子，描述汽车时你会说汽车是有四个轮子的一种交通工具，但是不会重复描述交通工具具备的通用特性（比如引擎）。</p>
+<p>如果你把 JavaScript 中对象的所有委托行为都归结于对象本身并且把对象看作是实物的话，那就（差不多）可以理解差异继承了。默认情况下，对象并不会像差异继承那样暗示的通过复制生成，因此，差异继承也不适合用来描述 JavaScript 中的 [[Prototype]] 机制。</p>
+<h3 id="“构造函数”"><a href="#“构造函数”" class="headerlink" title="“构造函数”"></a>“构造函数”</h3><p>回到之前的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br></pre></td></tr></table></figure>
+<p>是什么让我们认为 Foo 是一个类呢？</p>
+<p>其中一个原因his我们看到了关键字 new ,在面向类的语言汇总构造实例时也会用到它。另一个原因是，看起来我们执行了类的构造函数方法，Foo（） 调用方式很像初始化类时类构造函数调用方式。</p>
+<p>处理令人迷惑的“构造函数”语义外，Foo.prototype 还有另一个绝招，思考下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype.constructor ==== Foo; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line">a.constructor === Foo; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>Foo.prototype默认有一个共有的并且不可枚举的属性 .constructor，这个属性引用的是对象关联的函数。此外，我们可以看到这个 “够着函数”调用 new Foo() 创建的对象也有一个 .constructor 属性，指向“创建这个对象的函数”。</p>
+<blockquote>
+<p>实际上 a 本身并没有 .constructor 属性，而且，虽然 a.constructor 确实指向 Foo 函数，但是这个属性并不是表示 a 由 Foo “构造”。</p>
+</blockquote>
+<p>“类” 首字母要大写。</p>
+<h4 id="1-构造函数还是调用"><a href="#1-构造函数还是调用" class="headerlink" title="1.构造函数还是调用"></a><strong>1.构造函数还是调用</strong></h4><p>上一段代码中很容易让人认为 Foo 是一个构造函数，因为我们使用 new 来调用它并看到它 “构造” 了一个对象。</p>
+<p>实际上,Foo 和 程序中的其他函数没有任何区别，函数本身并不是构造函数，然而，当你在普通的函数调用加上 new 关键字之后，就会把这个函数调用变成了一个 “构造函数调用”。实际上，new 会劫持所有普通函数并用构造对象的形式来调用它。举例来说：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">NothingSpecial</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(Do not mind me!);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> NothingSpecial();</span><br><span class="line"><span class="comment">// Do not mind me!</span></span><br><span class="line">a; <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>NothingSpecial 只是一个普通函数，但是使用 new 调用时，它就会构造一个对象并赋值给 a，这看起来是 new 的一个副作用（无论如何都会构造一个对象），这个调用是一个构造函数调用，但是 NothingSpecial  本身并不是一个构造函数。</p>
+<p>换句话说，在 JavaScript 中对于 “构造函数” 最准确的说法是，所有带 new 的函数调用。</p>
+<p>函数不是构造函数，但是当且仅当使用 new 时，函数调用会变成“构造函数调用”。</p>
+<h3 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h3><p>JavaScript 开发者想要模仿类的行为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype.myName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo(<span class="string">"a"</span>);</span><br><span class="line"><span class="keyword">var</span> b = <span class="keyword">new</span> Foo(<span class="string">"b"</span>);</span><br><span class="line"></span><br><span class="line">a.myName(); <span class="comment">// "a"</span></span><br><span class="line">b.myName(); <span class="comment">// "b"</span></span><br></pre></td></tr></table></figure>
+<p>这段代码展示了另外两种“面向类”的技巧：</p>
+<ol>
+<li>this.name = name  给每个对象（也就是 a 和 b ）都添加了一个 .name 属性，有点像类实例封装的数据值</li>
+<li>Foo.prototype.myName = .. 可能是一个更加有趣的技巧，它会给Foo.prototype 对象添加一个属性（函数），现在，a.myName() 可以正常工作，但是你可能会觉得很惊讶，这是什么原理？</li>
+</ol>
+<p>这段代码中，看起来似乎创建 a 和 b 会把 Foo.prototype 对象复制到这两个对象中，然而事实并不是这样的。</p>
+<p>在前面介绍 默认[[Get]] 算法的时候我们介绍过 [[Prototype]]链，以及当属性不直接存在于对象中如何通过它来进行查找。</p>
+<p>因此，在创建的过程中,a 和 b 的内部 [[Prototype]] 都会关联到 Foo.prototype 上，当 a 和 b 中都无法找到 myName 的时候，它会（通过委托）在 Foo.prototype 上找到。</p>
+<h4 id="回顾”构造函数“"><a href="#回顾”构造函数“" class="headerlink" title="回顾”构造函数“"></a><strong>回顾”构造函数“</strong></h4><p>之前讨论 .constructor 属性的时候说过，a.constructor  === Foo 为真意味着 a 确实有一个指向 Foo 的 .constructor  属性，但是事实并不是这样的。</p>
+<p>实际上，.constructor  引用同样被委托给 Foo.prototype，而 Foo.prototype.constructor  默认指向了 Foo。</p>
+<p>把 .constructor  属性指向 Foo 看作是 a 对象由 Foo “构造” 是非常容易理解的，但这只不过是一种虚假的安全感，a.constructor  只是通过默认的 [[Prototype]] 委托指向了 Foo,这和“构造”毫无关系。相反，对于 .constructor  的错误理解很容易对自己产生误导。</p>
+<p>举例来说，Foo.prototype 的 .constructor   属性只是 Foo 函数在声明时的默认属性，如果你创建了一个新对象并替换了函数默认的 .prototype 对象引用，那么新对象并不会自动获得 .constructor   属性。</p>
+<p>思考下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;<span class="comment">/*..*/</span>&#125;</span><br><span class="line">Foo.prototype = &#123;<span class="comment">/*..*/</span>&#125; <span class="comment">// 创建一个新原型对象</span></span><br><span class="line"><span class="keyword">var</span> a1 = <span class="keyword">new</span> Foo();</span><br><span class="line">a1.constructor === Foo; <span class="comment">// false</span></span><br><span class="line">a1.constructor === <span class="built_in">Object</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>Object(…) 并没有 “构造” a1，看起来应该是 Foo() “构造”了它。大部分开发者都认为是 Foo() 执行了构造工作，但是问题在于，如果你认为 “constructor” 表示 “由…构造”的话，a1.constructor 应该是 Foo,但是它并不是 Foo.</p>
+<p>a1 并没有 .constructor 属性，它会委托 [[prototype]] 链上的 Foo.prototype。但是这个对象也没有 .constructor 属性（不过默认的Foo.prototype 对象有这个属性！），所以它会继续委托，这次会委托链顶端的 Object.prototype，这个对象有 .constructor 属性，指向内置的 Object(..) 函数。</p>
+<p>当然，你可以给 Foo.prototype 添加一个 .constructor 属性，不过这需要手动添加一个符合正常的不可枚举的属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;<span class="comment">/*..*/</span>&#125;</span><br><span class="line">Foo.prototype = &#123;<span class="comment">/*..*/</span>&#125; <span class="comment">// 创建一个新原型对象</span></span><br><span class="line"><span class="comment">// 需要在 Foo.prototype 上 “修复”丢失的 .constructor 属性</span></span><br><span class="line"><span class="comment">// 新对象属性起到 Foo.prototype 的作用</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(Foo.prototype,<span class="string">"constructor"</span>,&#123;</span><br><span class="line">    enumerable:<span class="literal">false</span>,</span><br><span class="line">    writable:<span class="literal">true</span>,</span><br><span class="line">    configurable:<span class="literal">true</span>,</span><br><span class="line">    value:Foo <span class="comment">// 让 .constructor 指向 Foo</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>修复 .constructor 需要很多手动操作，所以这些工作都是源于把 “constructor” 错误地理解为 “由…构造”。</p>
+<p>实际上，对象的 .constructor 属性默认指向一个函数，而这个函数也有一个叫做 .prototype 的引用指向这个对象。“构造函数” 和 “原型” 这两个词默认只有松散的含义，实际的值可能适用也可能不适用。最好的办法是记住 “constructor 并不表示（对象）被（它）构造”</p>
+<p>.constructor 并不是一个不可变的属性，它是不可枚举的，但是它的值是可写的（可以被修改）。此外，可以给任意的 [[Prototype]] 链中的任意对象添加一个名为  constructor  的属性或者对其进行修改，你可以任意对其赋值。</p>
+<p>和 [[Get]] 算法查找 [[Prototype]] 链的机制一样， .constructor  属性的引用目标可能和你想的完全不同。</p>
+<p>a1.constructor  是一个非常不可靠并且不安全的引用，通常来说要尽量避免使用这些引用。</p>
+<h2 id="（原型）继承"><a href="#（原型）继承" class="headerlink" title="（原型）继承"></a>（原型）继承</h2><p>我们已经看过了许多 JavaScript 程序中常用的模拟类行为的方法，但是如果没有 “继承”机制的话，JavaScript 中的类就是一个空架子。</p>
+<p>实际上，我们了解了通常被称作原型继承的机制，a 可以 “继承” Foo.prototype 并访问 Foo.prototype 的 myName() 函数。但是之前我们只把继承看做是类和类之间的关系，并没有把它当做是类和实例之间的关系。</p>
+<p>下面的代码使用的就是典型的 “原型风格”：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype.myName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params">name,label</span>)</span>&#123;</span><br><span class="line">    Foo.call(<span class="keyword">this</span>,name);</span><br><span class="line">    <span class="keyword">this</span>.label = label;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 我们创建了一个新的 Bar.prototype 对象并关联到 Foo.prototype </span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，现在没有 Bar.prototype.constructor </span></span><br><span class="line"><span class="comment">// 如果你需要这个属性的话可能需要手动修复一下它</span></span><br><span class="line">Bar.prototype.myLable = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.label;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Bar(<span class="string">"a"</span>,<span class="string">"obj a"</span>);</span><br><span class="line">a.myName(); <span class="comment">// "a"</span></span><br><span class="line">a.myLabel(); <span class="comment">// "obj a"</span></span><br></pre></td></tr></table></figure>
+<p>这段代码的核心是语法 “Bar.prototype = Object.create(Foo.prototype);’’调用 object.create(..) 会凭空创建一个“新”对象并把对象内部的 [[Prototype]] 关联到你的指定的对象（本例子是 Foo.prototype）.</p>
+<p>换句话说，这个语法的意思就是：“创建一个新的Bar.prototype 对象并把它关联到 Foo.prototype ”。</p>
+<p>声明 function Bar(){…}时，和其他函数一样，Bar 会有一个 .prototype 关联到默认的对象，但是这个对象并没有像我们想要的关联到 Foo.prototype,因为我们创建了一个新对象把它关联到我们希望的对象上，直接把原始的关联对象抛弃掉。</p>
+<p>注意，下面这两种方式是常见的错误做法，实际上它们都存在一些问题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 和你想要的机制不一样</span></span><br><span class="line">Bar.prototype = Foo.prototype;</span><br><span class="line"><span class="comment">// 基本上可以满足你的需求，但是可能会产生一些副作用</span></span><br><span class="line">Bar.prototype = <span class="keyword">new</span> Foo();</span><br></pre></td></tr></table></figure>
+<p>Bar.prototype = Foo.prototype; 并不会创建一个关联到 Bar.prototype 的新对象，它只是让 Bar.prototype 直接引用了 Foo.prototype 的对象，因此当你执行类似 Bar.prototype.myLabel = … 的赋值语句会直接修改 Foo.prototype 对象本身。显然这不是我们想要的结果，否则根本不需要 Bar 对象，直接使用 Foo 就可以了，这样代码也会简单一些。</p>
+<p>Bar.prototype = new Foo(); 的确会创建一个关联到 Bar.prototype 的新对象，但是它使用了 Foo(..) 的 “构造函数调用”，如果函数有些副作用（比如写日志、修改状态、注册到其他对象、给 this 添加数据属性等等）的话，就会影响新对象然后把旧对象抛弃掉，不能直接修改已有的默认对象。</p>
+<p>如果能有一个标准并且可靠的方法来修改对象的 [[Prototype]] 关联就好了。在 ES6 之前，我们只能通过设置 <code>__proto__</code>属性来实现，但是这个方法并不是标准并且无法兼容所有浏览器。ES6 添加了辅助函数 Object.setPrototypeOf(..) ,可以用标准并且可靠的方法来修改关联。</p>
+<p>我们来对比两种把 Bar.prototype 关联到 Foo.prototype 的方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 之前需要抛弃默认的 Bar.prototype</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</span><br><span class="line"><span class="comment">// ES6 开始可以直接修改现有的 Bar.prototype</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(Bar.prototype,Foo.prototype);</span><br></pre></td></tr></table></figure>
+<p>如果忽略掉 Object.create(..) 方法带来的轻微性能损失（抛弃的对象需要进行垃圾回收），它实际比ES6 及其之后的方法更短而且可读性更高，不过无论如何，这是两种完全不同的语法。</p>
+<h4 id="检查-“类”关系"><a href="#检查-“类”关系" class="headerlink" title="检查 “类”关系"></a><strong>检查 “类”关系</strong></h4><p>假设有对象 a,如何寻找对象 a 委托的对象（如果存在的话）呢？在传统的面向类的环境中，检查一个实例（JavaScript 中的对象）的继承祖先（JavaScript 中的委托关联）通常被称为内省（或者反射）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;</span><br><span class="line">Foo.prototype.blah = ....；</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br></pre></td></tr></table></figure>
+<p>我们如何通过内省找出 a 的 “祖先”（委托关联）呢？第一个方法就是站在 “类”的角度来判断：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a <span class="keyword">instanceof</span> Foo;<span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>instanceof 操作符的左边是一个普通对象，右边是一个函数，instanceof 回答的问题是：在 a 的整条 [[Prototype] 是否有 Foo.prototype 指向的对象？</p>
+<p>可惜，这个方法只能处理对象（a） 和 函数 （带 .prototype引用的 Foo）之间的关系。如果想要判断两个对象（比如 a 和 b ）是否通过 [[Prototype]] 链关联，只用 instanceof 无法实现。</p>
+<blockquote>
+<p>如果使用内置的 .bind(…) 函数来生成一个硬绑定函数的话，该函数是没有 .prototype 属性的，在这样的函数上使用 instanceof 的话，目标函数的 .prototype 会代替硬绑定函数的 .prototype 。通常我们不会在 “构造函数调用” 中使用硬绑定函数，不过如果这么做的话，相对于直接调用目标函数。同理，在硬绑定函数上使用 instanceof  也相当于直接在目标函数上使用 instanceof </p>
+</blockquote>
+<p>下面这段荒谬的代码试图站在 “类”的角度来使用 instanceof 来判断两个对象的关系：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用来判断 o1 是否关联到（委托）o2 的辅助函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isRelatedTo</span>(<span class="params">o1,o2</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    F.prototype = o2;</span><br><span class="line">    <span class="keyword">return</span> o1 <span class="keyword">instanceof</span> F;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">Object</span>.create(a);</span><br><span class="line">isRelatedTo(b,a);</span><br></pre></td></tr></table></figure>
+<p>在 isRelatedTo 内部声明了一个一次性函数 F,把它的 .prototype重新赋值并指向 对象 o2,然后判断 o1 是否是 F 的一个实例。显而易见，o1 实际上并没有继承 F 也不是由 F 构造的，所以这种方法非常愚蠢且容易造成误解。问题的关键在于思考的角度，强行在 JavaScript 中应用类的语义就会造成这种尴尬的局面。</p>
+<p>下面是第二种判断 [[Prototype]] 反射的方法，它更加简洁。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Foo.prototype.isPrototypeOf(a); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>我们只需要一个用来判断的对象就行，isPrototypeOf 回答的问题是：在 a 的整条 [[Prototype] 是否有 出现过 Foo.prototype 。</p>
+<p>我们只需要两个对象就可以判断它们之间的关系，前者的prototype 会自动被访问</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b.isPrototypeOf(a);</span><br></pre></td></tr></table></figure>
+<p>我们也可以直接获取一个对象的 [[Prototype]] 链，在 ES5 中，标准的方法是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf(a);</span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(a) === Foo.prototype; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>绝大多数的浏览器也支持一种非标准的方法来访问内部的 [[Prototype]] 属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.__proto__ === Foo.prototype; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>这个奇怪的 <code>__proto__</code>在 ES6 之前不是标准的属性神奇地引用了内部的 [[Prototype]] 对象，如果你想直接查找原型链的话，这个非常有用。和我们说过的 .constructor 一样， <code>__proto__</code> 实际上并不存在与正在使用的对象中，实际上，它和其他常用的函数（toString()、isPrototypeOf() 等等）一样，都存在于内置的 Object.prototype 中（它们是不可枚举的）。</p>
+<p>此外， <code>__proto__</code> 很像一个属性，但是实际上它更想一个 getter/setter。它的内部实现大致是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype,<span class="string">"__proto__"</span>,&#123;</span><br><span class="line">    get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.getPrototype(<span class="keyword">this</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    set:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// ES6 中的方法</span></span><br><span class="line">        <span class="built_in">Object</span>.setPrototypeOf(<span class="keyword">this</span>,o);</span><br><span class="line">        <span class="keyword">return</span> o;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>因此，访问（获取值） <code>a.__proto__</code>的时候，实际上是调用了  <code>a.__proto__ ()</code>（调用了 getter 函数）。虽然 getter 函数存在于 Object.prototype对象中，但是它的 this 指向了对象a。所以和 Object.getPrototypeOf(a) 结果相同。</p>
+<p> <code>__proto__</code> 是可设置属性，之前的代码使用 ES6 的 Object.setPrototypeOf(..)进行设置。然而，通常来说不需要修改已有对象的 [[Prototype]]。</p>
+<p>我们只有在一些特殊情况下，需要设置函数默认 .prototype 对象的 [[Prototype]] ，让它引用其他对象（除了 Object.prototype）。这样可以避免使用全新的对象替换默认对象。此外，最好把 [[Prototype]] 对象关联看作是只读特性，从而增加代码的 可读性。</p>
+<h2 id="对象关联"><a href="#对象关联" class="headerlink" title="对象关联"></a>对象关联</h2><p> [[Prototype]] 机制技术存在于对象中的一个内部链接，它会引用其他对象。</p>
+<p>通常来说，这个链接的作用是：如果在对象上没有找到需要的属性或者方法引用，引擎就会继续在  [[Prototype]] 关联的对象上进行查找，同理，如果在后者中也没有找到需要的引用就会继续查找它的 [[Prototype]] ，依次类推。这一系列对象的链接被称为 “原型链”。</p>
+<h3 id="创建关联"><a href="#创建关联" class="headerlink" title="创建关联"></a>创建关联</h3><p>用 [[Prototype]] 机制的意义是什么？为什么 JavaScript 开发者费这么大力气在代码中创建这些关联？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">    something:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Tell me something good..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = <span class="built_in">Object</span>.create(foo);</span><br><span class="line">bar.something(); <span class="comment">// Tell me something good...</span></span><br></pre></td></tr></table></figure>
+<p>Object.create(..) 会创建一个新对象并把它关联到我们指定的对象中，这样我们就可以充分发挥  [[Prototype]]  的威力（委托）并且避免不必要的麻烦（比如使用 new 构造函数调用会生成 .prototype 和 .constructor 引用）。</p>
+<blockquote>
+<p>Object.create(null)会创建一个 拥有空（或者说 null） [[Prototype]] 链接的对象，这个对象无法进行委托。由于这个对象没有原型链，所以 instanceof 操作符无法进行帕努安东尼，因此总会返回 false.这些特殊的 [[Prototype]] 对象通常被称为字典，它们完全不会受到原型链的干扰，因此非常适合用来存储数据</p>
+</blockquote>
+<p>我们并不需要类创建两个对象之间的关系，只需要通过委托来关联对象就足够了。而Object.create(..) 不包含任何类的诡计，所以它可以完美地创建我们想要的关联关系。</p>
+<p><strong>Object.create()的 polyfill 代码</strong></p>
+<p>Object.create(..) 是在 ES5 中新增的函数，所以在这之前如果要支持这个功能的话就需要一些简单的 polyfill 代码，它部分实现了 Object.create(null) 的功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Object</span>.create)&#123;</span><br><span class="line">    <span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">        F.prototype = o;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码使用了一个一次性的函数 F,我们改写了它的.prototype 属性使其指向想要关联的对象，然后再使用 new F() 来构造一个新对象进行关联。</p>
+<p>由于Object.create(..) 可以被模仿，因此这个函数被应用得非常广泛，标准的ES5 内置的Object.create(..) 函数还提供了一系列附加功能，但是 ES5 之前的版本不支持这些功能，通常来说，这些功能的范围要小得多，但是由于完整性考虑，还是介绍一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject,&#123;</span><br><span class="line">    b:&#123;</span><br><span class="line">        enumerable:<span class="literal">false</span>,</span><br><span class="line">        writable:<span class="literal">true</span>,</span><br><span class="line">        configurable:<span class="literal">false</span>,</span><br><span class="line">        value:<span class="number">3</span></span><br><span class="line">    &#125;,</span><br><span class="line">    c:&#123;</span><br><span class="line">        enumerable:<span class="literal">true</span>,</span><br><span class="line">        writable:<span class="literal">false</span>,</span><br><span class="line">        configurable:<span class="literal">false</span>,</span><br><span class="line">        value:<span class="number">4</span></span><br><span class="line">    &#125;,    </span><br><span class="line">&#125;);</span><br><span class="line">myObject.hasOwnProperty(<span class="string">"a"</span>); <span class="comment">// false</span></span><br><span class="line">myObject.hasOwnProperty(<span class="string">"b"</span>); <span class="comment">// true</span></span><br><span class="line">myObject.hasOwnProperty(<span class="string">"c"</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>Object.create(..) 的第二个餐胡搜指定了需要添加到新对象中的属性名以及这些属性的属性描述符。因为 ES5 之前的版本无法模拟属性操作符，所以 pilyfill 代码无法实现这个附加功能。</p>
+<p>通常来说并不会使用Object.create(..) 的附加功能，所以对于很多人来说，上面的那段 polyfill 代码就足够了。</p>
+<p>有些开发者更加严谨，他们认为只有能被完全模拟的函数才应该使用 polyfill 代码由于 Object.create(..) 是只能部分模拟的函数之一，所以这些狭隘的人认为如果你需要在 ES5 之前的环境中使用 这个功能的特性，那不要使用 polyfill 代码，而是使用给一个自定义函数并名字不是 Object.create 。你可以把你自己的函数定义成这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createAllLinkObject</span>(<span class="params">o</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a:<span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myObject = createAllLinkObject(anotherObject);</span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<h3 id="关联关系是备用"><a href="#关联关系是备用" class="headerlink" title="关联关系是备用"></a>关联关系是备用</h3><p>看起来对象之间的关联是处理“缺失”属性或者方法时的一种备用选项。这个说法有点道理，但是作者认为这并不是 [[Prototype]]  的本质：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    cool:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"cool!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject);</span><br><span class="line">myObject.cool(); <span class="comment">// cool!</span></span><br></pre></td></tr></table></figure>
+<p>由于存在[[Prototype]]  机制，这段代码可以正常运行，但是如果你这样写只是为了让 myObject 在无法处理属性或者方法的时候可以使用备用的 anotherObject，那么你的软件就会变得有点神奇，而且很难理解和维护。</p>
+<p>这并不是说任何情况下都不应该选择备用这种设计模式，但是在 JavaScript 中并不是很常见。所以你使用的是这种模式，那么或许应该退后一步重新思考一下这种模式是否合适。</p>
+<p>你可以让你的 API设计不那么神奇，同时也可以发挥[[Prototype]]   关联的威力</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    cool:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"cool!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create(anotherObject);</span><br><span class="line">myObject.doCool = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.cool();<span class="comment">// 内部委托！</span></span><br><span class="line">&#125;</span><br><span class="line">myObject.doCool(); <span class="comment">// cool!</span></span><br></pre></td></tr></table></figure>
+<p>这里调用 doCool 是实际存在于 myObject 中的，这让我们的 API 设计更加清晰。从内部来说，我们实现的是遵循委托设计模式，通过[[Prototype]]  委托到 anotherObject.cool() </p>
+<p>换句话说，内部委托比起直接委托可以让 API 接口设计更加清晰。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>如果要访问的堆对象中不存在的一个属性，[[Get]] 操作就会查找对象内部[[Prototype]]  关联的对象，这个关联关系实际上定义了一条“原型链”（有点像嵌套作用域链），在查找属性时会对它进行遍历。</p>
+<p>所有普通对象都有内置的 Object.prototype，指向原型链的顶端（比如说全局作用域），如果在原型链中查找不到指定的属性就会停止。toString()、valueOf 等函数和其他一些通用的功能都存在于 Object.prototype 对象上，因此语言中所有的对象都可以使用它们。</p>
+<p>关联两个对象最常用的方法是使用 new 关键字进行函数调用，在调用的4个步骤会创建一个关联其他对象的新对象。</p>
+<p>使用 new 调用函数会把新对象的 .prototype 属性到“其他对象”，带 new 的函数调用通常被称为 “构造函数嗲用”，尽管它们实际上和传统的面向类语言中的类构造函数不一样。</p>
+<p>虽然这些 JavaScript 机制和传统面向类的语言中的“类初始化”和“类继承”很相似，但是 机制有一个核心区别，就是不会进行赋值，对象之间是通过内部的 [[Prototype]]  链进行关联的。</p>
+<p>相比之下，“委托”是一个更合适的术语，因为对象之间的关系不是复制而是委托。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2019-01-22-你不知道的JavaScript(上)——原型.html" title="你不知道的JavaScript(上)——原型">http://laibh.top/2019-01-22-你不知道的JavaScript(上)——原型.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/你不知道的JavaScript/" <i class="fa fa-tag"></i> 你不知道的JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019-01-21-你不知道的JavaScript(上)——混合对象“类”.html" rel="next" title="你不知道的JavaScript(上)——混合对象“类”">
+                <i class="fa fa-chevron-left"></i> 你不知道的JavaScript(上)——混合对象“类”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-01-23-你不知道的JavaScript(上)——行为委托.html" rel="prev" title="你不知道的JavaScript(上)——行为委托">
+                你不知道的JavaScript(上)——行为委托 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#你不知道的JavaScript-上-——原型"><span class="nav-number">1.</span> <span class="nav-text">你不知道的JavaScript(上)——原型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype"><span class="nav-number">1.1.</span> <span class="nav-text">[[Prototype]]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-prototype"><span class="nav-number">1.1.1.</span> <span class="nav-text">Object.prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性设置和屏蔽"><span class="nav-number">1.1.2.</span> <span class="nav-text">属性设置和屏蔽</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“类”"><span class="nav-number">1.2.</span> <span class="nav-text">“类”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“类”函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">“类”函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于名称"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">关于名称</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“构造函数”"><span class="nav-number">1.2.2.</span> <span class="nav-text">“构造函数”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-构造函数还是调用"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">1.构造函数还是调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术"><span class="nav-number">1.2.3.</span> <span class="nav-text">技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回顾”构造函数“"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">回顾”构造函数“</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#（原型）继承"><span class="nav-number">1.3.</span> <span class="nav-text">（原型）继承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检查-“类”关系"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">检查 “类”关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象关联"><span class="nav-number">1.4.</span> <span class="nav-text">对象关联</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建关联"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联关系是备用"><span class="nav-number">1.4.2.</span> <span class="nav-text">关联关系是备用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

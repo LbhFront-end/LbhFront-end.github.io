@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 测试 Node 程序本章内容  用 Node 的 assert 模块测试 使用其他断言库 使用 Node 单元测试框架 用 Node 模拟并控制 Web 浏览器 在测试失败时获取更多的信息  添加到 程序中的功能越来越多，出现的 bug 的风险就越高。没经过测试的程序是不完整的，而手动测试既繁琐又容易出错，所以">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— 测试 Node 程序">
+<meta property="og:url" content="http://laibh.top/2019-1-07-NodeJs2-Part9.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 测试 Node 程序本章内容  用 Node 的 assert 模块测试 使用其他断言库 使用 Node 单元测试框架 用 Node 模拟并控制 Web 浏览器 在测试失败时获取更多的信息  添加到 程序中的功能越来越多，出现的 bug 的风险就越高。没经过测试的程序是不完整的，而手动测试既繁琐又容易出错，所以">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.464Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— 测试 Node 程序">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 测试 Node 程序本章内容  用 Node 的 assert 模块测试 使用其他断言库 使用 Node 单元测试框架 用 Node 模拟并控制 Web 浏览器 在测试失败时获取更多的信息  添加到 程序中的功能越来越多，出现的 bug 的风险就越高。没经过测试的程序是不完整的，而手动测试既繁琐又容易出错，所以">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2019-1-07-NodeJs2-Part9.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— 测试 Node 程序 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2019-1-07-NodeJs2-Part9.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— 测试 Node 程序</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-07T11:30:00+08:00">
+                2019-01-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019-1-07-NodeJs2-Part9.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— 测试 Node 程序">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,437
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="测试-Node-程序"><a href="#测试-Node-程序" class="headerlink" title="测试 Node 程序"></a>测试 Node 程序</h2><p>本章内容</p>
+<ul>
+<li>用 Node 的 assert 模块测试</li>
+<li>使用其他断言库</li>
+<li>使用 Node 单元测试框架</li>
+<li>用 Node 模拟并控制 Web 浏览器</li>
+<li>在测试失败时获取更多的信息</li>
+</ul>
+<p>添加到 程序中的功能越来越多，出现的 bug 的风险就越高。没经过测试的程序是不完整的，而手动测试既繁琐又容易出错，所以自动测试越来越受欢迎。自动测试指的是编写代码来测试代码，而不是手动运行程序中的功能。</p>
+<p>两种基本测试：单元测试和验收测试。单元测试直接测试代码逻辑，通常是在函数或方法层面，适用于所有类型的程序。单元测试可以分成两种形态：测试驱动开发（TDD） 和行为驱动开发（BDD）。实事求是地讲，TDD 和 BDD 基本是一样的，它们的区别在于风格上。这个是否重要取决于个人。验收测试一般是对 Web 程序进行的额外的测试，需要用脚本控制浏览器来触发 Web 程序的功能。</p>
+<h4 id="TDD-与-BDD"><a href="#TDD-与-BDD" class="headerlink" title="TDD 与 BDD"></a><strong>TDD 与 BDD</strong></h4><p><strong>BDD</strong> ：Behavior Driven Development 行为驱动开发是一种敏捷软件开发的技术，它鼓励软件项目中的开发人员、QA和非技术人员之间的协作。</p>
+<p>BDD 的重点是通过与利益相关者的讨论取得对预期软件的行为的清醒认识。它通过用自然语言书写非程序员可读的测试用例扩展了测试驱动开发行为。行为驱动开发人员使用了混合领域中统一的语言的母语语言来描述他们的代码的目的。这让开发者取得以把精力集中在代码应该怎么写，而不是技术细节上，而且也最大程度减少了将代码编写者的技术语言与商业客户、用户、利益相关者、项目管理者等的领域语言之间来回翻译的代价。</p>
+<p><strong>TDD</strong>：Test-Driven Development 就是测试驱动开发，它是一种测试先于编写代码的思想，用于指导软件开发，测试驱动开发是敏捷开发中的一项核心时间和技术，也是一种方法论，TDD的原理是在开发功能代码之前，先编写单元测试用例，测试代码确定需要编写什么产品代码。</p>
+<p>TDD 的基本思路是通过测试来推动整个开发的进行，但测试驱动开发并不只是单纯的测试工作，而是把需求分析，设计，质量控制量化的过程。TDD的重要目的不仅仅是测试软件，测试工作保证代码只是其中一个部分，而且在开发过程中帮助客户和程序员去除模棱两可的需求。TDD 首先考虑使用的需求（对象、功能、过程、接口等）。主要编写的测试用例框架对功能的过程和接口进行设计，而测试框架可以持续进行验证。优点是在任意一个开发节点都可以拿出一个使用，含少量bug 并具有一定功能和能够发布的产品。缺点是增加代码量，测试代码是系统代码的两倍或者更多，但是同时节省了调试程序及挑错的时间。</p>
+<p>TDD 的原则：</p>
+<ol>
+<li><strong>独立测试</strong>：不同的代码的测试应该互相独立，一个类对应一个测试类，一个函数对应一个测试函数。用例也应各自独立，每个用例不能使用其他用例的结果数据，结果也不能依赖用例执行顺序。一个角色，开发过程中包含多种工作，做不同工作时应专注于当前的角色，不要过多考虑其他方面的细节</li>
+<li><strong>测试列表</strong>：代码的功能点可能很多，并且需求可能是陆续出现的，任何阶段想添加功能时，应把先把功能点加到测试列表中，然后才能继续手头工作，避免疏漏。</li>
+<li><strong>测试驱动</strong>：即利用测试来驱动开发，是 TDD 的核心。要实现某个功能，要编写某个类或某个函数，应首先编写测试代码，明确这个类、函数如何使用、测试，然后再对其进行设计、编码。</li>
+<li><strong>先写断言</strong>：编写测试代码时，应该首先编写判断代码功能的断言语句，然后编写必要的辅助语句。</li>
+<li><strong>可测试性</strong>：产品代码设计、开发时应尽可能提高可测性。每个代码单元的功能应该比较单纯，每个类应该只做它应该做的事情，尤其是增加新功能，不要为图一时的便利，随便在原有代码中添加功能。多考虑使用子类、继承、重载的方法</li>
+<li><strong>及时重构</strong>：对结构不合理，重复不好的代码，在测试通过后，应及时进行重构。</li>
+<li><strong>小步前进</strong>：软件开发是复杂性很高的工作，小步前进是降低复杂性的最好的方法。</li>
+</ol>
+<p>对于单元测试，会介绍 Node 的 assert 模块、Mocha、Vows、Should.js  框架和 Chai。对于验收测试，我们会介绍Node 中使用 Selenium。</p>
+<table>
+<thead>
+<tr>
+<th>测试类型</th>
+<th>分类</th>
+<th>工具</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单元测试</td>
+<td>TDD</td>
+<td>Mocha/Jasmine/Node 中的 assert 模块/Chai</td>
+<td>测试程序逻辑</td>
+</tr>
+<tr>
+<td></td>
+<td>BDD</td>
+<td>Mocha/Vows/Chai/Should.js</td>
+<td></td>
+</tr>
+<tr>
+<td>验收测试</td>
+<td>浏览器</td>
+<td>WebdriverIO/Selenium</td>
+<td>测试程序界面和功能</td>
+</tr>
+<tr>
+<td></td>
+<td>无头</td>
+<td>WebdriverIO/Phantom/Zombie.js</td>
+</tr>
+</tbody>
+</table>
+<h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><p>单元测试是指通过编写代码来测试程序中的各个部分。编写测试代码会让你更认真思考程序的设计选择，尽早避开各种陷阱。测试还会让你确信自己最近的修改没有引入错误。尽管单元测试需要在编码时做些工作，但以后每次修改程序后都不用自己手动测试了，所以还是能节省很多时间的。</p>
+<p>做单元测试需要些技巧，而异步逻辑有带来了新的挑战。因为异步单元测试可以并行运行，所以必须小心，确保测试不会互相干扰。比如说，如果测试在硬盘上创建了一个临时文件，那么在完成测试后删除文件时一定要谨慎，以免删除另外一个未完成的测试正在使用过的文件。因此很多单元测试框架都有流程控制，可以让测试按顺序运行。</p>
+<p>本节介绍的内容：</p>
+<ul>
+<li>Node 自带的 assert 模块 —— TDD 风格自动化测试的工具</li>
+<li>Mocha —— 相对比较新的测试框架，可以用来做 TDD- 或 BDD-风格的测试</li>
+<li>Vows —— 得到广泛应用的 BDD 风格测试框架</li>
+<li>Should.js —— 构建在 Node assert 模块之上的模块，提供 BDD 风格的断言</li>
+</ul>
+<h4 id="assert-模块"><a href="#assert-模块" class="headerlink" title="assert 模块"></a><strong>assert 模块</strong></h4><p>assert 模块是 Node 中大多数单元测试的基础，它可以测试一个条件，如果条件未满足，则抛出错误。很多第三方测试框架都用到了 assert 模块，甚至没有测试框架也可以用它做测试。</p>
+<p><strong>简单的例子：</strong></p>
+<p>假设有一个简单的待办事项程序，它把事项存在内存里，而你要断言它做的是你认为它做的。</p>
+<p>下面的代码定义的模块实现了程序的核心功能，包括待办事项的创建、获取和删除。它还包括一个简单的 doAsync 方法，所以还可以看到如何测试异步方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// todo.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 定义待办项数据库</span></span><br><span class="line">    <span class="keyword">this</span>.todos = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  add(item) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!item) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Todo.prototype.add requires an item'</span>);</span><br><span class="line">    <span class="keyword">this</span>.todos.push(item);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  deleteAll() &#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = [];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  get length() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.todos.length;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 两秒后带着 true 调用回调</span></span><br><span class="line">  doAsync(cb) &#123;</span><br><span class="line">    setTimeout(cb, <span class="number">2000</span>, <span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Todo;</span><br></pre></td></tr></table></figure>
+<p>接下里用 assert 模块测试这段代码，下面的代码加载了必需模块，创建了新的待办事项列表，还声明一个变量记录完成的测试数量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</span><br><span class="line"><span class="keyword">const</span> Todo = <span class="built_in">require</span>(<span class="string">'./todo'</span>);</span><br><span class="line"><span class="keyword">const</span> todo = <span class="keyword">new</span> Todo();</span><br><span class="line"><span class="keyword">let</span> testsCompleted = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>用 equal 检查变量的值，测试待办事项程序的删除功能</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deleteTest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 添加数据来删除</span></span><br><span class="line">  todo.add(<span class="string">'Delete Me'</span>);</span><br><span class="line">  <span class="comment">// 断言数据添加成功</span></span><br><span class="line">  assert.equal(todo.length, <span class="number">1</span>, <span class="string">'1 item should exist'</span>);</span><br><span class="line">  todo.deleteAll();</span><br><span class="line">  assert.equal(todo.length, <span class="number">0</span>, <span class="string">'No items should exist'</span>);</span><br><span class="line">  <span class="comment">// 记录测试已完成</span></span><br><span class="line">  testsCompleted++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的测试添加一个待办事项，然后再删除，所以最后应该没有待办事项。如果程序能正常工作，那么 todo.length 的值应该是 0。如果程序出现问题，则会有异常抛出。如果 todo.length 不是 0.那么这个断言会在栈跟踪中显示一条错误消息，在控制台中输出 ‘No items should exist“，在断言后面将 testCompleted 加一，记录已完成了一次测试。</p>
+<p><strong>用 notEqual 找出逻辑中的问题</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addTest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  todo.deleteAll();</span><br><span class="line">  todo.add(<span class="string">'Added'</span>);</span><br><span class="line">  <span class="comment">// 断言有事项存在</span></span><br><span class="line">  assert.notEqual(todo.length, <span class="number">0</span>, <span class="string">'1 item should exist'</span>);</span><br><span class="line">  testsCompleted++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>assest 模块中还有一个 notEqual 断言，当程序产生特定的值表明逻辑有问题时，可以采用这种断言。上面展示了在删除所有待办事项又添加了一个事项，然后再获取所有事项，如果事项的数量为0，断言就会失败并抛出异常。</p>
+<p><strong>其他功能：strictEqual、notStrictEqual、deelEqual、notDeepEqual </strong></p>
+<p>除了 equal 和 notEqual ,assert 模块还提供了更严格的版本，strictEqual 和 notStrictEqual,它们在进行判断时用的是严格的相等操作符 ===。</p>
+<p>assert 模块也有用来比较对象的 deepEqual 和 notEqual ，这些断言中的 deep 表明它们会层层深入对两个对象进行比较，比较两个对象的属性，如果属性也是对象，则会继续比较属性的属性。</p>
+<p><strong>用 ok 测试异步值是否为 true</strong></p>
+<p>因为是异步测试，所以要提供一个回调函数（cb），向测试运行者发送测试结束的信号——不能像同步测试那样靠返回语句来表明测试结束了。要判断 doAsync 的结果值是否为 true,可以用 ok 断言，用它判断一个值是否为 true 很容易。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doAsyncTest</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">  todo.doAsync(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 断言值为 true</span></span><br><span class="line">    assert.ok(value, <span class="string">'Callback should be passed true'</span>);</span><br><span class="line">    testsCompleted++;</span><br><span class="line">    cb();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试能否正确抛出错误</strong></p>
+<p>assert 模块还可以检查程序抛出消息 是否正确。throws 调用中的第二个参数是一个正则表达式，表示要在错误消息中检查文本 requires</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throwsTest</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">  assert.throws(todo.add, /requires/);</span><br><span class="line">  testsCompleted++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行测试</strong></p>
+<p>测试已经定义好了，接下来要在测试文件中添加运行这些测试的代码，下面的代码会运行前面的定义的所有测试，然后输出完成的测试数量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">deleteTest();</span><br><span class="line">addTest();</span><br><span class="line">throwsTest();</span><br><span class="line">doAsyncTest(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`Completed <span class="subst">$&#123;testsCompleted&#125;</span> tests`</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果测试成功了，脚本会告诉你以完成的测试数量。要防止某个测试出问题，可以追踪测试的开始和结束时间。比如说，某个测试可能没能执行到断言的地方。</p>
+<p>使用 Node 自带的 assert 模块时，每个测试用例中都要包含很多套路化的代码用以设置测试（比如删除所有事项），追踪测试进程（’已完成‘计数器）。这些套路化的代码会占用编写测试用例的时间和精力。如果能把这些工作交给专用的框架，让你的精力都放在业务员逻辑的测试上就更好。接下来用 Mocha,了解一下如何使用这个第三方单玉测试框架让 工作变得更加轻松。</p>
+<h4 id="Mocha"><a href="#Mocha" class="headerlink" title="Mocha"></a><strong>Mocha</strong></h4><p>Mocha 是个流行的测试框架，很容易上手，尽管 Mocha 默认是 BDD 风格的。但也可以用在 TDD 风格的测试中。Mocha 具有很多特性，包括全局变量泄露检测和客户端测试。</p>
+<p><strong>全局变量泄露测试</strong></p>
+<p>一般应该不需要整个程序范围内全都可读的全局变量，并且按照编程最佳实践来说，要尽量少用全局变量。但在 ES5中，一不小心就创建了一个全局变量来，只要在声明变量时忘记写 关键字 var ，这个变量就是全局变量了。Mocha 能够发现这种不小心创建出来的全局变量泄露，如果你创建了全局变量，它会在测试时抛出错误。如果你想禁用全局泄露检查，可以运行 mocha 命令时加上 –ignored-leaks 选项。此外，如果要指明要使用的几个全局变量，可以把它们放在 –globals 后面，用逗号隔开。</p>
+<p>Mocha 测试默认使用 BDD 风格的函数定义和设置，这些函数包括 describe、it、before、after、beforeEach和 afterEach，另外，Mocha 也有 TDD 接口，用 suite 代替 describe,test代替 it,setup 代替 before ，teardown 代替 after。</p>
+<p><strong>用 Mocha测试 Node 程序</strong></p>
+<p>初始化 package.json，定义 scripts:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123; </span><br><span class="line"> "test": "mocha" </span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>安装依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S mocha</span><br></pre></td></tr></table></figure>
+<p>测试会放在 test 目录下。Mocha 默认使用 BDD 接口,Mocha 测试的基本结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/memdb.js</span></span><br><span class="line"><span class="keyword">const</span> memdb = <span class="built_in">require</span>(<span class="string">'..'</span>);</span><br><span class="line">describe(<span class="string">'memdb'</span>, () =&gt; &#123;</span><br><span class="line">  describe(<span class="string">'.saveSync(doc)'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should save the document'</span>, () =&gt; &#123;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Mocha 也支持 TDD 和 qunit 以及 exports 风格的接口，下面是一个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="string">'memdb'</span>:&#123;</span><br><span class="line">        <span class="string">'.saveSync(doc)'</span>:&#123;</span><br><span class="line">            <span class="string">'should save the document'</span>:<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些接口提供的功能是一样的，依然用的是默认的 BDD 接口，下面是第一个测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memdb = <span class="built_in">require</span>(<span class="string">'..'</span>);</span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</span><br><span class="line">describe(<span class="string">'memdb'</span>, () =&gt; &#123;</span><br><span class="line">  describe(<span class="string">'.saveSync(doc)'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should save the document'</span>, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> pet = &#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;;</span><br><span class="line">      memdb.saveSync(pet);</span><br><span class="line">      <span class="keyword">const</span> ret = memdb.first(&#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;);</span><br><span class="line">      assert(ret == pt);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>添加 saveSync 功能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = [];</span><br><span class="line">exports.saveSync = <span class="function">(<span class="params">doc</span>) =&gt;</span> &#123;</span><br><span class="line">  db.push(doc);</span><br><span class="line">&#125;</span><br><span class="line">exports.first = <span class="function">(<span class="params">obj</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> db.filter(<span class="function"><span class="params">doc</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">      <span class="keyword">if</span> (doc[key] != obj[key]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;).shift();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>describe</code>块被称为测试套件，表示一组相关的测试，它是一个函数，第一个参数是测试套件的名称，第二个参数是一个实际执行的函数。</p>
+<p><code>it</code>块被称为测试用例，表示一个单独的测试，是测试的最小单位，也是一个函数，第一个参数是测试用例的名字，第二个参数是一个实际执行的函数。</p>
+<p>所有的测试用例都应该含有一句或多句的断言，它是编写测试用例的关键，断言功能由断言库来实现。</p>
+<p><strong>用 Mocha挂钩定义设置和清理逻辑</strong></p>
+<p>BDD 接口 beforeEach()、afterEach()、before()和 after()接受回调，可以用来定义设置和清理逻辑。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memdb = <span class="built_in">require</span>(<span class="string">'..'</span>);</span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</span><br><span class="line">describe(<span class="string">'memdb'</span>, () =&gt; &#123;</span><br><span class="line">  beforeEach(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    memdb.clear();</span><br><span class="line">  &#125;);</span><br><span class="line">  describe(<span class="string">'.saveSync(doc)'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should save the document'</span>, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> pet = &#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;;</span><br><span class="line">      memdb.saveSync(pet);</span><br><span class="line">      <span class="keyword">const</span> ret = memdb.first(&#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;);</span><br><span class="line">      assert(ret == pet);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  describe(<span class="string">'.first(obj)'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should return the first matching doc'</span>, () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> tobi = &#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;;</span><br><span class="line">      <span class="keyword">const</span> loki = &#123; <span class="attr">name</span>: <span class="string">'Loki'</span> &#125;;</span><br><span class="line">      memdb.saveSync(tobi);</span><br><span class="line">      memdb.saveSync(loki);</span><br><span class="line">      <span class="keyword">let</span> ret = mendb.first(&#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;);</span><br><span class="line">      assert(ret == tobi);</span><br><span class="line">      ret = memdb.first(&#123; <span class="attr">name</span>: <span class="string">'Loki'</span> &#125;);</span><br><span class="line">      assert(ret == loki);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">  it(<span class="string">'should return null when no doc matches'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = mendb.first(&#123; <span class="attr">name</span>: <span class="string">'Manny'</span> &#125;);</span><br><span class="line">    assert(ret == <span class="literal">null</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>理想的情况下，测试用例不会共享状态，要让 memdb 达到这一状态，只需要在 index.js 中实现 .clear 方法来移除所有的文档就可以了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exports.clear = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  db.length = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试异步逻辑</strong></p>
+<p>为了演示异步测试，需要做一些改动，将 saveSync 函数加一个会在短暂延迟之后执行的回调（用来模拟某中异步操作）作为可选的参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">exports.saveSync = <span class="function">(<span class="params">doc, cb</span>) =&gt;</span> &#123;</span><br><span class="line">  db.push(doc);</span><br><span class="line">  <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      cb();</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要给定义测试逻辑函数添加一个参数，就可以把 Mocha 测试用例定义为异步的。这个参数通常被命名为 <code>done</code>,下面的代码中演示了如何给异步方法 <code>.save()</code> 写测试用例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'asyncronous .saveSync(doc)'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'should save the document'</span>, (done) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 保存文档</span></span><br><span class="line">    <span class="keyword">const</span> pet = &#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;;</span><br><span class="line">    memdb.saveSync(pet, () =&gt; &#123;</span><br><span class="line">      <span class="comment">// 用第一个文档调用回调</span></span><br><span class="line">      <span class="keyword">const</span> ret = memdb.first(&#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;);</span><br><span class="line">      assert(ret == pet);</span><br><span class="line">      <span class="comment">// 告诉Mocha 这个测试用例完成了</span></span><br><span class="line">      done();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p> 这个规则适用于所有挂钩，比如给 <code>beforeEach()</code> 挂钩一个清理数据库的回调，Mocha 可以等它调用后再继续，如果调用 <code>done()</code>时它的第一个参数是个错误，Mocha会报告这个错误，并将这个挂钩或测试用例标记为失败：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">beforeEach(<span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">  memdb.clear(done);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>Mocha 的非并行测试</strong></p>
+<p>Mocha的测试不是并行测试的，而是一个接一个地测试，虽然这样执行慢，但写起来更容易。Mocha不会让测试运行太长时间，一个测试默认不超过 2000毫秒，超过这个时长会被当做失败的测试。如果有运行时间长的测试，可以用 –timeout 指定一个更大的数值。</p>
+<p>不过说到并行的执行测试的框架有一个叫做 Vows的。</p>
+<h4 id="Vows"><a href="#Vows" class="headerlink" title="Vows"></a><strong>Vows</strong></h4><p>跟很多单元测试框架比，在Vows 下写的测试代码结构更加强，Vows想让测试更容易理解和维护。</p>
+<p>Vows 用它自己的BDD 属于定义测试结构。按Vows 的定义，一个测试套件中包含一个或多个批次。可以把批次当做是一组相互关联的情境，或者要测试的概念领域。批次和上下文是并行运行的。上下文中可能包含主题、一个或多个誓约，以及/或者一或多个先关联的情境（内部情况也是并行运行的）。主题是跟情境相关的测试逻辑。誓约是对主题结果的测试。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">套件---批次---情境-----主题</span><br><span class="line">			    |----誓约</span><br><span class="line">				|----情境</span><br></pre></td></tr></table></figure>
+<p>Vows 跟 Mocha 一样，是专门用来做自动化程序测试的。它们的差别主要体现在风格和并行性上，Vows 测试有特定的结构和术语。</p>
+<p>先初始化,并安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i -S -g vows</span><br></pre></td></tr></table></figure>
+<p>修改 package.json test属性</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "test": "vows test/*.js"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>用 Vows 测试程序逻辑</strong></p>
+<p>在 Vows 中，既可以运行包含测试逻辑的脚本来触发测试，也可以用 vows 命令行测试运行器。下面这个例子是个独立的测试脚本，用了待办事项程序核心逻辑测试中的一个。</p>
+<p>下面的代码创建一个批次，在这个批次中定义了一个情景，情景中定义了一个主题和一个誓约。注意它在主题如何使用回调处理一般逻辑，如果主题不是异步的，可以直接返回值，不用通过回调。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/todo-test.js</span></span><br><span class="line"><span class="keyword">const</span> vows = <span class="built_in">require</span>(<span class="string">'vows'</span>);</span><br><span class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</span><br><span class="line"><span class="keyword">const</span> Todo = <span class="built_in">require</span>(<span class="string">'../todo'</span>);</span><br><span class="line"><span class="comment">// 批次</span></span><br><span class="line">vows.describe(<span class="string">'Todo'</span>).addBatch(&#123;</span><br><span class="line">   <span class="comment">// 情景</span></span><br><span class="line">  <span class="string">'when adding an item'</span>: &#123;</span><br><span class="line">    <span class="comment">// 主题</span></span><br><span class="line">    topic: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> todo = <span class="keyword">new</span> Todo();</span><br><span class="line">      todo.add(<span class="string">'Feed my cat'</span>);</span><br><span class="line">      <span class="keyword">return</span> todo;</span><br><span class="line">    &#125;,</span><br><span class="line">     <span class="comment">// 誓约</span></span><br><span class="line">    <span class="string">'it should exist in my todos'</span>: <span class="function">(<span class="params">er, todo</span>) =&gt;</span> &#123;</span><br><span class="line">      assert.equal(todo.length, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).export(<span class="built_in">module</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// todo.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Todo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  add(item) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!item) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Todo.prototype.add requires an item'</span>);</span><br><span class="line">    <span class="keyword">this</span>.todos.push(item);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  deleteAll() &#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get length() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.todos.length;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  doAsync(cb) &#123;</span><br><span class="line">    setTimeout(cb, <span class="number">2000</span>, <span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Todo;</span><br></pre></td></tr></table></figure>
+<p>Vows 提供了完备的测试方案，但仍然可以用别的断言库将不同测试库的功能混合搭配到一起.另外还有一个叫做 Chai的断言库，它可以代替 assert 模块。</p>
+<h4 id="Chai"><a href="#Chai" class="headerlink" title="Chai"></a><strong>Chai</strong></h4><p>Chai 是个流行的断言库，有三个接口：should、expect 和 assert。下面的代码中用到了 assert ，其看起来就像是 Node 自带的 assertion 模块，但它还有用来比较对象、数组和它们的属性的工具。比如用 <code>typeof</code>比较类型，用 <code>property</code>检查某个对象是否有我们想要的属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chai = <span class="built_in">require</span>(<span class="string">'chai'</span>);</span><br><span class="line"><span class="keyword">const</span> assert = chai.assert;</span><br><span class="line"><span class="keyword">const</span> foo = <span class="string">'bar'</span>;</span><br><span class="line"><span class="keyword">const</span> tea = &#123; <span class="attr">flavors</span>: [<span class="string">'char'</span>, <span class="string">'earl grey'</span>, <span class="string">'pg tips'</span>] &#125;;</span><br><span class="line">assert.typeOf(foo, <span class="string">'string'</span>);</span><br><span class="line">assert.equal(foo, <span class="string">'bar'</span>);</span><br><span class="line">assert.lengthOf(foo, <span class="number">3</span>);</span><br><span class="line">assert.property(tea, <span class="string">'flavors'</span>);</span><br><span class="line">assert.lengthOf(tea.flavors, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>这个 API 看起来更像是英语句子——声明式风格更冗长，但看起来更加通顺。should 换了种风格：给对象添加属性，这样就不用把断言放在 expect 调用里了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> chai = <span class="built_in">require</span>(<span class="string">'chai'</span>);</span><br><span class="line">chai.should();</span><br><span class="line"><span class="keyword">const</span> foo = <span class="string">'bar'</span>;</span><br><span class="line">foo.should.be.a(<span class="string">'string'</span>);</span><br><span class="line">foo.should.equal(<span class="string">'bar'</span>);</span><br></pre></td></tr></table></figure>
+<p>要用哪个接口取决于项目，如果先写测试，并将其作为项目的文档，详细的 expect 和 should 接口很好用。</p>
+<p>Chai 有很多插件，包括一些趁手的工具，比如可以用 promise 写测试代码的 chai-as-promised，以及根据统计方法比较数值的 chai-stats。注意，因为 Chai 是断言库，所以要跟 Mocha 这样的测试运行者配合使用。另一个像 Chai 一样的 BDD 断言库是 Should.js。</p>
+<h4 id="Should-js"><a href="#Should-js" class="headerlink" title="Should.js"></a><strong>Should.js</strong></h4><p>Should.js 是个断言库，它用类似于 BDD 的风格表示断言，让测试更容易看懂。它的设计初衷是搭配其他测试框架一起用，我们用的例子是编写代码测试一个定制的模块。Should.js 跟其他框架的搭配很容易，因为它只是给 Object.prototype 增加了一个 should属性。这样你就可以写出表达能力更强的断言，比如 user.role.should.equal(‘admin’)，或者 users.should.include(‘rick’)。</p>
+<p>比如说，你要编写一个 Node 命令行的小费计算器，在你跟朋友们采用 AA 制付费时，要用它计算每个人该付多少钱。你希望非程序员朋友也能看懂测试计算逻辑的代码，以免他们怀疑你<br>耍诈。</p>
+<p>初始化并安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i --save-dev should</span><br></pre></td></tr></table></figure>
+<p>新建并编辑 index.js ，放入实现核心功能的代码，具体来说，消费计算器包含四个辅助函数：</p>
+<ul>
+<li>addPercentageToEach——按给定的百分比加大数组中的所有数值</li>
+<li>sum——计算数组中所有数值的和</li>
+<li>percentFormat——将要显示的值变成百分比格式</li>
+<li>dollarFormat——将要显示的值变成美元格式</li>
+</ul>
+<p>分账时计算小费的逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// 按百分比加大数组元素汇总的数值</span></span><br><span class="line">exports.addPercentageToEach = <span class="function">(<span class="params">prices, percentage</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> prices.map(<span class="function"><span class="params">total</span> =&gt;</span> &#123;</span><br><span class="line">    total = <span class="built_in">parseFloat</span>(total);</span><br><span class="line">    <span class="keyword">return</span> total + (total * percentage)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算数组中所有数值的和</span></span><br><span class="line">exports.sum = <span class="function">(<span class="params">prices</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> prices.reduce(<span class="function">(<span class="params">currentSum, currentValue</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseFloat</span>(currentSum) + <span class="built_in">parseFloat</span>(currentValue);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将要显示的值变成百分比格式</span></span><br><span class="line">exports.percentFormat = <span class="function">(<span class="params">percentage</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">parseFloat</span>(percentage) * <span class="number">100</span> + <span class="string">'%'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将要显示的值变成美元格式</span></span><br><span class="line">exports.dollarFormat = <span class="function">(<span class="params">number</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`$<span class="subst">$&#123;<span class="built_in">parseFloat</span>(number).toFixed(<span class="number">2</span>)&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分账时测试计算小费的逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/tips.js</span></span><br><span class="line"><span class="keyword">const</span> tips = <span class="built_in">require</span>(<span class="string">'..'</span>);</span><br><span class="line"><span class="keyword">const</span> should = <span class="built_in">require</span>(<span class="string">'should'</span>);</span><br><span class="line"><span class="keyword">const</span> tax = <span class="number">0.12</span>;</span><br><span class="line"><span class="keyword">const</span> tip = <span class="number">0.15</span>;</span><br><span class="line"><span class="keyword">const</span> prices = [<span class="number">10</span>, <span class="number">20</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pricesWithTipAndTax = tips.addPercentageToEach(prices, tip + tax);</span><br><span class="line">pricesWithTipAndTax[<span class="number">0</span>].should.equal(<span class="number">12.7</span>);</span><br><span class="line">pricesWithTipAndTax[<span class="number">1</span>].should.equal(<span class="number">25.4</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> totalAmount = tips.sum(pricesWithTipAndTax).toFixed(<span class="number">2</span>);</span><br><span class="line">totalAmount.should.equal(<span class="string">'38.10'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> totalAmountAsCurrency = tips.dollarFormat(totalAmount);</span><br><span class="line">totalAmountAsCurrency.should.equal(<span class="string">'$38.10'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tipAsPercent = tips.percentFormat(tip);</span><br><span class="line">tipAsPercent.should.equal(<span class="string">'15%'</span>);</span><br></pre></td></tr></table></figure>
+<p>修改 package.json 中的脚本</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "test": "node test/tips.js"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行脚本，npm test 如果一切正常，不会输出什么。因为断言没有抛出错误。</p>
+<p>Should.js 支持很多种断言，从使用正则表达式的到检查对象属性的全都有，其可以对程序生成的数据和对象进行全面的检查。处理断言库，测试时还经常要用到探测器、存根和模拟对象。</p>
+<h4 id="Sinon-JS-的探测器和存根"><a href="#Sinon-JS-的探测器和存根" class="headerlink" title="Sinon.JS 的探测器和存根"></a><strong>Sinon.JS 的探测器和存根</strong></h4><p>模拟对象和存根库是测试工具箱里的工具。我们写单元测试是为了把系统的各个组成部分隔离单独测试，但有时候这很难做到。比如测试图片缩放的代码时，如果不想读写真正的图片文件，该怎么写测试代码，代码中不应该有避开文件系统读写的特殊测试分支，因为那样就不是真正的测试了。在这种情况下，需要创建文件系统的功能的存根。可以用存根来代替尚未准备好的依赖项，这有助于实现真正的 TDD。</p>
+<p>下面介绍如何 用 SinonJS 编写测试探测器、存根和模拟对象。</p>
+<p>初始化，安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i --save-dev sinon</span><br></pre></td></tr></table></figure>
+<p>接着创建要测试的样例文件，这个例子里用了一个简单的 JSON 键/值数据库，创建一个文件系统 API 的存根，这样就不用在文件系统里创建真正的文件了。我们也可以像下面一样只测试数据库代码，避免处理文件的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Database</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(filename) &#123;</span><br><span class="line">    <span class="keyword">this</span>.filename = filename;</span><br><span class="line">    <span class="keyword">this</span>.data = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  save(cb) &#123;</span><br><span class="line">    fs.writeFile(<span class="keyword">this</span>.filename, <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.data), cb);</span><br><span class="line">  &#125;</span><br><span class="line">  insert(key, value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.data[key] = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Database;</span><br></pre></td></tr></table></figure>
+<p><strong>探测器</strong></p>
+<p>有时候我们只想看看某个方法是否调用了，探测器最适合做这个，借助它的 API ，可以将某个方法替换成能够进行断言的东西。比如用 Sinon 的方法替身 spy 模拟 db.js 中的 fs.writeFile:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sinon.spy(fs.<span class="string">'writeFile'</span>);</span><br></pre></td></tr></table></figure>
+<p>测试完成后，可以用 fs.writeFile.restore() 复原原来的方法。</p>
+<p>在 Mocha 之类的测试库中使用时，应该把这些操作放在 beforeEach 和 afterEach 中，下面是探测器用法的完整例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// spies.js</span></span><br><span class="line"><span class="keyword">const</span> sinon = <span class="built_in">require</span>(<span class="string">'sinon'</span>);</span><br><span class="line"><span class="keyword">const</span> Database = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> database = <span class="keyword">new</span> Database(<span class="string">'./sample.json'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ➊ 替换fs 方法</span></span><br><span class="line"><span class="keyword">const</span> fsWriteFileSpy = sinon.spy(fs,<span class="string">'writeFile'</span>);</span><br><span class="line"><span class="keyword">const</span> saveDone = sinon.spy();</span><br><span class="line"></span><br><span class="line">database.insert(<span class="string">'name'</span>,<span class="string">'Charles Dickens'</span>);</span><br><span class="line">database.save(saveDone);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ➋ 断言 writeFile 只调用一次</span></span><br><span class="line">sinon.assert.calledOnce(fsWriteFileSpy);</span><br><span class="line"><span class="comment">// ➌ 恢复原来的方法</span></span><br><span class="line">fs.writeFile.restore();</span><br></pre></td></tr></table></figure>
+<p>设置好探测器后➊运行要测试的代码。然后调用 sinon.assert➋确保方法被调用了。恢复原来的方法➌。这项测试中的恢复操作不是必须的，但恢复之前改变的方法是最佳实践。</p>
+<p><strong>存根</strong></p>
+<p>有时候要控制代码流程，比如在测试错误处理代码时，需要强制执行错误处理分支。可以用前面的例子改写，用存根取代探测器，以便执行 writeFile 的回调函数。注意，我们并不是想调用真正的 writeFile.只是希望能运行那个回调函数。下面的是例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stub.js</span></span><br><span class="line"><span class="keyword">const</span> sinon = <span class="built_in">require</span>(<span class="string">'sinon'</span>);</span><br><span class="line"><span class="keyword">const</span> Database = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> database = <span class="keyword">new</span> Database(<span class="string">'./sample.json'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用自己的函数替代 writeFile</span></span><br><span class="line"><span class="keyword">const</span> stub = sinon.stub(fs,<span class="string">'writeFile'</span>,(file,data,cb)=&gt;&#123;</span><br><span class="line">  cb();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> saveDone = sinon.spy();</span><br><span class="line"></span><br><span class="line">database.insert(<span class="string">'name'</span>,<span class="string">'Charles Dickens'</span>);</span><br><span class="line">database.save(saveDone);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 断言 writeFile 被调用了</span></span><br><span class="line">sinon.assert.calledOnce(stub);</span><br><span class="line"><span class="comment">// 断言 database.save 的回调被调用了</span></span><br><span class="line">sinon.assert.calledOnce(saveDone);</span><br><span class="line"></span><br><span class="line">fs.writeFile.restore();</span><br></pre></td></tr></table></figure>
+<p>在测试有大量用户提供的函数、回调和 promise 的代码时，把存根和探测器结合起来用是最理想的办法。看过这些单元测试工具后，我们该去探究另一种风格的测试了：功能测试。</p>
+<h3 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h3><p>在大多数 Web 项目的开发中，进行功能测试的办法都是按用户指定的需求列表驱动浏览器执行操作，然后检查各种 DOM 变化。比如在做一个内容管理系统时，要对图片库的上传功能做功能测试，也就是上传一张图片，然后检查是不是添加上了，在检查是不是加到了正确的图片列表中。</p>
+<p>Node 中做功能测试的工具很多，它们大体上可以分成两类：无头测试和基于浏览器的测试。无头测试基本上都是用 PhantomJS 之类的工具提供一个可以在终端里使用的浏览器环境，也有轻便的一些方案会用 Cheerio 和 JSDOM 这样的库。基于浏览器的测试用 Selenium之类的浏览器自动化工具，通过脚本驱动真正的浏览器。两种测试方式用的底层工具都是一样的，可以根据自己的偏好用 Mocha、Jasmine 甚至Cucumber 驱动 Selenium 测试自己的程序。</p>
+<p>Selenium 是基于 Java 的浏览器自动化库，在特定语言驱动器的帮助下，可以连接到  Selenium  服务上。用真正的服务器跑测试用例。</p>
+<p><a href="https://blog.csdn.net/huilan_same/article/details/51896672">https://blog.csdn.net/huilan_same/article/details/51896672</a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>编写单元测试需要 Mocha 这样的测试运行器</li>
+<li>Node 自带了一个 断言库 assert</li>
+<li>还有其他断言库，包括 Chai 和 Should.js </li>
+<li>如果不想运行某些代码，比如网络请求，可以用 SinonJS</li>
+<li>SinonJS 也可以探测代码，验证某个函数或方法是不是运行了。</li>
+<li>通过利用脚本驱动真正的浏览器，可以用 Selenium 编写浏览器测试</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2019-1-07-NodeJs2-Part9.html" title="Nodejs实战 —— 测试 Node 程序">http://laibh.top/2019-1-07-NodeJs2-Part9.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-12-28-(转)深入浅出JavaScript运行进制.html" rel="next" title="（转）深入浅出JavaScript 运行机制">
+                <i class="fa fa-chevron-left"></i> （转）深入浅出JavaScript 运行机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019-1-09-BEM.html" rel="prev" title="BEM 规范">
+                BEM 规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试-Node-程序"><span class="nav-number">1.</span> <span class="nav-text">测试 Node 程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TDD-与-BDD"><span class="nav-number">1.0.1.</span> <span class="nav-text">TDD 与 BDD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单元测试"><span class="nav-number">1.1.</span> <span class="nav-text">单元测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#assert-模块"><span class="nav-number">1.1.1.</span> <span class="nav-text">assert 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mocha"><span class="nav-number">1.1.2.</span> <span class="nav-text">Mocha</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vows"><span class="nav-number">1.1.3.</span> <span class="nav-text">Vows</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chai"><span class="nav-number">1.1.4.</span> <span class="nav-text">Chai</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Should-js"><span class="nav-number">1.1.5.</span> <span class="nav-text">Should.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sinon-JS-的探测器和存根"><span class="nav-number">1.1.6.</span> <span class="nav-text">Sinon.JS 的探测器和存根</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能测试"><span class="nav-number">1.2.</span> <span class="nav-text">功能测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

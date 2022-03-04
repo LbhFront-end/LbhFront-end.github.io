@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="距离第四章的完成已经过去了两个月了，这段期间，由于学习 nodeJS、《图解http》以及项目，暂时把这本书丢下了。今天项目已经完成了七七八八，其他几本书也看完了，趁着有时间，来继续学习这本书的第五章——链表。 这一章你将会学会如何实现和使用链表这种动态的数据结构，这意味着我们可以从中任意添加或移除项，它会按需进行扩张。 本章内容  链表数据结构 向链表添加元素 从链表移除元素 使用 Linked">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">
+<meta property="og:url" content="http://laibh.top/2018-10-30-JavaScipt数据结构与算法Part5.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="距离第四章的完成已经过去了两个月了，这段期间，由于学习 nodeJS、《图解http》以及项目，暂时把这本书丢下了。今天项目已经完成了七七八八，其他几本书也看完了，趁着有时间，来继续学习这本书的第五章——链表。 这一章你将会学会如何实现和使用链表这种动态的数据结构，这意味着我们可以从中任意添加或移除项，它会按需进行扩张。 本章内容  链表数据结构 向链表添加元素 从链表移除元素 使用 Linked">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-链表-数据结构.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-双向链表-数据结构.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-循环链表-数据结构.png">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-双向循环链表-数据结构.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">
+<meta name="twitter:description" content="距离第四章的完成已经过去了两个月了，这段期间，由于学习 nodeJS、《图解http》以及项目，暂时把这本书丢下了。今天项目已经完成了七七八八，其他几本书也看完了，趁着有时间，来继续学习这本书的第五章——链表。 这一章你将会学会如何实现和使用链表这种动态的数据结构，这意味着我们可以从中任意添加或移除项，它会按需进行扩张。 本章内容  链表数据结构 向链表添加元素 从链表移除元素 使用 Linked">
+<meta name="twitter:image" content="http://laibh.top/images/js数据结构与算法-链表-数据结构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-10-30-JavaScipt数据结构与算法Part5.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第五章）—— 链表 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-10-30-JavaScipt数据结构与算法Part5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第五章）—— 链表</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T16:13:41+08:00">
+                2018-10-30
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-10-30-JavaScipt数据结构与算法Part5.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,399
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>距离第四章的完成已经过去了两个月了，这段期间，由于学习 nodeJS、《图解http》以及项目，暂时把这本书丢下了。今天项目已经完成了七七八八，其他几本书也看完了，趁着有时间，来继续学习这本书的第五章——链表。</p>
+<p>这一章你将会学会如何实现和使用链表这种动态的数据结构，这意味着我们可以从中任意添加或移除项，它会按需进行扩张。</p>
+<p>本章内容</p>
+<ul>
+<li>链表数据结构</li>
+<li>向链表添加元素</li>
+<li>从链表移除元素</li>
+<li>使用 LinkedList 类</li>
+<li>双向链表</li>
+<li>循环链表</li>
+</ul>
+<h2 id="第五章-链表"><a href="#第五章-链表" class="headerlink" title="第五章 链表"></a>第五章 链表</h2><h3 id="链表数据结构"><a href="#链表数据结构" class="headerlink" title="链表数据结构"></a>链表数据结构</h3><p>要存储多个元素，数组（或列表）可能是最常见的数据结构了。然后这种数据结构有一个缺点：数组的大小是固定的，从数组的起点或中间插入或移除项的成本有点高，因为需要移动元素。</p>
+<p>链表存储有序的元素集合，但不同于数组，链表中的元素在内存并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成，下图展示了一个链表的结构。</p>
+<p><img src="/images/js数据结构与算法-链表-数据结构.png" alt="链表数据结构"></p>
+<p>相对于传统的数组，链表的一个好处在于，添加或者移除元素的时候不需要移动其他元素，然后，链表需要使用指针，因为实现链表时需要额外注意。数组的另一个细节是可以直接访问任何位置的任何元素，而想要访问链表中间的一个元素，需要从起点（表头）开始迭代列表直到找到所需的元素。</p>
+<p>现实中也有一些链表的例子，第一个例子就是康加舞队，每个人就是一个元素，手就是链向下一个人的指针，可以向队列汇总增加人——只需要找到想加入的点，断开连接，插入一个人，再重新连接起来。</p>
+<p>另外一个例子就是寻宝游戏，你有一条线索，这条线索是指向寻找下一个线索的地点的指针，你顺着这条链去下一个地点，得到另一条指向再下一处的线索。得到列表中间的线索的唯一方法，就是从起点（第一个线索）顺着列表寻找。</p>
+<p>还有一个可能就是用来说明链表中的最流行的例子，那就是火车。一列火车是由一系列车厢（也称车皮）组成的。每节车厢或车皮都互相连接。可以很容易的分离开一节车皮，改变它的位置，添加或移除它。</p>
+<h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><p>了解链表是什么之后，就要开始实现我们的数据结构了，一下是我们的 LinkedList 类的骨架：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LinkedList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123; <span class="comment">// 需要一个Node辅助类，表示要加入列表的项，element 代表要添加到列表中的值， next d代表指向列表的下一个节点向的指针</span></span><br><span class="line">        <span class="keyword">this</span>.element = element;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>; <span class="comment">// 存储列表项的数量 length 属性</span></span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>; <span class="comment">// 存储第一个节点的引用在 head 变量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.append = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,element</span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span>(<span class="params">position</span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.indexOf = <span class="function"><span class="keyword">function</span>(<span class="params">position</span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.isEmpty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.getHead = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>LinkedList 类的方法的功能</p>
+<ul>
+<li>append(element)：向列表尾部添加一个新的项</li>
+<li>insert(position,element)：向列表的特定位置插入一个新的项</li>
+<li>removeAt(position)：从列表的特定位置移除一项</li>
+<li>remove(element)：从列表中移除一项</li>
+<li>indexOf(element)：返回元素在列表中的索引。如果列表中没有该元素则返回-1</li>
+<li>isEmpty()：如果链表中不包含任何元素，返回true,如果链表的长度大于0则返回 false</li>
+<li>size()：返回链表包含的元素个数，与数字的 length 属性类似</li>
+<li>toString()：由于列表项使用 Node 类，就需要重写继承自 JavaScript 对象默认的 toString 方法，让其只输出元素的值。</li>
+</ul>
+<h4 id="向链表尾部追加元素"><a href="#向链表尾部追加元素" class="headerlink" title="向链表尾部追加元素"></a><strong>向链表尾部追加元素</strong></h4><p>向 LinkedList 对象尾部添加一个元素时，可能有两种场景，列表为空，添加的是第一个元素，或者列表不为空，向追加元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.append = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element),current;</span><br><span class="line">    <span class="keyword">if</span>(head === <span class="literal">null</span>)&#123;</span><br><span class="line">        head = node;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        current = head;</span><br><span class="line">        <span class="comment">// 循环列表，直到找到最后一项</span></span><br><span class="line">        <span class="keyword">while</span>(current.next)&#123;</span><br><span class="line">            current = current.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 当current.next元素为null时，找到最后一项，将其 next 赋为 node,建立连接</span></span><br><span class="line">        current.next = node;</span><br><span class="line">    &#125;</span><br><span class="line">    length++;  <span class="comment">// 更新列表的长度</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以在 append 函数 加上return node ,通过下面的代码来使用和测试目前创建的数据结构</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="keyword">new</span> LinkedList();</span><br><span class="line"><span class="built_in">console</span>.log(list.append(<span class="number">15</span>)); <span class="comment">// Node &#123;element: 15, next: null&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(list.append(<span class="number">10</span>)); <span class="comment">// Node &#123;element: 10, next: null&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="从链表中移除元素"><a href="#从链表中移除元素" class="headerlink" title="从链表中移除元素"></a><strong>从链表中移除元素</strong></h4><p>移除元素也有两种场景：第一种是移除第一个元素，第二种是移除第一个以外的任一元素。我们要实现两种 remove 方法：第一种是从特定位置移除第一个元素，第二种是根据元素的值移除元素。</p>
+<p>首先先实现移除特定位置的元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span>(<span class="params">position</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 检查越界值</span></span><br><span class="line">    <span class="keyword">if</span>(position &gt;<span class="number">-1</span> &amp;&amp; position &lt; length)&#123;</span><br><span class="line">        <span class="keyword">let</span> current = head,previous,index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移除第一项</span></span><br><span class="line">        <span class="keyword">if</span>(position === <span class="number">0</span>)&#123;</span><br><span class="line">            head = current.next;</span><br><span class="line">            <span class="built_in">console</span>.log(current.element);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>)&#123;</span></span></span><br><span class="line"><span class="xml">                previous = current;</span></span><br><span class="line"><span class="xml">                current = current.next;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            // 将 previous 与 current 的下一项连接起来，跳过 current,从移除它</span></span><br><span class="line"><span class="xml">            previous.next = current.next;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        length --;</span></span><br><span class="line"><span class="xml">        console.log(current.element);</span></span><br><span class="line"><span class="xml">        return current.element;</span></span><br><span class="line"><span class="xml">    &#125;else&#123;				</span></span><br><span class="line"><span class="xml">        return null;</span></span><br><span class="line"><span class="xml">    &#125;			</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果想要移除第一个元素（position=0），要做的就是让 head 指向列表的第二个元素，我们用 current 变量穿甲一个对列表中第一个元素的应用，这样 current 变量就是对列表中第一个元素的引用，如果吧 head 赋值为 current.next  就会移除第一个元素。</p>
+<p>如果我们要移除列表的最后一项或者是中间的一项，为此，需要依靠一个细节来迭代列表，知道到达目标位置（index++ &lt; position），使用一个用于内部控制和递增的 index 变量，current 变量总是对所循环列表的当前元素的引用（current = current.next），我们还需要一个对当前元素的前一个元素的引用（previous = current），它被命名为 previous。</p>
+<p>因此，要从列表中移除当前元素，要做的就是将 previous.next 和 current.next 链接起来，这样当前元素就会被丢弃在计算机内存中，等着被垃圾回收站清除。</p>
+<p>对于最后一个元素，在（while(index++ &lt; position)）跳出循环时， current 变量总是对列表中最后一个元素的引用（要移除的元素）。current.next 的值将是 null（因为它是最后一个元素）。由于还保留了对 previous 的引用（当前元素的前一个元素），previous 就指向了 current 。那么要移除 current,要做的就是把 previous.next 的值改变为 current.next 。</p>
+<h4 id="在任意位置插入元素"><a href="#在任意位置插入元素" class="headerlink" title="在任意位置插入元素"></a><strong>在任意位置插入元素</strong></h4><p>实现 insert 方法，使用这个方法可以在任意位置插入一个元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,element</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 检查越界值</span></span><br><span class="line">    <span class="keyword">if</span>(position &gt;=<span class="number">0</span> &amp;&amp; position &lt;= length)&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element),</span><br><span class="line">        current = head,</span><br><span class="line">        previous,</span><br><span class="line">        index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(position === <span class="number">0</span> )&#123; <span class="comment">// 在第一个位置添加</span></span><br><span class="line">            node.next = current;</span><br><span class="line">            head = node;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">while</span>(index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>)&#123;</span></span></span><br><span class="line"><span class="xml">                previous = current;</span></span><br><span class="line"><span class="xml">                current = current.next;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            node.next = current;</span></span><br><span class="line"><span class="xml">            previous.next = node;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        length++;</span></span><br><span class="line"><span class="xml">        return true;</span></span><br><span class="line"><span class="xml">    &#125;else&#123;</span></span><br><span class="line"><span class="xml">        return false;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>current 变量是对列表中第一个元素的引用，我们需要做的是把 node.next 的值设为 current （列表中的第一个元素），现在 head 和 node.next 都指向了 current ，接下来要做的就是把 head 的引用改为 node ，这样列表中就有了一个新元素。</p>
+<p>现在来处理第二种场景，在列表中间或者末尾添加一个新的元素。首先，循环访问列表，找打目标为位置，当跳出循环的时候， current 变量将是对想要插入新元素的位置之后一个元素的引用，而 previous 将是对想要插入新元素的位置之前的一个元素的引用。在这种情况下，我门要在 previous 和 current 之间添加新项。因此，需要将新项（node）和当前链接起来（node.next = current），然后需要改变 previous 和 current z之间的链接，我们还需要让 previous.next 指向 node。</p>
+<h4 id="实现其他方法"><a href="#实现其他方法" class="headerlink" title="实现其他方法"></a><strong>实现其他方法</strong></h4><p><strong>toString方法</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> current = head,</span><br><span class="line">    string = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">while</span>(current)&#123;</span><br><span class="line">        string += current.element + (current.next ? <span class="string">'-'</span>:<span class="string">''</span>);</span><br><span class="line">        current = current.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> string;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>赋值current为 head, 循环访问 current，将 current 变量当做索引，初始化用于拼接元素的变量（string）。通过 current 来检查元素是否存在，如果列表为空或是到达列表中最后一个元素的下一位（null），while 循环中的代码就不会执行，就可以得到元素的内容，将其拼接到字符串中，最后，迭代下一个元素。最后，返回列表内容的字符串。</p>
+<p><strong>indexOf方法</strong></p>
+<p>indexOf方法接受一个元素的值，如果在列表中找到它，就返回元素的位置，否则返回 -1</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.indexOf = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> current = head,</span><br><span class="line">    index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(current)&#123;</span><br><span class="line">        <span class="keyword">if</span>(element === current.element)&#123;</span><br><span class="line">            <span class="keyword">return</span> index;</span><br><span class="line">        &#125;</span><br><span class="line">        index++;</span><br><span class="line">        current = current.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>循环变量 current，它的初始值是  head ,利用index 来计算位置数。访问元素，检查当前元素是否是我们要找的，如果是，就返回它的位置，不是就继续计数，检查列表中的下一个节点。</p>
+<p>如果列表为空，或是到达列表的尾部（current = current.next 将是 null），循环就不会执行。如果没有找到值就返回 -1 。</p>
+<p>实现了上面的方法，就可以实现remove等其他方法了</p>
+<p><strong>remove方法</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="keyword">this</span>.indexOf(element);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.removeAt(index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>isEmpty、size 和 getHead方法</strong></p>
+<p>isEmpty和size 和之前章节实现一模一样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.isEmpty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> length === <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有 getHead方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getHead = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>head 变量是 LinkedList 类的私有变量，我们如果需要在类的实现外部循环访问列表，就需要提供一种获取类的第一个元素的方法。</p>
+<p>整个 LinkedList函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LinkedList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123; <span class="comment">// 需要一个Node辅助类，表示要加入列表的项，element 代表要添加到列表中的值， next d代表指向列表的下一个节点向的指针</span></span><br><span class="line">        <span class="keyword">this</span>.element = element;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>; <span class="comment">// 存储列表项的数量 length 属性</span></span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>; <span class="comment">// 存储第一个节点的引用在 head 变量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.append = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element),current;</span><br><span class="line">        <span class="keyword">if</span>(head === <span class="literal">null</span>)&#123;</span><br><span class="line">            head = node;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            current = head;</span><br><span class="line">            <span class="comment">// 循环列表，直到找到最后一项</span></span><br><span class="line">            <span class="keyword">while</span>(current.next)&#123;</span><br><span class="line">                current = current.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 当current.next元素为null时，找到最后一项，将其 next 赋为 node,建立连接</span></span><br><span class="line">            current.next = node;</span><br><span class="line">        &#125;</span><br><span class="line">        length++;  <span class="comment">// 更新列表的长度</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,element</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 检查越界值</span></span><br><span class="line">        <span class="keyword">if</span>(position &gt;=<span class="number">0</span> &amp;&amp; position &lt;= length)&#123;</span><br><span class="line">            <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element),</span><br><span class="line">            current = head,</span><br><span class="line">            previous,</span><br><span class="line">            index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(position === <span class="number">0</span> )&#123; <span class="comment">// 在第一个位置添加</span></span><br><span class="line">                node.next = current;</span><br><span class="line">                head = node;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">while</span>(index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>)&#123;</span></span></span><br><span class="line"><span class="xml">                    previous = current;</span></span><br><span class="line"><span class="xml">                    current = current.next;</span></span><br><span class="line"><span class="xml">                &#125;</span></span><br><span class="line"><span class="xml">                node.next = current;</span></span><br><span class="line"><span class="xml">                previous.next = node;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            length++;</span></span><br><span class="line"><span class="xml">            return true;</span></span><br><span class="line"><span class="xml">        &#125;else&#123;</span></span><br><span class="line"><span class="xml">            return false;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.removeAt = function(position)&#123;</span></span><br><span class="line"><span class="xml">        // 检查越界值</span></span><br><span class="line"><span class="xml">        if(position &gt;-1 &amp;&amp; position <span class="tag">&lt; <span class="attr">length</span>)&#123;</span></span></span><br><span class="line"><span class="xml">            let current = head,previous,index = 0;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">            // 移除第一项</span></span><br><span class="line"><span class="xml">            if(position === 0)&#123;</span></span><br><span class="line"><span class="xml">                head = current.next;</span></span><br><span class="line"><span class="xml">                console.log(current.element);</span></span><br><span class="line"><span class="xml">            &#125;else&#123;</span></span><br><span class="line"><span class="xml">                while(index++ <span class="tag">&lt; <span class="attr">position</span>)&#123;</span></span></span><br><span class="line"><span class="xml">                    previous = current;</span></span><br><span class="line"><span class="xml">                    current = current.next;</span></span><br><span class="line"><span class="xml">                &#125;</span></span><br><span class="line"><span class="xml">                // 将 previous 与 current 的下一项连接起来，跳过 current,从移除它</span></span><br><span class="line"><span class="xml">                previous.next = current.next;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            length --;</span></span><br><span class="line"><span class="xml">            return current.element;</span></span><br><span class="line"><span class="xml">        &#125;else&#123;				</span></span><br><span class="line"><span class="xml">            return null;</span></span><br><span class="line"><span class="xml">        &#125;			</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.remove = function(element)&#123;</span></span><br><span class="line"><span class="xml">        let index = this.indexOf(element);</span></span><br><span class="line"><span class="xml">        return this.removeAt(index);</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.indexOf = function(element)&#123;</span></span><br><span class="line"><span class="xml">        let current = head,</span></span><br><span class="line"><span class="xml">        index = 0;</span></span><br><span class="line"><span class="xml">        while(current)&#123;</span></span><br><span class="line"><span class="xml">            if(element === current.element)&#123;</span></span><br><span class="line"><span class="xml">                return index;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            index++;</span></span><br><span class="line"><span class="xml">            current = current.next;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        return -1;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.isEmpty = function()&#123;</span></span><br><span class="line"><span class="xml">        return length === 0;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.size = function()&#123;</span></span><br><span class="line"><span class="xml">        return length;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.getHead = function()&#123;</span></span><br><span class="line"><span class="xml">        return head;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.toString = function()&#123;</span></span><br><span class="line"><span class="xml">        let current = head,</span></span><br><span class="line"><span class="xml">        string = '';</span></span><br><span class="line"><span class="xml">        while(current)&#123;</span></span><br><span class="line"><span class="xml">            string += current.element + (current.next ? '-':'');</span></span><br><span class="line"><span class="xml">            current = current.next;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        return string;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h3><p>链表有多种不同的类型，这一节介绍 双向链表，双向链表和普通链表的区别在于，在链表中，一个节点只有链向下一个链接，而在双向链表中，链接是双向的：一个链向下一个元素，另一个链向前一个元素。如下图所示</p>
+<p><img src="/images/js数据结构与算法-双向链表-数据结构.png" alt="双向链表"></p>
+<p>先从实现 DoublyLinkedList 类所需要的变动开始</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DoublyLinkedList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">elememt</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elememt = elememt;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.prev = <span class="literal">null</span>; <span class="comment">// 新增的</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">let</span> tail = <span class="literal">null</span> <span class="comment">// 新增的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里是方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，Node 类中新增了 prev属性（一个新指针），在 DoublyLinkedList 类里也有用来保存对列表最后一项的引用的 tail 属性。</p>
+<p>双向链表提供了两种迭代列表的方式：从头到尾，或者从尾到头。我们也可以方位一个特定节点的下一个或者是上一个元素。在单向链表中，如果迭代列表时错过了要找的元素，就需要回到列表起点，重新迭代。这是双向链表的一个优点。</p>
+<h4 id="在任意位置插入新元素"><a href="#在任意位置插入新元素" class="headerlink" title="在任意位置插入新元素"></a><strong>在任意位置插入新元素</strong></h4><p>向双向链表中插入一个新项跟（单向）链表非常相类似。区别在于，链表只要控制一个 next 指针，而双向链表则要同时控制 next 和 prev （previous，前一个）这两个指针。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,elememt</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 检查越界值</span></span><br><span class="line">    <span class="keyword">if</span>(position &gt;= <span class="number">0</span> &amp;&amp; position &lt;= length)&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="keyword">new</span> Node(elememt),</span><br><span class="line">        current = head,</span><br><span class="line">        previous,</span><br><span class="line">        index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(position === <span class="number">0</span>)&#123; <span class="comment">// 在第一个位置添加</span></span><br><span class="line">            <span class="keyword">if</span>(!head)&#123;</span><br><span class="line">                head = node;</span><br><span class="line">                tail = node;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                node.next = current;</span><br><span class="line">                current.prev = node;</span><br><span class="line">                head = node;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position === length)&#123; <span class="comment">// 最后一项</span></span><br><span class="line">            current = tail;</span><br><span class="line">            current.next = node;</span><br><span class="line">            node.prev = current;</span><br><span class="line">            tail = node;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>) &#123;</span></span></span><br><span class="line"><span class="xml">                previous = current;</span></span><br><span class="line"><span class="xml">                current = current.next;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            node.next = current;</span></span><br><span class="line"><span class="xml">            previous.next = node;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">            current.prev = node;</span></span><br><span class="line"><span class="xml">            node.prev = previous;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        length++</span></span><br><span class="line"><span class="xml">        return true;</span></span><br><span class="line"><span class="xml">    &#125;else&#123;</span></span><br><span class="line"><span class="xml">        return false;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>在列表的第一个位置（列表的起点）插入一个新元素，如果列表为空（if(!head)），那只需将 head 和 tail 都指向这个新节点。如果不为空， current  变量将是对列表中的第一个元素的引用。就像我们在链表中所做的，把 node.next  设为 current ，而head 将指针指向 node （它被设为列表中的第一个元素）。不同之处，我们还需要为指向上一个元素的指针设一个值。current.prev 指针将由 指向 null 变成指向 新元素（current.prev = node）。node.prev 指针已经是 null,因此不需要在更新任何东西了。</p>
+<p>假如我们要在列表最后添加一个新元素。这是一个特殊情况，因为我们还控制着指向最后一个元素的指针（tail）。current 变量将引用最后一个元素（current = tail）。然后分开建立第一个链接：node.prev 将引用current。current.next 指针（指向null）将指向 node （由于构造函数，node.next 已经指向了 null）。然后只剩下一件事，就是更新 tail ，它将由 指向 current 变成指向 node 。</p>
+<p>第三种场景：在列表中插入一个新元素，就像我们在之前方法中所做，迭代列表，知道到达要找的位置（while (index++ &lt; position)）。我们将在 current 和 previous 元素之间插入新元素。首先，node.next 将指向 current ,而 previous.next 将指向 node,这样就不会跌势节点之间的链接。然后需要处理所有的链接：current.prev 将指向node ,而 node.prev 将指向 previous</p>
+<h4 id="从任意位置移除元素"><a href="#从任意位置移除元素" class="headerlink" title="从任意位置移除元素"></a><strong>从任意位置移除元素</strong></h4><p>从双向链表中移除元素跟链表非常类似。唯一区别就是还需要设置一个位置的指针。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span>(<span class="params">position</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 检查越界值</span></span><br><span class="line">    <span class="keyword">if</span>(position &gt; <span class="number">-1</span> &amp;&amp; position &lt; length)&#123;</span><br><span class="line">        <span class="keyword">let</span> current = head,</span><br><span class="line">        previous,</span><br><span class="line">        index = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 移除第一项</span></span><br><span class="line">        <span class="keyword">if</span>(position === <span class="number">0</span>)&#123;</span><br><span class="line">            head = current.next;</span><br><span class="line">            <span class="comment">// 如果只有一项，更新 tail</span></span><br><span class="line">            <span class="keyword">if</span>(length === <span class="number">1</span>)&#123;</span><br><span class="line">                tail = <span class="literal">null</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                head.prev = <span class="literal">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position === length<span class="number">-1</span>)&#123; <span class="comment">// 最后一项</span></span><br><span class="line">            current = tail;</span><br><span class="line">            tail = current.prev;</span><br><span class="line">            tail.next = <span class="literal">null</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>) &#123;</span></span></span><br><span class="line"><span class="xml">                previous = current;</span></span><br><span class="line"><span class="xml">                current = current.next;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            // 将 previous 与 current 的下一项连接起来——跳过 current</span></span><br><span class="line"><span class="xml">            previous.next = current.next;</span></span><br><span class="line"><span class="xml">            current.next.prev = previous;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        length --;</span></span><br><span class="line"><span class="xml">        return current.elememt;</span></span><br><span class="line"><span class="xml">    &#125;else&#123;</span></span><br><span class="line"><span class="xml">        return null;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们需要处理三种场景，从头部、从中间和从尾部移除一个元素。</p>
+<p>移除第一个元素。current 变量是对列表中第一个元素的引用，也就是我们想要移除的远古三。需要做的就是改变 head 的引用，将其从 current 改为下一个元素（head = current.next;），但是我们还需要更新 current.next 指向上一个元素的指针（因为第一个元素的 prev 指针是 null）。因此，把 head.prev 的引用改为 null（因为 head 也指向了列表中的第一个元素，或者也可以用 current.next.prev ）。由于还需要控制 tail 的引用，我们可以检测要移除的是否是第一个元素，如果是，只需要把 tail 也设为 null。</p>
+<p>移除最后一个位置的元素。既然已经有了对最后一个元素的引用（tail）,我们就不需要为找到它而迭代列表。我们可以把 tail 的引用赋给 current 变量。接下来，就需要吧 tail 的引用更新为列表中的倒数第二个元素（current.prev,或者 tail.prev也可以）。既然 tail 指向了倒数第二个元素，我们需要把 next 指针更新为 null （tail.next = null）。</p>
+<p>最后一种场景，从列表中移除一个元素。首先需要迭代列表，直到到达要找的位置。current 变量所引用的就是要移除的远古三。那么要移除它，我们可以通过更新 previous.next 和 current.next.prev 的引用，在列表中跳过它。因此，previous.next 将 指向 current.next ，而 current.next.prev 将指向 previous。</p>
+<p>完整代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DoublyLinkedList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span>(<span class="params">elememt</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elememt = elememt;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.prev = <span class="literal">null</span>; <span class="comment">// 新增的</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">let</span> tail = <span class="literal">null</span> <span class="comment">// 新增的</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.append = <span class="function"><span class="keyword">function</span>(<span class="params">elememt</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> node = <span class="keyword">new</span> Node(elememt),</span><br><span class="line">        current;</span><br><span class="line">        <span class="keyword">if</span>(!head)&#123;</span><br><span class="line">            head = node;</span><br><span class="line">            tail = node;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            current = tail;</span><br><span class="line">            current.next = node;</span><br><span class="line">            node.prev = current;</span><br><span class="line">            tail = node;</span><br><span class="line">        &#125;</span><br><span class="line">        length++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,elememt</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 检查越界值</span></span><br><span class="line">        <span class="keyword">if</span>(position &gt;= <span class="number">0</span> &amp;&amp; position &lt;= length)&#123;</span><br><span class="line">            <span class="keyword">let</span> node = <span class="keyword">new</span> Node(elememt),</span><br><span class="line">            current = head,</span><br><span class="line">            previous,</span><br><span class="line">            index = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(position === <span class="number">0</span>)&#123; <span class="comment">// 在第一个位置添加</span></span><br><span class="line">                <span class="keyword">if</span>(!head)&#123;</span><br><span class="line">                    head = node;</span><br><span class="line">                    tail = node;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    node.next = current;</span><br><span class="line">                    current.prev = node;</span><br><span class="line">                    head = node;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position === length)&#123; <span class="comment">// 最后一项</span></span><br><span class="line">                current = tail;</span><br><span class="line">                current.next = node;</span><br><span class="line">                node.prev = current;</span><br><span class="line">                tail = node;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">while</span> (index++ <span class="xml"><span class="tag">&lt; <span class="attr">position</span>) &#123;</span></span></span><br><span class="line"><span class="xml">                    previous = current;</span></span><br><span class="line"><span class="xml">                    current = current.next;</span></span><br><span class="line"><span class="xml">                &#125;</span></span><br><span class="line"><span class="xml">                node.next = current;</span></span><br><span class="line"><span class="xml">                previous.next = node;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">                current.prev = node;</span></span><br><span class="line"><span class="xml">                node.prev = previous;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            length++</span></span><br><span class="line"><span class="xml">            return true;</span></span><br><span class="line"><span class="xml">        &#125;else&#123;</span></span><br><span class="line"><span class="xml">            return false;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">    &#125;	</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.removeAt = function(position)&#123;</span></span><br><span class="line"><span class="xml">        // 检查越界值</span></span><br><span class="line"><span class="xml">        if(position &gt; -1 &amp;&amp; position <span class="tag">&lt; <span class="attr">length</span>)&#123;</span></span></span><br><span class="line"><span class="xml">            let current = head,</span></span><br><span class="line"><span class="xml">            previous,</span></span><br><span class="line"><span class="xml">            index = 0;</span></span><br><span class="line"><span class="xml">            // 移除第一项</span></span><br><span class="line"><span class="xml">            if(position === 0)&#123;</span></span><br><span class="line"><span class="xml">                head = current.next;</span></span><br><span class="line"><span class="xml">                // 如果只有一项，更新 tail</span></span><br><span class="line"><span class="xml">                if(length === 1)&#123;</span></span><br><span class="line"><span class="xml">                    tail = null;</span></span><br><span class="line"><span class="xml">                &#125;else&#123;</span></span><br><span class="line"><span class="xml">                    head.prev = null;</span></span><br><span class="line"><span class="xml">                &#125;</span></span><br><span class="line"><span class="xml">            &#125;else if(position === length-1)&#123; // 最后一项</span></span><br><span class="line"><span class="xml">                current = tail;</span></span><br><span class="line"><span class="xml">                tail = current.prev;</span></span><br><span class="line"><span class="xml">                tail.next = null;</span></span><br><span class="line"><span class="xml">            &#125;else&#123;</span></span><br><span class="line"><span class="xml">                while (index++ <span class="tag">&lt; <span class="attr">position</span>) &#123;</span></span></span><br><span class="line"><span class="xml">                    previous = current;</span></span><br><span class="line"><span class="xml">                    current = current.next;</span></span><br><span class="line"><span class="xml">                &#125;</span></span><br><span class="line"><span class="xml">                // 将 previous 与 current 的下一项连接起来——跳过 current</span></span><br><span class="line"><span class="xml">                previous.next = current.next;</span></span><br><span class="line"><span class="xml">                current.next.prev = previous;</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            length --;</span></span><br><span class="line"><span class="xml">            return current.elememt;</span></span><br><span class="line"><span class="xml">        &#125;else&#123;</span></span><br><span class="line"><span class="xml">            return null;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.remove = function(elememt)&#123;</span></span><br><span class="line"><span class="xml">        let index = this.indexOf(elememt);</span></span><br><span class="line"><span class="xml">        this.removeAt(index);</span></span><br><span class="line"><span class="xml">    &#125;	</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.toString = function()&#123;</span></span><br><span class="line"><span class="xml">        let current = head,</span></span><br><span class="line"><span class="xml">        str = '';</span></span><br><span class="line"><span class="xml">        while (current) &#123;</span></span><br><span class="line"><span class="xml">            str += current.elememt + (current.next?'-':'');</span></span><br><span class="line"><span class="xml">            current = current.next;</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        return str;</span></span><br><span class="line"><span class="xml">    &#125;		</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.indexOf = function(elememt)&#123;</span></span><br><span class="line"><span class="xml">        let current = head,</span></span><br><span class="line"><span class="xml">        index = 0;</span></span><br><span class="line"><span class="xml">        while (current) &#123;</span></span><br><span class="line"><span class="xml">            if(current.elememt === elememt)&#123;</span></span><br><span class="line"><span class="xml">                return index</span></span><br><span class="line"><span class="xml">            &#125;</span></span><br><span class="line"><span class="xml">            current = current.next;</span></span><br><span class="line"><span class="xml">            index++</span></span><br><span class="line"><span class="xml">        &#125;</span></span><br><span class="line"><span class="xml">        return -1;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.isEmpty = function()&#123;</span></span><br><span class="line"><span class="xml">        return length === 0;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.size = function()&#123;</span></span><br><span class="line"><span class="xml">        return length;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">    this.getHead = function()&#123;</span></span><br><span class="line"><span class="xml">        return head;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="循环链表"><a href="#循环链表" class="headerlink" title="循环链表"></a>循环链表</h3><p>循环链表可以像链表一样只有单向引用，也可以像双向链表一样有双向引用。循环链表和链表之间唯一的区别在于，最后一个元素指向下一个元素的指针（tail.next）不是引用 null,而是指向第一个元素（head），如下图所示</p>
+<p><img src="/images/js数据结构与算法-循环链表-数据结构.png" alt="循环链表"></p>
+<p>双向链表有指向 head 元素的 tail.next ，和指向 tail 元素的 head.prev</p>
+<p><img src="/images/js数据结构与算法-双向循环链表-数据结构.png" alt="双向循环链表"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这一章中，学习了链表这种数据结构，及其辩题双向链表和循环链表，知道了如何在任意位置添加和移除元素，已经如何循环访问两边，比数组重要的优点就是，无需移动链表中的元素，就能轻松添加和移除元素。当你需要添加和移除很多元素的时候，最好的选择就是链表，而非数组。下一章将学习集合，最后一种顺序数据结构。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-10-30-JavaScipt数据结构与算法Part5.html" title="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">http://laibh.top/2018-10-30-JavaScipt数据结构与算法Part5.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-10-26-RESTful.html" rel="next" title="深入理解RESTful">
+                <i class="fa fa-chevron-left"></i> 深入理解RESTful
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-01-JavaScipt数据结构与算法Part6.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">
+                为什么我要放弃javaScript数据结构与算法（第六章）—— 集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章-链表"><span class="nav-number">1.</span> <span class="nav-text">第五章 链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#链表数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">链表数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建链表"><span class="nav-number">1.2.</span> <span class="nav-text">创建链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#向链表尾部追加元素"><span class="nav-number">1.2.1.</span> <span class="nav-text">向链表尾部追加元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从链表中移除元素"><span class="nav-number">1.2.2.</span> <span class="nav-text">从链表中移除元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在任意位置插入元素"><span class="nav-number">1.2.3.</span> <span class="nav-text">在任意位置插入元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现其他方法"><span class="nav-number">1.2.4.</span> <span class="nav-text">实现其他方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向链表"><span class="nav-number">1.3.</span> <span class="nav-text">双向链表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在任意位置插入新元素"><span class="nav-number">1.3.1.</span> <span class="nav-text">在任意位置插入新元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从任意位置移除元素"><span class="nav-number">1.3.2.</span> <span class="nav-text">从任意位置移除元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环链表"><span class="nav-number">1.4.</span> <span class="nav-text">循环链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

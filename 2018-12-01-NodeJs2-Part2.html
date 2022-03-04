@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node编程基础本章内容：  用模块组织代码 用回调处理一次性时间 用事件发射器处理重复性事件 实现串行和并行的流程控制 使用流程控制工具  本章要解决摆在Node 新手开发面前的两个难题:  如何组织代码 如何实现异步编程 如何响应一次性事件 如何处理重复性事件 如何让异步逻辑顺序执行  Node 功能的组织">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs实战 —— Node编程基础">
+<meta property="og:url" content="http://laibh.top/2018-12-01-NodeJs2-Part2.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node编程基础本章内容：  用模块组织代码 用回调处理一次性时间 用事件发射器处理重复性事件 实现串行和并行的流程控制 使用流程控制工具  本章要解决摆在Node 新手开发面前的两个难题:  如何组织代码 如何实现异步编程 如何响应一次性事件 如何处理重复性事件 如何让异步逻辑顺序执行  Node 功能的组织">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-代码分组.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-exports.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-查找模块.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-模块定义规则.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-Web中共享app对象.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-异步逻辑的顺序化.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-串行化流程控制的工作机制.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-串行化流程控制的结果.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-用并行化流程控制实现对几个文件中单词频度的计数.png">
+<meta property="og:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-并行化流程控制的结果.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs实战 —— Node编程基础">
+<meta name="twitter:description" content="读 《node.js实战2.0》，进行学习记录总结。 当当网购买链接 豆瓣网1.0链接 Node编程基础本章内容：  用模块组织代码 用回调处理一次性时间 用事件发射器处理重复性事件 实现串行和并行的流程控制 使用流程控制工具  本章要解决摆在Node 新手开发面前的两个难题:  如何组织代码 如何实现异步编程 如何响应一次性事件 如何处理重复性事件 如何让异步逻辑顺序执行  Node 功能的组织">
+<meta name="twitter:image" content="http://laibh.top/images/2018-12-01-NodeJs2-Part2-代码分组.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-12-01-NodeJs2-Part2.html"/>
+
+
+
+
+
+  <title>Nodejs实战 —— Node编程基础 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-12-01-NodeJs2-Part2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Nodejs实战 —— Node编程基础</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T10:30:00+08:00">
+                2018-12-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-12-01-NodeJs2-Part2.html" class="leancloud_visitors" data-flag-title="Nodejs实战 —— Node编程基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  10,423
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>读 《node.js实战2.0》，进行学习记录总结。</p>
+<p><a href="http://product.dangdang.com/25329015.html">当当网购买链接</a></p>
+<p><a href="https://book.douban.com/subject/25870705/">豆瓣网1.0链接</a></p>
+<h2 id="Node编程基础"><a href="#Node编程基础" class="headerlink" title="Node编程基础"></a>Node编程基础</h2><p>本章内容：</p>
+<ul>
+<li>用模块组织代码</li>
+<li>用回调处理一次性时间</li>
+<li>用事件发射器处理重复性事件</li>
+<li>实现串行和并行的流程控制</li>
+<li>使用流程控制工具</li>
+</ul>
+<p>本章要解决摆在Node 新手开发面前的两个难题:</p>
+<ul>
+<li>如何组织代码</li>
+<li>如何实现异步编程</li>
+<li>如何响应一次性事件</li>
+<li>如何处理重复性事件</li>
+<li>如何让异步逻辑顺序执行</li>
+</ul>
+<h3 id="Node-功能的组织及重用"><a href="#Node-功能的组织及重用" class="headerlink" title="Node 功能的组织及重用"></a>Node 功能的组织及重用</h3><p>传统的方式是按逻辑相关性对代码分组，将包含大量代码的单个文件分解成多个文件。</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-代码分组.png" alt="代码分组"></p>
+<p>对于整合一个文件（’included’文件）中的逻辑，后面引入这个文件里面的任何变量或者是函数可能会覆盖应用程序原来的相同的变量或者是函数。</p>
+<p>在PHP中可以使用 命名空间 解决这个问题， Ruby 通过模块也提供了类似的功能。但 Node 的做法是不给你有污染命名空间的机会。</p>
+<p>Node 模块打包代码是为了重用，但是不会改变全局作用域。Node 模块允许从被引入文件中选择要暴露给程序的函数和变量，如果模块返回的函数或者变量不止一个，那么它可以通过设定 <code>exports</code> 对象的属性来指明它们。如果这个模块只返回一个函数或者变量，则可以设定 <code>module</code> 属性。</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-exports.png" alt="exports"></p>
+<p>Node 模块系统避免了对全局作用域的污染，从而也就避免了命名冲突，并简化了代码的重用。模块还可以发布到 npm 存储库中。使用线上这些模块没有必要担心会覆盖其他模块的变量和函数。</p>
+<p>下面将会通过一个实例来说明把逻辑组织到模块中，需要注意的几个问题：</p>
+<ul>
+<li>如何创建模块</li>
+<li>模块放在文件系统中的什么地方</li>
+<li>在创建和使用模块时要注意的东西</li>
+</ul>
+<h3 id="开始一个新的-Node-项目"><a href="#开始一个新的-Node-项目" class="headerlink" title="开始一个新的 Node 项目"></a>开始一个新的 Node 项目</h3><p>创建一个文件，在该目录下输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+<p><code>-y</code> 代表 <code>yes</code>，这样 npm 就会创建一个全部使用默认值的 package.json 文件。如果想要更多的控制权，则去掉 <code>-y</code>，就可以自定义 授权许可、作者名字等等…不过这些都没有什么必要吧，因为你也可以手动再去修改初始化的 package.json 文件。</p>
+<h4 id="创建模块"><a href="#创建模块" class="headerlink" title="创建模块"></a><strong>创建模块</strong></h4><p>模块既可以是一个文件，也可以是包含一个或者多个文件的目录。如果模块是一个目录，Node通常会在这个目录下找一个叫 index.js的文件作为模块的入口。典型的模块是一个包含 exports 对象属性定义的文件，这些属性可以是任意类型的数据，比如字符串、对象和函数。</p>
+<p>创建一个模块，来进行货币转换。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canadianDollar = <span class="number">0.91</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">roundTwo</span>(<span class="params">amount</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.round(amount * <span class="number">100</span>) / <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// canadianToUS 与 USToCanadian函数设定在 exports 模块中，所以引入这个模块的代码可以使用它们</span></span><br><span class="line">exports.canadianToUS = <span class="function"><span class="params">canadian</span> =&gt;</span> roundTwo(canadian * canadianDollar);</span><br><span class="line">exports.USToCanadian = <span class="function"><span class="params">us</span> =&gt;</span> roundTwo(us / canadianDollar);</span><br></pre></td></tr></table></figure>
+<p>exports 对象上只设定了两个属性。也就是说引入这个模块的代码只能访问到 canadianToUS 与 USToCanadian两个函数。而变量 canadianDollar 作为私有变量仅作用在 这两个函数的逻辑内部，程序并不能直接访问它。</p>
+<p>使用这个模块要用到 Node 的 require 函数，该函数以所用模块的路径为参数。Node 以同步的方式寻找模块，定义到这个模块并加载文件中的内容。Node 查找文件的 顺序是先找到核心模块，然后是当前目录，最后是 node_modules</p>
+<p><strong>关于 require 和 同步I/O</strong></p>
+<p>require 是 Node 中少数几个同步 I/O操作之一。因为经常用到模块，并且一般都是在文件顶端引入，所以把 require 做成同步的有助于代码的整洁、有序。</p>
+<p>但在I/O密集的地方尽量不要用 require。所有同步调用都会阻塞 Node,知道调用完成才能做其他事情。比如你正在运行一个 HTTP 服务器，如果在每个进入的请求上都用了 require，就会遇到性能问题。所以 require 和其他同步操作通常放在最初加载的地方。</p>
+<p>下面这个是 test-currency.js 中的代码，它 require 了 currency.js 模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路径 ./ 代表模块跟程序脚本放在同一个目录下</span></span><br><span class="line"><span class="keyword">const</span> currency = <span class="built_in">require</span>(<span class="string">'./currency'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'50 Canadian dollars equals this amount of US dollars:'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(currency.canadianToUS(<span class="number">50</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'30 US dollars equals this amount of Canadian dollars:'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(currency.USToCanadian(<span class="number">30</span>));</span><br></pre></td></tr></table></figure>
+<p>引入时，.js 扩展名可以忽略。如果没有指明是 js文件，Node也会检查 json 文件，json 文件就是作为 JavaScript 对象加载的。</p>
+<p>在 Node 定位到并计算好你的模块之后， require 函数会返回这个模块中定义的 exports 对象中的内容，然后你就可以用这个模块中的两个函数做货币转换了。</p>
+<p>如果想把这个模块放在子目录，比如 ’/lib‘，只要把 require 语句改成下面的就可以了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> currency = <span class="built_in">require</span>(<span class="string">'./lib/currency'</span>);</span><br></pre></td></tr></table></figure>
+<p>组装模块中的 exports 对象是在单独的文件中组织可重用代码的一种简便方法。</p>
+<h3 id="用-module-exports-微调模块的创建"><a href="#用-module-exports-微调模块的创建" class="headerlink" title="用 module.exports 微调模块的创建"></a><strong>用 module.exports 微调模块的创建</strong></h3><p>尽管用函数和变量组装 exports 对象能满足大多数的模块的需要，但有时你可能需要调用不同的模型来创建该模块。</p>
+<p>比如说，前面创建的那个货币转换器模块可以改成只返回一个 Currency 构造函数，而不是一个包含两个函数的对象。一个面向对象的实现看起来可能想下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Currency = <span class="built_in">require</span>(<span class="string">'./currency'</span>);</span><br><span class="line"><span class="keyword">const</span> canadianDollar = <span class="number">0.91</span>;</span><br><span class="line"><span class="keyword">const</span> currency = <span class="keyword">new</span> Currency(canadianDollar);</span><br><span class="line"><span class="built_in">console</span>.log(currency.canadianToUS);</span><br></pre></td></tr></table></figure>
+<p>如果只需要从模块中得到一个函数，那从 require 中返回一个函数的代码要比返回一个对象的代码更加优雅。</p>
+<p>要创建一个变量或者函数的模块，你可能会以为只要把 exports 设定你想返回的东西就行。但是这样是不行的，因为 Node 觉得不用任何其他对象、函数或者变量给 exports  赋值。下面代码清单中的模块代码视图将一个函数赋值给 exports</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个模块不能用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Currency</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canadianDollar)&#123;</span><br><span class="line">        <span class="keyword">this</span>.canadianDollar = canadianDollar;</span><br><span class="line">    &#125;</span><br><span class="line">    roundTwoDecimals(amount)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Math</span>.round(amount * <span class="number">100</span>) / <span class="number">100</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    canadianToUS(canadian)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.roundTwoDecimals(canadian * <span class="keyword">this</span>.canadianDollar);</span><br><span class="line">    &#125;</span><br><span class="line">    USToCanadian(us)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.roundTwoDecimals(us / <span class="keyword">this</span>.canadianDollar);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports  = Currency; <span class="comment">// 错误，Node 不允许重写 exports</span></span><br></pre></td></tr></table></figure>
+<p>为了让前面那个模块可用，需要把 exports 换成 module.exports 。用 module.exports 可以对外提供单个变量、函数或者对象。如果你创建了一个既有 exports 又有 module.exports 的模块。那么它会返回 module.exports ，而 exports 会被忽略。</p>
+<p><strong>导出的究竟是什么</strong></p>
+<p>最终在程序里导出的是 module.exports。 exports 只是对 module.exports 的全局引用，最初被定义为一个可以添加属性的空对象。 exports.myFunc 只是 module.exports.myFunc 的简写。</p>
+<p>所以，如果把 exports 设定为别的，就打破了 module.exports 之间的引用关系。可是因为真正导出的是 module.exports，那样 exports 就不能用了，因为它不再指向 module.exports 了。如果你想保留那个链接，可以像下面这样让 module.exports 再次引用 exports:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = exports = Currency;</span><br></pre></td></tr></table></figure>
+<p>根据需要使用 exports 或 module.exports 可以将功能组织成模块，规避将程序脚本一直增长所产生的弊端。</p>
+<h3 id="用-node-module-重用模块"><a href="#用-node-module-重用模块" class="headerlink" title="用 node_module 重用模块"></a>用 node_module 重用模块</h3><p>要求模块在文件系统中使用相对路径存放，对于组织程序特定的代码很有帮助，但对于想要在程序房间共享或跟其他人共享代码却用处不大。Node 中有一个独特的引用机制，可以不必知道模块在文件系统中的具体位置。这个机制就是使用 node_modules 目录。</p>
+<p>如果引入的时候省略掉路径，直接写文件名，Node 会遵照几个柜子搜寻这个模块</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-查找模块.png" alt="查找模块"></p>
+<p>用环境变量 NODE_PATH 可以改变 Node 模块的默认路径。如果用了它，在 Window 中 NODE_PATH 应该设置为用分号分隔的目录列表，在其他操作系统中则用冒号分隔。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>尽管Node模块系统的本质简单直接，但是有两点需要注意一下。</p>
+<p>第一，如果模块是目录，在模块目录中定义模块的文件必须被命名为 index.js ，除非你在这个目录下一个叫 package.json 的文件里特别指明。要指定一个取代 index.js 的文件，package.json 文件里必须有一个用 JavaScript 对象表示法 （JSON）数据定义的对象，其中有一个名为 main 的键，指明模块目录内文件的路径。下面的流程图对这些规则做了汇总。</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-模块定义规则.png" alt="模块定义规则"></p>
+<p>下面是一个 package.json 文件的例子，它指定 currency.js 为主文件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"main"</span>:<span class="string">"currency.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二，Node 能把模块作为对象缓存起来，如果程序中的两个文件引入了相同的模块，第一个 require 会把模块返回的数据存到内容中，这样第二个 require 加不用再去访问和计算模块的源文件了。也就是说，同个进程中使用 require 加载一个模块得到的是相同的对象。假设你搭建了一个 MVC Web 程序，它有一个主对象 app。你可以设置好那个 app 对象，导出它，然后在项目中的任何地方 require 它。如果你在这个 app 对象中放了一些配置信息，那你就可以在其他文件访问这些配置信息的值，假设目录接口如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">project </span><br><span class="line"> --app.js</span><br><span class="line"> --models</span><br><span class="line"> 	--post.js</span><br></pre></td></tr></table></figure>
+<p>下面展示它的工作原理</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-Web中共享app对象.png" alt="Web中共享app对象"></p>
+<h3 id="使用异步编程技术"><a href="#使用异步编程技术" class="headerlink" title="使用异步编程技术"></a>使用异步编程技术</h3><p>服务端异步编程：事件也会触发响应逻辑，在Node 的世界流行两种响应逻辑管理方式，回调和事件监听。</p>
+<p><strong>回调</strong>通常用来定义一次性响应的逻辑，比如对于数据库查询，可以指定一个回调函数来确定如何处理查询结果。这个回调函数可能会显示数据库查询结果，根据这些结果来做些计算，或者以查询结果为参数执行另一个回调函数。</p>
+<p><strong>事件监听器</strong>本质上也是一个回调，不同的是，它是一个概念实体（事件）相关联。例如，当有人在浏览器点击鼠标时，鼠标点击就是一个需要处理的事件。在node 中，当有 HTTP 请求过来时候，HTTP服务器会发出一个 request 事件。你可以监听那个 request 事件，并添加一些响应逻辑。在下面的例子中，用 EventEmitter.prototype.on 方法在服务器上绑定了一个监听器，所以每当有 request 事件发出时，服务器就会调用 hanldeRequest 函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.on(<span class="string">'request'</span>,handleRequest);</span><br></pre></td></tr></table></figure>
+<p>一个 Node HTTP 服务器实例就是一个事件发射器，一个可以继承、能够添加事件发射及处理能力的类（EventEmitter）。Node 的许多核心功能都继承自 EventEmitter ，你也能创建自己的事件发射器。</p>
+<p>Node 有两种常用的响应逻辑组织方式，我们刚才用了一种，接下来要了解它的工作机制：</p>
+<ul>
+<li>如何用回调处理一次性事件</li>
+<li>如何用事件监听器响应重复性事件</li>
+<li>异步编程的几个难点</li>
+</ul>
+<h3 id="用回调处理一次性事件"><a href="#用回调处理一次性事件" class="headerlink" title="用回调处理一次性事件"></a>用回调处理一次性事件</h3><p><strong>回调</strong>是一个函数，它被当做参数传给异步函数，用来描述异步操作完成之后要做什么。回调函数 在 Node 开发使用得很频繁，比事件发射器用得多，并且用起来也很简单。</p>
+<p>为了演示回调的用法，我们来做一个简单的 HTTP 服务器，让它实现以下的功能</p>
+<ul>
+<li>异步获取存在 JSON 文件中的文章的标题</li>
+<li>异步获取简单的HTML 模块</li>
+<li>把那些标题组装到 HTML 页面中</li>
+<li>把 HTML 页面发送给用户</li>
+</ul>
+<p>JSON 文件（title.json）会被格式化陈给一个包含文章标题的字符串数组，内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    <span class="string">"Kazakhstan is a huge country... what goes on there?"</span>,</span><br><span class="line">    <span class="string">"This weather is making me craaazy"</span>,</span><br><span class="line">    <span class="string">"My neighbor sort of howls at night"</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>HTML 文件 template.html 如下结构，可以插入博客文章的标题</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>回调的用法<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Lates Posts<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- %会被替换 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>%<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>获取 JSON 文件中的标题并渲染 Web 页面的代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// blog_recent.js</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="comment">// 创建 HTTP 服务器并调用回调定义响应逻辑</span></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req,res</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(req.url == <span class="string">'/'</span>)&#123;</span><br><span class="line">        <span class="comment">// 读取 JSON 文件并调定义如何处理其中的内容</span></span><br><span class="line">        fs.readFile(<span class="string">'./title.json'</span>,(err,data) =&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(err);</span><br><span class="line">                res.end(<span class="string">'Server Error'</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;                </span><br><span class="line">                <span class="keyword">const</span> titles = <span class="built_in">JSON</span>.parse(data.toString());</span><br><span class="line">                <span class="comment">// 读取 HTML 模块，并在加载完成后使用回调</span></span><br><span class="line">                fs.readFile(<span class="string">'./template.html'</span>,(err,data) =&gt;&#123;</span><br><span class="line">                    <span class="keyword">if</span>(err)&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(err);</span><br><span class="line">                        res.end(<span class="string">'Server Error'</span>);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="comment">// 组装 HTML 页面以显示博客标题</span></span><br><span class="line">                        <span class="keyword">const</span> tmpl = data.toString();</span><br><span class="line">                        <span class="keyword">const</span> html = tmpl.replace(<span class="string">'%'</span>,titles.join(<span class="string">'&lt;li&gt;&lt;/li&gt;'</span>));</span><br><span class="line">                        res.writeHead(<span class="number">200</span>,&#123; <span class="string">'Content-Type'</span>:<span class="string">'text/html'</span> &#125;);</span><br><span class="line">                        <span class="comment">// 将 HTML 页面发送给用户</span></span><br><span class="line">                        res.end(html);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这这个例子中，嵌套了三层</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123; ...</span><br><span class="line">	fs.readFile(<span class="string">'./titles.json'</span>, (err, data) =&gt; &#123; ...</span><br><span class="line">		fs.readFile(<span class="string">'./template.html'</span>, (err, data) =&gt; &#123; ...</span><br></pre></td></tr></table></figure>
+<p>三层还可以，但是调用层数越多，代码看起来越乱，重构和测试起来也很困难，所以最好限制一下回调的嵌套层级。如果把每一层回调嵌套的处理做成命名函数，虽然表示相同逻辑所用的代码变多了，但维护、测试和重构起来会跟更容易。下面代码创建了中间函数来减少嵌套</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="comment">// 客户端请求一开始会进入到这里</span></span><br><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 控制权交给了 getTitles</span></span><br><span class="line">    getTitles(res);</span><br><span class="line">&#125;).listen(<span class="number">8000</span>, <span class="string">'128.0.0.1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取标题，并将控制权转交给 getTemplate</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTitles</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'./title.json'</span>, (err, data) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            hadError(err, res);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            getTemplate(<span class="built_in">JSON</span>.parse(data.toString()), res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// getTemplate读取模块文件，并将控制权转交给 formatHtml</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTemplate</span>(<span class="params">titles, res</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'./template.html'</span>, (err, data) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            hadError(err, res);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            formatHtml(titles, data.toString(), res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// formatHtml 得到标题和模板，渲染一个响应给客户端</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatHtml</span>(<span class="params">titles, tmpl, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> html = tmpl.replace(<span class="string">'%'</span>, titles.join(<span class="string">'&lt;li&gt;&lt;/li&gt;'</span>));</span><br><span class="line">    res.writeHead(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>);</span><br><span class="line">    res.end(html);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误处理，如果过程中出错，控制台会输出错误，并想客户端返回 Server Error</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hadError</span>(<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    res.end(<span class="string">'Server Error'</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还可以用 Node 开发中的另一种惯用法来减少由 if/else 引起的嵌套，尽早从函数中返回。</p>
+<p>通过尽快返回减少嵌套的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line">http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    getTitles(res);</span><br><span class="line">&#125;).listen(<span class="number">8000</span>, <span class="string">'128.0.0.1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTitles</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'./titles.json'</span>, (err, data) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> hadError(err, res);</span><br><span class="line">        getTemplate(<span class="built_in">JSON</span>.parse(data.toString()), res);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTemplate</span>(<span class="params">titles, res</span>) </span>&#123;</span><br><span class="line">    fs.readFile(<span class="string">'./template.html'</span>, (err, data) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) <span class="keyword">return</span> hadError(err, res)</span><br><span class="line">        formatHtml(titles, data.toString(), res);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatHtml</span>(<span class="params">titles, tmpl, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> html = tmpl.replace(<span class="string">'%'</span>, titles.join(<span class="string">'&lt;li&gt;&lt;/li&gt;'</span>));</span><br><span class="line">    res.writeHead(<span class="number">200</span>, &#123; <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span> &#125;);</span><br><span class="line">    res.end(html);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hadError</span>(<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">    res.end(<span class="string">'Server Error'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们已经知道如何使用一次性任务定义响应了。上面的读取文件和响应 Web 服务器请求。</p>
+<p><strong>Node 的异步回调惯例</strong></p>
+<p>Node 中的大多数内置模块在使用回调时都会带两个参数，第一个用来放可能会发生的错误，第二个用来放结果。错误参数经常缩写为 err。</p>
+<h3 id="用事件发射器处理重复性事件"><a href="#用事件发射器处理重复性事件" class="headerlink" title="用事件发射器处理重复性事件"></a>用事件发射器处理重复性事件</h3><p>事件处理器会触发事件，并且在那些事件被触发时能处理它们，一些重要的Node Api 组件，比如 HTTP 服务器、TCP 服务器和流，都被做成了事件发射器。我们也可以创建自己的事件发射器。</p>
+<p>事件是通过监听器进行处理的。监听器是跟事件相关联的、当有事件出现时就会触发的回调函数。比如 Node 中的 TCP socket ，它有一个 data 事件，每当 socket 中有新数据时就会触发：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket.on(<span class="string">'data'</span>, handleData);</span><br></pre></td></tr></table></figure>
+<h4 id="事件发射器示例"><a href="#事件发射器示例" class="headerlink" title="事件发射器示例"></a><strong>事件发射器示例</strong></h4><p>echo 服务器就是一个处理重复性事件的简单例子，当你给它发送数据时，它会把数据发回来。</p>
+<p>实现一个 echo 服务器，当有客户端连接上来时，它就会创建一个 socket 。socket 是一个事件发射器，可以用 on 方法添加监听器响应 data 事件。只要 socket 上有新数据过来，就会发这些 data 事件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> server = net.createServer(<span class="function"><span class="params">socket</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 当读取到新数据时处理的 data 事件</span></span><br><span class="line">    socket.on(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">        <span class="comment">// 数据被写回到客户端</span></span><br><span class="line">        socket.write(data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
+<p>用下面的命令运行 echo 服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node echo_server.js</span><br></pre></td></tr></table></figure>
+<p>echo 服务器运行起来之后，就可以用下面的命令连上去(可以另开一个终端)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">8888</span></span><br></pre></td></tr></table></figure>
+<p>每次通过 telnet 会话把数据发送给服务器，数据都会回传到 telnet会话中，意味着你每打一个字母，它也会返回对应的字母。</p>
+<p>window 的 telnet 是默认不开启的。具体怎么开启可以<a href="https://jingyan.baidu.com/article/95c9d20d96ba4aec4f756154.html">看这里。</a></p>
+<h4 id="响应只应该发生一次的事件"><a href="#响应只应该发生一次的事件" class="headerlink" title="响应只应该发生一次的事件"></a><strong>响应只应该发生一次的事件</strong></h4><p>监听器可以被定义成持续不断被地响应事件，如前面的例子，也能被定义成只响应一次，下面的代码用了 once 方法，对前面的那个 echo 服务器做了修改，让它只回应第一次发送过来的数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> net = require(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> server = net.createServer(socket =&gt; &#123;</span><br><span class="line">    socket.once(<span class="string">'data'</span>, data =&gt; &#123;</span><br><span class="line">        socket.write(data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="创建事件发射器：一个-PUB-SUB-的例子"><a href="#创建事件发射器：一个-PUB-SUB-的例子" class="headerlink" title="创建事件发射器：一个 PUB/SUB 的例子"></a><strong>创建事件发射器：一个 PUB/SUB 的例子</strong></h4><p>前面的例子用了一个带事件发射器的 Node 内置 API。然后我们可以用 Node 内置的事件模块创建自己的事件发射器。</p>
+<p>下面代码定义了一个 channel 事件发射器，带有一个监听器，可以向加入频道的人做出相应。注意这里用 on (或者用较长的 addListener)方法给事件发射器添加了监听器：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">channel.on(<span class="string">'join'</span>,() =&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Welcome'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 用 emit 函数发射这个事件，否则永远不会回调</span></span><br><span class="line">channel.emit(<span class="string">'join'</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>事件名称</strong>：事件是可以具有任意字符串值的键：data、join或某些长的让人发疯的事件名都行。只有一个事件是特殊的，那就是 error 。</p>
+<p>接着用 EventEmitter 实现自己的发布/预定逻辑，做一个通信通道。如果运行了下面的代码，就会得到一个简单的聊天服务器。聊天服务器的频道被做成了事件发射器，能对客户端发出的 join 事件做成响应。当有客户端加入聊天频道时，join 监听器逻辑会将一个针对该客户端的监听器附加到频道上，用来处理会将所有广播消息写入改客户端 socket 的 broadcast 事件。事件类型的名称,比如 join 和 broadcast ，完全是随意取的。你可以按自己的喜好给它们换个名字。</p>
+<p>用事件发射器实现简单的发布/预定系统</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line">channel.clients = &#123;&#125;;</span><br><span class="line">channel.subscriptions = &#123;&#125;;</span><br><span class="line">channel.on(<span class="string">'join'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">id,client</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 添加 join 事件的监听器，保存用户的 client 对象，以便程序可以将数据发送给用户</span></span><br><span class="line">    <span class="keyword">this</span>.clients[id] = client;</span><br><span class="line">    <span class="keyword">this</span>.subscriptions[id] = <span class="function">(<span class="params">senderId,message</span>) =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(id != senderId)&#123;</span><br><span class="line">            <span class="keyword">this</span>.clients[id].write(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加一个专门针对当前用户的 broadcast 事件监听器</span></span><br><span class="line">    <span class="keyword">this</span>.on(<span class="string">'broadcast'</span>,<span class="keyword">this</span>.subscriptions[id]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = net.createServer(<span class="function"><span class="params">client</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> id = <span class="string">`<span class="subst">$&#123;client.remoteAddress&#125;</span>:<span class="subst">$&#123;client.remotePort&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 当有用户连接到服务器上时发出一个 jion 事件，指明用户 ID 和 client 对象</span></span><br><span class="line">    channel.emit(<span class="string">'join'</span>,id,client);</span><br><span class="line">    client.on(<span class="string">'data'</span>,data =&gt;&#123;</span><br><span class="line">        data = data.toString();</span><br><span class="line">        <span class="comment">// 当有用户发送数据时，发出一个频道 broadcast 事件，指明用户 ID 和 消息</span></span><br><span class="line">        channel.emit(<span class="string">'broadcast'</span>,id,data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
+<p>把聊天服务器跑起来后，打开两个新的命令行窗口，并在两个都输入下面的命令进入聊天程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet 127.0.0.1 8888</span><br></pre></td></tr></table></figure>
+<p>在其中任何一个窗口输入的内容都会被发送到其他所有窗口中。</p>
+<p>这个聊天服务器还有一个问题，在用户关闭连接离开聊天室后，原来的那个监听器还在，仍会尝试向已经断开连接写数据。这样自然就会出错。为了解决这样的问题，还要按照下面的代码清单把监听器加到频道事件发射器上，并且向服务器的 close 事件监听器中添加发射频道的 leave 事件的处理逻辑。leave 事件本质上就是要移除原来给客户端添加的 broadcast 监听器。</p>
+<p>创建一个在用户断开连接时能 “打扫战场”的监听器</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">const</span> net = <span class="built_in">require</span>(<span class="string">'net'</span>);</span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line">channel.clients = &#123;&#125;;</span><br><span class="line">channel.subscriptions = &#123;&#125;;</span><br><span class="line">channel.on(<span class="string">'join'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">id,client</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 添加 join 事件的监听器，保存用户的 client 对象，以便程序可以将数据发送给用户</span></span><br><span class="line">    <span class="keyword">this</span>.clients[id] = client;</span><br><span class="line">    <span class="keyword">this</span>.subscriptions[id] = <span class="function">(<span class="params">senderId,message</span>) =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(id != senderId)&#123;</span><br><span class="line">            <span class="keyword">this</span>.clients[id].write(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加一个专门针对当前用户的 broadcast 事件监听器</span></span><br><span class="line">    <span class="keyword">this</span>.on(<span class="string">'broadcast'</span>,<span class="keyword">this</span>.subscriptions[id]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建leave 事件的监听器</span></span><br><span class="line">channel.on(<span class="string">'leave'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">    channel.removeListener(<span class="string">'broadcast'</span>,<span class="keyword">this</span>.subscriptions[id]);</span><br><span class="line">    <span class="comment">// 移除指定客户端的broadcast 监听器</span></span><br><span class="line">    channel.emit(<span class="string">'broadcast'</span>,id,<span class="string">`<span class="subst">$&#123;id&#125;</span> has left the chatroom. \n`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = net.createServer(<span class="function"><span class="params">client</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> id = <span class="string">`<span class="subst">$&#123;client.remoteAddress&#125;</span>:<span class="subst">$&#123;client.remotePort&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 当有用户连接到服务器上时发出一个 jion 事件，指明用户 ID 和 client 对象</span></span><br><span class="line">    channel.emit(<span class="string">'join'</span>,id,client);</span><br><span class="line">    client.on(<span class="string">'data'</span>,data =&gt;&#123;</span><br><span class="line">        data = data.toString();</span><br><span class="line">        <span class="comment">// 当有用户发送数据时，发出一个频道 broadcast 事件，指明用户 ID 和 消息</span></span><br><span class="line">        channel.emit(<span class="string">'broadcast'</span>,id,data);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 在用户断开连接是发出 leave 事件</span></span><br><span class="line">    client.on(<span class="string">'close'</span>,() =&gt;&#123;</span><br><span class="line">        channel.emit(<span class="string">'leave'</span>,id);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(<span class="number">8888</span>);</span><br></pre></td></tr></table></figure>
+<p>如果你想停止提供聊天服务，但是又不想关掉服务器的，可以用 removeAll-Listeners 事件发射器方法去掉给定类型的全部监听器。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">channel.on(<span class="string">'shutdown'</span>,() =&gt;&#123;</span><br><span class="line">    channel.emit(<span class="string">'broadcast'</span>,<span class="string">''</span>,<span class="string">'The Server has shut down.\n'</span>);</span><br><span class="line">    channel.removeAllListeners(<span class="string">'broadcast'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后你可以添加一个停止服务的聊天命令。为此需要将 data 事件的监听器改成下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">client.on(<span class="string">'data'</span>,data =&gt;&#123;</span><br><span class="line">    data = data.toString();</span><br><span class="line">    <span class="keyword">if</span>(data === <span class="string">'shutdown\r\n'</span>)&#123;</span><br><span class="line">        channel.emit(<span class="string">'shutdown'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 当有用户发送数据时，发出一个频道 broadcast 事件，指明用户 ID 和 消息</span></span><br><span class="line">    channel.emit(<span class="string">'broadcast'</span>,id,data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>现在只要有人输入 shutdown 命令，所有参与聊天的人都会被踢出去。</p>
+<p><strong>错误处理</strong></p>
+<p>在错误处理上有一个常规做法，你可以创建发出 error 类型事件的事件发射器，而不是直接抛出错误，这样就可以为这事件类型设置一个或者多个监听器，从而定制的事件响应逻辑。</p>
+<p>下面的代码显示的是一个错误监听器如何将发出的错误输出到控制台中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line">events.myEmitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line">myEmitter.on(<span class="string">'error'</span>,err =&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`ERROR: <span class="subst">$&#123;err.message&#125;</span>`</span>);   </span><br><span class="line">&#125;);</span><br><span class="line">myEmitter.emit(<span class="string">'error'</span>, <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'something is wrong'</span>));</span><br></pre></td></tr></table></figure>
+<p>如果发出这个 error 事件流类型没有该事件类型的监听器，事件监听器会输出一个栈跟踪（到错误发生时所执行的程序指令列表）并停止执行。栈跟踪会用 emit 调用的第二个参数指明错误类型。这是只有错误类型事件才能享受的特殊待遇，在发出没有监听器的其他事件类型时，什么也不会发生。</p>
+<p>如果发出的 error 类型事件没有作为第二个参数的 error 对象，栈跟踪会指出一个 ”为捕获、未指明的‘错误’事件“错误，并且程序会停止执行。可以用一个已经废除的方法来处理这个错误，用下面的代码顶一个全局的处理器实现响应逻辑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'uncaughtException'</span>,err =&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err.stack);</span><br><span class="line">    process.exit(<span class="string">'1'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>让连接上面的用户看到当前有几个已链接的聊天对象，可以用下面这个监听器方法，它能根据给定的事件类型返回一个监听器数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">channel.on(<span class="string">'join'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">id, client</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//查看加入聊天室的人数</span></span><br><span class="line">    <span class="keyword">const</span> welcome = <span class="string">`</span></span><br><span class="line"><span class="string">    Welcome!</span></span><br><span class="line"><span class="string">        Guset online: <span class="subst">$&#123;<span class="keyword">this</span>.listeners(<span class="string">'broadcast'</span>).length&#125;</span>`</span>;</span><br><span class="line">        client.write(<span class="string">`<span class="subst">$&#123;welcome&#125;</span>\n`</span>);</span><br><span class="line">    <span class="comment">// 添加 join 事件的监听器，保存用户的 client 对象，以便程序可以将数据发送给用户</span></span><br><span class="line">    <span class="keyword">this</span>.clients[id] = client;</span><br><span class="line">    <span class="keyword">this</span>.subscriptions[id] = <span class="function">(<span class="params">senderId, message</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (id != senderId) &#123;</span><br><span class="line">            <span class="keyword">this</span>.clients[id].write(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加一个专门针对当前用户的 broadcast 事件监听器</span></span><br><span class="line">    <span class="keyword">this</span>.on(<span class="string">'broadcast'</span>, <span class="keyword">this</span>.subscriptions[id]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>为了增加能够附加到事件发射器上的监听器数量，不让Node 在监听器数量超过 10个时发出警告，可以用 setMaxListeners 方法。以该频道事件发射器为例，可以用下面的代码增加监听器的数量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channel.setMaxListeners(<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="扩展事件监听器：文件监听器"><a href="#扩展事件监听器：文件监听器" class="headerlink" title="扩展事件监听器：文件监听器"></a><strong>扩展事件监听器：文件监听器</strong></h4><p>如果你想在事件发射器的基础上构造程序，可以创建一个新的 javaScript 类继承事件发射器。</p>
+<p>比如创建一个 watcher 类来处理放在某个目录下的文件，然后可以用这个类创建一个工具，该工具可以监视目录（将放在里面的文件名都改为小写，并将文件复制到一个单独目录中）</p>
+<p>设置好 Watcher 对象后，还需要加两个新方法来扩展继承自 EventEmitter 的方法，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 扩展 EventEmitter 添加处理文件的方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> <span class="keyword">extends</span> <span class="title">events</span>.<span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(watchDir, processedDir)&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.watchDir = watchDir;</span><br><span class="line">        <span class="keyword">this</span>.processedDir = processedDir;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 处理 watch 目录中的所有文件</span></span><br><span class="line">    watch()&#123;</span><br><span class="line">        fs.readdir(<span class="keyword">this</span>.watchDir, (err, files) =&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> index <span class="keyword">in</span> files)&#123;</span><br><span class="line">                <span class="keyword">this</span>.emit(<span class="string">'process'</span>,files[index]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加开始监控的方法</span></span><br><span class="line">    start()&#123;</span><br><span class="line">        fs.watchFile(<span class="keyword">this</span>.watchDir, ()=&gt;&#123;</span><br><span class="line">            <span class="keyword">this</span>.watch();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = Watcher;</span><br></pre></td></tr></table></figure>
+<p>watch 方法循环目录，处理其中的所有文件。start 方法启动对目录的监控。监控用到了 Node 的 fs.watchFile 函数，所以当被监控的目录中有事情发生的时候，watch方法就会触发，循环遍历整个受监控的目录，可以用一下代码创建一个 Watcher 对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> watcher = <span class="keyword">new</span> Watcher(watchDir,processedDir);</span><br></pre></td></tr></table></figure>
+<p>注意，<code>watchDir</code>为观察的文件名， <code>processedDir</code>为文件进程处理后要放置的文件名</p>
+<p>有了新创建的 Watcher 对象，就可以继承自事件发射器类的 on 方法设定每个文件的处理逻辑，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">watcher.on(<span class="string">'process'</span>,(file) =&gt;&#123;</span><br><span class="line">    <span class="comment">// 目标文件路径</span></span><br><span class="line">    <span class="keyword">const</span> watchFile = <span class="string">`<span class="subst">$&#123;watchDir&#125;</span>/<span class="subst">$&#123;file&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 处理之后文件的小写路径</span></span><br><span class="line">    <span class="keyword">const</span> processedFile = <span class="string">`<span class="subst">$&#123;processedDir&#125;</span>/<span class="subst">$&#123;file.toLowerCase()&#125;</span>`</span>;</span><br><span class="line">    <span class="comment">// 重命名文件</span></span><br><span class="line">    fs.rename(watchFile,processedFile,err =&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>接着就可以启动对目录的监控：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watcher.start();</span><br></pre></td></tr></table></figure>
+<p>新建 watch 和 done 目录，然后输入目标文件名和完成之后的文件名:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> watchDir = <span class="string">'watch'</span>;</span><br><span class="line"><span class="keyword">const</span> processedDir = <span class="string">'done'</span>;</span><br></pre></td></tr></table></figure>
+<p>运行你所命名的文件名:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node Extended_Emitter.js</span><br></pre></td></tr></table></figure>
+<p>接着把文件丢到 watch 目录中，然后看着文件出现在 done 目录中，文件名被改成小写。这就是用事件发射器创建新类的例子。</p>
+<p>学习了使用回调定义一次性异步逻辑，已经如何用事件发射器重复派发异步逻辑。我们可能还想在单个回调或事件发射器的监听器中添加新的异步任务。如果这些任务的执行顺序很重要，就会面对新的难题:如何准确控制一系列异步任务里的每个任务。</p>
+<h3 id="异步开发的难题"><a href="#异步开发的难题" class="headerlink" title="异步开发的难题"></a>异步开发的难题</h3><p>在创建异步程序的时候，必须密切关注程序的执行流程，盯着程序的状态：事件轮询的条件、程序变量，以及其他随着程序逻辑执行而发生变化的资源。</p>
+<p>比如说，Node 的事件轮询会跟踪还没有完成的异步逻辑。只要有异步逻辑未完成，Node 进程就不会退出。一个持续运行的 Node 进程对 Web 服务器之类的应用来说很有必要，但对于命令行工具这种经过一段时间后就应该结束的应用却意义不大。事件轮询会跟踪所有数据库连接，直到它们关闭，以防止 Node 退出。</p>
+<p>下面是一段可能因为执行顺序而导致混乱的异步代码，如果例子中的代码能够同步执行，那么应该输出的是 ‘The color is blue’，可这个例子是异步的，在 console.log 执行之前的 color 的值还在变化，所以输出的是 ‘The color is green’.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 作用域如何到导致 bug 出现的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    setTimeout(callback,<span class="number">200</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> color = <span class="string">'blue'</span>;</span><br><span class="line">asyncFunction(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 最晚执行，200毫秒后执行</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`The color is <span class="subst">$&#123;color&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line">color = <span class="string">'green'</span>;</span><br></pre></td></tr></table></figure>
+<p>用 JavaScript 闭包可以 ‘冻结’color 里面的值，在下面的代码中，对 asyncFunction 的调用被封装到了一个 以 color 为参数的匿名函数里。这样就可以马上执行这个匿名函数，把当前的 color 的值传给它。而 color 变成了匿名函数的采纳数，也就是这个匿名函数内部的本地变量，当匿名函数外面的 color 值发生变化的时候，本地的 color 不会受到影响</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用匿名函数保留全局变量的值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncFunction</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">    setTimeout(callback,<span class="number">200</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> color = <span class="string">'blue'</span>;</span><br><span class="line">(<span class="function"><span class="params">color</span> =&gt;</span> &#123;</span><br><span class="line">    asyncFunction(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'The color is'</span>,color);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)(color);</span><br><span class="line"></span><br><span class="line">color = <span class="string">'green'</span>;</span><br></pre></td></tr></table></figure>
+<p>闭包是 Node 开发中要经常用到的一个编程技巧，接着看看怎么让异步逻辑顺序执行，好掌握程序的流程。</p>
+<h3 id="异步逻辑的顺序化"><a href="#异步逻辑的顺序化" class="headerlink" title="异步逻辑的顺序化"></a>异步逻辑的顺序化</h3><p>在异步程序的执行过程汇中，有些任务可能会随时发生，跟程序中的其他部分在做什么没有关系，什么时候做这些任务都不会出问题。但有些任务只能在某些特定的任务之前或之后做。</p>
+<p>让一组异步任务顺序执行的概念也被 Node 社区称为流程控制。这种控制分成两类：串行和并行：</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-异步逻辑的顺序化.png" alt="异步逻辑的顺序化"></p>
+<p>需要一个接着一个执行的任务叫作串行任务。创建一个目录并往里放一个文件的任务就是串行的。你不能在创建目录前往里放文件。</p>
+<p>不需要一个接着一个执行的任务叫作并行任务。这些任务彼此之间开始和结束的时间并不重要，但在后续逻辑执行之前它们应该全部执行完。下载几个文件然后把它们压缩到一个 zip归档文件中就是并行任务。这些文件的下载可以同时进行，但在创建归档文件之前应该全部下载完。</p>
+<p>跟踪串行和并行的流程控制要做编程记账的工作。在实现串行化流程控制时，需要跟踪当前<br>执行的任务，或维护一个尚未执行任务的队列。实现并行化流程控制时需要跟踪有多少个任务要执行完成了。</p>
+<p>有一些可以帮助记账的流程控制工具，它们能够让组织异步的串行或并行化任务变得很容易。尽管社团创建了许多序列化异步逻辑的辅助工具。但亲自动手是实现流程控制可以让我们看透其中的玄机。</p>
+<h3 id="何时使用串行流程控制"><a href="#何时使用串行流程控制" class="headerlink" title="何时使用串行流程控制"></a>何时使用串行流程控制</h3><p>可以使用回调让几个异步任务按顺序执行，但是如果任务很多，就必须组织一下，否则过多的回调嵌套会把代码搞得很乱。</p>
+<p>下面的这段代码就是用回调让任务顺序执行的。这里例子用 setTimeout 模拟需要花时间执行的任务：第一个任务用了1秒，第二个0.5秒，最后一个十分之一秒。setTimeout 只是一个人工模拟，在真正的代码中可能是读取文件、发起HTTP 请求。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'I execute first.'</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'I execute next.'</span>);</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'I execute last.'</span>);</span><br><span class="line">        &#125;,<span class="number">100</span>);</span><br><span class="line">    &#125;,<span class="number">500</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>此外，也可以用 Async 这样的流程控制工具执行这些任务。Async 用起来简单直接，并且代码量小。安装Async</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i async</span><br></pre></td></tr></table></figure>
+<p>简化代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);</span><br><span class="line"><span class="keyword">async</span>.series([</span><br><span class="line">    callback =&gt; &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'I execute first.'</span>);</span><br><span class="line">            callback();</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    callback =&gt; &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'I execute next.'</span>);</span><br><span class="line">            callback();</span><br><span class="line">        &#125;, <span class="number">500</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    callback =&gt; &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'I execute last.'</span>);</span><br><span class="line">            callback();</span><br><span class="line">        &#125;, <span class="number">100</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>尽管这种用流程控制实现的代码很多，但通常可读性和可维护性更强，一般也不会一直用流程控制，当碰到想要躲开回调嵌套的情况是，它就会是改善代码可读性的好工具了。</p>
+<p>看过这个用特制工具实现串行化流程控制的例子后，我们看看怎么从头实现它。</p>
+<h3 id="实现串行化流程控制"><a href="#实现串行化流程控制" class="headerlink" title="实现串行化流程控制"></a>实现串行化流程控制</h3><p>为了用串行化流程控制让几个异步任务按顺序执行，需要先把这些任务按预期的执行顺序<br>放到一个数组中。这个数组将起到队列的作用：完成一个任务后按顺序从数组中取出下一个。</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-串行化流程控制的工作机制.png" alt="串行化流程控制的工作机制"></p>
+<p>数组中的每个任务都是一个函数，任务完成之后应该调用一个处理函数，告诉它错误状态和结果。在这一实现中，如果有错误，处理器函数就会终止，否则就从队列中取出下一个任务执行它。</p>
+<p>实现一个小程序，让它从一个随机选择的 RSS 预订源中获取一篇文章的标题和URL，并显示出来，RSS预订源列表放在一个文本文件中。这个程序的输出是像下面这样的文本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Of Course ML Has Monads!</span><br><span class="line">http://lambda-the-ultimate.org/node/4306</span><br></pre></td></tr></table></figure>
+<p>需要从 npm 下载两个辅助模块。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i --save request@2.60.0</span><br><span class="line">npm i --save htmlparser@1.7.7</span><br></pre></td></tr></table></figure>
+<p>request 模块是个经过简化的 HTTP 客户端，你可以用它获取 RSS 数据。 htmlparser 模<br>块能把原始的 RSS数据转换成 JavaScript数据结构。</p>
+<p>创建一个 index.js 文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> htmlparser = <span class="built_in">require</span>(<span class="string">'htmlparser'</span>);</span><br><span class="line"><span class="keyword">const</span> configFilename = <span class="string">'./rss_feeds.txt'</span>;</span><br><span class="line"><span class="comment">// 确保包含RSS订阅源 URL 列表的文件存在</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkForRSSFile</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fs.exists(configFilename, (exists) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 有错误就返回</span></span><br><span class="line">        <span class="keyword">if</span>(!exists) <span class="keyword">return</span> next(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Missing RSS file: <span class="subst">$&#123;configFilename&#125;</span>`</span>));</span><br><span class="line">        next(<span class="literal">null</span>,configFilename);        </span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取并解析包含预订源 URL 的文件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readRSSFile</span>(<span class="params">configFilename</span>)</span>&#123;</span><br><span class="line">    fs.readFile(configFilename,(err,feedList) =&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> next(err);</span><br><span class="line">        <span class="comment">// 将预订源URL 列表转换成字符串，然后分隔成一个数组</span></span><br><span class="line">        feedList = feedList.toString().replace(<span class="regexp">/^\s+|\s+$/g</span>,<span class="string">''</span>).split(<span class="string">'\n'</span>);</span><br><span class="line">        <span class="comment">// 从预订源URL 数组中随机选择一个预订源 URL</span></span><br><span class="line">        <span class="keyword">const</span> random = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()* feedList.length);</span><br><span class="line">        next(<span class="literal">null</span>,feedList[random]);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向选定的订阅源发送 HTTP 请求以获取数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadRSSFeed</span>(<span class="params">feedUrl</span>)</span>&#123;</span><br><span class="line">    request(&#123;<span class="attr">uri</span>:feedUrl&#125;,(err,res,body) =&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span>(err) <span class="keyword">return</span> err;</span><br><span class="line">        <span class="keyword">if</span>(res.statusCode !== <span class="number">200</span>) <span class="keyword">return</span> next(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Abnormal response status code'</span>));</span><br><span class="line">        next(<span class="literal">null</span>,body);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将预订源数据解析到一个条目数组中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseRSSFeed</span>(<span class="params">rss</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> handler = <span class="keyword">new</span> htmlparser.RssHandler();</span><br><span class="line">    <span class="keyword">const</span> parser = <span class="keyword">new</span> htmlparser.Parser(handler);</span><br><span class="line">    parser.parseComplete(rss);</span><br><span class="line">    <span class="keyword">if</span>(!handler.dom.items.length) <span class="keyword">return</span> next(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'No RSS items found'</span>));</span><br><span class="line">    <span class="comment">// 如果有数据，显示第一个预订源条目的标题和 URL</span></span><br><span class="line">    <span class="keyword">const</span> item = handler.dom.items.shift();</span><br><span class="line">    <span class="built_in">console</span>.log(item.title);</span><br><span class="line">    <span class="built_in">console</span>.log(item.link);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 把所有要做的任务按执行顺序添加到一个数组中</span></span><br><span class="line"><span class="keyword">const</span> tasks = [</span><br><span class="line">    checkForRSSFile,</span><br><span class="line">    readRSSFile,</span><br><span class="line">    downloadRSSFeed,</span><br><span class="line">    parseRSSFeed</span><br><span class="line">]</span><br><span class="line"><span class="comment">// 负责执行任务的 next函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err,result</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 如果任务出错，则抛出异常</span></span><br><span class="line">    <span class="keyword">if</span>(err) <span class="keyword">return</span> err;</span><br><span class="line">    <span class="comment">// 从任务数组中取出下一个任务</span></span><br><span class="line">    <span class="keyword">const</span> currentTask = tasks.shift();</span><br><span class="line">    <span class="keyword">if</span>(currentTask)&#123;</span><br><span class="line">        <span class="comment">// 执行当前任务</span></span><br><span class="line">        currentTask(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 开始串行化执行任务</span></span><br><span class="line">next();</span><br></pre></td></tr></table></figure>
+<p>在试用这个程序之前，先在程序脚本所在的目录下创建一个 rss_feeds.txt 文件。如果你自己没有预订源，可以试一下 Node 博客，地址是 <a href="http://blog.nodejs.org/feed/。把预订源">http://blog.nodejs.org/feed/。把预订源</a> URL 放到这个文本文件中，每行一条。文件创建好后，打开命令行窗口输入下面的命令进入程序所在目录并执行脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<p>接着在控制台可以看到这样的结果：</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-串行化流程控制的结果.png" alt="串行化流程控制的结果"></p>
+<p>如本例中的实现所示，串行化流程控制本质上是在需要时让回调进场，而不是简单地把它们<br>嵌套起来。</p>
+<p>现在已经知道怎么串行化流程控制了，接下来看看如何让异步任务并行执行。</p>
+<h3 id="实现并行化流程控制"><a href="#实现并行化流程控制" class="headerlink" title="实现并行化流程控制"></a>实现并行化流程控制</h3><p>为了让异步任务并行执行，仍然是要把任务放到数组中，但任务的存放顺序无关紧要。每个任务都应该调用处理器函数增加已完成任务的计数值，当所有任务都完全后，处理器函数应该执行后续的逻辑。</p>
+<p>下面实现一个简单的程序作为并行化流程控制的例子，它会读取几个文本文件的内容，并输出单词在整个文件中出现的次数。我们会用异步的 readFile 函数读取文本文件的内容，所有几个文件的读取可以并行执行。</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-用并行化流程控制实现对几个文件中单词频度的计数.png" alt="用并行化流程控制实现对几个文件中单词频度的计数"></p>
+<p>这个程序的输出看起来应该像是下面这样（尽管实际上可能要长很多）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">would:2</span><br><span class="line">wrench:3</span><br><span class="line">writeable:1</span><br><span class="line">you:24</span><br></pre></td></tr></table></figure>
+<p>新建一个要分析的文本文件的文件夹：text.</p>
+<p>实现并行化流程控制的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// word_count/word_count.js</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> tasks = [];</span><br><span class="line"><span class="keyword">const</span> wordCounts = &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> filesDir = <span class="string">'../text'</span>;</span><br><span class="line"><span class="keyword">let</span> completedTasks = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 当所有任务全部完全后，列出文件中用到的每个单词以及用了多少次</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkIfComplete</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    completedTasks++;</span><br><span class="line">    <span class="keyword">if</span> (completedTasks === tasks.length) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> wordCounts) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;index&#125;</span>:<span class="subst">$&#123;wordCounts[index]&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addWordCount</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">    wordCounts[word] = (wordCounts[word]) ? wordCounts[word] + <span class="number">1</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对文本中出现的单词计数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">countWordsInText</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> words = text.toString().toLowerCase().split(<span class="regexp">/\W+/</span>).sort();</span><br><span class="line">    words.filter(<span class="function"><span class="params">word</span> =&gt;</span> word).forEach(<span class="function"><span class="params">word</span> =&gt;</span> addWordCount(word));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 得出 text 目录中的文件列表</span></span><br><span class="line">fs.readdir(filesDir, (err, files) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">    files.forEach(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 定义每个处理文件的任务，每个任务中都会调用一个异步读取文件的函数并对文件中使用的单词计数</span></span><br><span class="line">        <span class="keyword">const</span> task = (<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                fs.readFile(file, (err, text) =&gt; &#123;</span><br><span class="line">                    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">                    countWordsInText(text);</span><br><span class="line">                    checkIfComplete();</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)(<span class="string">`<span class="subst">$&#123;filesDir&#125;</span>/<span class="subst">$&#123;file&#125;</span>`</span>);</span><br><span class="line">        <span class="comment">// 把所有任务都添加到函数调用数组中</span></span><br><span class="line">        tasks.push(task);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 开始并行执行任务</span></span><br><span class="line">    tasks.forEach(<span class="function"><span class="params">task</span> =&gt;</span> task())</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node word_count.js</span><br></pre></td></tr></table></figure>
+<p>可以看到大概这样的结果:</p>
+<p><img src="/images/2018-12-01-NodeJs2-Part2-并行化流程控制的结果.png" alt="并行化流程控制的结果"></p>
+<p>现在，我们已经知道串行和并行的流程化控制的底层机制了，接下来可以用社区贡献的工具在程序中实现流程控制，而不必自己实现。</p>
+<h3 id="利用社区里的工具"><a href="#利用社区里的工具" class="headerlink" title="利用社区里的工具"></a>利用社区里的工具</h3><p>社区中的很多附加模块都提供了方便好用的流程控制工具，比较流行的是 Async、Step 和 Seq 三个。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Node 模块可以被组织可重用的模块</li>
+<li>require 函数是用来加载模块的</li>
+<li>module.exports 和 exports 对象是用来分享模块内的函数和变量的</li>
+<li>package.json 文件是用来指明依赖项的，还要指明将哪个文件作为主文件</li>
+<li>异步逻辑可以用来嵌套回调、事件发射器和流程控制工具来控制。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-12-01-NodeJs2-Part2.html" title="Nodejs实战 —— Node编程基础">http://laibh.top/2018-12-01-NodeJs2-Part2.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-11-28-TypeScript.html" rel="next" title="TypeScript 入门">
+                <i class="fa fa-chevron-left"></i> TypeScript 入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-12-05-NodeJs2-Part3.html" rel="prev" title="Nodejs实战 —— Node Web 程序是什么">
+                Nodejs实战 —— Node Web 程序是什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node编程基础"><span class="nav-number">1.</span> <span class="nav-text">Node编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-功能的组织及重用"><span class="nav-number">1.1.</span> <span class="nav-text">Node 功能的组织及重用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始一个新的-Node-项目"><span class="nav-number">1.2.</span> <span class="nav-text">开始一个新的 Node 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建模块"><span class="nav-number">1.2.1.</span> <span class="nav-text">创建模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-module-exports-微调模块的创建"><span class="nav-number">1.3.</span> <span class="nav-text">用 module.exports 微调模块的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-node-module-重用模块"><span class="nav-number">1.4.</span> <span class="nav-text">用 node_module 重用模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">1.5.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用异步编程技术"><span class="nav-number">1.6.</span> <span class="nav-text">使用异步编程技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用回调处理一次性事件"><span class="nav-number">1.7.</span> <span class="nav-text">用回调处理一次性事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用事件发射器处理重复性事件"><span class="nav-number">1.8.</span> <span class="nav-text">用事件发射器处理重复性事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事件发射器示例"><span class="nav-number">1.8.1.</span> <span class="nav-text">事件发射器示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应只应该发生一次的事件"><span class="nav-number">1.8.2.</span> <span class="nav-text">响应只应该发生一次的事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建事件发射器：一个-PUB-SUB-的例子"><span class="nav-number">1.8.3.</span> <span class="nav-text">创建事件发射器：一个 PUB/SUB 的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展事件监听器：文件监听器"><span class="nav-number">1.8.4.</span> <span class="nav-text">扩展事件监听器：文件监听器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步开发的难题"><span class="nav-number">1.9.</span> <span class="nav-text">异步开发的难题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步逻辑的顺序化"><span class="nav-number">1.10.</span> <span class="nav-text">异步逻辑的顺序化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时使用串行流程控制"><span class="nav-number">1.11.</span> <span class="nav-text">何时使用串行流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现串行化流程控制"><span class="nav-number">1.12.</span> <span class="nav-text">实现串行化流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现并行化流程控制"><span class="nav-number">1.13.</span> <span class="nav-text">实现并行化流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用社区里的工具"><span class="nav-number">1.14.</span> <span class="nav-text">利用社区里的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.15.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

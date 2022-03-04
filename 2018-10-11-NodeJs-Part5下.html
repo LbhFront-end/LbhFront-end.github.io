@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Nodejs," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="国庆回家因为拜访做客的原因，没有时间可以更新，回来又要开始赶项目，今天趁着后端去开会把主机都拔了。把用户注册和登录以及发表微博的功能给解决了。 使用 Node.js 进行 Web 开发（下）用户注册和登录在上一节我们使用 Bootstrap 创建了网站的基本框架。在这一节我们要实现用户会话的功能，包括用户注册和登录状态的维护。为了实现这些功能，我们需要引入会话机制来记录用户状态，还要访问数据库来保">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好玩的Nodejs —— 使用 Node.js进行 Web 开发（下）">
+<meta property="og:url" content="http://laibh.top/2018-10-11-NodeJs-Part5下.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="国庆回家因为拜访做客的原因，没有时间可以更新，回来又要开始赶项目，今天趁着后端去开会把主机都拔了。把用户注册和登录以及发表微博的功能给解决了。 使用 Node.js 进行 Web 开发（下）用户注册和登录在上一节我们使用 Bootstrap 创建了网站的基本框架。在这一节我们要实现用户会话的功能，包括用户注册和登录状态的维护。为了实现这些功能，我们需要引入会话机制来记录用户状态，还要访问数据库来保">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-注册页面.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-注册两次密码不一样.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-注册成功.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-用户登录.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-用户页面.png">
+<meta property="og:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-首页.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="好玩的Nodejs —— 使用 Node.js进行 Web 开发（下）">
+<meta name="twitter:description" content="国庆回家因为拜访做客的原因，没有时间可以更新，回来又要开始赶项目，今天趁着后端去开会把主机都拔了。把用户注册和登录以及发表微博的功能给解决了。 使用 Node.js 进行 Web 开发（下）用户注册和登录在上一节我们使用 Bootstrap 创建了网站的基本框架。在这一节我们要实现用户会话的功能，包括用户注册和登录状态的维护。为了实现这些功能，我们需要引入会话机制来记录用户状态，还要访问数据库来保">
+<meta name="twitter:image" content="http://laibh.top/images/2018-09-21-NodeJs-Part5-注册页面.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-10-11-NodeJs-Part5下.html"/>
+
+
+
+
+
+  <title>好玩的Nodejs —— 使用 Node.js进行 Web 开发（下） | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-10-11-NodeJs-Part5下.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">好玩的Nodejs —— 使用 Node.js进行 Web 开发（下）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T16:31:54+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">Nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-10-11-NodeJs-Part5下.html" class="leancloud_visitors" data-flag-title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（下）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,243
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>国庆回家因为拜访做客的原因，没有时间可以更新，回来又要开始赶项目，今天趁着后端去开会把主机都拔了。把用户注册和登录以及发表微博的功能给解决了。</p>
+<h2 id="使用-Node-js-进行-Web-开发（下）"><a href="#使用-Node-js-进行-Web-开发（下）" class="headerlink" title="使用 Node.js 进行 Web 开发（下）"></a>使用 Node.js 进行 Web 开发（下）</h2><h3 id="用户注册和登录"><a href="#用户注册和登录" class="headerlink" title="用户注册和登录"></a>用户注册和登录</h3><p>在上一节我们使用 Bootstrap 创建了网站的基本框架。在这一节我们要实现用户会话的功能，包括用户注册和登录状态的维护。为了实现这些功能，我们需要引入会话机制来记录用户状态，还要访问数据库来保存和读取用户信息。现在就让我们从数据库开始。</p>
+<h4 id="访问数据库"><a href="#访问数据库" class="headerlink" title="访问数据库"></a>访问数据库</h4><p>选用 MongoDB 作为网站的数据库系统，它是一个开源的 NoSQL 数据库，相比 MYSQL 那样的关系型数据库，它更为轻巧，灵活，非常适合在数据规模很大、事务性不强的场合使用。</p>
+<h5 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h5><p>在传统的数据库中，数据库的格式是由表（table）、行（row）、字段（field）组成的。表具有固定的结构，规定了每行有哪些字段，在创建时被定义，之后修改很困难。行的格式是相同的，由若干个固定的字段组成的。每个表可能有若干个字段作为索引（index）,这其中有点是主键（primary key），用于与约束表中的数据，还有一个唯一键（unique key），确保字段中不存放重复数据。表和表之间可能还有相互的约束，称为外键（foreign key ）。对数据库的每次查询都要以行为单位，复杂的查询包括嵌套查询、连接查询和交叉表查询。</p>
+<p>拥有这些功能的数据库被称为关系型数据库，关系型数据库通常使用一种叫做 SQL （Structured Query Language） 的查询语言作为接口，因此又被称为 SQL 数据库。典型的 SQL 数<br>据库有 MySQL、Oracle、Microsoft SQL Server、PostgreSQL、SQLite，等等。</p>
+<p>NoSQL 是 1998 年被提出的，它曾经是一个轻量、开源、不提供SQL功能的关系数据库。但现在 NoSQL 被认为是 Not Only SQL 的简称，主要指非关系型、分布式、不提供 ACID 的数据库系统。正如它的名称所暗示的，NoSQL 设计初衷并不是为了取代 SQL 数据库的，而是作为一个补充，它和 SQL 数据库有着各自不同的适应领域。NoSQL 不像 SQL 数据库一样都有着统一的架构和接口，不同的 NoSQL 数据库系统从里到外可能完全不同。</p>
+<h5 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h5><p>MongoDB 是一个对象数据库，它没有表、行等概念，也没有固定的模式和结构，所有的数据以文档的形式存储。所谓的文档就是一个关联数组式的对象，它的内部由属性组成，一个属性对应一个数、字符串、日期、数组、甚至是一个嵌套的文档。下面是一个 MongoDB 文档的实例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123; 	<span class="string">"_id"</span> : ObjectId( <span class="string">"4f7fe8432b4a1077a7c551e8"</span> ),</span><br><span class="line">    <span class="string">"uid"</span> : <span class="number">2018</span>,</span><br><span class="line">    <span class="string">"username"</span> : <span class="string">"lbh"</span>,</span><br><span class="line">    <span class="string">"net9"</span> : &#123; <span class="string">"nickname"</span> : <span class="string">"lbh"</span>,</span><br><span class="line">    <span class="string">"surname"</span> : <span class="string">"lbh"</span>,</span><br><span class="line">    <span class="string">"givenname"</span> : <span class="string">"lbh"</span>,</span><br><span class="line">    <span class="string">"fullname"</span> : <span class="string">"lbh"</span>,</span><br><span class="line">    <span class="string">"emails"</span> : [ <span class="string">"544289495@qq.com"</span>],</span><br><span class="line">    <span class="string">"website"</span> : <span class="string">"http://laibh.top"</span>,</span><br><span class="line">    <span class="string">"address"</span> : <span class="string">"GuangDong University"</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面文档中 uid 是一个整数属性， username 是字符串属性， _id 是文档对象的标识符，格式为特定的  ObjectId 。 net9  是一个嵌套的文档，其内部结构与一般文档无异。从格式来看文档好像 JSON，没错，MongoDB 的数据格式就是 JSON（准确地说，MongoDB 的数据格式是 BSON （Binary JSON），它是 JSON 的一个扩展。） ，因此与 JavaScript 的亲和性很强。在Mongodb 中对数据的操作都是以文档为单位的，当然我们也可以修改文档的部分属性。对于查询操作，我们只需要指定文档的任何一个属性，就可在数据库中将满足条件的所有文档筛选出来。为了加快查询，MongoDB 也对文档实现了索引，这一点和 SQL 数据库一样。</p>
+<h5 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h5><p>在本地安装 MongoDB ,点击  <a href="http://www.mongodb.org/">http://www.mongodb.org/</a>  去官网下载。接着在项目里面，使用命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 全局安装驱动</span><br><span class="line">npm install mongodb -g</span><br><span class="line"></span><br><span class="line">// 在当前项目中引入mongodb</span><br><span class="line">npm install mongodb --save</span><br></pre></td></tr></table></figure>
+<p>接下来在工程的目录中创建 settings.js 文件，这个文件用于保存数据库的连接信息。我们将用到的数据库命名为 microblog，数据库服务器在本地，因此Settings.js文件的内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    cookieSecret: <span class="string">'microblogbyvoid'</span>,</span><br><span class="line">    db: <span class="string">'microblog'</span>,</span><br><span class="line">    host: <span class="string">'localhost'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中， db 是数据库的名称， host 是数据库的地址。 cookieSecret 用于 Cookie 加密与数据库无关,留作后面有作用。</p>
+<p>接下来在 models 子目录中创建 db.js，内容是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> settings = <span class="built_in">require</span>(<span class="string">'../settings'</span>);</span><br><span class="line"><span class="keyword">var</span> Db = <span class="built_in">require</span>(<span class="string">'mongodb'</span>).Db;</span><br><span class="line"><span class="keyword">var</span> Connection = <span class="built_in">require</span>(<span class="string">'mongodb'</span>).Connection;</span><br><span class="line"><span class="keyword">var</span> Server = <span class="built_in">require</span>(<span class="string">'mongodb'</span>).Server;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">new</span> Db(settings.host, <span class="keyword">new</span> Server(Connection.DEFAULT_PORT, &#123;&#125;));</span><br></pre></td></tr></table></figure>
+<p>以上代码通过  module.exports  输出了创建的数据库连接，在后面的小节中我们会用到这个模块。由于模块只会被加载一次，以后我们在其他文件中使用时均为这一个实例。</p>
+<h4 id="会话支持"><a href="#会话支持" class="headerlink" title="会话支持"></a>会话支持</h4><p>在完成用户注册和登录功能之前,需要先了解会话的概念。会话是一种持久的网络协议，用于完成服务器和客户端之间一些交互行为，会话是一个比较连接粒度更大的概念，一次会话可能包含多次连接，每次连接都被认为是会话的一些操作。在网络应用开发中，有必要实现会话来帮助用户交互。例如网上购物的场景，用户浏览了多个页面，购买了一些物品，这些请求在多次连接中完成。许多应用层网络协议都是由会话支持的，如 FTP、Telnet 等，而 HTTP 协议是无状态的，本身不支持会话，因此在没有额外手段的帮助下，前面场景中服务器不知道用户购买了什么。</p>
+<p>为了在无状态的 HTTP 协议之上实现会话，Cookie 诞生了。Cookie 是一些存储在客户端的消息，每次连接的时候由浏览器向服务器递交，服务器也向浏览器发起存储 Cookie 的请求，依靠这样的手段服务器可以识别客户端。我们通常意义上的 HTTP 会话功能就是这样实现的。具体来说，浏览器首次向服务器发起请求时，服务器生成一个唯一标识符并发送给客户端浏览器，浏览器将这个唯一标识符存储在 Cookie 中，以后每次再发起请求，客户端浏览器都会向服务器传送这个唯一标识符，服务器通过这个唯一标识符来识别用户。</p>
+<p>对于开发者来说，我们无须关心浏览器端的存储，需要关注的仅仅是如何通过这个唯一标识符来识别用户。很多服务端脚本语言都有会话功能，如 PHP，把每个唯一标识符存储到文件中。Express 也提供了会话中间件，默认情况下是把用户信息存储在内存中，但我们既然已经有了 MongoDB，不妨把会话信息存储在数据库中，便于持久维护。为了使用这一功能，我们首先要获得一个叫做 connect-mongo  的模块。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i connect-mongo -S</span><br></pre></td></tr></table></figure>
+<p>在 app.js 中添加以下内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MongoStore = <span class="built_in">require</span>(<span class="string">'connect-mongo'</span>);</span><br><span class="line"><span class="keyword">var</span> settings = <span class="built_in">require</span>(<span class="string">'./settings'</span>);</span><br><span class="line"></span><br><span class="line">app.use(express.session(&#123;</span><br><span class="line">  secret: settings.cookieSecret,</span><br><span class="line">  store: <span class="keyword">new</span> MongoStore(&#123;</span><br><span class="line">    db: settings.db</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>其中 express.cookieParser()  是 Cookie 解析的中间件。 express.session()  则提供会话支持，设置它的  store  参数为  MongoStore  实例，把会话信息存储到数据库中，以避免丢失。<br>在后面可以通过 req.session  获取当前用户的会话对象，以维护用户相关的信息。</p>
+<h4 id="注册和登入"><a href="#注册和登入" class="headerlink" title="注册和登入"></a>注册和登入</h4><p>我们已经准备好了数据库访问和会话存储的相关信息，接下来开始实现网站的第一个功能，用户注册和登入。</p>
+<h5 id="注册页面"><a href="#注册页面" class="headerlink" title="注册页面"></a>注册页面</h5><p>首先来设计用户注册页面的表单，创建 views/reg.ejs 文件，内容是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"form-horizontal"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">legend</span>&gt;</span>用户注册<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"control-group"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"control-label"</span> <span class="attr">for</span>=<span class="string">"username"</span>&gt;</span>用户名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"controls"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"input-xlarge"</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"help-block"</span>&gt;</span>你的账户名称，用于登录和显示。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"control-group"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"control-label"</span> <span class="attr">for</span>=<span class="string">"password"</span>&gt;</span>口令<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"controls"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"input-xlarge"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"control-group"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"control-label"</span> <span class="attr">for</span>=<span class="string">"password-repeat"</span>&gt;</span>重复输入口令<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"controls"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"input-xlarge"</span> <span class="attr">id</span>=<span class="string">"password-repeat"</span> <span class="attr">name</span>=<span class="string">"password-repeat"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-actions"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个表单中有3个输入单元，分别是  username 、 password  和  password-repeat 。表单的请求方法是 POST，将会发送到相同的路径下。</p>
+<p>接着在 router/index.js 里面设置好路由</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户注册</span></span><br><span class="line">router.get(<span class="string">'/reg'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'reg'</span>, &#123; <span class="attr">title</span>: <span class="string">'用户注册'</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>现在运行 app.js，在浏览器中打开  <a href="http://localhost:3000/reg">http://localhost:3000/reg</a> ，可以看到</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-注册页面.png" alt="注册页面"></p>
+<h5 id="注册响应"><a href="#注册响应" class="headerlink" title="注册响应"></a>注册响应</h5><p>实现注册响应，在 router/index.js 里面添加 /reg 的 POST 响应函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">'/reg'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res.body);</span><br><span class="line">  <span class="keyword">if</span> (req.body[<span class="string">'password-repeat'</span>] != req.body[<span class="string">'password'</span>]) &#123;</span><br><span class="line">    req.flash(<span class="string">'error'</span>, <span class="string">'两次输入的口令不一致'</span>);</span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="comment">// 生成口令的散列值</span></span><br><span class="line">  <span class="keyword">var</span> md5 = crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line">  <span class="keyword">var</span> password = md5.update(req.body.password).digest(<span class="string">'base64'</span>);</span><br><span class="line">  <span class="keyword">var</span> newUser = <span class="keyword">new</span> User(&#123;</span><br><span class="line">    name: req.body.username,</span><br><span class="line">    password: password,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查用户名是否存在</span></span><br><span class="line">  User.get(newUser.name, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (user) &#123;</span><br><span class="line">      err = <span class="string">"Username is already exists."</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果不存在则新增用户</span></span><br><span class="line">    newUser.save(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">        <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      req.session.user = newUser;</span><br><span class="line">      req.flash(<span class="string">'success'</span>, <span class="string">'注册成功'</span>);</span><br><span class="line">      res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>req.body</code> 就是 POST 请求信息解析过后的对象，例如我们要访问用户传递的 password 域的值，只需访问 req.body[‘password’] 即可</li>
+<li><code>req.flash</code> 是 Express 提供的一个奇妙的工具，通过它可以保存的变量只会在用户当前和下一次的请求中被访问，之后就会被清除掉，通过它可以很方便地实现页面的通知和错误消息显示功能</li>
+<li><code>res.redirect</code> 是重定向功能，通过它会向用户返回一个 303 See Other 状态，通知浏览器转向相应页面。</li>
+<li><code>crypto</code> 是 Node.js 的一个核心模块，功能是加密并生成各种散列，使用它之前首先要声明 var crypto = require(‘crypto’) </li>
+<li><code>User</code> 是设计的用户对象，后面会详细介绍。</li>
+<li><code>User.get</code> 的功能是通过用户名获取已知用户，在这里我们判断用户名是否已经存在。 User.save 可以将用户对象的修改写入数据库。</li>
+<li>通过  req.session.user = newUser  向会话对象写入了当前用户的信息。</li>
+</ul>
+<h5 id="用户模型"><a href="#用户模型" class="headerlink" title="用户模型"></a>用户模型</h5><p>在前面的代码中，我们直接使用了  User 对象。 User 是一个描述数据的对象，即 MVC架构中的模型。前面我们使用了许多视图和控制器，这是第一次接触到模型。与视图和控制器不同，模型是真正与数据打交道的工具，没有模型，网站就只是一个外壳，不能发挥真实的作用，因此它是框架中最根本的部分。现在就让我们来实现  User 模型吧。</p>
+<p>在 models 目录中创建 user.js 的文件，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongodb = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">User</span>(<span class="params">user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = user.name;</span><br><span class="line">    <span class="keyword">this</span>.password = user.password;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = User;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 保存一个用户到数据库</span></span><br><span class="line"><span class="comment"> * @param &#123;Function&#125; callback: 执行完数据库操作的应该执行的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">User.prototype.save = <span class="function"><span class="keyword">function</span> <span class="title">save</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 存入 Mongodb 的文档</span></span><br><span class="line">    <span class="keyword">var</span> user = &#123;</span><br><span class="line">        name: <span class="keyword">this</span>.name,</span><br><span class="line">        password: <span class="keyword">this</span>.password,</span><br><span class="line">    &#125;;</span><br><span class="line">    mongodb.open(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> callback(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 读取 users 集合</span></span><br><span class="line">        db.collection(<span class="string">'users'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, collection</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">return</span> callback(err);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//为name属性添加索引，新版本的ensureIndex方法需要一个回调函数</span></span><br><span class="line">            collection.ensureIndex(<span class="string">'name'</span>, &#123; <span class="attr">unique</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">            <span class="comment">//写入user文档</span></span><br><span class="line">            collection.insert(user, &#123; <span class="attr">safe</span>: <span class="literal">true</span> &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                callback(err, user);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 查询在集合`users`是否存在一个制定用户名的用户</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; username: 需要查询的用户的名字 </span></span><br><span class="line"><span class="comment"> * @param &#123;Function&#125; callback: 执行完数据库操作的应该执行的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">User.get = <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">username, callback</span>) </span>&#123;</span><br><span class="line">    mongodb.open(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> callback(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 读取 users 集合</span></span><br><span class="line">        db.collection(<span class="string">'users'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, collection</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">return</span> callback(err);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 查找 name 属性为 username 的文档</span></span><br><span class="line">            collection.findOne(&#123; <span class="attr">name</span>: username &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, doc</span>) </span>&#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">if</span> (doc) &#123;</span><br><span class="line">                    <span class="comment">// 封装文档为 User 对象</span></span><br><span class="line">                    <span class="keyword">var</span> user = <span class="keyword">new</span> User(doc);</span><br><span class="line">                    callback(err, user);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    callback(err, <span class="literal">null</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>以上代码实现了两个接口， User.prototype.save  和 User.get， 前者是对象实例的方法，用于将用户对象的数据保存到数据库中，后者是对象构造函数的方法，用于从数据库中查找指定的用户。</p>
+<h5 id="视图交互"><a href="#视图交互" class="headerlink" title="视图交互"></a>视图交互</h5><p>现在几乎已经万事俱备，只差视图的支持了。为了实现不同登录状态下页面呈现不同内容的功能，我们需要创建动态视图助手，通过它我们才能在视图中访问会话中的用户数据。同时为了显示错误和成功的信息，也要在动态视图助手中增加响应的函数。<br>打开 app.js，添加以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> flash = <span class="built_in">require</span>(<span class="string">'connect-flash'</span>);</span><br><span class="line"><span class="comment">// 在路由后面配置</span></span><br><span class="line">app.use(flash());</span><br></pre></td></tr></table></figure>
+<p>然后在 routes/index.js 里面添加</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">router.use(<span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.locals.user=req.session.user;</span><br><span class="line">  <span class="keyword">var</span> err = req.flash(<span class="string">'error'</span>);</span><br><span class="line">  <span class="keyword">var</span> success = req.flash(<span class="string">'success'</span>);</span><br><span class="line"></span><br><span class="line">  res.locals.error = err.length ? err : <span class="literal">null</span>;</span><br><span class="line">  res.locals.success = success.length ? success : <span class="literal">null</span>;</span><br><span class="line">   </span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>修改 header.ejs 中的导航部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;nav&quot;&gt;</span><br><span class="line">   &lt;li class=&quot;active&quot;&gt;&lt;a href=&quot;/&quot;&gt;首页&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">   &lt;% if (!user) &#123; %&gt;</span><br><span class="line">   &lt;li&gt;&lt;a href=&quot;/login&quot;&gt;登入&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">   &lt;li&gt;&lt;a href=&quot;/reg&quot;&gt;注册&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">   &lt;% &#125; else &#123; %&gt;</span><br><span class="line">   &lt;li&gt;&lt;a href=&quot;/logout&quot;&gt;登出&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">   &lt;% &#125; %&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>上面功能是为已登入用户和未登入用户显示不同的信息。在  container  中， &lt;%- body %&gt;之前加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (success) &#123; %&gt;</span><br><span class="line">    &lt;div class=&quot;alert alert-success&quot;&gt;</span><br><span class="line">      &lt;%= success %&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br><span class="line">&lt;% if (error) &#123; %&gt;</span><br><span class="line">    &lt;div class=&quot;alert alert-error&quot;&gt;</span><br><span class="line">      &lt;%= error %&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>它的功能是页面通知。</p>
+<p>下面分别是注册时遇到错误和注册成功以后的画面。</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-注册两次密码不一样.png" alt="两次口令不一致"></p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-注册成功.png" alt="注册成功"></p>
+<h5 id="登入和登出"><a href="#登入和登出" class="headerlink" title="登入和登出"></a>登入和登出</h5><p>完成用户注册的功能以后再实现用户登入和登出就相当容易了。把下面的代码加到 routes/index.js 中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户登录</span></span><br><span class="line">router.get(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'login'</span>, &#123; <span class="attr">title</span>: <span class="string">'用户登录'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">router.post(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 生成口令的散列值</span></span><br><span class="line">  <span class="keyword">var</span> md5 = crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line">  <span class="keyword">var</span> password = md5.update(req.body.password).digest(<span class="string">'base64'</span>);</span><br><span class="line">  User.get(req.body.username, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, <span class="string">'用户不存在'</span>);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (user.password != password) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, <span class="string">'用户口令错误'</span>);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    req.session.user = user;</span><br><span class="line">    req.flash(<span class="string">'success'</span>, <span class="string">'登入成功'</span>);</span><br><span class="line">    res.redirect(<span class="string">'/'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>在这里清晰地看出登入和登出仅仅是 req.session.user 变量的标记，非常简单。但这会不会有安全性问题呢？不会的，因为这个变量只有服务端才能访问到，只要不是黑客攻破了整个服务器，无法从外部改动。</p>
+<p>创建 views/login.ejs</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"form-horizontal"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">fieldset</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">legend</span>&gt;</span>用户登入<span class="tag">&lt;/<span class="name">legend</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"control-group"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"control-label"</span> <span class="attr">for</span>=<span class="string">"username"</span>&gt;</span>用户名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"controls"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"input-xlarge"</span> <span class="attr">id</span>=<span class="string">"username"</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"control-group"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"control-label"</span> <span class="attr">for</span>=<span class="string">"password"</span>&gt;</span>口令<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"controls"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"input-xlarge"</span> <span class="attr">id</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-actions"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-primary"</span>&gt;</span>登入<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">fieldset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在浏览器中访问  <a href="http://localhost:3000/login">http://localhost:3000/login</a>   可以看到页面</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-用户登录.png" alt="用户登录"></p>
+<p>至此用户注册和登录的功能就完全实现了。</p>
+<h4 id="页面权限控制"><a href="#页面权限控制" class="headerlink" title="页面权限控制"></a>页面权限控制</h4><p>还有一个工作要完成，就是为页面设置访问权限。例如，登出功能应该只对登入的用户开发，注册和登入页面则应该阻止已登入的用户访问。实现这一点，最简单的方法是在每个页面的路由响应函数内检查用户是否已经登录，但这会带来很多重复代码，因此利用路由中间件来实现这个功能。</p>
+<p>同一路径绑定多个响应函数的方法，通过调用  next() 转移控制权，这种方法叫做路由中间件。把用户登入状态检查放在路由中间件中，每个路径前增加路由中间件，既可以实现页面权限控制。</p>
+<p>routes/index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户注册</span></span><br><span class="line">router.get(<span class="string">'/reg'</span>, checkNotLogin);</span><br><span class="line">router.get(<span class="string">'/reg'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'reg'</span>, &#123; <span class="attr">title</span>: <span class="string">'用户注册'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">router.post(<span class="string">'/reg'</span>, checkNotLogin);</span><br><span class="line">router.post(<span class="string">'/reg'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (req.body[<span class="string">'password-repeat'</span>] != req.body[<span class="string">'password'</span>]) &#123;</span><br><span class="line">    req.flash(<span class="string">'error'</span>, <span class="string">'两次输入的口令不一致'</span>);</span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 生成口令的散列值</span></span><br><span class="line">  <span class="keyword">var</span> md5 = crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line">  <span class="keyword">var</span> password = md5.update(req.body.password).digest(<span class="string">'base64'</span>);</span><br><span class="line">  <span class="keyword">var</span> newUser = <span class="keyword">new</span> User(&#123;</span><br><span class="line">    name: req.body.username,</span><br><span class="line">    password: password,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查用户名是否存在</span></span><br><span class="line">  User.get(newUser.name, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (user) &#123;</span><br><span class="line">      err = <span class="string">"Username is already exists."</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果不存在则新增用户</span></span><br><span class="line">    newUser.save(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">        <span class="keyword">return</span> res.redirect(<span class="string">'/reg'</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      req.session.user = newUser;</span><br><span class="line">      req.flash(<span class="string">'success'</span>, <span class="string">'注册成功'</span>);</span><br><span class="line">      res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 用户登录</span></span><br><span class="line">router.get(<span class="string">'/login'</span>, checkNotLogin);</span><br><span class="line">router.get(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">'login'</span>, &#123; <span class="attr">title</span>: <span class="string">'用户登录'</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">router.post(<span class="string">'/login'</span>, checkNotLogin);</span><br><span class="line">router.post(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 生成口令的散列值</span></span><br><span class="line">  <span class="keyword">var</span> md5 = crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line">  <span class="keyword">var</span> password = md5.update(req.body.password).digest(<span class="string">'base64'</span>);</span><br><span class="line">  User.get(req.body.username, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, <span class="string">'用户不存在'</span>);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (user.password != password) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, <span class="string">'用户口令错误'</span>);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    req.session.user = user;</span><br><span class="line">    req.flash(<span class="string">'success'</span>, <span class="string">'登入成功'</span>);</span><br><span class="line">    res.redirect(<span class="string">'/'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 用户登出 </span></span><br><span class="line">router.get(<span class="string">'/logout'</span>, checkLogin);</span><br><span class="line">router.get(<span class="string">'/logout'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  req.session.user = <span class="literal">null</span>;</span><br><span class="line">  req.flash(<span class="string">'success'</span>, <span class="string">'登出成功'</span>);</span><br><span class="line">  res.redirect(<span class="string">'/'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkLogin</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!req.session.user)&#123;</span><br><span class="line">    req.flash(<span class="string">'error'</span>,<span class="string">'未登入'</span>);</span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">'/login'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkNotLogin</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(req.session.user)&#123;</span><br><span class="line">    req.flash(<span class="string">'error'</span>,<span class="string">'已登入'</span>);</span><br><span class="line">    <span class="keyword">return</span> res.redirect(<span class="string">'/'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="发表微博"><a href="#发表微博" class="headerlink" title="发表微博"></a>发表微博</h3><p>现在网站已经具备了用户注册、登入、页面权限控制的功能，这些功能为网站最核心的部分——发表微博做好了准备,我们可以来实现发表微博的功能，完成整个网站的设计。</p>
+<h4 id="微博模型"><a href="#微博模型" class="headerlink" title="微博模型"></a>微博模型</h4><p>从模型设计开始，仿照用户模型，将微博模型命名为 Post 对象，它拥有与 User 相似的接口，分别是 Post.get 和 Post.prototype.save。Post.get 的功能是从数据库中获取微博，可以指定用户获取，也可以获取全部的内容。Post.prototype.save 是 Post 对象实例的方法，用于将对象的变动保存到数据库中。</p>
+<p>创建 models/post.js，写入以下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongodb = <span class="built_in">require</span>(<span class="string">'./db'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Post</span>(<span class="params">username, post, time</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.user = username;</span><br><span class="line">    <span class="keyword">this</span>.post = post;</span><br><span class="line">    <span class="keyword">if</span> (time) &#123;</span><br><span class="line">        <span class="keyword">this</span>.time = time;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.time = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = Post;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 保存一条发言到数据库</span></span><br><span class="line"><span class="comment"> * @param &#123;Function&#125; callback: 执行完数据库操作的应该执行的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">Post.prototype.save = <span class="function"><span class="keyword">function</span> <span class="title">save</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 存入 Mongodb 的文档</span></span><br><span class="line">    <span class="keyword">var</span> post = &#123;</span><br><span class="line">        user: <span class="keyword">this</span>.user,</span><br><span class="line">        post: <span class="keyword">this</span>.post,</span><br><span class="line">        time: <span class="keyword">this</span>.time,</span><br><span class="line">    &#125;;</span><br><span class="line">    mongodb.open(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> callback(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 读取 posts 集合</span></span><br><span class="line">        db.collection(<span class="string">'posts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, collection</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">return</span> callback(err);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 为 user 属性添加索引</span></span><br><span class="line">            <span class="comment">// collection.ensureIndex('user');</span></span><br><span class="line">            <span class="comment">// 写入 post 文档</span></span><br><span class="line">            collection.insert(post, &#123; <span class="attr">safe</span>: <span class="literal">true</span> &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, post</span>) </span>&#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                callback(err, post);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 查询一个用户的所有发言</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; username: 需要查询的用户的名字 </span></span><br><span class="line"><span class="comment"> * @param &#123;Function&#125; callback: 执行完数据库操作的应该执行的回调函数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">Post.get = <span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">username, callback</span>) </span>&#123;</span><br><span class="line">    mongodb.open(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> callback(err);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 读取 posts 集合</span></span><br><span class="line">        db.collection(<span class="string">'posts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, collection</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">return</span> callback(err);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 查找 user 属性为 username 的文档，如果 username 是 null 则匹配全部</span></span><br><span class="line">            <span class="keyword">var</span> query = &#123;&#125;;</span><br><span class="line">            <span class="keyword">if</span> (username) &#123;</span><br><span class="line">                query.user = username;</span><br><span class="line">            &#125;</span><br><span class="line">            collection.find(query).sort(&#123; <span class="attr">time</span>: <span class="number">-1</span> &#125;).toArray(<span class="function"><span class="keyword">function</span> (<span class="params">err, docs</span>) </span>&#123;</span><br><span class="line">                mongodb.close();</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    callback(err, <span class="literal">null</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 封装 posts 为 Post 对象</span></span><br><span class="line">                <span class="keyword">var</span> posts = [];</span><br><span class="line">                docs.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">doc, index</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> post = <span class="keyword">new</span> Post(doc.user, doc.post, doc.time);</span><br><span class="line">                    posts.push(post);</span><br><span class="line">                &#125;);</span><br><span class="line">                callback(<span class="literal">null</span>, posts);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在后面我们会通过控制器调用这个模块。</p>
+<h4 id="发表微博-1"><a href="#发表微博-1" class="headerlink" title="发表微博"></a>发表微博</h4><p>通过 POST 方法访问  /post 以发表微博，现在来实现这个控制器。在 routes/index.js 中添加下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户发表微博</span></span><br><span class="line">router.post(<span class="string">'/post'</span>, checkLogin);</span><br><span class="line">router.post(<span class="string">'/post'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> currentUser = req.session.user;</span><br><span class="line">  <span class="keyword">var</span> post = <span class="keyword">new</span> Post(currentUser.name, req.body.post);</span><br><span class="line">  post.save(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    req.flash(<span class="string">'success'</span>, <span class="string">'发表成功'</span>);</span><br><span class="line">    res.redirect(<span class="string">'/u/'</span> + currentUser.name);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码通过 req.session.user  获取当前用户信息，从 req.body.post  获取用户发表的内容，建立 Post  对象，调用 save()  方法存储信息，最后将用户重定向到用户页面。</p>
+<p>在这里会报错，需要在 app.js 引入 bodyParser</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i bodyParser</span><br></pre></td></tr></table></figure>
+<p>安装后引入，并且运用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.urlencoded());</span><br></pre></td></tr></table></figure>
+<h4 id="用户页面"><a href="#用户页面" class="headerlink" title="用户页面"></a>用户页面</h4><p>用户页面的功能是展示用户发表的所有内容，在routes/index.js中加入以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用户的主页 </span></span><br><span class="line">router.get(<span class="string">'/u/:user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  User.get(req.params.user, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">      req.flash(<span class="string">'error'</span>, <span class="string">'用户不存在'</span>);</span><br><span class="line">      <span class="keyword">return</span> res.redirect(<span class="string">'/'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    Post.get(user.name, <span class="function"><span class="keyword">function</span> (<span class="params">err, posts</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(posts);</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        req.flash(<span class="string">'error'</span>, err);</span><br><span class="line">        <span class="keyword">return</span> res.redirect(<span class="string">'/'</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      res.render(<span class="string">'user'</span>, &#123;</span><br><span class="line">        title: user.name,</span><br><span class="line">        posts: posts,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>它的功能是首先检查用户是否存在，如果存在则从数据库中获取该用户的微博，最后通过  posts 属性传递给  user 视图。views/user.ejs 的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (user) &#123; %&gt;</span><br><span class="line">    &lt;% include say.ejs %&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br><span class="line">&lt;% include posts.ejs %&gt;</span><br></pre></td></tr></table></figure>
+<p>根据 DRY 原则，我们把重复用到的部分都提取出来，分别放入 say.ejs 和 posts.ejs。say.ejs的功能是显示一个发表微博的表单，它的内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">action</span>=<span class="string">"/post"</span> <span class="attr">class</span>=<span class="string">"well form-inline center"</span> <span class="attr">style</span>=<span class="string">"text-align:</span></span></span><br><span class="line"><span class="tag"><span class="string">center;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"span8"</span> <span class="attr">name</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon-comment icon-white"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">i</span>&gt;</span> 发言<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>posts.ejs 的目的是按照行列显示传入的  posts 的所有内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;% posts.forEach(function(post, index) &#123;</span><br><span class="line">	if (index % 3 == 0) &#123; %&gt;</span><br><span class="line">	&lt;div class=&quot;row&quot;&gt;</span><br><span class="line">		&lt;%&#125; %&gt;</span><br><span class="line">		&lt;div class=&quot;span4&quot;&gt;</span><br><span class="line">			&lt;h2&gt;&lt;a href=&quot;/u/&lt;%= post.user %&gt;&quot;&gt;&lt;%= post.user %&gt;&lt;/a&gt; 说&lt;/h2&gt;</span><br><span class="line">			&lt;p&gt;&lt;small&gt;&lt;%= post.time %&gt;&lt;/small&gt;&lt;/p&gt;</span><br><span class="line">			&lt;p&gt;&lt;%= post.post %&gt;&lt;/p&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;% if (index % 3 == 2) &#123; %&gt;</span><br><span class="line">	&lt;/div&gt;&lt;!-- end row --&gt;</span><br><span class="line">	&lt;% &#125; %&gt;</span><br><span class="line">	&lt;%&#125;) %&gt;</span><br><span class="line">	&lt;% if (posts.length % 3 != 0) &#123; %&gt;</span><br><span class="line">&lt;/div&gt;&lt;!-- end row --&gt;</span><br><span class="line">&lt;%&#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>完成上述工作后，重启服务器。在用户的页面上发表几个微博，可以看到以下效果</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-用户页面.png" alt="用户页面"></p>
+<h4 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h4><p>最后一步是实现首页的内容。我们计划在首页显示所有用户发表的微博，按时间从新到旧的顺序。</p>
+<p>在 routes/index.js 中添加下面代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正式微博路由</span></span><br><span class="line">router.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  Post.get(<span class="literal">null</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, posts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      posts = [];</span><br><span class="line">    &#125;</span><br><span class="line">    res.render(<span class="string">'index'</span>, &#123;</span><br><span class="line">      title: <span class="string">'首页'</span>,</span><br><span class="line">      posts: posts,</span><br><span class="line">      user: req.session.user,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>它的功能是读取所有用户的微博，传递给页面  posts 属性。接下来修改首页的模板index.ejs：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;% include header.ejs %&gt;</span><br><span class="line">&lt;% if (!user) &#123; %&gt;</span><br><span class="line">&lt;div class=&quot;hero-unit&quot;&gt;</span><br><span class="line">  &lt;h1&gt;欢迎来到 Microblog&lt;/h1&gt;</span><br><span class="line">  &lt;p&gt;Microblog 是一个基于 Node.js 的微博系统。&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;</span><br><span class="line">    &lt;a class=&quot;btn btn-primary btn-large&quot; href=&quot;/login&quot;&gt;登录&lt;/a&gt;</span><br><span class="line">    &lt;a class=&quot;btn btn-large&quot; href=&quot;/reg&quot;&gt;立即注册&lt;/a&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;% &#125; else &#123; %&gt;</span><br><span class="line">  &lt;% include say.ejs %&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br><span class="line">&lt;% include posts.ejs %&gt;</span><br><span class="line"></span><br><span class="line">&lt;% include footer.ejs %&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到首页效果如下</p>
+<p><img src="/images/2018-09-21-NodeJs-Part5-首页.png" alt="首页"></p>
+<p>到这里就初步完成了一个基本博客的模型，完整的源码可以到 <a href="https://github.com/LbhFront-end/LearnNodeJsCode">https://github.com/LbhFront-end/LearnNodeJsCode</a> 查看。有问题的可以互相交流</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-10-11-NodeJs-Part5下.html" title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（下）">http://laibh.top/2018-10-11-NodeJs-Part5下.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" <i class="fa fa-tag"></i> Nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-09-27-NodeJs-Part5中.html" rel="next" title="好玩的Nodejs —— 使用 Node.js进行 Web 开发（中）">
+                <i class="fa fa-chevron-left"></i> 好玩的Nodejs —— 使用 Node.js进行 Web 开发（中）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-10-13-NodeJs-Part6.html" rel="prev" title="好玩的Nodejs —— Node.js进阶话题">
+                好玩的Nodejs —— Node.js进阶话题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Node-js-进行-Web-开发（下）"><span class="nav-number">1.</span> <span class="nav-text">使用 Node.js 进行 Web 开发（下）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户注册和登录"><span class="nav-number">1.1.</span> <span class="nav-text">用户注册和登录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问数据库"><span class="nav-number">1.1.1.</span> <span class="nav-text">访问数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#NoSQL"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">NoSQL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MongoDB"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">MongoDB</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#连接数据库"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">连接数据库</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话支持"><span class="nav-number">1.1.2.</span> <span class="nav-text">会话支持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注册和登入"><span class="nav-number">1.1.3.</span> <span class="nav-text">注册和登入</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注册页面"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">注册页面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注册响应"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">注册响应</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用户模型"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">用户模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#视图交互"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">视图交互</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#登入和登出"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">登入和登出</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#页面权限控制"><span class="nav-number">1.1.4.</span> <span class="nav-text">页面权限控制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发表微博"><span class="nav-number">1.2.</span> <span class="nav-text">发表微博</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#微博模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">微博模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发表微博-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">发表微博</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户页面"><span class="nav-number">1.2.3.</span> <span class="nav-text">用户页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#首页"><span class="nav-number">1.2.4.</span> <span class="nav-text">首页</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

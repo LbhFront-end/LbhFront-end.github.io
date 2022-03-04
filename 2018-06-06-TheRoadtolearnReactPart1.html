@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="The Road to learn React书籍学习笔记(第一章) react灵活的生态圈Small ApplicationBoilerplate: create-react-appUtility: JavaScript ES6 and beyondStyling: plain CSS and inline styleAsynchronous Requests: fetchHigher Orde">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Road to learn React Part1">
+<meta property="og:url" content="http://laibh.top/2018-06-06-TheRoadtolearnReactPart1.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="The Road to learn React书籍学习笔记(第一章) react灵活的生态圈Small ApplicationBoilerplate: create-react-appUtility: JavaScript ES6 and beyondStyling: plain CSS and inline styleAsynchronous Requests: fetchHigher Orde">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img.shields.io/badge/%E4%BB%A3%E7%A0%81%E8%AF%A6%E6%83%85%E8%A7%81%E6%88%91%E7%9A%84github-%E7%82%B9%E6%88%91-blue.svg">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Road to learn React Part1">
+<meta name="twitter:description" content="The Road to learn React书籍学习笔记(第一章) react灵活的生态圈Small ApplicationBoilerplate: create-react-appUtility: JavaScript ES6 and beyondStyling: plain CSS and inline styleAsynchronous Requests: fetchHigher Orde">
+<meta name="twitter:image" content="https://img.shields.io/badge/%E4%BB%A3%E7%A0%81%E8%AF%A6%E6%83%85%E8%A7%81%E6%88%91%E7%9A%84github-%E7%82%B9%E6%88%91-blue.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-06-06-TheRoadtolearnReactPart1.html"/>
+
+
+
+
+
+  <title>The Road to learn React Part1 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-06-06-TheRoadtolearnReactPart1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">The Road to learn React Part1</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-06T14:00:12+08:00">
+                2018-06-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/react相关/" itemprop="url" rel="index">
+                    <span itemprop="name">react相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-06-06-TheRoadtolearnReactPart1.html" class="leancloud_visitors" data-flag-title="The Road to learn React Part1">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,691
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="The-Road-to-learn-React书籍学习笔记-第一章"><a href="#The-Road-to-learn-React书籍学习笔记-第一章" class="headerlink" title="The Road to learn React书籍学习笔记(第一章)"></a>The Road to learn React书籍学习笔记(第一章)</h1><p><a href="https://github.com/LbhFront-end/react-pratice/tree/master/my-first-react-app"><img src="https://img.shields.io/badge/%E4%BB%A3%E7%A0%81%E8%AF%A6%E6%83%85%E8%A7%81%E6%88%91%E7%9A%84github-%E7%82%B9%E6%88%91-blue.svg" alt="The Road to learn React 代码"></a></p>
+<h2 id="react灵活的生态圈"><a href="#react灵活的生态圈" class="headerlink" title="react灵活的生态圈"></a>react灵活的生态圈</h2><h3 id="Small-Application"><a href="#Small-Application" class="headerlink" title="Small Application"></a>Small Application</h3><p>Boilerplate: create-react-app<br>Utility: JavaScript ES6 and beyond<br>Styling: plain CSS and inline style<br>Asynchronous Requests: fetch<br>Higher Order Components: optional<br>Formatting: none<br>Type Checking: none or PropTypes<br>State Management: local state<br>Routing: none or conditional rendering<br>Authentication: Firebase<br>Database: Firebase<br>UI Components: none<br>Time: moment or date-fns<br>Testing: Jest</p>
+<h3 id="Medium-Application"><a href="#Medium-Application" class="headerlink" title="Medium Application"></a>Medium Application</h3><p>Boilerplate: create-react-app with eject<br>Utility: JavaScript ES6 + Lodash or Ramda<br>Styling: CSS modules or Styled Components<br>Asynchronous Requests: fetch or axios<br>Higher Order Components: maybe + optional recompose<br>Formatting: Prettier<br>Type Checking: none or Flow<br>State Management: local state and very optional Redux<br>Routing: React Router<br>Authentication: Firebase<br>Database: Firebase<br>UI Components: none or Semantic UI<br>Time: moment or date-fns<br>Testing: Jest with Enzyme  </p>
+<h3 id="Large-Application"><a href="#Large-Application" class="headerlink" title="Large Application"></a>Large Application</h3><p>Boilerplate: create-react-app with eject or own boilerplate project<br>Utility: JavaScript ES6 + Lodash or Ramda<br>Styling: CSS modules or Styled Components<br>Asynchronous Requests: axios<br>Higher Order Components: maybe + optional recompose<br>Formatting: Prettier<br>Type Checking: Flow<br>State Management: local state and Redux or MobX<br>Routing: React Router<br>Authentication: Solution with an own Express/Hapi/Koa Node.js Server with Passport.js<br>Database: Solution with an own Express/Hapi/Koa Node.js Server with a SQL or NoSQL Database<br>UI Components: Semantic UI or own implementation of UI components<br>Time: moment or date-fns<br>Testing: Jest with Enzyme  </p>
+<h2 id="基本要求npm-node"><a href="#基本要求npm-node" class="headerlink" title="基本要求npm/node"></a>基本要求npm/node</h2><p>Node包管理器（npm/node/package/manager）可以让你通过命令行安装第三方node包。这些包可能是一系列的工具函数、库、或者是集成的框架  </p>
+<h2 id="零配置搭载react"><a href="#零配置搭载react" class="headerlink" title="零配置搭载react"></a>零配置搭载react</h2><blockquote>
+<p><code>npm install -g react-reate-app</code></p>
+</blockquote>
+<p>运行</p>
+<blockquote>
+<p>npm start</p>
+</blockquote>
+<p>运行测试</p>
+<blockquote>
+<p>npm test</p>
+</blockquote>
+<p>构建项目产品文件</p>
+<blockquote>
+<p>npm run build</p>
+</blockquote>
+<h2 id="ES6中的const与let"><a href="#ES6中的const与let" class="headerlink" title="ES6中的const与let"></a>ES6中的<code>const</code>与<code>let</code></h2><p>被<code>const</code>声明的变量不能被重新赋值或者是重新声明。可以使用它创建不可变数据结构。但如果创建的这个变量是数组或者是对象的时候，里面持有的内容可以被更新。<br>当一个变量需要被重新赋值的时候，应该使用<code>let</code>去声明它</p>
+<h2 id="ReactDOM"><a href="#ReactDOM" class="headerlink" title="ReactDOM"></a>ReactDOM</h2><p>简单地说，<code>ReactDOM.render()</code>会使用<code>JSX</code>替换<code>HTML</code>中一个<code>DOM</code>节点，这样可以很容易地<code>React</code>集成到每一个其他的应用中。<code>ReactDOM.render()</code> 有两个传入参数，第一个是准备渲染的<code>JSX</code>,第二个参数指定了<code>React</code>应用在<code>HTML</code>中放置的位置。</p>
+<h2 id="模块热替换"><a href="#模块热替换" class="headerlink" title="模块热替换"></a>模块热替换</h2><p>模块热替换（HMR）是一个帮助你在浏览器中重新加载应用的工具，并且无需让浏览器刷新页面。<br>在<code>src/index.js</code>中添加一些配置代码</p>
+<blockquote>
+<p><code>if（module.hot）{module.hot.accept();}</code></p>
+</blockquote>
+<p>代码改变后，浏览器就不会刷新页面，但是应用还是会重新加载并且正确的输出</p>
+<h2 id="JSX中复杂的JavaScript"><a href="#JSX中复杂的JavaScript" class="headerlink" title="JSX中复杂的JavaScript"></a>JSX中复杂的JavaScript</h2><p>定义一个列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">// import logo from &apos;./logo.svg&apos;;</span><br><span class="line">import &apos;./App.css&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const list = [&#123;</span><br><span class="line">    title: &apos;React&apos;,</span><br><span class="line">    url: &apos;https://facebook.github.io/react&apos;,</span><br><span class="line">    author: &apos;Jordan Walke&apos;,</span><br><span class="line">    num_comments: 3,</span><br><span class="line">    points: 4,</span><br><span class="line">    objectID: 0,</span><br><span class="line">&#125;, &#123;</span><br><span class="line">    title: &apos;Redux&apos;,</span><br><span class="line">    url: &apos;https://github.com/reactjs/redux&apos;,</span><br><span class="line">    author: &apos;Dan Abramov, Andrew Clark&apos;,</span><br><span class="line">    num_comments: 2,</span><br><span class="line">    points: 5,</span><br><span class="line">    objectID: 1,  </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>在JSX中使用HTML中的JavaScript是强大的，可以使用<code>map</code>来将一个列表转换成另外一个列表。记得在React中添加一个辅助属性，给列表的每个成员加上一个关键字（<code>key</code>）属性，这样就可以在列表发生变化的时候识别其中成员的添加、更改和删除的状态。不要错误地使用列表成员在数组的索引作为关键字，列表的成员索引是完全不稳定的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class App extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">    return (      </span><br><span class="line">        &lt;div className = &quot;App&quot;&gt;</span><br><span class="line">        &#123;list.map(function(item)&#123;</span><br><span class="line">            return(</span><br><span class="line">            &lt;div key = &#123;item.objectID&#125;&gt;</span><br><span class="line">            &lt;span&gt;</span><br><span class="line">                &lt;a href= &#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">            &lt;/span&gt;</span><br><span class="line">            &lt;span&gt;&#123;item.author&#125;&lt;/span&gt;</span><br><span class="line">            &lt;span&gt;&#123;item.num_comments&#125;&lt;/span&gt;</span><br><span class="line">            &lt;span&gt;&#123;item.points&#125;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            );</span><br><span class="line">        &#125;)&#125;        </span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure>
+<h2 id="ES6-箭头函数"><a href="#ES6-箭头函数" class="headerlink" title="ES6 箭头函数"></a>ES6 箭头函数</h2><p>箭头函数表达式比普通的函数表达式更加简洁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//函数表示式</span><br><span class="line">function()&#123;...&#125;</span><br><span class="line">//箭头函数</span><br><span class="line">（） =&gt; &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：如果函数只有一个参数，就可以移除参数的括号，但是如果有多个参数，就必须保留这个括号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//允许</span><br><span class="line">item =&gt;&#123;...&#125;</span><br><span class="line">(item) =&gt;&#123;...&#125;</span><br><span class="line">(item,key) =&gt;&#123;...&#125;</span><br><span class="line">//不允许</span><br><span class="line">item,key =&gt;&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>上例可以改写为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class App extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (      </span><br><span class="line">            &lt;div className = &quot;App&quot;&gt;</span><br><span class="line">            &#123;list.map(item =&gt;&#123;</span><br><span class="line">                return(</span><br><span class="line">                &lt;div key = &#123;item.objectID&#125;&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;a href= &#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">                &lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.author&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.num_comments&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.points&#125;&lt;/span&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                );          </span><br><span class="line">            &#125;)&#125;      </span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外在ES6的箭头函数中，可以简洁函数体来替换块状函数体（用花括号<code>{}</code>表示），简洁函数体的返回不用显示声明，这样就可以移除掉return表示式，那再改简洁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class App extends Component &#123;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (      </span><br><span class="line">            &lt;div className = &quot;App&quot;&gt;</span><br><span class="line">            &#123;list.map(item =&gt;</span><br><span class="line">                &lt;div key = &#123;item.objectID&#125;&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                &lt;a href= &#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">                &lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.author&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.num_comments&#125;&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;item.points&#125;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;         </span><br><span class="line">            )&#125;      </span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="ES6类"><a href="#ES6类" class="headerlink" title="ES6类"></a>ES6类</h2><p>javaScript ES6中引入了类的概念。类通常在面向对象编程语言中被使用，可以根据使用情况一边使用函数式编程一边使用面向对象编程<br>尽管React为了例如不可变数据结构等的特征而拥抱函数式编程，但是它还是使用类来声明组件，这些组件就被称为ES6组件，React混合使用了两种编程范式中的有益部分</p>
+<p>例如下面这个Developer类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Developer&#123;</span><br><span class="line">        constructor(firstname,lastname)&#123;</span><br><span class="line">            this.firstname = firstname;</span><br><span class="line">            this.lastname = lastname;      </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        getName()&#123;</span><br><span class="line">        return this.firstname + &apos;&apos; +this.lastname;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类都有一个用来实例化自己的构造函数，这个构造函数可以用来传入参数来赋予给类的实例。此外，类可定义函数，因为这个函数被关联给了类，所有它被称为方法，通常它被当称为类的方法。<br>实例化上面的Develper类，以及使用它的方法   </p>
+<blockquote>
+<p>const Lbh = new Developer(‘Lai’,’binhong’);<br>console.log(Lbh.getName());</p>
+</blockquote>
+<p>React 使用JavaScript ES6类来实现 ES6组件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123;Component&#125; from &apos;react&apos;;</span><br><span class="line">    class App extends Component &#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">    ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>App类</code>继承自<code>Component</code>，你可以声明App组件，但是这个组件需要继承自另一个组件，继承的意思就是在一个面向对象编程的语言中，你要需要遵循继承原则， 它可以把功能从一个类传递到另一个类</p>
+<p>这个App类就从Component类中继承了它的功能，这个Component类是从一个基本ES6类中继承来的ES6组件类。它 有一个React组件所需要的所有功能。渲染（<code>render</code>）方法就是其中可以使用的一个功能。<br>这个Component 类封装了所有React类需要的细节。<br><code>React Component</code>类暴露出来的方法都是公共的接口，这些方法有一个方法必须被重写，其他的则不一定要被重写。<code>render()</code>方法是必须要被重写的方法，因为你定义了一个React组件的输出，它必须被定义</p>
+<p>参考链接：<a href="https://leanpub.com/the-road-to-learn-react-chinese">https://leanpub.com/the-road-to-learn-react-chinese</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-06-06-TheRoadtolearnReactPart1.html" title="The Road to learn React Part1">http://laibh.top/2018-06-06-TheRoadtolearnReactPart1.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" <i class="fa fa-tag"></i> react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-06-05-react-third-day.html" rel="next" title="react-day3">
+                <i class="fa fa-chevron-left"></i> react-day3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-06-07-TheRoadtolearnReactPart2.html" rel="prev" title="The Road to learn React Part2">
+                The Road to learn React Part2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Road-to-learn-React书籍学习笔记-第一章"><span class="nav-number">1.</span> <span class="nav-text">The Road to learn React书籍学习笔记(第一章)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#react灵活的生态圈"><span class="nav-number">1.1.</span> <span class="nav-text">react灵活的生态圈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Small-Application"><span class="nav-number">1.1.1.</span> <span class="nav-text">Small Application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Medium-Application"><span class="nav-number">1.1.2.</span> <span class="nav-text">Medium Application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Large-Application"><span class="nav-number">1.1.3.</span> <span class="nav-text">Large Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本要求npm-node"><span class="nav-number">1.2.</span> <span class="nav-text">基本要求npm/node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零配置搭载react"><span class="nav-number">1.3.</span> <span class="nav-text">零配置搭载react</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6中的const与let"><span class="nav-number">1.4.</span> <span class="nav-text">ES6中的const与let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactDOM"><span class="nav-number">1.5.</span> <span class="nav-text">ReactDOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块热替换"><span class="nav-number">1.6.</span> <span class="nav-text">模块热替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSX中复杂的JavaScript"><span class="nav-number">1.7.</span> <span class="nav-text">JSX中复杂的JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-箭头函数"><span class="nav-number">1.8.</span> <span class="nav-text">ES6 箭头函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6类"><span class="nav-number">1.9.</span> <span class="nav-text">ES6类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本章将会学习递归、动态规划和贪心算法。 第十一章 算法模式递归递归是一种解决问题的方法，它解决问题的各个小部分，直到解决最初的大问题。递归通常涉及函数调用自身。 递归函数是像下面能够直接调用自身的方式或函数 123function recursiveFunction(someParam)&amp;#123;    recursiveFunction(someParam);&amp;#125; 能够像下面这样间接调">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式">
+<meta property="og:url" content="http://laibh.top/2018-11-08-JavaScipt数据结构与算法Part11.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="本章将会学习递归、动态规划和贪心算法。 第十一章 算法模式递归递归是一种解决问题的方法，它解决问题的各个小部分，直到解决最初的大问题。递归通常涉及函数调用自身。 递归函数是像下面能够直接调用自身的方式或函数 123function recursiveFunction(someParam)&amp;#123;    recursiveFunction(someParam);&amp;#125; 能够像下面这样间接调">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/js数据结构与算法-算法模式-斐波那契函数.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式">
+<meta name="twitter:description" content="本章将会学习递归、动态规划和贪心算法。 第十一章 算法模式递归递归是一种解决问题的方法，它解决问题的各个小部分，直到解决最初的大问题。递归通常涉及函数调用自身。 递归函数是像下面能够直接调用自身的方式或函数 123function recursiveFunction(someParam)&amp;#123;    recursiveFunction(someParam);&amp;#125; 能够像下面这样间接调">
+<meta name="twitter:image" content="http://laibh.top/images/js数据结构与算法-算法模式-斐波那契函数.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-11-08-JavaScipt数据结构与算法Part11.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-11-08-JavaScipt数据结构与算法Part11.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-08T16:13:41+08:00">
+                2018-11-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-11-08-JavaScipt数据结构与算法Part11.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,342
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章将会学习递归、动态规划和贪心算法。</p>
+<h2 id="第十一章-算法模式"><a href="#第十一章-算法模式" class="headerlink" title="第十一章 算法模式"></a>第十一章 算法模式</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>递归是一种解决问题的方法，它解决问题的各个小部分，直到解决最初的大问题。递归通常涉及函数调用自身。</p>
+<p>递归函数是像下面能够直接调用自身的方式或函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursiveFunction</span>(<span class="params">someParam</span>)</span>&#123;</span><br><span class="line">    recursiveFunction(someParam);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>能够像下面这样间接调用自身的函数，也是递归函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursiveFunction1</span>(<span class="params">someParam</span>)</span>&#123;</span><br><span class="line">    recursiveFunction2(someParam);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursiveFunction2</span>(<span class="params">someParam</span>)</span>&#123;</span><br><span class="line">    recursiveFunction1(someParam);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设现在必须要执行 recursiveFunction ,结果是什么?单单上述情况而言，它会一直执行下去。因此，每个递归函数都必须有边界条件，即一个不再递归调用的条件（停止点），以防无限递归。</p>
+<h3 id="JavaScript-调用栈大小的限制"><a href="#JavaScript-调用栈大小的限制" class="headerlink" title="JavaScript 调用栈大小的限制"></a>JavaScript 调用栈大小的限制</h3><p>如果忘记加上用以停止函数递归调用的边界条件，会发生什么呢？递归并不会无限执行下去，浏览器会抛出错误，也就是所谓的栈溢出错误（stack Overflow error）</p>
+<p>每个浏览器都有自己的上限，可以用一下代码测试。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursiveFn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    i++;</span><br><span class="line">    recursiveFn();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">   recursiveFn(); </span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'i='</span>+i+<span class="string">' error:'</span>+e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 谷歌：i=15706 error:RangeError: Maximum call stack size exceeded</span></span><br><span class="line"><span class="comment">// 360：i=31470 error:RangeError: Maximum call stack size exceeded</span></span><br><span class="line"><span class="comment">// 火狐：i=40687 error:InternalError: too much recursion</span></span><br></pre></td></tr></table></figure>
+<p>根据操作系统和浏览器的不同，具体的数值也会有所不同，但区别不大。</p>
+<p>ES6 有尾调用优化（tail call optimazation）。如果函数内最后一个操作是调用函数，会通过“跳转指令（jump）”而不是“子程序调用（subroutine call ）”来控制。也就是说，ES6中，这里的代码会一直执行下去。所以，具有停止递归的边界条件很重要。</p>
+<p><a href="http://es6.ruanyifeng.com/#docs/function#%E5%B0%BE%E8%B0%83%E7%94%A8%E4%BC%98%E5%8C%96">尾调用</a> 点击看看，阮一峰老师的。</p>
+<h3 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h3><p>斐波那契数列的定义如下：</p>
+<ul>
+<li>1 和 2 的斐波那契数是1</li>
+<li>n（n&gt;2）的斐波那契数是（n-1）加上（n-2）的斐波那契数。</li>
+</ul>
+<p>实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fibonacci</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(num === <span class="number">1</span> || num ===<span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">arguments</span>.callee(num - <span class="number">1</span>) + <span class="built_in">arguments</span>.callee(num - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>让我们试着找出6的斐波那契数，其会产生如下函数调用</p>
+<p><img src="http://laibh.top/images/js数据结构与算法-算法模式-斐波那契函数.png" alt="斐波那契函数"></p>
+<p>我们也可以用非递归的方法实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fib</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> n1 = <span class="number">1</span>,</span><br><span class="line">    n2 = <span class="number">1</span>,</span><br><span class="line">    n = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">3</span>; i &lt;= num; i++)&#123;</span><br><span class="line">        n = n1 + n2;</span><br><span class="line">        n1 = n2;</span><br><span class="line">        n2 = n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为什么要用递归？是因为更快吗？其实并不，反而更慢。递归的好处在于更容易理解，并且它所需的代码量更少。然后在ES6中，因为有尾调用，可以加快递归的速度。总而言之，我们用递归，通常是因为它更容易解决问题。</p>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><p>动态规划（Dynamic Programming,DP）是一种将复杂问题分解成更小的子问题来解决的优化技术。与分而治之不同的是，动态规划是将问题分解成相互依赖的子问题。</p>
+<p>用动态规划解决问题，要遵循三个步骤：</p>
+<ol>
+<li>实现子问题。</li>
+<li>实现要反复执行来解决子问题的部分</li>
+<li>识别并求解出边界条件</li>
+</ol>
+<p>可以用动态规划解决一些著名的问题如下：</p>
+<ul>
+<li><strong>背包问题</strong>：给出一组项目，各自有值和容量，目标是要找出总值最大的项目的集合。这个问题的限制是，总容量必须小于等于“背包”的容量。</li>
+<li><strong>最长公共子序列</strong>：找出一组序列的最长公共子序列（可由另一序列删除元素但不改变）</li>
+<li><strong>矩阵链相乘</strong>：给出一系列矩阵，目标是找到这些矩阵相乘的最高效办法（计算次数尽可能少）。相乘操作不会进行，解决方案是找到这些矩阵各自相乘的顺序。</li>
+<li><strong>硬币找零</strong>：给出面额为d1…dn的一定数量的硬币和要找零的钱数，找出有多少种找零的方法。</li>
+<li><strong>图的全源最短路径</strong>：对所有顶点对（u,v），找出顶点u到顶点v的最短路径。</li>
+</ul>
+<h3 id="最少硬币找零问题"><a href="#最少硬币找零问题" class="headerlink" title="最少硬币找零问题"></a>最少硬币找零问题</h3><p>最少硬币找零问题是硬币问题的一个变种。硬币找零问题是给出要找零的钱数，以及可以用的硬币面额d1…dn 及其数量，找出有多少种找零方法。最少硬币找零问题是要给出要找零的钱数以及可用的硬币面额d1…dn及其数量，找出所需的最少硬币个数。</p>
+<p>例如，美国有一下面额（硬币）：d<sub>1</sub>=1,d<sub>2</sub>=5,d<sub>3</sub>=10,d<sub>4</sub>=25</p>
+<p>如果要找36美分的零钱，我么可以用1个25美分，1个10美分和一个便士（1美分）</p>
+<p>如何将这个解答转化成算法？</p>
+<p>最少硬币找零的解决方案是找到n所需的最小硬币数。但要做到这一点，首先得找到对每个x&lt;n的解。然后，我们将解建立在更小的值的基础上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MinCoinChange</span>(<span class="params">coins</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> coins = coins; <span class="comment">// 零钱的面额</span></span><br><span class="line">    <span class="keyword">var</span> cache = &#123;&#125;; <span class="comment">// 缓存</span></span><br><span class="line">    <span class="keyword">this</span>.makeChange = <span class="function"><span class="keyword">function</span>(<span class="params">amount</span>)</span>&#123; <span class="comment">// 递归函数</span></span><br><span class="line">        <span class="keyword">var</span> me = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">if</span>(!amount)&#123; <span class="comment">// 若金额总额小于0则返回空数组</span></span><br><span class="line">            <span class="keyword">return</span> [];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(cache[amount])&#123; <span class="comment">// 若缓存中已有该计算结果，则直接返回 </span></span><br><span class="line">            <span class="keyword">return</span> cache[amount];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> min = [],newMin,newAmount; </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; coins.length; i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> coin = coins[i];</span><br><span class="line">            newAmount = amount - coin;</span><br><span class="line">            <span class="keyword">if</span>(newAmount &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">                newMin = me.makeChange(newAmount);					</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(newAmount &gt;= <span class="number">0</span> &amp;&amp; (newMin.length &lt; min.length - <span class="number">1</span> || !min.length) &amp;&amp; (newMin.length || !newAmount))&#123;</span><br><span class="line">                min = [coin].concat(newMin);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'new Min '</span>+ min + <span class="string">'for '</span>+ amount);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (cache[amount] = min);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.getCache = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(cache);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> minCoinChange = <span class="keyword">new</span> MinCoinChange([<span class="number">1</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">25</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(minCoinChange.makeChange(<span class="number">36</span>));</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1for 5</span></span><br><span class="line"><span class="comment">new Min 5for 5</span></span><br><span class="line"><span class="comment">new Min 1,5for 6</span></span><br><span class="line"><span class="comment">new Min 1,1,5for 7</span></span><br><span class="line"><span class="comment">new Min 1,1,1,5for 8</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,5for 9</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,5for 10</span></span><br><span class="line"><span class="comment">new Min 5,5for 10</span></span><br><span class="line"><span class="comment">new Min 10for 10</span></span><br><span class="line"><span class="comment">new Min 1,10for 11</span></span><br><span class="line"><span class="comment">new Min 1,1,10for 12</span></span><br><span class="line"><span class="comment">new Min 1,1,1,10for 13</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,10for 14</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,10for 15</span></span><br><span class="line"><span class="comment">new Min 5,10for 15</span></span><br><span class="line"><span class="comment">new Min 1,5,10for 16</span></span><br><span class="line"><span class="comment">new Min 1,1,5,10for 17</span></span><br><span class="line"><span class="comment">new Min 1,1,1,5,10for 18</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,5,10for 19</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,5,10for 20</span></span><br><span class="line"><span class="comment">new Min 5,5,10for 20</span></span><br><span class="line"><span class="comment">new Min 10,10for 20</span></span><br><span class="line"><span class="comment">new Min 1,10,10for 21</span></span><br><span class="line"><span class="comment">new Min 1,1,10,10for 22</span></span><br><span class="line"><span class="comment">new Min 1,1,1,10,10for 23</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,10,10for 24</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,10,10for 25</span></span><br><span class="line"><span class="comment">new Min 5,10,10for 25</span></span><br><span class="line"><span class="comment">new Min 25for 25</span></span><br><span class="line"><span class="comment">new Min 1,25for 26</span></span><br><span class="line"><span class="comment">new Min 1,1,25for 27</span></span><br><span class="line"><span class="comment">new Min 1,1,1,25for 28</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,25for 29</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,25for 30</span></span><br><span class="line"><span class="comment">new Min 5,25for 30</span></span><br><span class="line"><span class="comment">new Min 1,5,25for 31</span></span><br><span class="line"><span class="comment">new Min 1,1,5,25for 32</span></span><br><span class="line"><span class="comment">new Min 1,1,1,5,25for 33</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,5,25for 34</span></span><br><span class="line"><span class="comment">new Min 1,1,1,1,1,5,25for 35</span></span><br><span class="line"><span class="comment">new Min 5,5,25for 35</span></span><br><span class="line"><span class="comment">new Min 10,25for 35</span></span><br><span class="line"><span class="comment">new Min 1,10,25for 36 </span></span><br><span class="line"><span class="comment">(3) [1, 10, 25]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">minCoinChange.getCache();	</span><br><span class="line"><span class="comment">// &#123;1: Array(1), 2: Array(2), 3: Array(3), 4: Array(4), 5: Array(1), 6: Array(2), 7: Array(3), 8: Array(4), 9: Array(5), 10: Array(1), 11: Array(2), 12: Array(3), 13: Array(4), 14: Array(5), 15: Array(2), 16: Array(3), 17: Array(4), 18: Array(5), 19: Array(6), 20: Array(2), 21: Array(3), 22: Array(4), 23: Array(5), 24: Array(6), 25: Array(1), 26: Array(2), 27: Array(3), 28: Array(4), 29: Array(5), 30: Array(2), 31: Array(3), 32: Array(4), 33: Array(5), 34: Array(6), 35: Array(2), 36: Array(3)&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> minCoinChange1 = <span class="keyword">new</span> MinCoinChange([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(minCoinChange1.makeChange(<span class="number">6</span>));</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> new Min 1for 1</span></span><br><span class="line"><span class="comment"> new Min 1,1for 2</span></span><br><span class="line"><span class="comment"> new Min 1,1,1for 3</span></span><br><span class="line"><span class="comment"> new Min 3for 3</span></span><br><span class="line"><span class="comment"> new Min 1,3for 4</span></span><br><span class="line"><span class="comment"> new Min 4for 4</span></span><br><span class="line"><span class="comment"> new Min 1,4for 5</span></span><br><span class="line"><span class="comment"> new Min 1,1,4for 6</span></span><br><span class="line"><span class="comment"> new Min 3,3for 6</span></span><br><span class="line"><span class="comment"> (2) [3, 3]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">minCoinChange1.getCache();	<span class="comment">// &#123;1: Array(1), 2: Array(2), 3: Array(1), 4: Array(1), 5: Array(2), 6: Array(2)&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h3><p>背包问题是一个组合优化问题。它可以描述如下：给定一个固定大小、能够携带W的背包，以及一组有价值和重量的物品，找出一个最佳解决方案，使得装入背包的物品总重量不超过W，且总价值最大。</p>
+<p>下面是一个例子：</p>
+<table>
+<thead>
+<tr>
+<th>物品</th>
+<th>重量</th>
+<th>价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>考虑背包能够携带的重量只有5。对于这个例子，我们可以说最佳解决方案就是往背包里装入物品1和物品2，这样，总重量为5，总价值为7。</p>
+<p>背包算法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">knapSack</span>(<span class="params">capacity,weights,values,n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> i,w,a,b,kS = [];</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        kS[i] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(w = <span class="number">0</span>; w &lt;= capacity; w++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> || w == <span class="number">0</span>)&#123;</span><br><span class="line">                kS[i][w] = <span class="number">0</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(weights[i<span class="number">-1</span>] &lt;= w)&#123;</span><br><span class="line">                a = values[i - <span class="number">1</span>] + kS[i - <span class="number">1</span>][w - weights[i<span class="number">-1</span>]];</span><br><span class="line">                b = kS[i<span class="number">-1</span>][w];</span><br><span class="line">                kS[i][w] = (a &gt; b) ? a : b;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                kS[i][w] = kS[i<span class="number">-1</span>][w];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> kS[n][capacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工作原理</p>
+<ul>
+<li>首先，初始化将用于寻找解决方案的矩阵<code>ks[n+1][capacity+1]</code></li>
+<li>忽略矩阵的第一列和第一行，只处理索引不为0的列和行</li>
+<li>物品i的重量必须小于约束（capacity）才有可能成为解决方案的一部分。否则，总重量就会超出背包能够携带的重量。发生这种情况的话，就采用之前的值。</li>
+<li>当找到可以构成解决方案的物品时，选择价值最大的那个</li>
+<li>问题的解决方案就在二维表格右下角的最后一个格子里面</li>
+</ul>
+<p>测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> values = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],</span><br><span class="line">weights = [<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line">capacity = <span class="number">5</span>,</span><br><span class="line">n = values.length;</span><br><span class="line"><span class="built_in">console</span>.log(knapSack(capacity,weights,values,n)); <span class="comment">// 7</span></span><br></pre></td></tr></table></figure>
+<p>上面的算法只输出背包携带物品价值的最大值，而不列出实际的物品。我们可以增加下面的附加函数来找出构成解决方案的物品：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findValues</span>(<span class="params">n,capacity,kS,weights,values</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> i = n, k = capacity;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'解决方案包含以下物品： '</span>);</span><br><span class="line">    <span class="keyword">while</span>( i &gt; <span class="number">0</span> &amp;&amp; k &gt; <span class="number">0</span> )&#123;</span><br><span class="line">        <span class="keyword">if</span>(kS[i][k] !== kS[i<span class="number">-1</span>][k])&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'物品'</span> + i + <span class="string">'，重量：'</span> + weights[i<span class="number">-1</span>] + <span class="string">'，价值：'</span>+values[i - <span class="number">1</span>] );</span><br><span class="line">            i--;</span><br><span class="line">            k = k - kS[i][k];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">解决方案包含以下物品： </span><br><span class="line">物品<span class="number">2</span>，重量：<span class="number">3</span>，价值：<span class="number">4</span></span><br><span class="line">物品<span class="number">1</span>，重量：<span class="number">2</span>，价值：<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<h3 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h3><p>另一个经常被当做编程挑战问题的动态最长公共子序列（LCS）:找出两个字符串序列的最长子序列的长度。最长子序列是指，在两个字符串序列中以相同顺序出现，但不要求连续（非字符串子串）的字符串序列。</p>
+<p>考虑如下的例子：</p>
+<table>
+<thead>
+<tr>
+<th>字符串</th>
+<th>元素</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符串1</td>
+<td>a</td>
+<td>c</td>
+<td>b</td>
+<td>a</td>
+<td>e</td>
+<td>d</td>
+</tr>
+<tr>
+<td>字符串2</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>a</td>
+<td>d</td>
+<td>f</td>
+</tr>
+</tbody>
+</table>
+<p>LCS:长度为4的‘’acad“</p>
+<p>下面的算法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lcs</span>(<span class="params">wordX,wordY</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> m = wordX.length,</span><br><span class="line">    n = wordY.length,</span><br><span class="line">    l = [],</span><br><span class="line">    solution = [],</span><br><span class="line">    i, j, a, b;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= m; ++i)&#123;</span><br><span class="line">        l[i] = [];</span><br><span class="line">        solution[i] = [];</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt;= n; ++j)&#123;</span><br><span class="line">            l[i][j] = <span class="number">0</span>;</span><br><span class="line">            solution[i][j] = <span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;= m; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt;= n; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>)&#123;</span><br><span class="line">                l[i][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(wordX[i<span class="number">-1</span>] == wordY[j<span class="number">-1</span>])&#123;</span><br><span class="line">                l[i][j] = l[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span>;</span><br><span class="line">                solution[i][j] = <span class="string">'diagonal'</span>;</span><br><span class="line"></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                a = l[i<span class="number">-1</span>][i];</span><br><span class="line">                b = l[i][j<span class="number">-1</span>];</span><br><span class="line">                l[i][j] = a &gt; b ? a : b;</span><br><span class="line">                solution[i][j] = l[i][j] == l[i<span class="number">-1</span>][j] ? <span class="string">'top'</span> : <span class="string">'left'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    printSolution(solution,l,wordX,wordY,m,n);</span><br><span class="line">    <span class="keyword">return</span> l[m][n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printSolution</span>(<span class="params">solution,l,wordX,wordY,m,n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = m,</span><br><span class="line">        b = n,</span><br><span class="line">        i,</span><br><span class="line">        j,</span><br><span class="line">        x = solution[a][b],</span><br><span class="line">        answer = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">while</span>(x !== <span class="string">'0'</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(solution[a][b] === <span class="string">'diagonal'</span>)&#123;</span><br><span class="line">                answer = wordX[a<span class="number">-1</span>] + answer;</span><br><span class="line">                a--;</span><br><span class="line">                b--;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(solution[a][b] === <span class="string">'left'</span>)&#123;</span><br><span class="line">                b--;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(solution[a][b] === <span class="string">'top'</span>)&#123;</span><br><span class="line">                a--;</span><br><span class="line">            &#125;</span><br><span class="line">            x = solution[a][b];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'lcs:'</span> + answer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="矩阵链相乘（未完成）"><a href="#矩阵链相乘（未完成）" class="headerlink" title="矩阵链相乘（未完成）"></a>矩阵链相乘（未完成）</h3><h3 id="贪心算法（未完成）"><a href="#贪心算法（未完成）" class="headerlink" title="贪心算法（未完成）"></a>贪心算法（未完成）</h3><p><strong>最少硬币找零问题</strong></p>
+<p><strong>背包问题</strong></p>
+<h3 id="函数式编程简介"><a href="#函数式编程简介" class="headerlink" title="函数式编程简介"></a>函数式编程简介</h3><p>借助ES6的能力，JavaScript 也能够进行函数式编程</p>
+<h3 id="函数式编程和命令式编程"><a href="#函数式编程和命令式编程" class="headerlink" title="函数式编程和命令式编程"></a>函数式编程和命令式编程</h3><p>以函数式方式进行开发并不简单。</p>
+<p>假如我们想打印一个数组中所有的元素。我们可以用命令式编程，声明的函数如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> printArray = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(array[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">printArray([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]);</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我们迭代数组，打印每一项。</p>
+<p>现在，我们试着将这个例子转换成函数式编程。在函数式编程中，我们关注的重点是需要描述什么，而不是如何描述</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> forEach = <span class="function"><span class="keyword">function</span>(<span class="params">array,action</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++)&#123;</span><br><span class="line">        action(array[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着我们需要创建另一个元素负责把数组元素打印到控制台的函数（考虑为回调函数），如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> logItem = <span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，像下面这样使用函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forEach([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],logItem);</span><br></pre></td></tr></table></figure>
+<p>几点需要注意：</p>
+<ul>
+<li>主要目标是描述数据，已经要对数据应用的转换</li>
+<li>程序执行顺序的重要性很低，而在命令式编程中，步骤和顺序是非常重要的</li>
+<li>函数和数据结合是函数式编程的核心</li>
+<li>在函数式编程中，我们可以使用和滥用函数和递归，而在命令式编程中，则使用循环、赋值、条件和函数。</li>
+</ul>
+<p>另外一个例子，考虑我们要找数组中最小的值。用命令式编程完成这个任务，只要迭代数组，检查当前的最小值是否大于数组元素，如果是，就更行最小值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> findMinArray = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> minValue = array[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; array.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(minValue &gt; array[i])&#123;</span><br><span class="line">           minValue = array[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minValue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(findMinArray([<span class="number">8</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>])); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<p>用函数式编程完成相同的任务，可以使用Math.in 函数，传入所有要比较的数组元素。我们可以像下面的例子里这样，使用ES2015 的解构操作符（…）,把数组转换成单个元素：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> min_ = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.min(...array);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(min_([<span class="number">8</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>])); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<p>使用箭头函数，简化代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> min_ = <span class="function"><span class="params">arr</span> =&gt;</span> <span class="built_in">Math</span>.min(...arr);</span><br></pre></td></tr></table></figure>
+<h3 id="JavaScript函数式工具箱——map、filter-和-reduce"><a href="#JavaScript函数式工具箱——map、filter-和-reduce" class="headerlink" title="JavaScript函数式工具箱——map、filter 和 reduce"></a>JavaScript函数式工具箱——map、filter 和 reduce</h3><p>map、filter和reduce函数是函数式编程的基础</p>
+<p>我们可以使用map函数 ，把一个数据集合转换成映射成另一个数据集合。先看一个命令式编程的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> daysOfWeek = [</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Monday'</span>, <span class="attr">value</span>: <span class="number">1</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Tuseday'</span>, <span class="attr">value</span>: <span class="number">2</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">'Webnesday'</span>, <span class="attr">value</span>: <span class="number">7</span> &#125;,</span><br><span class="line">]</span><br><span class="line"><span class="keyword">var</span> daysOfWeekValues_ = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; daysOfWeek.length; i++ )&#123;</span><br><span class="line">    daysOfWeekValues_.push(daysOfWeek[i].value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再以函数式编程来考虑同样的例子，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> daysOfWeekValues = daysOfWeek.map(<span class="function"><span class="keyword">function</span>(<span class="params">day</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> day.value;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(daysOfWeekValues);</span><br></pre></td></tr></table></figure>
+<p>我们可以使用 filter 函数过滤一个集合的值。来看一个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> positiveNumbers_ = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> positive = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(array[i] &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">           positive.push(array[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> positive;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(positiveNumbers_([<span class="number">-1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">-2</span>])); <span class="comment">// (2) [1, 2]</span></span><br></pre></td></tr></table></figure>
+<p>改成函数式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> positiveNumbers = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array.filter(<span class="function"><span class="keyword">function</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num &gt;= <span class="number">0</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(positiveNumbers([<span class="number">-1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">-2</span>])); <span class="comment">// (2) [1, 2]</span></span><br></pre></td></tr></table></figure>
+<p>也可以使用reduce函数，把一个集合归纳成一个约定的值。比如，对一个数组中的值求和：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sumValues = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> total = array[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; array.length; i++)&#123;</span><br><span class="line">        total += array[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sumValues([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码也可以写成这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum_ = <span class="function"><span class="keyword">function</span>(<span class="params">array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> array.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sum_([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<p>再看另外一个例子，考虑我们需要写一个函数，把几个数组连接起来。为此，可以创建另外一个数组，用于存放其他数组的元素。我们可以执行以下命令式的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mergeArrays = <span class="function"><span class="keyword">function</span>(<span class="params">arrays</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> count = arrays.length,</span><br><span class="line">        newArray = [],</span><br><span class="line">        k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; count; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arrays[i].length; j++)&#123;</span><br><span class="line">            newArray[k++] = arrays[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newArray;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(mergeArrays([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>]])); <span class="comment">// (6) [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<p>在这个例子，我们声明了变量，还使用了循环。现在，我们用JavaScript 函数式编程把上面的代码重写如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mergeArraysConcat = <span class="function"><span class="keyword">function</span>(<span class="params">arrays</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> arrays.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">p,n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> p.concat(n);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(mergeArraysConcat([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>]])); <span class="comment">// (6) [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<p>箭头函数简写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mergeArrays = <span class="function">(<span class="params">...arrays</span>) =&gt;</span> [].concat(...arrays);</span><br><span class="line"><span class="built_in">console</span>.log(mergeArrays([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>])); <span class="comment">// (6) [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>在本章中，你了解了更多的递归的知识，已经它帮助我们解决一些动态规划问题。我们介绍了最著名的动态规划问题，如最少硬币找零、背包问题、最长公共子序列和矩阵链相乘(后面补)。</p>
+<p>还学习了贪心算法，已经如何用贪心算法解决最少硬币找零和背包问题。</p>
+<p>还学习了函数式编程，并通过一些例子了解了如何以这种范式使用JavaScript 的功能。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-11-08-JavaScipt数据结构与算法Part11.html" title="为什么我要放弃javaScript数据结构与算法（第十一章）—— 算法模式">http://laibh.top/2018-11-08-JavaScipt数据结构与算法Part11.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-11-07-JavaScipt数据结构与算法Part10.html" rel="next" title="为什么我要放弃javaScript数据结构与算法（第十章）—— 排序和搜索算法">
+                <i class="fa fa-chevron-left"></i> 为什么我要放弃javaScript数据结构与算法（第十章）—— 排序和搜索算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-12-JavaScipt数据结构与算法Part12.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第十二章）—— 算法复杂度">
+                为什么我要放弃javaScript数据结构与算法（第十二章）—— 算法复杂度 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一章-算法模式"><span class="nav-number">1.</span> <span class="nav-text">第十一章 算法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#递归"><span class="nav-number">1.1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-调用栈大小的限制"><span class="nav-number">1.2.</span> <span class="nav-text">JavaScript 调用栈大小的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">1.3.</span> <span class="nav-text">斐波那契数列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态规划"><span class="nav-number">1.4.</span> <span class="nav-text">动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最少硬币找零问题"><span class="nav-number">1.5.</span> <span class="nav-text">最少硬币找零问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背包问题"><span class="nav-number">1.6.</span> <span class="nav-text">背包问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最长公共子序列"><span class="nav-number">1.7.</span> <span class="nav-text">最长公共子序列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵链相乘（未完成）"><span class="nav-number">1.8.</span> <span class="nav-text">矩阵链相乘（未完成）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贪心算法（未完成）"><span class="nav-number">1.9.</span> <span class="nav-text">贪心算法（未完成）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式编程简介"><span class="nav-number">1.10.</span> <span class="nav-text">函数式编程简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式编程和命令式编程"><span class="nav-number">1.11.</span> <span class="nav-text">函数式编程和命令式编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript函数式工具箱——map、filter-和-reduce"><span class="nav-number">1.12.</span> <span class="nav-text">JavaScript函数式工具箱——map、filter 和 reduce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.13.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

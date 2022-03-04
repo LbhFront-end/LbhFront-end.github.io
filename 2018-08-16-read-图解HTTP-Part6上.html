@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="内容太多了，分成两节记录。 第六章  HTTP 首部（上）HTTP协议的请求和响应报文中必定包含HTTP首部，只是我们在使用Web的过程中感受不到它。 HTTP报文首部 HTTP报文协议的请求和响应报文中必定包含HTTP首部。首部内容为客户端和服务器分别处理请求和响应提供所需要的消息。对于客户端用户来说，这些信息中大部分内容都无须亲自查看。 HTTP 请求报文在请求中，HTTP报文由方法、URI、">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部">
+<meta property="og:url" content="http://laibh.top/2018-08-16-read-图解HTTP-Part6上.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="内容太多了，分成两节记录。 第六章  HTTP 首部（上）HTTP协议的请求和响应报文中必定包含HTTP首部，只是我们在使用Web的过程中感受不到它。 HTTP报文首部 HTTP报文协议的请求和响应报文中必定包含HTTP首部。首部内容为客户端和服务器分别处理请求和响应提供所需要的消息。对于客户端用户来说，这些信息中大部分内容都无须亲自查看。 HTTP 请求报文在请求中，HTTP报文由方法、URI、">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-HTTP%20报文的结构.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-HTTP%20报文的结构.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-响应报文.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Connection1.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Connection2.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Upgrade.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-Via.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部">
+<meta name="twitter:description" content="内容太多了，分成两节记录。 第六章  HTTP 首部（上）HTTP协议的请求和响应报文中必定包含HTTP首部，只是我们在使用Web的过程中感受不到它。 HTTP报文首部 HTTP报文协议的请求和响应报文中必定包含HTTP首部。首部内容为客户端和服务器分别处理请求和响应提供所需要的消息。对于客户端用户来说，这些信息中大部分内容都无须亲自查看。 HTTP 请求报文在请求中，HTTP报文由方法、URI、">
+<meta name="twitter:image" content="http://laibh.top/images/2018-08-17-read-图解HTTP-Part6-HTTP%20报文的结构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-08-16-read-图解HTTP-Part6上.html"/>
+
+
+
+
+
+  <title>深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-08-16-read-图解HTTP-Part6上.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T17:20:54+08:00">
+                2018-08-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-08-16-read-图解HTTP-Part6上.html" class="leancloud_visitors" data-flag-title="深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,339
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>内容太多了，分成两节记录。</p>
+<h2 id="第六章-HTTP-首部（上）"><a href="#第六章-HTTP-首部（上）" class="headerlink" title="第六章  HTTP 首部（上）"></a>第六章  HTTP 首部（上）</h2><p>HTTP协议的请求和响应报文中必定包含HTTP首部，只是我们在使用Web的过程中感受不到它。</p>
+<h3 id="HTTP报文首部"><a href="#HTTP报文首部" class="headerlink" title="HTTP报文首部"></a>HTTP报文首部</h3><p><img src="/images/2018-08-17-read-图解HTTP-Part6-HTTP 报文的结构.png" alt="HTTP报文首部"></p>
+<p>HTTP报文协议的请求和响应报文中必定包含HTTP首部。首部内容为客户端和服务器分别处理请求和响应提供所需要的消息。对于客户端用户来说，这些信息中大部分内容都无须亲自查看。</p>
+<h4 id="HTTP-请求报文"><a href="#HTTP-请求报文" class="headerlink" title="HTTP 请求报文"></a>HTTP 请求报文</h4><p>在请求中，HTTP报文由方法、URI、HTTP版本、HTTP首部字段等部分构成。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-HTTP 报文的结构.png" alt="HTTP请求报文"></p>
+<p>访问  <a href="http://hackr.jp">http://hackr.jp</a>  时，请求报文的首部消息</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: hackr.jp</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0) Gecko/20100101 Firefox/13.0</span><br><span class="line"><span class="attribute">Accept</span>: text/html,application/xhtml+xml,application/xml;q=0.9,*/*; q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span>: ja,en-us;q=0.7,en;q=0.3</span><br><span class="line"><span class="attribute">Accept-Encoding</span>: gzip, deflate</span><br><span class="line"><span class="attribute">DNT</span>: 1</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">If-Modified-Since</span>: Fri, 31 Aug 2007 02:02:20 GMT</span><br><span class="line"><span class="attribute">If-None-Match</span>: "45bae1-16a-46d776ac"</span><br><span class="line"><span class="attribute">Cache-Control</span>: max-age=0</span><br></pre></td></tr></table></figure>
+<h4 id="HTTP-响应报文"><a href="#HTTP-响应报文" class="headerlink" title="HTTP 响应报文"></a>HTTP 响应报文</h4><p>在响应中，HTTP报文由HTTP版本、状态码（数字和原因短语）、HTTP首部字段3部分构成。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-响应报文.png" alt="HTTP响应报文"></p>
+<p>请求访问 <a href="http://hackr.jp">http://hackr.jp</a> 时，返回的响应报文的首部消息。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">304</span> Not Modified</span><br><span class="line"><span class="attribute">Date</span>: Thu, 07 Jun 2012 07:21:36 GMT</span><br><span class="line"><span class="attribute">Server</span>: Apache</span><br><span class="line"><span class="attribute">Connection</span>: close</span><br><span class="line"><span class="attribute">Etag</span>: "45bae1-16a-46d776ac"</span><br></pre></td></tr></table></figure>
+<p>HTTP中首部字段同时存在于请求和响应报文内，并涵盖HTTP报文相关的内容消息。</p>
+<h3 id="HTTP-首部字段"><a href="#HTTP-首部字段" class="headerlink" title="HTTP 首部字段"></a>HTTP 首部字段</h3><h4 id="HTTP-首部字段传递重要消息"><a href="#HTTP-首部字段传递重要消息" class="headerlink" title="HTTP 首部字段传递重要消息"></a>HTTP 首部字段传递重要消息</h4><p>HTTP首部字段是构成HTTP报文的要素之一。在客户端与服务器之间以HTTP协议进行通信的过程中，无论是请求还是响应都会使用首部字段，它能起到额外重要消息的作用。</p>
+<p>使用首部字段是为了给浏览器和服务器提供报文主体大小、所使用语言、认证消息等内容。</p>
+<h4 id="HTTP-首部字段结构"><a href="#HTTP-首部字段结构" class="headerlink" title="HTTP 首部字段结构"></a>HTTP 首部字段结构</h4><p>HTTP 首部字段是由首部字段和字段值构成的，中间用冒号“：”分隔</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首部字段名：字段值</span><br></pre></td></tr></table></figure>
+<p>例如，在HTTP首部中以 Content-Type 这个字段来表示报文主体的对象类型</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br></pre></td></tr></table></figure>
+<p>另外，字段值对应单个HTTP首部字段可以有多个值。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Keep-Alive</span>: timeout=15, max=100</span><br></pre></td></tr></table></figure>
+<p>若HTTP首部字段重复了会如何</p>
+<p>当HTTP报文首部中出现了两个或者两个以上具有相同首部字段名时会怎么样？这种情况在规范内还没明确，根据浏览器内部处理逻辑的不同而不同。有些浏览器会优先处理第一次出现的首部字段，有些则反之。</p>
+<h4 id="4种-HTTP-首部字段类型"><a href="#4种-HTTP-首部字段类型" class="headerlink" title="4种 HTTP 首部字段类型"></a>4种 HTTP 首部字段类型</h4><p>HTTP 首部字段根据实际用途被分为以下4种类型</p>
+<table>
+<thead>
+<tr>
+<th>HTTP 首部字段类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通用首部字段（General Header Fields）</td>
+<td>请求报文和响应报文两方都会使用的首部</td>
+</tr>
+<tr>
+<td>请求首部字段（Request  Header Fields）</td>
+<td>从客户端向服务器端发送请求报文时使用的首部。补充了请求的附加内容、客户端消息、响应内容相关优先级等消息</td>
+</tr>
+<tr>
+<td>响应首部字段（Response Header Fields）</td>
+<td>从服务器端向客户端返回响应报文时使用的首部。补充了响应的附加内容，也要求客户端附加额外的内容消息。</td>
+</tr>
+<tr>
+<td>实体首部字段（Entity Header Fields）</td>
+<td>针对请求报文和响应报文的实体部分使用的首部。补充了资源内容更新时间等与实体有关的消息。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="HTTP-1-1-首部字段一览"><a href="#HTTP-1-1-首部字段一览" class="headerlink" title="HTTP/1.1 首部字段一览"></a>HTTP/1.1 首部字段一览</h4><p>HTTP/1.1 规范定义了如下47种首部字段</p>
+<h5 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h5><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cache-Control</td>
+<td>控制缓存的行为</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>逐跳首部、连接的管理</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>创建报文的日期时间</td>
+</tr>
+<tr>
+<td>Pragma</td>
+<td>报文指令</td>
+</tr>
+<tr>
+<td>Trailer</td>
+<td>报文末端的首部一览</td>
+</tr>
+<tr>
+<td>Transfer-Encoding</td>
+<td>指定报文主体的传输编码方式</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>升级为其他协议</td>
+</tr>
+<tr>
+<td>Via</td>
+<td>代理服务器的相关消息</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>错误通知</td>
+</tr>
+</tbody>
+</table>
+<h5 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h5><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accept</td>
+<td>用户代理可处理的媒体类型</td>
+</tr>
+<tr>
+<td>Accept-Charset</td>
+<td>优先的字符集</td>
+</tr>
+<tr>
+<td>Accept-Encoding</td>
+<td>优先的内容编码</td>
+</tr>
+<tr>
+<td>Accept-Language</td>
+<td>优先的语言（自然语言）</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Web 认证信息</td>
+</tr>
+<tr>
+<td>Expect</td>
+<td>期待服务器的特定行为</td>
+</tr>
+<tr>
+<td>From</td>
+<td>用户的电子邮箱地址</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>请求资源所在服务器</td>
+</tr>
+<tr>
+<td>If-Match</td>
+<td>比较实体标记（ETag）</td>
+</tr>
+<tr>
+<td>If-Modified-Since</td>
+<td>比较资源的更新时间</td>
+</tr>
+<tr>
+<td>If-None-Match</td>
+<td>比较实体标记（与If-Match相反）</td>
+</tr>
+<tr>
+<td>If-Range</td>
+<td>资源未更新时发送实体Byte的范围请求</td>
+</tr>
+<tr>
+<td>If-Unmodified-Since</td>
+<td>比较资源的更新时间（与If-Modified-Since相反）</td>
+</tr>
+<tr>
+<td>Max-Forwards</td>
+<td>最大传输逐跳数</td>
+</tr>
+<tr>
+<td>Proxy-Authorization</td>
+<td>代理服务器要求客户端的认证信息</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>实体的字节范围请求</td>
+</tr>
+<tr>
+<td>Referer</td>
+<td>对请求中 URI 的原始获取方</td>
+</tr>
+<tr>
+<td>TE</td>
+<td>传输编码的优先级</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>HTTP 客户端程序的信息</td>
+</tr>
+</tbody>
+</table>
+<h5 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h5><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accept-Ranges</td>
+<td>是否接受字节范围请求</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>推算资源创建经过的时间</td>
+</tr>
+<tr>
+<td>ETag</td>
+<td>资源的匹配消息</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>令客户端重定向至指定的 URI</td>
+</tr>
+<tr>
+<td>Proxy-Authenticate</td>
+<td>代理服务器对客户端的认证消息</td>
+</tr>
+<tr>
+<td>Retry-After</td>
+<td>对再次发起请求的时机要求</td>
+</tr>
+<tr>
+<td>Server</td>
+<td>HTTP服务器的安装消息</td>
+</tr>
+<tr>
+<td>Vary</td>
+<td>代理服务器缓存的管理消息</td>
+</tr>
+<tr>
+<td>WWW-Authenticate</td>
+<td>服务器对客户端的认证消息</td>
+</tr>
+</tbody>
+</table>
+<h5 id="实体首部字段"><a href="#实体首部字段" class="headerlink" title="实体首部字段"></a>实体首部字段</h5><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allow</td>
+<td>资源可支持的HTTP方法</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>实体主体适用的编码方式</td>
+</tr>
+<tr>
+<td>Content-Language</td>
+<td>实体主体的自然语言</td>
+</tr>
+<tr>
+<td>Content-Length</td>
+<td>实体主体的大小（单位：字节）</td>
+</tr>
+<tr>
+<td>Content-Location</td>
+<td>替换对应资源的 URI</td>
+</tr>
+<tr>
+<td>Content-MD5</td>
+<td>实体主体的报文摘要</td>
+</tr>
+<tr>
+<td>Content-Range</td>
+<td>实体主体的位置范围</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>实体主体的媒体类型</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>实体主体的过期的日期时间</td>
+</tr>
+<tr>
+<td>Last-Modified</td>
+<td>资源的最后修改时间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="非-HTTP-1-1首部字段"><a href="#非-HTTP-1-1首部字段" class="headerlink" title="非 HTTP/1.1首部字段"></a>非 HTTP/1.1首部字段</h4><p>在HTTP协议通信交互中使用到的首部字段，不限于RFC2616中定义的47中首部字段。还有Cookie、Set-Cookie和Content-Disposition等在其他RFC中定义的首部字段，它们的使用频率也很高。</p>
+<p>这些非正式的首部字段统一归纳在RFC4229HTTP Header Field Registrations中。</p>
+<h4 id="End-to-end-首部和Hop-by-hop-首部"><a href="#End-to-end-首部和Hop-by-hop-首部" class="headerlink" title="End-to-end 首部和Hop-by-hop 首部"></a>End-to-end 首部和Hop-by-hop 首部</h4><p>HTTP首部字段将定义成缓存代理和非缓存代理的行为，分为2种类型。</p>
+<table>
+<thead>
+<tr>
+<th>缓存代理类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>端到端首部（End-to-end）</td>
+<td>分在此类别中的首部都会转发给请求/响应对应的最终接收目标，且必须保存在由缓存生成的响应中，另外规定它必须被转发。</td>
+</tr>
+<tr>
+<td>逐跳首部（Hop-by-hop-Header）</td>
+<td>分在此类别中的首部只对单次转发有效，会通过缓存或代理而不再转发。HTTP/1.1和之后的版本中，如果要使用 hop-by-hop首部，需提供Connection 首部字段。</td>
+</tr>
+</tbody>
+</table>
+<p>下面列举了HTTP/1.1中的逐跳首部字段。除了这8个首部字段之外，其他所有字段都属于端到端首部。</p>
+<ul>
+<li>Connection</li>
+<li>Keep-Alive</li>
+<li>Proxy-Authenticate</li>
+<li>Proxy-Authorization</li>
+<li>Trailer</li>
+<li>TE</li>
+<li>Transfer-Encoding</li>
+<li>Upgrade</li>
+</ul>
+<h3 id="HTTP-1-1-通用首部字段"><a href="#HTTP-1-1-通用首部字段" class="headerlink" title="HTTP/1.1 通用首部字段"></a>HTTP/1.1 通用首部字段</h3><p>通用首部字段是指，请求报文和响应报文双方都会使用的首部</p>
+<h4 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h4><p>通过制定首部字段 Cache-control 的指令，就能操作缓存的工作机制。</p>
+<p>指令的参数是选的，多个指令之间通过“，”分隔。首部字段 Cache-Control 的指令可用于请求及响应时。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: private, max-age=0,no-cache</span><br></pre></td></tr></table></figure>
+<h5 id="缓存请求指令"><a href="#缓存请求指令" class="headerlink" title="缓存请求指令"></a>缓存请求指令</h5><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no-cache</td>
+<td>无</td>
+<td>强制向源服务器再次验证</td>
+</tr>
+<tr>
+<td>no-store</td>
+<td>无</td>
+<td>不缓存请求或响应的任何内容</td>
+</tr>
+<tr>
+<td>max-age = [秒]</td>
+<td>必需</td>
+<td>响应的最大Age值</td>
+</tr>
+<tr>
+<td>max-stale（=[秒]）</td>
+<td>可省略</td>
+<td>接收已过期的响应</td>
+</tr>
+<tr>
+<td>min-fresh = [秒]</td>
+<td>必需</td>
+<td>期望在指定时间内的响应仍有效</td>
+</tr>
+<tr>
+<td>no-transform</td>
+<td>无</td>
+<td>代理不可更改媒体类型</td>
+</tr>
+<tr>
+<td>noly-if-caches</td>
+<td>无</td>
+<td>从缓存获取资源</td>
+</tr>
+<tr>
+<td>cache-extension</td>
+<td>-</td>
+<td>新指令标记（token）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="缓存响应指令"><a href="#缓存响应指令" class="headerlink" title="缓存响应指令"></a>缓存响应指令</h5><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>无</td>
+<td>可向任意方提供响应的缓存</td>
+</tr>
+<tr>
+<td>private</td>
+<td>可省略</td>
+<td>仅向特定用户返回响应</td>
+</tr>
+<tr>
+<td>no-cache</td>
+<td>可省略</td>
+<td>缓存前必须先确认其有效性</td>
+</tr>
+<tr>
+<td>no-store</td>
+<td>无</td>
+<td>不缓存请求或响应任何内容</td>
+</tr>
+<tr>
+<td>no-transform</td>
+<td>无</td>
+<td>代理不可更改媒体类型</td>
+</tr>
+<tr>
+<td>must-revalidate</td>
+<td>无</td>
+<td>可缓存但必须再向源服务器进行确认</td>
+</tr>
+<tr>
+<td>proxy-revalidate</td>
+<td>无</td>
+<td>要求中间缓存服务器对缓存的响应有效性再进行确认</td>
+</tr>
+<tr>
+<td>max-age = [秒]</td>
+<td>必需</td>
+<td>响应的最大Age值</td>
+</tr>
+<tr>
+<td>s-maxage=[秒]</td>
+<td>必需</td>
+<td>公共缓存服务器相应的最大Age值</td>
+</tr>
+<tr>
+<td>cache-extension</td>
+<td>-</td>
+<td>新指令标记（token）</td>
+</tr>
+</tbody>
+</table>
+<h5 id="表示是否能缓存的指令"><a href="#表示是否能缓存的指令" class="headerlink" title="表示是否能缓存的指令"></a>表示是否能缓存的指令</h5><h6 id="public-指令"><a href="#public-指令" class="headerlink" title="public 指令"></a>public 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: public</span><br></pre></td></tr></table></figure>
+<p>当指定使用 public 的指令时，则明确表明其他用户也可以利用缓存。</p>
+<h6 id="private-指令"><a href="#private-指令" class="headerlink" title="private 指令"></a>private 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: private</span><br></pre></td></tr></table></figure>
+<p>当指定 private 指令后，响应只以特定的用户作为对象，这与 public 指令的行为相反。缓存服务器会对该特定用户提供资源缓存的服务，对于其他用户发送过来的请求，代理服务器则不会返回缓存。</p>
+<h6 id="no-cache-指令"><a href="#no-cache-指令" class="headerlink" title="no-cache 指令"></a>no-cache 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: no-cache</span><br></pre></td></tr></table></figure>
+<p>使用 no-cache 指令的目的是为了防止从缓存中返回过期的资源。</p>
+<p>客户端发送的请求中如果包含 no-cache 指令，则表示客户端将不会接收缓存过的响应。于是，“中间”的缓存服务器必须把客户端请求转发给源服务器。</p>
+<p>如果源服务器返回的响应中包含 no-cache 的指令，那么缓存服务器不能对资源进行缓存。源服务器以后也将不会对缓存服务器请求中提出的资源有效性进行确认，且禁止其对响应资源进行缓存操作。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: no-cache=Location</span><br></pre></td></tr></table></figure>
+<p>由服务器返回的响应中，若报文首部字段 Cache-Control 中对 no-cache 字段名具有指定参数值，那么客户端在接收到这个被指定参数值的首部字段对应的响应报文后，就不能使用缓存。换言之，无参数值的首部字段可以使用缓存，只能在响应指令中指定该参数。</p>
+<p>注意：从字面意思上很容易把 no-cache 误解成为不缓存，但事实上 no-cache 代表不缓存过期的资源，缓存会向源服务器进行有效期确认后处理资源，也许称为 do-not-serve-from-cache-without-revalidation 更合适。no-store 才是真正地不进行缓存。</p>
+<h5 id="控制可执行缓存的对象指令"><a href="#控制可执行缓存的对象指令" class="headerlink" title="控制可执行缓存的对象指令"></a>控制可执行缓存的对象指令</h5><h6 id="no-store-指令"><a href="#no-store-指令" class="headerlink" title="no-store 指令"></a>no-store 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: no-store</span><br></pre></td></tr></table></figure>
+<p>当使用 no-store指令时，暗示请求（和对应的响应）或响应中包含机密信息。因此，该指令规定缓存不能在本地存储请求或响应的任一部分。</p>
+<h5 id="指定缓存期限和认证的指令"><a href="#指定缓存期限和认证的指令" class="headerlink" title="指定缓存期限和认证的指令"></a>指定缓存期限和认证的指令</h5><h6 id="s-maxage-指令"><a href="#s-maxage-指令" class="headerlink" title="s-maxage 指令"></a>s-maxage 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: s-maxage = 604800（单位 ：秒）</span><br></pre></td></tr></table></figure>
+<p>s-maxage 指令的功能和 max-age 指令的相同，它们的不同点是 s-maxage 指令只适用于供多用户使用的公共缓存服务器（代理）。也就是说，对于同一个用户重复返回相应的服务器来说，这个指令是没有任何作用。</p>
+<p>另外，当使用 s-maxage 指令后，则直接忽略对 Expires 首部字段及 max-age 指令的处理。</p>
+<h6 id="max-age-指令"><a href="#max-age-指令" class="headerlink" title="max-age 指令"></a>max-age 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-control</span>: max-age = 604800（单位 ：秒）</span><br></pre></td></tr></table></figure>
+<p>当客户端发送的请求中包含 max-age 指令时，如果判定缓存资源的缓存时间数值比指定时间的数值更小，那么客户端就接受缓存的资源。另外，当指定 max-age 的值为 0，那么缓存服务器通常需要将请求转发给源服务器。</p>
+<p>当服务器返回的响应中包含 max-age 指令时，缓存服务器将不对资源的有效性再次确认，而 max-age 数值代表资源保存为缓存的最长时间。</p>
+<p>应用 HTTP/1.1 版本的缓存服务器遇到同时存在 Expires 首部字段的情况时，会优先处理 max-age 指令，而忽略掉 Expires 首部字段。而HTTP/1.0 版本的缓存服务器的情况却相反，max-age 指令会被忽略掉。</p>
+<h6 id="min-fresh-指令"><a href="#min-fresh-指令" class="headerlink" title="min-fresh 指令"></a>min-fresh 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: min-fresh=60（单位：秒）</span><br></pre></td></tr></table></figure>
+<p>min-fresh 指令要求缓存服务器返回至少还未过指定时间的缓存资源。比如：当指定了 min-fresh 为 60秒之后，过了60秒的资源都无法作为响应返回了。</p>
+<h6 id="max-stale-指令"><a href="#max-stale-指令" class="headerlink" title="max-stale 指令"></a>max-stale 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: max-stale=3600（单位：秒）</span><br></pre></td></tr></table></figure>
+<p>使用 max-stale 可指示缓存资源，即使过期也照常接收。如果指令为指定参数值，那么无论经过多久，客户端都会接收响应。如果指令中指定了具体数值，那么即使过期，只要仍然处于 max-stale 指定的时间内，仍旧会被客户端接收。</p>
+<h6 id="on-if-cached-指令"><a href="#on-if-cached-指令" class="headerlink" title="on-if-cached 指令"></a>on-if-cached 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: only-if-cached</span><br></pre></td></tr></table></figure>
+<p>使用 only-if-cached 指令表示客户端仅在缓存服务器本地缓存目标资源的情况下才会要求其返回。换言之，该指令要求缓存服务器不重新加载响应，也不会再次确认资源有效性。若发生请求缓存服务器的本地缓存无响应，则返回状态码 504 Gateway Timeout。</p>
+<h6 id="must-revalidate-指令"><a href="#must-revalidate-指令" class="headerlink" title="must-revalidate 指令"></a>must-revalidate 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: must-revalidate</span><br></pre></td></tr></table></figure>
+<p>使用 must-revalidate 指令，代理会向源服务器再次验证即将返回的响应缓存目前是否仍然有效。若代理无法连通源服务器再次获取有效资源的话，缓存必须给客户端一条 504（Gateway Timeout）状态码。<br>另外，使用 must-revalidate 指令会忽略请求的 max-stale 指令（即使已经在首部使用了 max-stale，也不会再有效果）。</p>
+<h6 id="proxy-revalidate-指令"><a href="#proxy-revalidate-指令" class="headerlink" title="proxy-revalidate 指令"></a>proxy-revalidate 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: proxy-revalidate</span><br></pre></td></tr></table></figure>
+<p>proxy-revalidate 指令要求所有的缓存服务器在接收到客户端带有该指令的请求返回响应之前，必须再次验证缓存的有效性。</p>
+<h6 id="no-transform-指令"><a href="#no-transform-指令" class="headerlink" title="no-transform 指令"></a>no-transform 指令</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: no-transform</span><br></pre></td></tr></table></figure>
+<p>使用 no-transform 指令规定无论是在请求还是响应中，缓存都不能改变实体主体的媒体类型。这样做可防止缓存或代理压缩图片等类似操作。</p>
+<h5 id="Cache-Control-扩展"><a href="#Cache-Control-扩展" class="headerlink" title="Cache-Control 扩展"></a>Cache-Control 扩展</h5><h6 id="cache-extension-token"><a href="#cache-extension-token" class="headerlink" title="cache-extension token"></a>cache-extension token</h6><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: private, community="UCI"</span><br></pre></td></tr></table></figure>
+<p>通过 cache-extension 标记（token），可以扩展 Cache-Control 首部字段内的指令。<br>如上例，Cache-Control 首部字段本身没有 community 这个指令。借助extension tokens 实现了该指令的添加。如果缓存服务器不能理解community 这个新指令，就会直接忽略。因此，extension tokens 仅对能理解它的缓存服务器来说是有意义的。</p>
+<h4 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h4><p>Connection 首部字段具备以下两个作用</p>
+<ul>
+<li><p>控制不再转发给代理的首部字段</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-Connection1.png" alt="控制不再转发给代理的首部字段"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Connection</span>: 不再转发的首部字段名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>管理持久连接</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-Connection2.png" alt="管理持久连接"></p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Connection</span>: close</span><br></pre></td></tr></table></figure>
+<p>HTTP/1.1 版本的默认连接都是持久连接。为此，客户端会在持久连接上连续发送请求。当服务器端想明确断开连接时，则指定Connection 首部字段的值为 Close。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><br></pre></td></tr></table></figure>
+<p>HTTP/1.1 之前的 HTTP 版本的默认连接都是非持久连接。为此，如果想在旧版本的 HTTP 协议上维持持续连接，则需要指定Connection 首部字段的值为 Keep-Alive。</p>
+</li>
+</ul>
+<h4 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h4><p>首部字段 Date 表明创建 HTTP 报文的日期和时间。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Date</span>: Tue, 03 Jul 2012 04:40:59 GMT</span><br></pre></td></tr></table></figure>
+<p>之前的 HTTP 协议版本中使用在 RFC850 中定义的格式，如下所示。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Date</span>: Tue, 03-Jul-12 04:40:59 GMT</span><br></pre></td></tr></table></figure>
+<p>除此之外，还有一种格式。它与 C 标准库内的 asctime() 函数的输出格式一致。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Date</span>: Tue Jul 03 04:40:59 2012</span><br></pre></td></tr></table></figure>
+<h4 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h4><p>Pragma 是 HTTP/1.1 之前版本的历史遗留字段，仅作为与 HTTP/1.0的向后兼容而定义。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Pragma</span>: no-cache</span><br></pre></td></tr></table></figure>
+<p>该首部字段属于通用首部字段，但只用在客户端发送的请求中。客户端会要求所有的中间服务器不返回缓存的资源。</p>
+<p>所有的中间服务器如果都能以 HTTP/1.1 为基准，那直接采用 Cache-Control: no-cache 指定缓存的处理方式是最为理想的。但要整体掌握全部中间服务器使用的 HTTP 协议版本却是不现实的。因此，发送的请求会同时含有下面两个首部字段。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span>: no-cache</span><br><span class="line"><span class="attribute">Pragma</span>: no-cache</span><br></pre></td></tr></table></figure>
+<h4 id="Trailer"><a href="#Trailer" class="headerlink" title="Trailer"></a>Trailer</h4><p>首部字段 Trailer 会事先说明在报文主体后记录了哪些首部字段。该首部字段可应用在 HTTP/1.1 版本分块传输编码时。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Tue, 03 Jul 2012 04:40:56 GMT</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html</span><br><span class="line">...</span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><br><span class="line"><span class="attribute">Trailer</span>: Expires</span><br><span class="line">...(报文主体)...</span><br><span class="line"><span class="attribute">0</span></span><br><span class="line"><span class="attribute">Expires</span>: Tue, 28 Sep 2004 23:59:59 GMT</span><br></pre></td></tr></table></figure>
+<p>以上用例中，指定首部字段 Trailer 的值为 Expires，在报文主体之后（分块长度 0 之后）出现了首部字段 Expires。</p>
+<h4 id="Transfer-Encoding"><a href="#Transfer-Encoding" class="headerlink" title="Transfer-Encoding"></a>Transfer-Encoding</h4><p>首部字段 Transfer-Encoding 规定了传输报文主体时采用的编码方式。</p>
+<p>HTTP/1.1 的传输编码方式仅对分块传输编码有效。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Tue, 03 Jul 2012 04:40:56 GMT</span><br><span class="line"><span class="attribute">Cache-Control</span>: public, max-age=604800</span><br><span class="line"><span class="attribute">Content-Type</span>: text/javascript; charset=utf-8</span><br><span class="line"><span class="attribute">Expires</span>: Tue, 10 Jul 2012 04:40:56 GMT</span><br><span class="line"><span class="attribute">X-Frame-Options</span>: DENY</span><br><span class="line"><span class="attribute">X-XSS-Protection</span>: 1; mode=block</span><br><span class="line"><span class="attribute">Content-Encoding</span>: gzip</span><br><span class="line"></span><br><span class="line"><span class="attribute">Transfer-Encoding</span>: chunked</span><br><span class="line"></span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cf0 ←16进制(10进制为3312)</span><br><span class="line">...3312字节分块数据...</span><br><span class="line">392 ←16进制(10进制为914)</span><br><span class="line">...914字节分块数据...</span><br><span class="line"><span class="attribute">0</span></span><br></pre></td></tr></table></figure>
+<p>以上用例中，正如在首部字段 Transfer-Encoding 中指定的那样，有效使用分块传输编码，且分别被分成 3312 字节和 914 字节大小的分块数据。</p>
+<h4 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h4><p>首部字段 Upgrade 用于检测 HTTP 协议及其他协议是否可使用更高的版本进行通信，其参数值可以用来指定一个完全不同的通信协议。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-Upgrade.png" alt="Upgrade"></p>
+<p>上图用例中，首部字段 Upgrade 指定的值为 TLS/1.0。请注意此处两个字段首部字段的对应关系，Connection 的值被指定为 Upgrade。Upgrade 首部字段产生作用的 Upgrade 对象仅限于客户端和邻接服务器之间。因此，使用首部字段 Upgrade 时，还需要额外指定Connection:Upgrade。<br>对于附有首部字段 Upgrade 的请求，服务器可用 101 SwitchingProtocols 状态码作为响应返回。</p>
+<h4 id="Via"><a href="#Via" class="headerlink" title="Via"></a>Via</h4><p>使用首部字段 Via 是为了追踪客户端与服务器之间的请求和响应报文的传输路径。报文经过代理或网关时，会先在首部字段 Via 中附加该服务器的信息，然后再进行转发。这个做法和traceroute 及电子邮件的 Received首部的工作机制很类似。首部字段 Via 不仅用于追踪报文的转发，还可避免请求回环的发生。所以必须在经过代理时附加该首部字段内容。</p>
+<p><img src="/images/2018-08-17-read-图解HTTP-Part6-Via.png" alt="Via"></p>
+<p>上图用例中，在经过代理服务器 A 时，Via 首部附加了“1.0gw.hackr.jp (Squid/3.1)”这样的字符串值。行头的 1.0 是指接收请求的服务器上应用的 HTTP 协议版本。接下来经过代理服务器 B 时亦是如<br>此，在 Via 首部附加服务器信息，也可增加 1 个新的 Via 首部写入服务器信息。</p>
+<p>Via 首部是为了追踪传输路径，所以经常会和 TRACE 方法一起使用。比如，代理服务器接收到由 TRACE 方法发送过来的请求（其中Max-Forwards: 0）时，代理服务器就不能再转发该请求了。这种情况下，代理服务器会将自身的信息附加到 Via 首部后，返回该请求的响应。</p>
+<h4 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h4><p>HTTP/1.1 的 Warning 首部是从 HTTP/1.0 的响应首部（Retry-After）演变过来的。该首部通常会告知用户一些与缓存相关的问题的警告。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Warning</span>: 113 gw.hackr.jp:8080 "Heuristic expiration" Tue, 03 Jul 2012</span><br></pre></td></tr></table></figure>
+<p>Warning 首部的格式如下。最后的日期时间部分可省略。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Warning</span>: [警告码][警告的主机:端口号]“[警告内容]”([日期时间])</span><br></pre></td></tr></table></figure>
+<p>HTTP/1.1 中定义了 7 种警告。警告码对应的警告内容仅推荐参考。另外，警告码具备扩展性，今后有可能追加新的警告码。</p>
+<table>
+<thead>
+<tr>
+<th>警告码</th>
+<th>警告内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>110</td>
+<td>Response is stale（响应已过期）</td>
+<td>代理返回已过期的资源</td>
+</tr>
+<tr>
+<td>111</td>
+<td>Revalidation failed（再验证失败）</td>
+<td>代理再验证资源有效性时失败（服务器无法到达等原因）</td>
+</tr>
+<tr>
+<td>112</td>
+<td>Disconnection operation（断开连接操</td>
+<td>代理与互联网连接被故意切断</td>
+</tr>
+<tr>
+<td>113</td>
+<td>Heuristic expiration（试探性过期）</td>
+<td>响应的使用期超过24小时（有效缓存</td>
+</tr>
+<tr>
+<td>199</td>
+<td>Miscellaneous warning（杂项警告）</td>
+<td>任意的警告内容</td>
+</tr>
+<tr>
+<td>214</td>
+<td>Transformation applied（使用了转换）</td>
+<td>代理对内容编码或媒体类型等执行了</td>
+</tr>
+<tr>
+<td>299</td>
+<td>Miscellaneous persistent warning（持久</td>
+<td>任意的警告内容</td>
+</tr>
+</tbody>
+</table>
+<p>参考链接：<a href="https://book.douban.com/subject/25863515/">https://book.douban.com/subject/25863515/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-08-16-read-图解HTTP-Part6上.html" title="深入浅出HTTP，从开始到放弃（第六章上）—— HTTP 首部">http://laibh.top/2018-08-16-read-图解HTTP-Part6上.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" <i class="fa fa-tag"></i> http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-08-16-JavaScipt数据结构与算法Part2.html" rel="next" title="为什么我要放弃javaScript数据结构与算法（第二章）—— 数组">
+                <i class="fa fa-chevron-left"></i> 为什么我要放弃javaScript数据结构与算法（第二章）—— 数组
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-21-read-图解HTTP-Part6中.html" rel="prev" title="深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部">
+                深入浅出HTTP，从开始到放弃（第六章中）—— HTTP 首部 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-HTTP-首部（上）"><span class="nav-number">1.</span> <span class="nav-text">第六章  HTTP 首部（上）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP报文首部"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP报文首部</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-请求报文"><span class="nav-number">1.1.1.</span> <span class="nav-text">HTTP 请求报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-响应报文"><span class="nav-number">1.1.2.</span> <span class="nav-text">HTTP 响应报文</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-首部字段"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP 首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-首部字段传递重要消息"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTP 首部字段传递重要消息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-首部字段结构"><span class="nav-number">1.2.2.</span> <span class="nav-text">HTTP 首部字段结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4种-HTTP-首部字段类型"><span class="nav-number">1.2.3.</span> <span class="nav-text">4种 HTTP 首部字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-1-1-首部字段一览"><span class="nav-number">1.2.4.</span> <span class="nav-text">HTTP/1.1 首部字段一览</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通用首部字段"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">通用首部字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#请求首部字段"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">请求首部字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#响应首部字段"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">响应首部字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实体首部字段"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">实体首部字段</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非-HTTP-1-1首部字段"><span class="nav-number">1.2.5.</span> <span class="nav-text">非 HTTP/1.1首部字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#End-to-end-首部和Hop-by-hop-首部"><span class="nav-number">1.2.6.</span> <span class="nav-text">End-to-end 首部和Hop-by-hop 首部</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1-通用首部字段"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP/1.1 通用首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cache-Control"><span class="nav-number">1.3.1.</span> <span class="nav-text">Cache-Control</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存请求指令"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">缓存请求指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存响应指令"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">缓存响应指令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#表示是否能缓存的指令"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">表示是否能缓存的指令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#public-指令"><span class="nav-number">1.3.1.3.1.</span> <span class="nav-text">public 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#private-指令"><span class="nav-number">1.3.1.3.2.</span> <span class="nav-text">private 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#no-cache-指令"><span class="nav-number">1.3.1.3.3.</span> <span class="nav-text">no-cache 指令</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#控制可执行缓存的对象指令"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">控制可执行缓存的对象指令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#no-store-指令"><span class="nav-number">1.3.1.4.1.</span> <span class="nav-text">no-store 指令</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指定缓存期限和认证的指令"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">指定缓存期限和认证的指令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#s-maxage-指令"><span class="nav-number">1.3.1.5.1.</span> <span class="nav-text">s-maxage 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#max-age-指令"><span class="nav-number">1.3.1.5.2.</span> <span class="nav-text">max-age 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#min-fresh-指令"><span class="nav-number">1.3.1.5.3.</span> <span class="nav-text">min-fresh 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#max-stale-指令"><span class="nav-number">1.3.1.5.4.</span> <span class="nav-text">max-stale 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#on-if-cached-指令"><span class="nav-number">1.3.1.5.5.</span> <span class="nav-text">on-if-cached 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#must-revalidate-指令"><span class="nav-number">1.3.1.5.6.</span> <span class="nav-text">must-revalidate 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#proxy-revalidate-指令"><span class="nav-number">1.3.1.5.7.</span> <span class="nav-text">proxy-revalidate 指令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#no-transform-指令"><span class="nav-number">1.3.1.5.8.</span> <span class="nav-text">no-transform 指令</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control-扩展"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">Cache-Control 扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#cache-extension-token"><span class="nav-number">1.3.1.6.1.</span> <span class="nav-text">cache-extension token</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Connection"><span class="nav-number">1.3.2.</span> <span class="nav-text">Connection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Date"><span class="nav-number">1.3.3.</span> <span class="nav-text">Date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pragma"><span class="nav-number">1.3.4.</span> <span class="nav-text">Pragma</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Trailer"><span class="nav-number">1.3.5.</span> <span class="nav-text">Trailer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transfer-Encoding"><span class="nav-number">1.3.6.</span> <span class="nav-text">Transfer-Encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Upgrade"><span class="nav-number">1.3.7.</span> <span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Via"><span class="nav-number">1.3.8.</span> <span class="nav-text">Via</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Warning"><span class="nav-number">1.3.9.</span> <span class="nav-text">Warning</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

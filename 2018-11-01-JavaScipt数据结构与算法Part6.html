@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前面已经学习了数组（列表）、栈、队列和链表等顺序数据结构。这一章，我们要学习集合，这是一种不允许值重复的顺序数据结构。 本章可以学习到，如何添加和移除值，如何搜索值是否存在，也可以学习如何进行并集、交集、差集等数学操作，还可以学到如何使用ES6 原生的 Set类 第六章 集合构建数据集合集合是由一组无序且唯一（即不重复）的项组成的。这个数据结构使用了与有限集合相同的属性概念，但应用在计算机科学的数">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">
+<meta property="og:url" content="http://laibh.top/2018-11-01-JavaScipt数据结构与算法Part6.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="前面已经学习了数组（列表）、栈、队列和链表等顺序数据结构。这一章，我们要学习集合，这是一种不允许值重复的顺序数据结构。 本章可以学习到，如何添加和移除值，如何搜索值是否存在，也可以学习如何进行并集、交集、差集等数学操作，还可以学到如何使用ES6 原生的 Set类 第六章 集合构建数据集合集合是由一组无序且唯一（即不重复）的项组成的。这个数据结构使用了与有限集合相同的属性概念，但应用在计算机科学的数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">
+<meta name="twitter:description" content="前面已经学习了数组（列表）、栈、队列和链表等顺序数据结构。这一章，我们要学习集合，这是一种不允许值重复的顺序数据结构。 本章可以学习到，如何添加和移除值，如何搜索值是否存在，也可以学习如何进行并集、交集、差集等数学操作，还可以学到如何使用ES6 原生的 Set类 第六章 集合构建数据集合集合是由一组无序且唯一（即不重复）的项组成的。这个数据结构使用了与有限集合相同的属性概念，但应用在计算机科学的数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-11-01-JavaScipt数据结构与算法Part6.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第六章）—— 集合 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-11-01-JavaScipt数据结构与算法Part6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第六章）—— 集合</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T14:13:41+08:00">
+                2018-11-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-11-01-JavaScipt数据结构与算法Part6.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,851
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前面已经学习了数组（列表）、栈、队列和链表等顺序数据结构。这一章，我们要学习集合，这是一种不允许值重复的顺序数据结构。</p>
+<p>本章可以学习到，如何添加和移除值，如何搜索值是否存在，也可以学习如何进行并集、交集、差集等数学操作，还可以学到如何使用ES6 原生的 Set类</p>
+<h2 id="第六章-集合"><a href="#第六章-集合" class="headerlink" title="第六章 集合"></a>第六章 集合</h2><h3 id="构建数据集合"><a href="#构建数据集合" class="headerlink" title="构建数据集合"></a>构建数据集合</h3><p>集合是由一组无序且唯一（即不重复）的项组成的。这个数据结构使用了与有限集合相同的属性概念，但应用在计算机科学的数据结构中。</p>
+<p>在数学中，集合时一组不同的对象（的集）。</p>
+<p>比如说，一个由大于或等于0 的整数组成的自然数集合： <code>N：{0,1,2,3,4,5,6，...}</code>。在集合中的对象列表用 <code>{}</code>（大括号）包围</p>
+<p>还有一个概念叫做空集。空集就是不包含任何元素的集合。</p>
+<p>可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。</p>
+<p>在数学中，集合也有并集、交集、差集等基本操作。</p>
+<h3 id="创建集合"><a href="#创建集合" class="headerlink" title="创建集合"></a>创建集合</h3><p>下面Set类的骨架</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Set</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> items = &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们使用对象而不是数组来表示集合（items）,但也可以用数组实现。这里我们用对象来实现，同时，JavaScript 对象不允许一个键指向两个不同的属性，也保证了集合里的元素都是唯一的。</p>
+<p>接下来，需要声明一些结合可用的方法</p>
+<ul>
+<li>add(value)：向集合添加一个新的项</li>
+<li>remove(value)：从集合移除一个值</li>
+<li>has(value)：如果值在集合中，返回 true,否则返回 false</li>
+<li>clear()：移除集合中的所有项</li>
+<li>size()：返回集合所包含元素的值，与数组的 length 属性类似</li>
+<li>values()：返回一个包含集合中所有值的数组</li>
+</ul>
+<h3 id="has-value-方法"><a href="#has-value-方法" class="headerlink" title="has(value)方法"></a>has(value)方法</h3><p>首先要实现的就是 has(value)方法，这是因为它会被 add、remove 等方法调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.has = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value <span class="keyword">in</span> items;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>既然我们使用对象来存储集合的值，就可以使用 JavaScript 的 <code>in</code> 操作符来验证给定的值是否是 items 对象的属性。</p>
+<p>但这个方法还有一个更好的实现方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.has = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.hasOwnProperty(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的 JavaScript 对象都有 <code>hasOwnProperty</code>方法，这个方法返回一个表明对象是否具有特定属性的布尔值。</p>
+<p><strong><code>in</code> 和 <code>hasOwnProperty</code> 的区别</strong></p>
+<p><code>in</code>判断的是对象的所有属性，包括对象实例及其原型的属性。而<code>hasOwnProperty</code>则是判断对象实例的是否具有某个属性。</p>
+<p>这也是为什么 <code>for in</code> 循环的时候会建议使用 <code>hasOwnProperty</code>进行过滤，在使用了 <code>eslint</code> 才不会报警告,同时也是为了可以有效避免扩展本地原型而引起的错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> foo) &#123; </span><br><span class="line">    <span class="keyword">if</span> (foo.hasOwnProperty(i)) &#123; </span><br><span class="line">    <span class="built_in">console</span>.log(i); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="add-方法"><a href="#add-方法" class="headerlink" title="add 方法"></a>add 方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.add = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.has(value))&#123;</span><br><span class="line">        items[value] = value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于给定的 <code>value</code>，可以检测是否存在于集合中。如果不存在，就把 value 添加到结合中，返回 true,表示添加了这个值。如果集合中，已经有了，就返回 false,表示没有添加它。</p>
+<h3 id="remove-和-clear-方法"><a href="#remove-和-clear-方法" class="headerlink" title="remove 和 clear 方法"></a>remove 和 clear 方法</h3><p>remove 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.has(value))&#123;</span><br><span class="line">        <span class="keyword">delete</span> items[value];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为使用对象来存储集合的 items 对象，可以简单使用 delete 操作符从 items 对象中移除属性</p>
+<p>clear 方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    items = &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重置 items 对象，需要做的只是把一个空对象重新赋值给它，我们也可以迭代集合，用 remove 方法依次移除所有的值，但既然有更简单的方法，那样做就太麻烦了。</p>
+<h3 id="size-方法"><a href="#size-方法" class="headerlink" title="size 方法"></a>size 方法</h3><p>返回集合中有多少项，有三种实现方法</p>
+<p>第一种是像之前一样，使用 length 变量，每当移除或者添加的时候控制它。</p>
+<p>第二种是使用 JavsScript 内建的 Object 类的一个内建函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.keys(items).length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JavaScript  的 Object 类有一个 keys 方法，它返回一个包含给定对象所有属性的数组。在这种情况下，可以使用这个数组的 length 属性来返回 items 对象的属性个数。</p>
+<p>第三种方法是手动提取 items 对象的每一个属性，记录属性的个数并返回这个数字。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> items)&#123;</span><br><span class="line">        <span class="keyword">if</span>(items.hasOwnProperty(key))&#123;</span><br><span class="line">           ++count;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历 items 对象的所有属性，检查它们是否是对象自身的属性（避免重复计数），如果是，就递增 count 变量的值，最后在方法结束时返回这个数字。</p>
+<h3 id="values-方法"><a href="#values-方法" class="headerlink" title="values 方法"></a>values 方法</h3><p>values 方法也应用了相同的逻辑，提取 items 对象的所有属性，以数组的形式返回</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> values = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span> , keys=<span class="built_in">Object</span>.keys(items); i&lt;keys.length; i++)&#123;</span><br><span class="line">        values.push(items[keys[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> values;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有兼容旧浏览器的写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> values = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> items)&#123;</span><br><span class="line">        <span class="keyword">if</span>(items.hasOwnProperty(key))&#123;</span><br><span class="line">           values.push(items[key])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> values;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Set类全部代码"><a href="#Set类全部代码" class="headerlink" title="Set类全部代码"></a>Set类全部代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Set</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> items = &#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.has = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> items.hasOwnProperty(value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.add = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="keyword">this</span>.has(value))&#123;</span><br><span class="line">            items[value] = value</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.has(value))&#123;</span><br><span class="line">            <span class="keyword">delete</span> items[value];</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        items = &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(items);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> items)&#123;</span><br><span class="line">            <span class="keyword">if</span>(items.hasOwnProperty(key))&#123;</span><br><span class="line">                ++count;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> values = [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span> , keys=<span class="built_in">Object</span>.keys(items); i&lt;keys.length; i++)&#123;</span><br><span class="line">            values.push(items[keys[i]]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> values;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用-Set类"><a href="#使用-Set类" class="headerlink" title="使用 Set类"></a>使用 Set类</h3><p>现在数据结构已经完成了 。测试一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>(); <span class="comment">// 新建 Set类 实例</span></span><br><span class="line">set.add(<span class="number">1</span>); </span><br><span class="line">set.add(<span class="number">2</span>);</span><br><span class="line">set.add(<span class="number">3</span>);</span><br><span class="line">set.add(<span class="string">'j'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(set.has(<span class="number">2</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(set.size()); <span class="comment">// 4</span></span><br><span class="line"><span class="built_in">console</span>.log(set.value()); <span class="comment">// [1, 2, 3, "j"]</span></span><br><span class="line">set.remove(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(set.has(<span class="number">2</span>)); <span class="comment">// false	</span></span><br><span class="line"><span class="built_in">console</span>.log(set.size()); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(set.value()); <span class="comment">//  [1, 3, "j"]</span></span><br><span class="line">set.clear();</span><br><span class="line"><span class="built_in">console</span>.log(set.size()); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(set.value());	<span class="comment">// []</span></span><br></pre></td></tr></table></figure>
+<h3 id="集合操作"><a href="#集合操作" class="headerlink" title="集合操作"></a>集合操作</h3><p>对集合可以进行以下操作</p>
+<ul>
+<li>并集：对于给定的两个集合，返回一个包含两个集合中所有元素的新集合</li>
+<li>交集：对于给定的两个集合，返回一个包含两个集合中共有元素的新集合</li>
+<li>差集：对于给定的两个集合，返回一个所有存在于第一个集合且不存在于第二个集合的元素的新集合</li>
+<li>字集：验证一个给定的集合是否是另一个的子集。</li>
+</ul>
+<h3 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并集</span></span><br><span class="line"><span class="keyword">this</span>.union = <span class="function"><span class="keyword">function</span>(<span class="params">otherSet</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> unionSet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; values.length; i++)&#123;</span><br><span class="line">        unionSet.add(values[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    values = otherSet.values();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; values.length; i++)&#123;</span><br><span class="line">        unionSet.add(values[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> unionSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先需要创建一个新的集合，代表两个集合的并集，获取第一个集合（当前Set类实例）所有值（values），遍历并添加到代表并集的集合中。然后对第二个集合做同样的事情，最后返回结果。</p>
+<p>测试上面的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);	</span><br><span class="line">setA.add(<span class="number">2</span>);	</span><br><span class="line">setA.add(<span class="number">3</span>);	</span><br><span class="line"><span class="keyword">let</span> setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line">setB.add(<span class="number">4</span>);</span><br><span class="line">setB.add(<span class="number">5</span>);</span><br><span class="line">setB.add(<span class="number">6</span>);</span><br><span class="line"><span class="built_in">console</span>.log(setA.values()); <span class="comment">// [1, 2, 3]</span></span><br><span class="line"><span class="built_in">console</span>.log(setB.values()); <span class="comment">// [3, 4, 5, 6]</span></span><br><span class="line"><span class="keyword">let</span> unionAB = setA.union(setB);</span><br><span class="line"><span class="built_in">console</span>.log(unionAB.values()); <span class="comment">// [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+<p>可以注意到元素 3同时存在于A和B中，但是集合里只输出了一次</p>
+<h3 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交集</span></span><br><span class="line"><span class="keyword">this</span>.intersection = <span class="function"><span class="keyword">function</span>(<span class="params">otherSet</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> intersectionSet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i &lt;values.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(otherSet.has(values[i]))&#123;</span><br><span class="line">            intersectionSet.add(values[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> intersectionSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> intersectionSetAB = setA.intersection(setB);</span><br><span class="line"><span class="built_in">console</span>.log(intersectionSetAB.values()); <span class="comment">// [3]</span></span><br></pre></td></tr></table></figure>
+<h3 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 差集</span></span><br><span class="line"><span class="keyword">this</span>.difference = <span class="function"><span class="keyword">function</span>(<span class="params">otherSet</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> differenceSet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; values.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!otherSet.has(values[i]))&#123;</span><br><span class="line">            differenceSet.add(values[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> differenceSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> differenceSetAB = setA.difference(setB);</span><br><span class="line"><span class="built_in">console</span>.log(differenceSetAB.values()); <span class="comment">// [1, 2]</span></span><br></pre></td></tr></table></figure>
+<p>differenceSetAB 会得到所有存在于集合A 但不存在与集合B的值。</p>
+<h3 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子集</span></span><br><span class="line"><span class="keyword">this</span>.subset = <span class="function"><span class="keyword">function</span>(<span class="params">otherSet</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.size() &gt; otherSet.size())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; values.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!otherSet.has(values[i]))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;				</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首要要验证当前Set实例的大小，如果当前实例中的元素比 otherSet 实例更多，它就不是一个子集。子集的元素个数需要小于或等于要比较的集合。</p>
+<p>接下来遍历所有集合中的元素，验证这些元素也存在于 otherSet 中，如果有任何元素不存在与 otherSet 中的，这意味着它不是一个子集，返回 false。如果所有元素都存在于 otherSet 中，就返回 true。</p>
+<p>验证</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> subSetAB = setA.subset(setB);</span><br><span class="line"><span class="built_in">console</span>.log(subSetAB); <span class="comment">// false </span></span><br><span class="line"></span><br><span class="line">setB.add(<span class="number">1</span>);	</span><br><span class="line">setB.add(<span class="number">2</span>);	</span><br><span class="line">setB.add(<span class="number">3</span>);	</span><br><span class="line"><span class="built_in">console</span>.log(subSetAB); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h3 id="ES6——Set类"><a href="#ES6——Set类" class="headerlink" title="ES6——Set类"></a>ES6——Set类</h3><p>ES6新增了 Set 类，我们可以基于 ES6 的 Set 开发我们的 Set 类</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">set.add(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(set.values()); <span class="comment">// SetIterator &#123;1&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(set.has(<span class="number">1</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(set.size); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>ES6的values 方法会返回 Iterator，而不是值构成的数组，需要通过 next() 方法来遍历获取值，另外size 是一个属性不是一个方法。</p>
+<p>可以用 delete 方法删除 set 中的元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set.delete(<span class="number">1</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>clear 方法会重置 set 数据结构，跟我们实现的功能一样。</p>
+<h3 id="ES6-Set类的操作"><a href="#ES6-Set类的操作" class="headerlink" title="ES6 Set类的操作"></a>ES6 Set类的操作</h3><p>我们的Set类实现了交集、差集、并集、子集等数学操作，然后ES6 原生的Set 并没有这些功能，不过我们可以尝试模拟。</p>
+<p>例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);</span><br><span class="line">setA.add(<span class="number">2</span>);</span><br><span class="line">setA.add(<span class="number">3</span>);</span><br><span class="line"><span class="keyword">let</span> setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">2</span>);</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line">setB.add(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="模拟并集操作"><a href="#模拟并集操作" class="headerlink" title="模拟并集操作"></a>模拟并集操作</h3><p>模拟交集操作需要创建一个辅助函数，来生成包含 setA 和 setB 都有的元素的新集合。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> unionAB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> setA) unionAB.add(x);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> setB) unionAB.add(x);</span><br><span class="line"><span class="built_in">console</span>.log(unionAB); <span class="comment">// Set(4) &#123;1, 2, 3, 4&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="模拟交集操作"><a href="#模拟交集操作" class="headerlink" title="模拟交集操作"></a>模拟交集操作</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> intersection = <span class="function"><span class="keyword">function</span>(<span class="params">SetA,SetB</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> intersectionSet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> SetA)&#123;</span><br><span class="line">        <span class="keyword">if</span>(SetB.has(x))&#123;</span><br><span class="line">            intersectionSet.add(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> intersectionSet;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> intersectionSetAB = intersection(setA,setB);</span><br><span class="line"><span class="built_in">console</span>.log(intersectionSetAB); <span class="comment">// Set(2) &#123;2, 3&#125;</span></span><br></pre></td></tr></table></figure>
+<p>也可以用简单的语法实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> intersectionSetAB = <span class="keyword">new</span> <span class="built_in">Set</span>([x <span class="keyword">for</span> (x <span class="keyword">of</span> setA) <span class="keyword">if</span> (setB.has(x))])</span><br></pre></td></tr></table></figure>
+<p>但是简化的函数，目前只有在火狐才可以运行。</p>
+<h3 id="模拟差集操作"><a href="#模拟差集操作" class="headerlink" title="模拟差集操作"></a>模拟差集操作</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> difference = <span class="function"><span class="keyword">function</span>(<span class="params">SetA,SetB</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> differenceSet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> x <span class="keyword">of</span> SetA)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!SetB.has(x))&#123;</span><br><span class="line">            differenceSet.add(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> differenceSet;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> differenceSetAB = difference(setA,setB);</span><br><span class="line"><span class="built_in">console</span>.log(differenceSetAB); <span class="comment">// Set(1) &#123;1&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>学习了从头实现一个ES6中定义的类似的Set 类，还实现了一些再其他语言的集合数据结构中不常见的一些方法，例如并集、交集、差集和子集。</p>
+<p>后面，将会介绍散列和字典这两种非顺序数据结构。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-11-01-JavaScipt数据结构与算法Part6.html" title="为什么我要放弃javaScript数据结构与算法（第六章）—— 集合">http://laibh.top/2018-11-01-JavaScipt数据结构与算法Part6.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-10-30-JavaScipt数据结构与算法Part5.html" rel="next" title="为什么我要放弃javaScript数据结构与算法（第五章）—— 链表">
+                <i class="fa fa-chevron-left"></i> 为什么我要放弃javaScript数据结构与算法（第五章）—— 链表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-11-02-JavaScipt数据结构与算法Part7.html" rel="prev" title="为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表">
+                为什么我要放弃javaScript数据结构与算法（第七章）—— 字典和散列表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-集合"><span class="nav-number">1.</span> <span class="nav-text">第六章 集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建数据集合"><span class="nav-number">1.1.</span> <span class="nav-text">构建数据集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建集合"><span class="nav-number">1.2.</span> <span class="nav-text">创建集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#has-value-方法"><span class="nav-number">1.3.</span> <span class="nav-text">has(value)方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add-方法"><span class="nav-number">1.4.</span> <span class="nav-text">add 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#remove-和-clear-方法"><span class="nav-number">1.5.</span> <span class="nav-text">remove 和 clear 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#size-方法"><span class="nav-number">1.6.</span> <span class="nav-text">size 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#values-方法"><span class="nav-number">1.7.</span> <span class="nav-text">values 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set类全部代码"><span class="nav-number">1.8.</span> <span class="nav-text">Set类全部代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Set类"><span class="nav-number">1.9.</span> <span class="nav-text">使用 Set类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合操作"><span class="nav-number">1.10.</span> <span class="nav-text">集合操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并集"><span class="nav-number">1.11.</span> <span class="nav-text">并集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交集"><span class="nav-number">1.12.</span> <span class="nav-text">交集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差集"><span class="nav-number">1.13.</span> <span class="nav-text">差集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子集"><span class="nav-number">1.14.</span> <span class="nav-text">子集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6——Set类"><span class="nav-number">1.15.</span> <span class="nav-text">ES6——Set类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6-Set类的操作"><span class="nav-number">1.16.</span> <span class="nav-text">ES6 Set类的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟并集操作"><span class="nav-number">1.17.</span> <span class="nav-text">模拟并集操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟交集操作"><span class="nav-number">1.18.</span> <span class="nav-text">模拟交集操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟差集操作"><span class="nav-number">1.19.</span> <span class="nav-text">模拟差集操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.20.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

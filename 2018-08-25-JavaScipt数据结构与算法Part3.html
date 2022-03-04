@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javaScript数据结构与算法," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="赖同学" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="有两种结构类似于数组，但在添加和删除元素时更加可控，它们就是栈和队列。 第三章 栈栈数据结构栈是一种遵循后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的同一端，称为栈顶，另一端就叫做栈底。在栈里， 新元素都靠近栈顶，旧元素都接近栈底。 栈也被用在编程语言的编译器和内存中保存变量、方法调用等。 创建栈 先声明这个类  123function Stack()&amp;#123;    /">
+<meta name="keywords" content="javaScript数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我要放弃javaScript数据结构与算法（第三章）—— 栈">
+<meta property="og:url" content="http://laibh.top/2018-08-25-JavaScipt数据结构与算法Part3.html">
+<meta property="og:site_name" content="赖同学">
+<meta property="og:description" content="有两种结构类似于数组，但在添加和删除元素时更加可控，它们就是栈和队列。 第三章 栈栈数据结构栈是一种遵循后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的同一端，称为栈顶，另一端就叫做栈底。在栈里， 新元素都靠近栈顶，旧元素都接近栈底。 栈也被用在编程语言的编译器和内存中保存变量、方法调用等。 创建栈 先声明这个类  123function Stack()&amp;#123;    /">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://laibh.top/images/2018-08-24-javaScript数据结构和算法第三章.png">
+<meta property="og:image" content="http://laibh.top/images/2018-08-24-javaScript数据结构和算法第三章-十进制转二进制.png">
+<meta property="og:updated_time" content="2022-03-04T10:00:38.452Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我要放弃javaScript数据结构与算法（第三章）—— 栈">
+<meta name="twitter:description" content="有两种结构类似于数组，但在添加和删除元素时更加可控，它们就是栈和队列。 第三章 栈栈数据结构栈是一种遵循后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的同一端，称为栈顶，另一端就叫做栈底。在栈里， 新元素都靠近栈顶，旧元素都接近栈底。 栈也被用在编程语言的编译器和内存中保存变量、方法调用等。 创建栈 先声明这个类  123function Stack()&amp;#123;    /">
+<meta name="twitter:image" content="http://laibh.top/images/2018-08-24-javaScript数据结构和算法第三章.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '1YNH8Y3MP9',
+      apiKey: '61c189facf700193dfcbb902369ce227',
+      indexName: 'MyBlog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"想要找些什么呢","hits_empty":"${query} 没有被找到，再试试","hits_stats":"在 ${time} ms 查找了${hits}个结果"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://laibh.top/2018-08-25-JavaScipt数据结构与算法Part3.html"/>
+
+
+
+
+
+  <title>为什么我要放弃javaScript数据结构与算法（第三章）—— 栈 | 赖同学</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">赖同学</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://laibh.top/2018-08-25-JavaScipt数据结构与算法Part3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="赖彬鸿">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/myPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="赖同学">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">为什么我要放弃javaScript数据结构与算法（第三章）—— 栈</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-25T11:00:41+08:00">
+                2018-08-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-04T18:00:38+08:00">
+                2022-03-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javaScript相关/" itemprop="url" rel="index">
+                    <span itemprop="name">javaScript相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018-08-25-JavaScipt数据结构与算法Part3.html" class="leancloud_visitors" data-flag-title="为什么我要放弃javaScript数据结构与算法（第三章）—— 栈">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,820
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有两种结构类似于数组，但在添加和删除元素时更加可控，它们就是栈和队列。</p>
+<h2 id="第三章-栈"><a href="#第三章-栈" class="headerlink" title="第三章 栈"></a>第三章 栈</h2><h3 id="栈数据结构"><a href="#栈数据结构" class="headerlink" title="栈数据结构"></a>栈数据结构</h3><p>栈是一种遵循后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的同一端，称为栈顶，另一端就叫做栈底。在栈里， 新元素都靠近栈顶，旧元素都接近栈底。</p>
+<p>栈也被用在编程语言的编译器和内存中保存变量、方法调用等。</p>
+<h3 id="创建栈"><a href="#创建栈" class="headerlink" title="创建栈"></a>创建栈</h3><ol>
+<li>先声明这个类</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 各种属性和方法的声明</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>选择数组这种数据结构来保存栈里的元素</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> items = [];</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>为栈声明一些方法</p>
+<ul>
+<li>push（element（s））： 添加一个（或者几个）新元素到栈顶</li>
+<li>pop（）：移除栈顶的元素，同时返回被移除的元素</li>
+<li>peek（）：返回栈顶的元素，不会对栈做任何修改（这个方法不会移除栈顶的元素，仅仅返回它）</li>
+<li>isEmpty（）：如果栈里没有任何元素的就返回true，否则就返回false.</li>
+<li>clear（）：移除栈里的所有元素</li>
+<li>size（）：返回栈里的元素个数，这个方法和数组的length属性很类似。</li>
+</ul>
+</li>
+</ol>
+<h3 id="向栈添加元素"><a href="#向栈添加元素" class="headerlink" title="向栈添加元素"></a>向栈添加元素</h3><p>我们要实现的第一个方法是 push,这个方法负责向栈里添加新元素，该方法只添加元素到栈顶，也就是栈的末尾。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.push = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.push(element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只能用 push 和 pop 方法添加和删除栈中元素，这样一来，我们的栈就自然遵从了 LIFO 原则。</p>
+<p>向栈移除元素</p>
+<p>我们要实现的第一个方法是 pop,这个方法主要用来移除栈里的元素。栈遵从 LIFO 原则，因此移出的是最后添加进去的元素。栈的 pop 方法可以这么写</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.pop = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.pop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只能用 push 和 pop 方法添加和删除栈中元素，这样一来，我们的栈就自然遵从了 LIFO 原则。</p>
+<h3 id="查看栈顶元素"><a href="#查看栈顶元素" class="headerlink" title="查看栈顶元素"></a>查看栈顶元素</h3><p>现在为类实现一些额外的辅助方法，如果想知道栈里最后添加的元素是什么，可以用 peek 方法，这个方法将返回栈顶的元素。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.peek = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items[items.length<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为类内部是用数组保存元素的，所以访问数组的最后一个元素可以用 length - 1</p>
+<p>检查栈是否为空</p>
+<p>isEmpty ,如果栈为空的话就返回true，否则就返回false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.isEmpty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.length == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似于数组的 length 属性，我们也能实现栈的 length,对于集合，最好用 size 代替 length。因为栈的内部使用数组保存元素，所以能简单地返回栈的长度。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> items.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="清空和打印栈元素"><a href="#清空和打印栈元素" class="headerlink" title="清空和打印栈元素"></a>清空和打印栈元素</h3><p>实现 clear 方法。clear 方法用来移除栈里所有的元素，把栈清空。实现这个方法最简单的方式是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    items = [];</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印出来栈里面的内容，通过实现辅助方法 print 来实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(items.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> items = [];</span><br><span class="line">		<span class="keyword">this</span>.push = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> items.push(element);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.pop = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> items.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.peek = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> items[items.length<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.isEmpty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> items.length == <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">return</span> items.length;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			items = [];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">this</span>.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(items.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">let</span> stack = <span class="keyword">new</span> Stack();</span><br><span class="line"><span class="built_in">console</span>.log(stack.isEmpty()); <span class="comment">// true 判断是否为空</span></span><br><span class="line">stack.push(<span class="number">5</span>); <span class="comment">// 往栈里添加元素 5</span></span><br><span class="line">stack.push(<span class="number">8</span>); <span class="comment">// 往栈里添加元素 8</span></span><br><span class="line"><span class="built_in">console</span>.log(stack.peek()); <span class="comment">// 查看最后一个元素 8</span></span><br><span class="line">stack.push(<span class="number">11</span>); <span class="comment">// 往栈里添加元素 11</span></span><br><span class="line"><span class="built_in">console</span>.log(stack.size()); <span class="comment">// 3 输出栈的元素个数</span></span><br><span class="line"><span class="built_in">console</span>.log(stack.isEmpty()); <span class="comment">// false 判断是否为空</span></span><br><span class="line">stack.push(<span class="number">15</span>); <span class="comment">// 往栈里添加元素 15</span></span><br><span class="line">stack.print(); <span class="comment">// 5,8,11,15 输出栈里的元素</span></span><br></pre></td></tr></table></figure>
+<p>下面是流程图</p>
+<p><img src="http://laibh.top/images/2018-08-24-javaScript数据结构和算法第三章.png" alt="流程图"></p>
+<h3 id="ECMAScript6-和-Stack-类"><a href="#ECMAScript6-和-Stack-类" class="headerlink" title="ECMAScript6 和 Stack 类"></a>ECMAScript6 和 Stack 类</h3><p>创建了一个可以当做类来使用的 Stack 函数。JavaScript 函数都有构造函数，可以用来模拟类的行为。我们声明一个私有的 items变量，它只能被 Stack 函数/类访问。然而，这个方法为每个类的实例都创建了一个 items 变量的副本。因此如果要创建多个 Stack实例，就不太适合。我们可以尝试用 ES6语法来声明 Stack 类。</p>
+<h3 id="用-ES6-声明-Stack-类"><a href="#用-ES6-声明-Stack-类" class="headerlink" title="用 ES6 声明 Stack 类"></a>用 ES6 声明 Stack 类</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>.items = []; <span class="comment">// &#123;1&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">    push(elememt)&#123;</span><br><span class="line">        <span class="keyword">this</span>.items.push(element);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其他方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只是用 ES6 的简化语法把 Stack 函数转换成 Stack 类。这种方法不能像其他语言（Java、C++、C#）一样直接在类里面声明变量，只能在类的构造函数 constructor 里声明，在类的其他函数里用 this.nameofVariable 就可以引用这个变量。</p>
+<p>尽管代码看起来更加简洁、更漂亮，变量 items 却是公共的。ES6 类是基于原型的。虽然基于原型的类比基于函数的类更节省内存，也更适合创建多个实例，却不能够声明私有属性（变量）或方法。而且，在这种情况下，我们希望 Stack 类的用户只能访问暴露给类的方法。否则，就有可能从栈的中间移除元素（因为我们用数组来存储其值），这不是我们希望看到的。</p>
+<h4 id="用ES6的限定作用域-Symbol-实现类"><a href="#用ES6的限定作用域-Symbol-实现类" class="headerlink" title="用ES6的限定作用域 Symbol 实现类"></a>用ES6的限定作用域 Symbol 实现类</h4><p>ES6 新增了一种叫做 Symbol 的基本类型，它是不可变的，可以用作对象的属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> _items = <span class="built_in">Symbol</span>(); <span class="comment">// 声明了 Symbol 类型的变量</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        <span class="keyword">this</span>[_items] = [] <span class="comment">// 要访问 _items,只需把所有的 this.items都换成 this.[_items]</span></span><br><span class="line">    &#125;</span><br><span class="line">    push(element)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[_items].push(element);</span><br><span class="line">    &#125;</span><br><span class="line">    pop ()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[_items].pop();</span><br><span class="line">    &#125;</span><br><span class="line">    peek ()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[_items][<span class="keyword">this</span>[_items].length<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    isEmpty ()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[_items].length == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    size ()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>[_items].length;</span><br><span class="line">    &#125;</span><br><span class="line">    clear ()&#123;</span><br><span class="line">        <span class="keyword">this</span>[_items] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    print ()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>[_items].toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方法创建了一个假的私有属性，因为ES6 新增的Object.getOwnPropertySymbols 方法能够取到类里面声明的所有 Symbols 属性。下面是一个破坏 Stack 类的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stack = <span class="keyword">new</span> Stack();</span><br><span class="line">stack.push(<span class="number">5</span>);</span><br><span class="line">stack.push(<span class="number">8</span>);</span><br><span class="line"><span class="keyword">let</span> objectSymbols = <span class="built_in">Object</span>.getOwnPropertySymbols(stack);</span><br><span class="line"><span class="built_in">console</span>.log(objectSymbols.length); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(objectSymbols); <span class="comment">// [Symbol()]</span></span><br><span class="line"><span class="built_in">console</span>.log(objectSymbols[<span class="number">0</span>]); <span class="comment">// Symbol()</span></span><br><span class="line">stack[objectSymbols[<span class="number">0</span>]].push(<span class="number">1</span>); </span><br><span class="line">stack.print(); <span class="comment">// 5,8,1</span></span><br></pre></td></tr></table></figure>
+<p>很明显可以通过访问 stack[objectSymbol[0]] 得到 _items。并且 _items属性是一个数组，可以进行任意的数组操作，比如从中间删除或者是添加元素。我们操作的是栈，不应该有这种行为出现。</p>
+<h4 id="用ES6类的-WeakMap-实现类"><a href="#用ES6类的-WeakMap-实现类" class="headerlink" title="用ES6类的 WeakMap 实现类"></a>用ES6类的 WeakMap 实现类</h4><p>有一种数据类型可确保属性是私有的，这就是 WeakMap。后面会深入探讨 Map 这种数据结构，现在只需要知道 WeakMap 可以存储键值对，其中键是对象，值可以是任意数据类型。</p>
+<p>如果使用 WeakMap 来存储 items 变量，那么 Stack 类是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> items = <span class="keyword">new</span> <span class="built_in">WeakMap</span>(); <span class="comment">// 声明了一个 WeakMap 类型的变量 items</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>()&#123;</span><br><span class="line">        items.set(<span class="keyword">this</span>, []) <span class="comment">// 在 constructor 中，以this（Stack类自己引用）为键，把代表栈的数组存入 items</span></span><br><span class="line">    &#125;</span><br><span class="line">    push(element)&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        s.push(element);</span><br><span class="line">    &#125;</span><br><span class="line">    pop ()&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">let</span> r = s.pop();</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">    peek ()&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">return</span> s[s.length<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    isEmpty ()&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">return</span> s.length == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    size ()&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">let</span> r = s.length</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">    clear ()&#123;</span><br><span class="line">        items.set(<span class="keyword">this</span>, [])</span><br><span class="line">    &#125;</span><br><span class="line">    print ()&#123;</span><br><span class="line">        <span class="keyword">let</span> s = items.get(<span class="keyword">this</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(s.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在 items 在 Stack 类里是真正的私有属性了，但是还有一件事要做， items 现在仍然是在 Stack 类以外声明的，因此任何谁都可以改动它。我们可以用一个闭包（外层函数）把 Stack 类包起来，这样就可以在这个函数里访问 WeakMap</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stack = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> items = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Stack</span> </span>&#123;</span><br><span class="line">        <span class="keyword">constructor</span>()&#123;</span><br><span class="line">            items.set(<span class="keyword">this</span>, []);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 其他方法</span></span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="keyword">return</span> Stack; <span class="comment">// 当 Stack 函数里的构造函数被调用时，会返回 Stack 类的一个实例。</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<p>现在，Stack 类有一个名为 items 的私有属性。然后用这种方法的话，扩展类无法继承其属性。将其与最开始用 function 实现的 Stack 类来做个比较，我们会发现一些相似之处。</p>
+<p>事实上，尽管 ES6 引入了类的语法，我们仍然不能像在其他编程语言中一样声明私有属性或方法。有很多种方法都可以达到相同的效果，但无论是语法还是性能，这些方法都有各自的缺点和优点。</p>
+<h3 id="用栈解决问题"><a href="#用栈解决问题" class="headerlink" title="用栈解决问题"></a>用栈解决问题</h3><p>栈的实际应用非常广泛。在回溯问题中，它可以存储访问过的任务或是路径、撤销的操作。Java 和 C# 用栈来存储变量和方法调用，特别是处理递归算法时，有可能抛出一个栈溢出异常（stack overflow）</p>
+<p>下面，学习使用栈的三个最著名的算法实例。首先是十进制转二进制的问题，以及任意进制转换的算法，然后是平衡圆括号问题，最后，会学习栈解决汉诺塔的问题。</p>
+<h4 id="从十进制到二进制"><a href="#从十进制到二进制" class="headerlink" title="从十进制到二进制"></a>从十进制到二进制</h4><p>计算科学中，二进制非常重要，因为计算机里的所有内容都是用二进制数字表示（0和1）。没有十进制和二进制相互转化的能力，与计算机交流就很困难。要把十进制化成十进制，将该十进制数字和2整除，直到结果为0为止。</p>
+<p>实例:数字10转为二进制的数字。</p>
+<p><img src="http://laibh.top/images/2018-08-24-javaScript数据结构和算法第三章-十进制转二进制.png" alt="数字10转为二进制的数字"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">divideBy2</span>(<span class="params">decNumber</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> remStack = <span class="keyword">new</span> Stack(),</span><br><span class="line">    rem,</span><br><span class="line">    binaryString = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">while</span>(decNumber &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        rem = <span class="built_in">Math</span>.floor(decNumber % <span class="number">2</span>); <span class="comment">// 拿到被2整除的余数</span></span><br><span class="line">        remStack.push(rem);</span><br><span class="line">        decNumber = <span class="built_in">Math</span>.floor(decNumber / <span class="number">2</span>) <span class="comment">// 拿到被2整除的整数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (! remStack.isEmpty())&#123;</span><br><span class="line">        binaryString += remStack.pop().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> binaryString;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(divideBy2(<span class="number">10</span>)); <span class="comment">// 1010</span></span><br><span class="line"><span class="built_in">console</span>.log(divideBy2(<span class="number">233</span>)); <span class="comment">// 11101001</span></span><br><span class="line"><span class="built_in">console</span>.log(divideBy2(<span class="number">100</span>)); <span class="comment">// 11101001</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript有数字类型，但是不会区分究竟是整数还是浮点数，使用 Math.floor 让除法只返回整数部分。</p>
+<h3 id="进制转换算法"><a href="#进制转换算法" class="headerlink" title="进制转换算法"></a>进制转换算法</h3><p>可以传入任意进制的基数作为参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">baseConverter</span>(<span class="params">decNumber, base</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> remStack = <span class="keyword">new</span> Stack(),</span><br><span class="line">    rem,</span><br><span class="line">    baseString = <span class="string">''</span>,</span><br><span class="line">    digits = <span class="string">'0123456789ABCDEF'</span>;</span><br><span class="line">    <span class="keyword">while</span>(decNumber &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        rem = <span class="built_in">Math</span>.floor(decNumber % base); <span class="comment">// 拿到被base整除的余数</span></span><br><span class="line">        remStack.push(rem);</span><br><span class="line">        decNumber = <span class="built_in">Math</span>.floor(decNumber / base) <span class="comment">// 拿到被base整除的整数</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (! remStack.isEmpty())&#123;</span><br><span class="line">        baseString += digits[remStack.pop()]; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> baseString;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(baseConverter(<span class="number">100345</span>,<span class="number">2</span>)); <span class="comment">// 11000011111111001</span></span><br><span class="line"><span class="built_in">console</span>.log(baseConverter(<span class="number">100345</span>, <span class="number">8</span>)); <span class="comment">// 303771</span></span><br><span class="line"><span class="built_in">console</span>.log(baseConverter(<span class="number">100345</span>, <span class="number">16</span>)); <span class="comment">// 187F9</span></span><br></pre></td></tr></table></figure>
+<p>需要改动的地方：在将十进制转为二进制的时候，余数是0或者1，转为八进制的时候，余数为0~7，同理16进制是0~9加上A~F。所以要做个转换，通过定义 digits ，digits[remStack.pop()] 来实现转化。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>通过这一章，学习了栈这一数据结构的相关内容。可以用代码自己实现栈，还讲解了栈里面的相关方法。</p>
+<p>书籍链接： <a href="https://book.douban.com/subject/26639401/">学习JavaScript数据结构与算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    赖彬鸿
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://laibh.top/2018-08-25-JavaScipt数据结构与算法Part3.html" title="为什么我要放弃javaScript数据结构与算法（第三章）—— 栈">http://laibh.top/2018-08-25-JavaScipt数据结构与算法Part3.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javaScript数据结构与算法/" <i class="fa fa-tag"></i> javaScript数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-08-23-read-图解HTTP-Part6下.html" rel="next" title="深入浅出HTTP，从开始到放弃（第六章下）—— HTTP 首部">
+                <i class="fa fa-chevron-left"></i> 深入浅出HTTP，从开始到放弃（第六章下）—— HTTP 首部
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018-08-29-read-图解HTTP-Part7.html" rel="prev" title="深入浅出HTTP，从开始到放弃（第七章）—— 确保 Web 安全的 HTTPS">
+                深入浅出HTTP，从开始到放弃（第七章）—— 确保 Web 安全的 HTTPS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?'+~(-new Date()/36e5)];;
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTcwMy8xNjIzMA"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/myPhoto.jpg"
+                alt="赖彬鸿" />
+            
+              <p class="site-author-name" itemprop="name">赖彬鸿</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">135</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LbhFront-end" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/lbh2018/" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-globe"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://yq.aliyun.com/users/1802204154913774?spm=a2c4e.11153940.blogcont662526.4.6c0a34f6E2lR5o" target="_blank" title="云栖">
+                      
+                        <i class="fa fa-fw fa-globe"></i>云栖</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:544289495@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=544289495&website=www.oicqzone.com" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=JtLCXIriJ8G4-gS_-4qABQ&q=site%3Alaibh.top&btnK=Google+%E6%90%9C%E7%B4%A2&oq=site%3Alaibh.top&gs_l=psy-ab.3...1158.6834..7051...5.0..1.246.3720.2-17......0....1..gws-wiz.....0..0j0i10.rJMUHvdrbds" target="_blank" title="Google">
+                      
+                        <i class="fa fa-fw fa-google"></i>Google</a>
+                  </span>
+                
+            </div>
+          
+         <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=90  src="//music.163.com/outchain/player?type=0&id=2353471182&auto=0&height=90"></iframe>
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.chjtx.com/JRoll/" title="醉萝卜" target="_blank">醉萝卜</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://hzd.plus/" title="Zhendong" target="_blank">Zhendong</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/cnyball" title="cnyballk" target="_blank">cnyballk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://johnzz.top/" title="John" target="_blank">John</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xiaojun1994.top/" title="xiaojun1994" target="_blank">xiaojun1994</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://me.ursb.me" title="Airing" target="_blank">Airing</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.iyouhun.com" title="游魂" target="_blank">游魂</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://icoty.github.io/" title="荒野之萍" target="_blank">荒野之萍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://im-one.github.io/" title="imOne" target="_blank">imOne</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.hourxu.com/" title="Ambre" target="_blank">Ambre</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.huyujs.com" title="胡雨" target="_blank">胡雨</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.andou.live" title="安逗" target="_blank">安逗</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.jianshu.com/u/701a8bbf4f7e" title="陈健斌" target="_blank">陈健斌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://itobys.github.io/" title="汤姆Tom酱" target="_blank">汤姆Tom酱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://breeze2.github.io/blog/" title="林毅锋" target="_blank">林毅锋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.qzroc.com/" title="大鹏博客" target="_blank">大鹏博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://lyreal666.com/" title="余腾靖的博客" target="_blank">余腾靖的博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://buzuosheng.com/" title="不作声" target="_blank">不作声</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/s?ie=UTF-8&wd=site%3Alaibh.top" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.google.com.hk/search?safe=strict&source=hp&ei=zXdWXfemLJbO0PEP8qyXyA0&q=site%3Alaibh.top&oq=site%3Alaibh.top&gs_l=psy-ab.3...580.8501..8767...0.0..0.397.934.2-1j2......0....2j1..gws-wiz.QESXfWGadT0&ved=0ahUKEwi3wbusiofkAhUWJzQIHXLWBdkQ4dUDCAU&uact=5" title="谷歌" target="_blank">谷歌</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-栈"><span class="nav-number">1.</span> <span class="nav-text">第三章 栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#栈数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">栈数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建栈"><span class="nav-number">1.2.</span> <span class="nav-text">创建栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#向栈添加元素"><span class="nav-number">1.3.</span> <span class="nav-text">向栈添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看栈顶元素"><span class="nav-number">1.4.</span> <span class="nav-text">查看栈顶元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清空和打印栈元素"><span class="nav-number">1.5.</span> <span class="nav-text">清空和打印栈元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.6.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECMAScript6-和-Stack-类"><span class="nav-number">1.7.</span> <span class="nav-text">ECMAScript6 和 Stack 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用-ES6-声明-Stack-类"><span class="nav-number">1.8.</span> <span class="nav-text">用 ES6 声明 Stack 类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用ES6的限定作用域-Symbol-实现类"><span class="nav-number">1.8.1.</span> <span class="nav-text">用ES6的限定作用域 Symbol 实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用ES6类的-WeakMap-实现类"><span class="nav-number">1.8.2.</span> <span class="nav-text">用ES6类的 WeakMap 实现类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用栈解决问题"><span class="nav-number">1.9.</span> <span class="nav-text">用栈解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从十进制到二进制"><span class="nav-number">1.9.1.</span> <span class="nav-text">从十进制到二进制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进制转换算法"><span class="nav-number">1.10.</span> <span class="nav-text">进制转换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.11.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart throb" style="color: #d43f57;"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">赖彬鸿</span>
+
+  
+</div>
+
+  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+-->
+<div>
+<span id="busuanzi_container_site_pv" title="访问量">
+    <i class="fa fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span>
+</span>
+<span id="busuanzi_container_site_uv" title="访问人数">
+  <i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-count" title="博客总字数"><i class="fa fa-pagelines" aria-hidden="true"></i>745.9k</span>
+</div>
+<i class="fa fa-shield" aria-hidden="true" title="本站安全运行时间"></i> <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/29/2018 09:47:04");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("JcDzlAxx8A0MJDQ9xpJTOBUe-gzGzoHsz", "hih724suAgjSWQnvOuIEvxza");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+  <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":400},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
