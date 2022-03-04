@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           submodules: true
 
@@ -37,29 +37,27 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
             node -v
+            npm i -g hexo-deployer-git
             npm i -g hexo-cli
             npm i
 
-      - name:  Generate static files
+      - name: Configuration environment
+        env:
+          GIT_USER : LbhFront-end
+          GIT_EMAIL : 544289495@qq.com
+          HEXO_DEPLOY_PUB : ${{ secrets.HEXO_DEPLOY_PUB }}
         run: |
-            hexo clean
-            hexo g
+            sudo timedatectl set-timezone "Asia/Shanghai"
+            mkdir -p ~/.ssh/
+            echo "$HEXO_DEPLOY_PUB" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            ssh-keyscan vensing.com >> ~/.ssh/known_hosts
+            git config --global user.name $GIT_USER
+            git config --global user.email $GIT_EMAIL
 
       - name: Deploy to Github Pages
-        env:
-          GIT_NAME: LbhFront-end
-          GIT_EMAIL: 544289495@qq.com
-          GH_REF: github.com/LbhFront-end/LbhFront-end.github.io
-          GH_TOKEN : ${{ secrets.GH_TOKEN }}
         run: |
-            git clone https://github.com/LbhFront-end/LbhFront-end.github.io.git .deploy_git
-            cd .deploy_git
-            git checkout master
-            cd ../
-            mv .deploy_git/.git/ ./public/
-            cd ./public
-            git config --global user.name "$GIT_NAME"
-            git config --global user.email "$GIT_EMAIL"
-            git add .
-            git commit -m "github Actions 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
-            git push --force --quiet "https://$GH_TOKEN@github.com/LbhFront-end/LbhFront-end.github.io.git" master:master
+            hexo clean
+            hexo g        
+            hexo deploy --generate

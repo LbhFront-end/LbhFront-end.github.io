@@ -123,5 +123,7 @@ mermaid:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
   type: git
-  repository: git@github.com:LbhFront-end/LbhFront-end.github.io
+  repo: git@github.com:LbhFront-end/LbhFront-end.github.io
   branch: master
+  name: LbhFront-end
+  email: 544289495@qq.com
