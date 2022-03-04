@@ -122,7 +122,6 @@ mermaid:
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-  skip_cleanup: true
   type: git
   repo: git@github.com:LbhFront-end/LbhFront-end.github.io
   branch: master
