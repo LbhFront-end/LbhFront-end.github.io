@@ -58,4 +58,4 @@ jobs:
 
       - name: Deploy to Github Pages
         run: |
-            hexo deploy --generate
+            npx hexo deploy --generate
