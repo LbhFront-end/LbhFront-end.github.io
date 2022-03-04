@@ -50,7 +50,7 @@ jobs:
           GIT_NAME: LbhFront-end
           GIT_EMAIL: 544289495@qq.com
           GH_REF: github.com/LbhFront-end/LbhFront-end.github.io
-          GH_TOKEN : ${{ secrets.GH_TOKEN  }}
+          GH_TOKEN : ${{ secrets.GH_TOKEN }}
         run: |
             git clone https://$GH_REF .deploy_git
             cd .deploy_git
