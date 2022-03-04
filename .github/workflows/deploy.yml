@@ -52,7 +52,7 @@ jobs:
           GH_REF: github.com/LbhFront-end/LbhFront-end.github.io
           GH_TOKEN : ${{ secrets.GH_TOKEN }}
         run: |
-            git clone https://$GH_REF .deploy_git
+            git clone https://github.com/LbhFront-end/LbhFront-end.github.io.git .deploy_git
             cd .deploy_git
             git checkout master
             cd ../
@@ -62,4 +62,4 @@ jobs:
             git config --global user.email "$GIT_EMAIL"
             git add .
             git commit -m "github Actions 自动生成 于 `date +"%Y-%m-%d %H:%M"`"
-            git push --force --quiet "https://$GH_TOKEN@$GH_REF" master:master
+            git push --force --quiet "https://$GH_TOKEN@github.com/LbhFront-end/LbhFront-end.github.io.git" master:master
